@@ -1,3 +1,11 @@
+[DEFAULT]
+lib = 
+    ifannex() {
+        if [[ "$ISANNEX" == "1" ]]; then
+            "$@"
+        fi
+    }
+sync = ifannex git annex sync
 
 [Programming/fusee-launcher]
 checkout = git clone 'https://github.com/reswitched/fusee-launcher.git' 'fusee-launcher'
@@ -10,15 +18,15 @@ checkout = git clone 'https://github.com/EverestAPI/MadelineEnergySelector' 'Mad
 
 [Programming]
 checkout = mkdir -p 'Programming'
-runannex = "$@"
+lib = export ISANNEX=1
 
 [Dotfiles]
 checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
-runannex = "$@"
+lib = export ISANNEX=1
 
 [Documents]
 checkout = mkdir -p 'Documents'
-runannex = "$@"
+lib = export ISANNEX=1
 
 [Programming/Everest]
 checkout = git clone 'https://github.com/EverestAPI/Everest.git' 'Everest'
