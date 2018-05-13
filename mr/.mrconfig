@@ -10,6 +10,12 @@ checkout = git clone 'https://github.com/EverestAPI/MadelineEnergySelector' 'Mad
 
 [Programming]
 checkout = mkdir -p 'Programming'
+runannex = "$@"
 
 [Dotfiles]
 checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
+runannex = "$@"
+
+[Documents]
+checkout = mkdir -p 'Documents'
+runannex = "$@"
