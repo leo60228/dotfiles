@@ -30,3 +30,7 @@ lib = export ISANNEX=1
 
 [Programming/Everest]
 checkout = git clone 'https://github.com/EverestAPI/Everest.git' 'Everest'
+
+[hdd-annex]
+checkout = mkdir -p 'hdd-annex'
+sync = mr sync
