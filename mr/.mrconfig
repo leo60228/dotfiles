@@ -1,0 +1,15 @@
+
+[Programming/fusee-launcher]
+checkout = git clone 'https://github.com/reswitched/fusee-launcher.git' 'fusee-launcher'
+
+[Programming/HookedMethod]
+checkout = git clone 'https://github.com/EverestAPI/HookedMethod.git' 'HookedMethod'
+
+[Programming/MadelineEnergySelector]
+checkout = git clone 'https://github.com/EverestAPI/MadelineEnergySelector' 'MadelineEnergySelector'
+
+[Programming]
+checkout = mkdir -p 'Programming'
+
+[Dotfiles]
+checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
