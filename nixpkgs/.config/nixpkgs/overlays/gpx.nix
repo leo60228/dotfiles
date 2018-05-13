@@ -21,5 +21,5 @@ with self; {
       platforms = stdenv.lib.platforms.unix;
       maintainers = [ stdenv.lib.maintainers.leo60228 ];
     };
-  }
+  };
 }
