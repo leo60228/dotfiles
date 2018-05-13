@@ -19,3 +19,6 @@ runannex = "$@"
 [Documents]
 checkout = mkdir -p 'Documents'
 runannex = "$@"
+
+[Programming/Everest]
+checkout = git clone 'https://github.com/EverestAPI/Everest.git' 'Everest'
