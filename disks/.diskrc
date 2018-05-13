@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo mount /dev/sda5 hdd-annex
