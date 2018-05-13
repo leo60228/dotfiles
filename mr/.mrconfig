@@ -33,4 +33,8 @@ checkout = git clone 'https://github.com/EverestAPI/Everest.git' 'Everest'
 
 [hdd-annex]
 checkout = mkdir -p 'hdd-annex'
-sync = mr sync
+sync = 
+    if [[ "$ISRECURSING" != "1" ]]; then
+        export ISRECURSING=1
+        mr sync
+    fi
