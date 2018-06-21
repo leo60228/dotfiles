@@ -1,0 +1,2 @@
+#!/bin/sh
+exec wine /home/leo60228/.wine/drive_c/Program\ Files\ \(x86\)/Hero\ Lab/HeroLab.exe
