@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# winecfg wrapper
+
+if [[ "$1" == "--unscaled" ]]; then
+	shift
+	IFS=$'\n'
+	WINECFG_PATHS=($(which -a winecfg))
+	"${WINECFG_PATHS[1]}" $@
+	exit $?
+fi
+
+run_scaled winecfg $@
