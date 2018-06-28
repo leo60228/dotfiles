@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+SRC=$1
+DST=$2
+
+if [[ -d "$DST" ]]; then
+	DST="$DST/$(basename $SRC)"
+fi
+
+rm $DST
+ln -s $SRC $DST
