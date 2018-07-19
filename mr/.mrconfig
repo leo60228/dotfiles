@@ -7,18 +7,14 @@ lib =
     }
 sync = ifannex git annex sync
 
-[Programming/fusee-launcher]
-checkout = git clone 'https://github.com/reswitched/fusee-launcher.git' 'fusee-launcher'
-
-[Programming/HookedMethod]
-checkout = git clone 'https://github.com/EverestAPI/HookedMethod.git' 'HookedMethod'
-
-[Programming/MadelineEnergySelector]
-checkout = git clone 'https://github.com/EverestAPI/MadelineEnergySelector' 'MadelineEnergySelector'
-
 [Programming]
 checkout = mkdir -p 'Programming'
 lib = export ISANNEX=1
+sync = 
+    if [[ "$ISRECURSING" != "1" ]]; then
+        export ISRECURSING=1
+        mr sync
+    fi
 
 [Dotfiles]
 checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
@@ -27,9 +23,6 @@ lib = export ISANNEX=1
 [Documents]
 checkout = mkdir -p 'Documents'
 lib = export ISANNEX=1
-
-[Programming/Everest]
-checkout = git clone 'https://github.com/EverestAPI/Everest.git' 'Everest'
 
 [hdd-annex]
 checkout = mkdir -p 'hdd-annex'
