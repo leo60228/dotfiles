@@ -1,5 +1,7 @@
 self: super:
 
-{
-#  mono = super.mono58;
-}
+#let nixpkgsMaster = import /home/leo60228/Programming/nixpkgs {}; in {
+#  mono = nixpkgsMaster.mono;
+#  msbuild = nixpkgsMaster.msbuild;
+#}
+{}
