@@ -1,0 +1,66 @@
+[DEFAULT]
+sync = mkdir -p ~/hdd-annex/Programming && rsync -uav --progress . $HOME/hdd-annex/Programming/$(realpath . | sed "s;^${HOME}/Programming/;;")
+
+[Everest.InstallerX]
+checkout = true
+
+[fusee-launcher]
+checkout = true
+
+[mono-msbuild]
+checkout = true
+
+[pdfcropper]
+checkout = true
+
+[uftpd.git]
+checkout = true
+
+[mono-msbuild.git]
+checkout = true
+
+[msbuild]
+checkout = true
+
+[Everest.git]
+checkout = true
+
+[gocode]
+checkout = true
+
+[MCModding]
+checkout = true
+
+[nixpkgs.git]
+checkout = true
+
+[wyag]
+checkout = true
+
+[nixpkgs]
+checkout = true
+
+[test_os]
+checkout = true
+
+[fusee-launcher.git]
+checkout = true
+
+[avr]
+checkout = true
+
+[Scripts]
+checkout = true
+
+[msbuild.git]
+checkout = true
+
+[uftpd]
+checkout = true
+
+[Everest]
+checkout = true
+
+[Vulcan-Starter]
+checkout = true
+
