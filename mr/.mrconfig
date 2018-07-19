@@ -14,7 +14,7 @@ sync =
         export ISRECURSING=1
         mr sync -j8
     fi
-status = bash -c 'diff --new-line-format="" --unchanged-line-format="" <(ls . | sort) <(ls ~/hdd-annex/Programming | sort)'
+status = bash -c 'diff --new-line-format="" --unchanged-line-format="" <(ls . | sort) <(ls ~/hdd-annex/Programming | sort) | awk -v prefix="$(printf '\''\033[0;31m?? \033[0m'\'')" '\''{print prefix $0}'\' || true
 
 [Dotfiles]
 checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
