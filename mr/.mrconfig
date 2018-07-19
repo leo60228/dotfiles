@@ -13,7 +13,7 @@ lib = export ISANNEX=1
 sync = 
     if [[ "$ISRECURSING" != "1" ]]; then
         export ISRECURSING=1
-        mr sync
+        mr sync -j8
     fi
 
 [Dotfiles]
