@@ -6,3 +6,5 @@ while c <= 'z'
 endw
 
 set ttimeout ttimeoutlen=50
+set backspace=2
+set ai
