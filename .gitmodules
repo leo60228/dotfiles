@@ -1,0 +1,9 @@
+[submodule "vim/.vim/pack/leo/start/vim-JumpToVerticalOccurrence"]
+	path = vim/.vim/pack/leo/start/vim-JumpToVerticalOccurrence
+	url = https://github.com/inkarkat/vim-JumpToVerticalOccurrence.git
+[submodule "vim/.vim/pack/leo/start/vim-CountJump"]
+	path = vim/.vim/pack/leo/start/vim-CountJump
+	url = https://github.com/inkarkat/vim-CountJump.git
+[submodule "vim/.vim/pack/leo/start/vim-ingo-library"]
+	path = vim/.vim/pack/leo/start/vim-ingo-library
+	url = https://github.com/inkarkat/vim-ingo-library.git
