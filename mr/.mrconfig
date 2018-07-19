@@ -9,12 +9,12 @@ sync = ifannex git annex sync
 
 [Programming]
 checkout = mkdir -p 'Programming'
-lib = export ISANNEX=1
 sync = 
     if [[ "$ISRECURSING" != "1" ]]; then
         export ISRECURSING=1
         mr sync -j8
     fi
+status = bash -c 'diff --new-line-format="" --unchanged-line-format="" <(ls . | sort) <(ls ~/hdd-annex/Programming | sort)'
 
 [Dotfiles]
 checkout = git clone 'https://github.com/leo60228/dotfiles.git' 'Dotfiles'
