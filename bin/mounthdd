@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+udisksctl mount -b /dev/sda5
+ln -sf /run/media/leo60228/HDDSTORE ~/hdd-annex

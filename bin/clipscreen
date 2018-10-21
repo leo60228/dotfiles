@@ -1,0 +1,3 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p bash maim xclip -i bash
+maim -s | xclip -selection clipboard -t image/png

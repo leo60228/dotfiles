@@ -1,0 +1,18 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p julia_06 jq bash proot gsettings_desktop_schemas -i bash
+set -e
+
+GTK3_SCHEMA=($(nix path-info nixpkgs.gtk3)/share/gsettings-schemas/*)
+GSETTINGS_SCHEMA=($(nix path-info nixpkgs.gsettings_desktop_schemas)/share/gsettings-schemas/*)
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:${GSETTINGS_SCHEMA[@]}:${GTK3_SCHEMA[@]}"
+
+# comment out once packaged
+NIXLDPATH='"${pkgs.imagemagickBig}/lib:${pkgs.cairo}/lib:${pkgs.gettext}/lib:${pkgs.pango.out}/lib:${pkgs.glib.out}/lib:${pkgs.gtk3}/lib:${pkgs.gdk_pixbuf}/lib:${pkgs.gzip}/lib:${pkgs.zlib}/lib:${pkgs.gcc-unwrapped.lib}/lib"'
+julia="$(dirname $(which julia))/.."
+ldPath="$(nix-instantiate --eval --json -E "let pkgs = import <nixpkgs> {}; in $NIXLDPATH" | jq -r .)"
+trueWrapper="$(mktemp)"
+trap "{ rm -f $trueWrapper; }" EXIT
+printf "#!/bin/sh\n%s" "$(which true)" > $trueWrapper
+chmod +x "$trueWrapper"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${ldPath}"
+PROOT_NO_SECCOMP=1 exec proot -b "${trueWrapper}":/sbin/ldconfig "${julia}/bin/julia" "$@"

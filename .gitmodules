@@ -1,3 +1,6 @@
 [submodule "vim/.vim/pack/leo/start/vim-columnmove"]
 	path = vim/.vim/pack/leo/start/vim-columnmove
 	url = https://github.com/machakann/vim-columnmove.git
+[submodule "home-manager"]
+	path = home-manager
+	url = https://github.com/rycee/home-manager

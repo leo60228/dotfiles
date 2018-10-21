@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+SRCDIR="$(mktemp -d)"
+trap "{ rm -rf $SRCDIR; }" EXIT
+MOUNTDIR="/$(basename $(pwd))"
+mkdir -p "$SRCDIR$MOUNTDIR"
+
+XSOCK=/tmp/.X11-unix
+XAUTH=/tmp/.docker.xauth
+touch $XAUTH
+xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
+
+CONTAINER="$(docker run -itd \
+    -v "$SRCDIR:/tmp/pwd:rw" -v "$(pwd):/tmp/pwd$MOUNTDIR:rw"  \
+    leo60228/devkita64 bash "$@")"
+docker attach $CONTAINER
+docker kill $CONTAINER >/dev/null 2>&1 || true
+docker commit $CONTAINER leo60228/devkita64 >/dev/null
+docker rm $CONTAINER >/dev/null

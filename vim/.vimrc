@@ -8,3 +8,5 @@ endw
 set ttimeout ttimeoutlen=50
 set backspace=2
 set ai
+
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab

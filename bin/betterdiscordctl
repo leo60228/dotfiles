@@ -1,0 +1,618 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p bash nodejs -i bash
+
+shopt -s dotglob extglob nullglob
+
+# Constants
+VERSION=1.4.1
+SOURCE="$(readlink -f "${BASH_SOURCE[0]}")"
+GITHUB_URL='https://raw.githubusercontent.com/bb010g/betterdiscordctl/master/betterdiscordctl'
+DISABLE_UPGRADE=
+
+# Options
+cmd=status
+verbosity=0
+scan=/opt
+flavors=('' Canary PTB)
+discord=
+modules=
+bd_repo='https://github.com/rauenzi/BetterDiscordApp'
+bd_repo_branch=stable16
+bd=
+copy_bd=
+global_asar=
+snap=
+flatpak=
+
+# Variables
+flavor=
+core=
+xdg_config="${XDG_CONFIG_DIR:-$HOME/.config}"
+data="${XDG_DATA_HOME:-$HOME/.local/share}/betterdiscordctl"
+
+show_help() {
+  printf 'Usage: %s [COMMAND] [OPTION...]\n\n' "${0##*/}"
+  cat << EOF
+Options:
+  -V, --version                  Display version info and exit
+  -h, --help                     Display this help message and exit
+  -v, --verbose                  Increase verbosity
+  -s, --scan=DIRECTORY           Directory to scan for Discord installation
+                                 (default '/opt')
+  -f, --flavors=FLAVORS          Comma-separated list of Discord flavors
+                                 (default ',Canary,PTB')
+  -d, --discord=DIRECTORY        Use specified Discord directory
+                                 (requires --modules)
+  -m, --modules=DIRECTORY        Use specified Discord modules directory
+  -r, --bd-repo=REPOSITORY       Use specified Git repo for BetterDiscord
+      --bd-repo-branch=BRANCH    Use specified Git branch for BetterDiscord
+                                 (default 'stable16')
+  -b, --betterdiscord=DIRECTORY  Use specified BetterDiscord directory
+  -c, --copy-bd                  Copy BD directory instead of symlinking
+      --global-asar              Use the asar in PATH instead of local
+      --snap                     Use the Snap version of Discord
+      --flatpak                  Use the Flatpak version of Discord
+
+Commands:
+  status (default)               Show the current Discord patch state.
+  install                        Install BetterDiscord.
+  reinstall                      Reinstall BetterDiscord.
+  update                         Update BetterDiscord.
+  uninstall                      Uninstall BetterDiscord.
+  upgrade                        Update betterdiscordctl.
+EOF
+}
+
+verbose() {
+  if (( verbosity >= $1 )); then
+    shift
+    printf '%s\n' "$1"
+  fi
+}
+
+die() {
+  while [ $# -gt 0 ]; do
+    printf '%s\n' "$1" >&2
+    shift
+  done
+  exit 1
+}
+
+die_with_help() {
+  die "$@" 'Use "--help" for more information.'
+}
+
+die_non_empty() {
+  die_with_help "ERROR: \"$1\" requires a non-empty option argument."
+}
+
+
+while :; do
+  case $1 in
+    status|install|reinstall|update|uninstall|upgrade)
+      cmd=$1
+      ;;
+    -V|--version)
+      printf 'betterdiscordctl %s\n' "$VERSION" >&2
+      exit
+      ;;
+    -h|-\?|--help)
+      show_help; exit
+      ;;
+    -v|--verbose)
+      ((++verbosity))
+      ;;
+    -s|--scan)
+      if [ "$2" ]; then scan=$2; shift
+      else die_non_empty '--scan'; fi
+      ;;
+    --scan=?*)
+      scan=${1#*=}
+      ;;
+    --scan=)
+      die_non_empty '--scan'
+      ;;
+    -f|--flavors)
+      if [ "$2" ]; then IFS=',' read -ra flavors <<< "$2"; shift
+      else die_non_empty '--flavors'; fi
+      ;;
+    --flavors=?*)
+      IFS=',' read -ra flavors <<< "${1#*=}"
+      ;;
+    --flavors=)
+      die_non_empty '--flavors'
+      ;;
+    -d|--discord)
+      if [ "$2" ]; then discord=$2; shift
+      else die_non_empty '--discord'; fi
+      ;;
+    --discord=?*)
+      discord=${1#*=}
+      ;;
+    --discord=)
+      die_non_empty '--discord'
+      ;;
+    -m|--modules)
+      if [ "$2" ]; then modules=$2; shift
+      else die_non_empty '--modules'; fi
+      ;;
+    --modules=?*)
+      modules=${1#*=}
+      ;;
+    --modules=)
+      die_non_empty '--modules'
+      ;;
+    --bd-repo-branch)
+      if [ "$2" ]; then bd_repo_branch=$2; shift
+      else die_non_empty '--bd-repo-branch'; fi
+      ;;
+    --bd-repo-branch=?*)
+      bd_repo_branch=${1#*=}
+      ;;
+    --bd-repo-branch=)
+      die_non_empty '--bd-repo-branch'
+      ;;
+    -r|--bd-repo)
+      if [ "$2" ]; then bd_repo=$2; shift
+      else die_non_empty '--bd-repo'; fi
+      ;;
+    --bd-repo=?*)
+      bd_repo=${1#*=}
+      ;;
+    --bd-repo=)
+      die_non_empty '--bd-repo'
+      ;;
+    -b|--betterdiscord)
+      if [ "$2" ]; then bd=$2; shift
+      else die_non_empty '--betterdiscord'; fi
+      ;;
+    --betterdiscord=?*)
+      bd=${1#*=}
+      ;;
+    --betterdiscord=)
+      die_non_empty '--betterdiscord'
+      ;;
+    -c|--copy-bd)
+      copy_bd=yes
+      ;;
+    --global-asar)
+      global_asar=yes
+      ;;
+    --snap)
+      snap=yes
+      copy_bd=yes
+      ;;
+    --flatpak)
+      flatpak=yes
+      copy_bd=yes
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -?*)
+      printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+      ;;
+    *)
+      break
+  esac
+  shift
+done
+
+mkdir -p "$data"
+[ ! -f "$data/bd_map" ] && touch "$data/bd_map"
+
+bdc_find_modules() {
+  local all_modules
+  all_modules=("$discord_config/"+([0-9]).+([0-9]).+([0-9])'/modules')
+  if ((! ${#all_modules[@]})); then
+    die 'ERROR: Discord modules directory not found.'
+  fi
+  modules="${all_modules[-1]}"
+  verbose 1 "V: Found modules in $modules"
+}
+
+if [ "$snap" ]; then
+  desktop_file='/var/lib/snapd/desktop/applications/discord_discord.desktop'
+  if [ -f $desktop_file ]; then
+    discord=$(grep Icon $desktop_file | sed 's/Icon=//g; s/\/discord.png//g')
+  else
+    if [ -d '/snap/discord' ]; then
+      discord=$(readlink -f /snap/discord/current/usr/share/discord)
+    else
+      discord=$(readlink -f /var/lib/snapd/snap/discord/current/usr/share/discord)
+    fi
+  fi
+  verbose 2 "VV: Checking $discord"
+  if [ -d "$discord" ]; then
+    verbose 1 "V: Using Discord at $discord"
+    # shellcheck disable=SC2016
+    # Expansion should happen inside snap's shell.
+    xdg_config="$(snap run --shell discord <<< 'echo "${XDG_CONFIG_HOME:-$SNAP_USER_DATA/.config}"')"
+    discord_config="$xdg_config/discord"
+    bdc_find_modules
+  else
+    die 'ERROR: Discord installation not found.'
+  fi
+fi
+
+if [ "$flatpak" ]; then
+  flatpak_location="$(readlink -f "$(flatpak info com.discordapp.Discord | grep 'Location:' | sed 's/Location: //g')")"
+  discord="$flatpak_location/files/extra"
+  verbose 2 "VV: Checking $discord" >&2
+  if [ -d "$discord" ]; then
+    verbose 1 "V: Using Discord at $discord" >&2
+    discord_config="$HOME/.var/app/com.discordapp.Discord/config/discord"
+    if [ ! -d "$discord_config" ]; then
+      printf 'WARN: Config directory not found for Discord (%s, %s).\n' "$discord" "$discord_config" >&2
+    fi
+    bdc_find_modules
+  else
+    die 'ERROR: Discord installation not found.'
+  fi
+fi
+
+if [ "$cmd" != upgrade ]; then
+  if [ -z "$discord" ]; then
+    verbose 2 "VV: Scanning $scan"
+    for flavor in "${flavors[@]// }"; do
+      verbose 2 "VV: Trying flavor '$flavor'" >&2
+      while read -rd '' discord; do
+        if [ -d "$discord" ] ; then
+          verbose 1 "V: Using Discord at $discord" >&2
+          discord_config="$xdg_config/discord${flavor,,}"
+          if [ ! -d "$discord_config" ]; then
+            printf 'WARN: Config directory not found for Discord %s (%s, %s).\n' "$flavor" "$discord" "$discord_config" >&2
+            continue 2
+          fi
+          if [ -z "$modules" ]; then
+            bdc_find_modules
+          else
+            # --modules
+            if [ ! -d "$modules" ]; then
+              die 'ERROR: Discord modules directory not found.'
+            fi
+          fi
+          break 2
+        fi
+      done < <(find "$scan" -iregex ".*/discord\\(-\\|\\)${flavor}$" -type d -print0)
+      die 'ERROR: Discord installation not found.'
+    done
+  else
+    flavor="$flavors"
+    # --discord and --modules
+    if [ -z "$modules" ]; then
+      die_with_help 'ERROR: "--discord" requires "--modules" to also be set.'
+    fi
+    if [ ! -d "$discord" ]; then
+      die 'ERROR: Discord installation not found.'
+    fi
+    if [ ! -d "$modules" ]; then
+      die 'ERROR: Discord modules directory not found.'
+    fi
+  fi
+  core="$modules/discord_desktop_core"
+  if [ ! -d "$core" ]; then
+    die "ERROR: Directory 'discord_desktop_core' not found in '$(readlink -f "$modules")'"
+  fi
+fi
+
+# Commands
+
+bdc_status() {
+  core_patched=no
+  index_mod=no
+  linked_dir=no
+  linked_repo=no
+  if [ -d "$core/core" ]; then
+    core_patched=yes
+    if [ -h "$core/core/node_modules/betterdiscord" ]; then
+      linked_dir="$(readlink "$core/core/node_modules/betterdiscord")"
+      if pushd "$core/core/node_modules/betterdiscord" >/dev/null; then
+        linked_repo="$(git remote get-url origin 2>/dev/null || printf 'no\n')"
+        # shellcheck disable=SC2164
+        popd >/dev/null
+      else
+        linked_dir="(broken link) $linked_dir"
+      fi
+    fi
+  fi
+  if [ ! -f "$core/index.js" ]; then
+    index_mod='(missing) no'
+  else
+    if ! grep -q 'asar' "$core/index.js"; then
+      index_mod=yes
+    fi
+  fi
+
+  printf 'Discord: %s
+Modules: %s
+Core patched: %s
+Index modified: %s
+Linked core directory: %s
+Linked core repository: %s\n' \
+    "$discord" "$modules" "$core_patched" "$index_mod" "$linked_dir" "$linked_repo"
+}
+
+bdc_install() {
+  if [ -d "$core/core" ]; then
+    die 'ERROR: Already installed.'
+  fi
+
+  bd_patch
+  bd_loader
+
+  printf 'Installed. (Restart Discord if necessary.)\n' >&2
+}
+
+bdc_reinstall() {
+  if [ ! -d "$core/core" ]; then
+    printf 'Not installed.\n' >&2
+    exit 1
+  fi
+
+  bdc_kill
+
+  verbose 1 'V: Removing old core folder.' >&2
+  rm -rf "$core/core"
+
+  bd_patch
+  bd_loader
+
+  printf 'Reinstalled.\n' >&2
+}
+
+bdc_update() {
+  if [ ! -d "$core/core" ]; then
+    printf 'Not installed.\n' >&2
+    exit 1
+  fi
+
+  if ! pushd "$core/core/node_modules/betterdiscord" >/dev/null; then
+    if [ -h "$core/core/node_modules/betterdiscord" ]; then
+      die 'ERROR: Core BetterDiscord symbolic link is broken.'
+    else
+      die 'ERROR: Core BetterDiscord location is not a directory.'
+    fi
+  fi
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    printf 'Updating Git repository...\n' >&2
+    git fetch origin
+    git reset --hard "origin/$bd_repo_branch"
+  else
+    printf 'WARN: No Git repository found.\n' >&2
+  fi
+  # shellcheck disable=SC2164
+  popd >/dev/null
+}
+
+bdc_uninstall() {
+  if [ ! -d "$core/core" ]; then
+    printf 'Not installed.\n' >&2
+    exit 1
+  fi
+
+  bdc_kill
+  bd_unpatch
+
+  # Remove managed BD repo if applicable
+  bd_n=$(bd_map_get_dir "$discord" | bd_map_entry_n)
+  bd_map_remove "$discord"
+  if [ -z "$(bd_map_get_n "$bd_n")" ]; then
+    verbose 2 "VV: Removing $data/bd/$bd_n"
+    rm -rf "$data/bd/$bd_n"
+  fi
+
+  # Clean up legacy cruft
+  if [ -d "$discord/resources/app" ]; then
+    printf 'Removing legacy app directory...\n' >&2
+    rm -r "$discord/resources/app"
+  fi
+
+  printf 'Uninstalled.\n' >&2
+}
+
+bdc_upgrade() {
+  if [ "$DISABLE_UPGRADE" ]; then
+    die 'ERROR: Upgrading has been disabled.' \
+        'If you installed this from a package, its maintainer should keep it up to date.'
+  fi
+
+  github_version="$(curl -sN "$GITHUB_URL" | grep 'VERSION=' -m1 | cut -d '=' -f2)"
+  if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+    die "ERROR: GitHub couldn't be reached to check the version."
+  fi
+  verbose 2 "VV: Script location: $SOURCE" >&2
+  verbose 1 "V: Local version: $VERSION" >&2
+  verbose 1 "V: GitHub version: $github_version" >&2
+  semver_diff="$(semver_compare "$github_version" "$VERSION")"
+  if [[ $semver_diff -eq 1 ]]; then
+    printf 'Downloading betterdiscordctl...\n' >&2
+    if curl -Sso "$SOURCE" "$GITHUB_URL"; then
+      printf 'Successfully updated betterdiscordctl.\n' >&2
+    else
+      die 'ERROR: Failed to update betterdiscordctl.' \
+          'You may want to rerun this command with sudo.'
+    fi
+  else
+    if [[ $semver_diff -eq 0 ]]; then
+      printf 'betterdiscordctl is already the latest version (%s).\n' "$VERSION" >&2
+    else
+      printf 'Local version (%s) is higher than GitHub version (%s).\n' "$VERSION" "$github_version" >&2
+    fi
+  fi
+}
+
+# Implementation functions
+
+bdc_asar() {
+  if [ "$global_asar" ]; then
+    asar "$@"
+  else
+    mkdir -p "$data/asar" || die "Couldn't create $data/asar."
+    # shellcheck disable=SC2164
+    pushd "$data/asar" >/dev/null
+    if [ ! -d "$data/asar/node_modules" ]; then
+      printf '{"devDependencies":{"asar": "*"}}\n' > package.json
+      printf 'Installing asar...\n' >&2
+      npm install
+    else
+      printf 'Updating asar...\n' >&2
+      npm update
+    fi
+    # shellcheck disable=SC2164
+    popd >/dev/null
+    "$data/asar/node_modules/asar/bin/asar.js" "$@"
+  fi
+}
+
+bdc_kill() {
+  local process_name
+  if [ -z "$flavor" ]; then
+    process_name='Discord'
+  else
+    if [ "${flavor,,}" == 'ptb' ]; then
+      process_name='DiscordPTB'
+    else
+      process_name='DiscordCanary'
+    fi
+  fi
+  printf 'Killing %s processes...\n' "$process_name" >&2
+  pkill -ex -SIGKILL "$(ps ax | awk "BEGIN{IGNORECASE=1}/discord(-){0,1}${flavor}/{print \$5}" | rev | \
+                        cut -d '/' -f1 | rev | grep -iE "^discord(-){0,1}${flavor}$" | head -1)" 2>/dev/null
+}
+
+bd_loader() {
+  if [ ! "$bd" ]; then
+    bd="$data/bd/$(bd_map_add "$discord" "$bd_repo")"
+    if [ ! -d "$bd" ]; then
+      printf 'Cloning %s...\n' "$bd_repo" >&2
+      git clone "$bd_repo" -b "$bd_repo_branch" --single-branch "$bd"
+    fi
+  fi
+
+  if [ "$copy_bd" ]; then
+    verbose 1 'V: Copying core loader...' >&2
+    cp -r "$bd" "$core/core/node_modules/betterdiscord"
+  else
+    verbose 1 'V: Linking core loader...' >&2
+    ln -s "$bd" "$core/core/node_modules/betterdiscord"
+  fi
+}
+
+bd_patch() {
+  verbose 1 'V: Unpacking core asar...' >&2
+  bdc_asar e "$core/core.asar" "$core/core"
+
+  if [ ! -d "$core/core" ]; then
+    die 'ERROR: Failed to unpack core asar.' \
+        'You may want to install or update nodejs and npm.'
+  fi
+
+  verbose 1 'V: Patching core entry...' >&2
+  sed -i "$core/index.js" -e "s/core\\.asar'/core'/g"
+  sed -i "$core/core/app/mainScreen.js" \
+      -e "/use strict/a var _betterDiscord = require('betterdiscord');\\nvar _betterDiscord2;" \
+      -e "/mainWindow = new/a \\  _betterDiscord2 = new _betterDiscord.BetterDiscord(mainWindow);" \
+      -e "/nodeIntegration: false/d"
+}
+
+bd_unpatch() {
+  verbose 1 'V: Removing core folder from modules...' >&2
+  sed "s/core'/core.asar'/g" -i "$core/index.js"
+  rm -rf "$core/core"
+}
+
+bd_map_entry_n() {
+  sed 's/^.*\t\t.*\t\(.*\)$/\1/' "$@"
+}
+
+bd_map_fresh() {
+  verbose 2 'VV: Generating fresh bd_map number...' >&2
+  bd_map_entry_n "$data/bd_map" | sort | awk 'BEGIN {max=-1} NF != 0 {if ($1>max+1) {exit}; max=$1} END {print max+1}'
+}
+
+bd_map_add() {
+  entry="$(bd_map_get_repo "$2")"
+  if [ "$entry" ]; then
+    num=$(head -n1 <<< "$entry" | bd_map_entry_n)
+  else
+    num=$(bd_map_fresh)
+  fi
+  printf '%s\t\t%s\t%s\n' "$1" "$2" "$num" >> "$data/bd_map"
+  printf '%s\n' "$num"
+}
+
+bd_map_get_dir() {
+  grep -F "$1"$'\t\t' "$data/bd_map"
+}
+
+bd_map_get_repo() {
+  grep -F $'\t\t'"$1"$'\t' "$data/bd_map"
+}
+
+bd_map_get_n() {
+  grep $'\t'"$1\$" "$data/bd_map"
+}
+
+bd_map_remove() {
+  sed -i "$data/bd_map" -e "\\%$1\\t\\t%d"
+}
+
+# Based on https://gist.github.com/Ariel-Rodriguez/9e3c2163f4644d7a389759b224bfe7f3
+# by Ariel Rodriguez, licensed under MIT
+# Bash-friendly rewrite by bb010g
+semver_compare() {
+  local version_a version_b pr_a pr_b i
+  # strip word "v" and extract first subset version (x.y.z from x.y.z-foo.n)
+  version_a=${1#v}; version_a=${version_a%%-*}
+  version_b=${2#v}; version_b=${version_b%%-*}
+
+  if [ "$version_a" \= "$version_b" ]
+  then
+    # check for pre-release
+    # extract pre-release (-foo.n from x.y.z-foo.n)
+    pr_a=${1#*-}; pr_a=${pr_a%%-*}
+    pr_b=${2#*-}; pr_b=${pr_b%%-*}
+    # 0 when A is equal to B
+    [ "$pr_a" \= "$pr_b" ] && echo 0 && return 0
+    # 1 when A is not pre-release or (pre-release A exists and is greater than B's pre-release)
+    [ -z "$pr_a" ] || [ "$pr_a" \> "$pr_b" ] && [ -n "$pr_b" ] && echo 1 && return 0
+    # -1 when A is lower than B
+    echo -1 && return 0
+  fi
+  IFS=. read -ra arr_version_a <<< "$version_a"
+  IFS=. read -ra arr_version_b <<< "$version_b"
+
+  i=0
+  for i in "${!arr_version_a[@]}"; do
+    if [[ "${arr_version_a[i]}" != "${arr_version_b[i]}" ]]; then break; fi
+  done
+  [[ "${arr_version_a[i]}" -gt "${arr_version_b[i]}" ]] && echo 1 || echo -1
+}
+
+# Run command
+
+case "$cmd" in
+  status)
+    bdc_status
+    ;;
+  install)
+    bdc_install
+    ;;
+  reinstall)
+    bdc_reinstall
+    ;;
+  update)
+    bdc_update
+    ;;
+  uninstall)
+    bdc_uninstall
+    ;;
+  upgrade)
+    bdc_upgrade
+    ;;
+  *)
+    die "ERROR: Unknown command: $cmd"
+    ;;
+esac

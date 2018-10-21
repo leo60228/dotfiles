@@ -1,0 +1,8 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p julia_10 jq bash -i bash
+set -e
+
+NIXLDPATH='"${pkgs.imagemagickBig}/lib:${pkgs.cairo}/lib:${pkgs.gettext}/lib:${pkgs.pango.out}/lib:${pkgs.glib.out}/lib:${pkgs.gtk3}/lib:${pkgs.gdk_pixbuf}/lib:${pkgs.gzip}/lib:${pkgs.zlib}/lib"'
+ldPath="$(nix-instantiate --eval --json -E "let pkgs = import <nixpkgs> {}; in $NIXLDPATH" | jq -r .)"
+
+LD_LIBRARY_PATH="${ldPath}" exec julia "$@"

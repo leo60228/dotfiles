@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd /home/leo60228/Programming/Ahorn
+exec julia06 ahorn.jl "$@"
