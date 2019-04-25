@@ -4,3 +4,10 @@
 [submodule "home-manager"]
 	path = home-manager
 	url = https://github.com/rycee/home-manager
+[submodule "libstrangle"]
+	path = libstrangle
+	url = https://gitlab.com/torkel104/libstrangle
+	branch = master
+[submodule "pass-rotate"]
+	path = pass-rotate
+	url = https://github.com/ddevault/pass-rotate.git

@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -p julia_06 jq bash proot gsettings_desktop_schemas -i bash
+#!nix-shell -I nixpkgs=channel:nixos-18.09 -p julia_06 jq bash proot gsettings_desktop_schemas imagemagickBig cairo gettext pango glib gtk3 gdk_pixbuf gzip zlib gcc-unwrapped.lib -i bash
 set -e
 
 GTK3_SCHEMA=($(nix path-info nixpkgs.gtk3)/share/gsettings-schemas/*)
@@ -7,9 +7,10 @@ GSETTINGS_SCHEMA=($(nix path-info nixpkgs.gsettings_desktop_schemas)/share/gsett
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:${GSETTINGS_SCHEMA[@]}:${GTK3_SCHEMA[@]}"
 
 # comment out once packaged
-NIXLDPATH='"${pkgs.imagemagickBig}/lib:${pkgs.cairo}/lib:${pkgs.gettext}/lib:${pkgs.pango.out}/lib:${pkgs.glib.out}/lib:${pkgs.gtk3}/lib:${pkgs.gdk_pixbuf}/lib:${pkgs.gzip}/lib:${pkgs.zlib}/lib:${pkgs.gcc-unwrapped.lib}/lib"'
+NIXLDPATH='[ imagemagickBig cairo gettext pango.out glib.out gtk3 gdk_pixbuf gzip zlib gcc-unwrapped.lib ]'
 julia="$(dirname $(which julia))/.."
-ldPath="$(nix-instantiate --eval --json -E "let pkgs = import <nixpkgs> {}; in $NIXLDPATH" | jq -r .)"
+NIXCODE="with import (builtins.fetchTarball channel:nixos-18.09) {}; lib.makeLibraryPath [ imagemagickBig cairo gettext pango glib gtk3 gdk_pixbuf gzip zlib gcc-unwrapped.lib ]"
+ldPath="$(nix eval --raw "($NIXCODE)")"
 trueWrapper="$(mktemp)"
 trap "{ rm -f $trueWrapper; }" EXIT
 printf "#!/bin/sh\n%s" "$(which true)" > $trueWrapper

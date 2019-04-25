@@ -1,4 +1,4 @@
-pkgs: pkgs.runCommand "leobin" {} ''
+{pkgs}: pkgs.runCommand "leobin" {} ''
   mkdir -p $out/bin
   cp -r ${./bin}/* $out/bin
 ''

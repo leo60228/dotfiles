@@ -1,10 +1,18 @@
-path:
-
 { pkgs, ... }:
 
-let gmusicproxy = import "${path}/gmusicproxy.nix";
+let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    gnupg
+    (hiPrio gtk2)
+    gtk3
+    (lowPrio llvmPackages_39.clang-unwrapped)
+    latest.rustChannels.nightly.rust
+    libreoffice
+    tmux
+    screen
+    irssi
+    rclone
     gist
     gitAndTools.hub
     appimage-run
@@ -13,12 +21,13 @@ in {
     steam-run-native
     vscode
     discord
+    xclip
+    xsel
     gimp
     google-musicmanager
     symbola
     kitty
-    (python36.withPackages (ps: with ps; [ pyusb ]))
-    python27
+    (python36.withPackages (ps: with ps; [ pyusb neovim ]))
     #(obs-studio.override {
     #  ffmpeg = ffmpeg-full.override {
     #    inherit nvidia-video-sdk;
@@ -41,17 +50,16 @@ in {
     vimHugeX
     openscad
     dpkg
-    binutils-unwrapped
-    slic3r-prusa3d
+    (lib.setPrio (-20) binutils-unwrapped)
+    #slic3r-prusa3d
     sdcc
     mgba
     filezilla
-    rustup
     nasm
     grub2
     xorriso
     qemu
-    google-chrome-beta
+    google-chrome
     gitAndTools.git-annex
     gitAndTools.gitFull
     mr
@@ -63,18 +71,30 @@ in {
     tigervnc
     usbutils
     #dotnetPackages.Nuget
-    wine
+    wineWowPackages.unstable
     gnumake
-    gcc
+    (hiPrio gcc)
     meteor
     hplip
     virtualbox
     dotnet-sdk
     gmusicproxy
+    mono5
     #julia_06
-    (pkgs.hiPrio (import "${path}/bin.nix" pkgs))
+    (pkgs.hiPrio (callPackage ./bin.nix {}))
     (callPackage ./fuseenano.nix {})
+    (python27.withPackages (ps: with ps; [ neovim ]))
+    (import ./julia-oldpkgs.nix {version = "06";})
+    (import ./julia-oldpkgs.nix {version = "07";})
+    (import ./julia-oldpkgs.nix {version = "11";})
   ];
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    enableExtraSocket = true;
+    grabKeyboardAndMouse = false;
+  };
 
   programs.home-manager.enable = true;
   programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
@@ -98,7 +118,14 @@ in {
 
   programs.bash.enable = true;
   programs.bash.initExtra = ''
+    [[ $- != *i* ]] && return
+
+    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+      exec tmux -u
+    fi
+
     export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin"
+    export EDITOR=vim
 
     export NIX_REMOTE=daemon
 
@@ -107,9 +134,12 @@ in {
       export KEYCHAIN_RAN=1
     fi
 
-    export GITHUB_TOKEN="2f1939ec3e70118cef6b6894de522015036d873b"
     eval $(hub alias -s)
   '';
+
+  programs.bash.sessionVariables = {
+    EDITOR = "vim";
+  };
 
   xdg.configFile."kitty/kitty.conf".text = ''
     remember_window_size no
@@ -119,11 +149,24 @@ in {
 
   home.file.".mrconfig".source = ./mrconfig;
 
+  home.file.".tmux.conf".text = ''
+    set -g mouse on
+    set-window-option -g mode-keys vi
+    bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
+
+    # Plugins
+    set -g @plugin 'tmux-plugins/tpm'
+    set -g @plugin 'tmux-plugins/tmux-sensible'
+
+    # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+    run -b '~/.tmux/plugins/tpm/tpm'
+  '';
+
   home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
   home.file.".frei0r-1/lib".recursive = true;
 
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
-  nixpkgs.overlays = map (e: import "${path}/nixpkgs/${e}") (builtins.attrNames (builtins.readDir ./nixpkgs));
+  nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
   nixpkgs.config.allowUnfree = true;
 }

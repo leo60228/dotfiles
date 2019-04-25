@@ -1,0 +1,56 @@
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
+
+set ttimeout ttimeoutlen=50
+set backspace=2
+set ai
+let mapleader = ","
+set pyxversion=2
+set completeopt-=preview
+
+filetype plugin on
+
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+au FileType cs setl sw=4
+au FileType cs call deoplete#enable()
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+let g:OmniSharp_server_path = '/home/leo60228/Programming/omnisharp/result/bin/omnisharp'
+let g:OmniSharp_timeout = 5
+let g:OmniSharp_want_snippet = 1
+set completeopt=longest,menuone
+
+nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
+nnoremap <Leader>ss :OmniSharpStartServer<CR>
+nnoremap <Leader>sp :OmniSharpStopServer<CR>
+nnoremap <Leader>us :OmniSharpFixUsings<CR>
+
+call plug#begin('~/.vim/plugged')
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'w0rp/ale'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-sleuth'
+call plug#end()
+
+let g:ale_linters = {
+\ 'cs': ['OmniSharp']
+\}
+
+nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
