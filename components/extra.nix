@@ -4,13 +4,7 @@ lib.makeComponent "extra"
   opts = {};
 
   config = {
-    security.sudo.extraRules = [ {
-      commands = [ {
-        command = "/run/current-system/sw/bin/mount";
-        options = [ "NOPASSWD" ];
-      } ];
-      users = [ "leo60228" ];
-    } ];
+    security.sudo.wheelNeedsPassword = false;
     
     hardware.enableAllFirmware = true;
     
