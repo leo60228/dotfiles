@@ -231,7 +231,10 @@ in {
 
     xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
-  xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
+    home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5";
+    home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
+      $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target
+    ''; # dirty hack
 
     nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
     nixpkgs.config.allowUnfree = true;
