@@ -7,5 +7,7 @@ lib.makeComponent "docker"
     virtualisation.docker.enable = true;
     virtualisation.docker.enableOnBoot = true;
     virtualisation.docker.package = pkgs.docker-edge;
+
+    users.extraUsers.leo60228.extraGroups = [ "docker" ];
   };
 })
