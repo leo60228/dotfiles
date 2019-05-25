@@ -18,9 +18,18 @@ lib.makeComponent "vfio"
       ]
     '';
     environment.systemPackages = [ pkgs.virtmanager pkgs.OVMF ];
-    boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+    boot.kernelParams = [ "amd_iommu=on" "iommu=pt" ];
     boot.extraModprobeConfig = ''
       options vfio-pci ids=10de:1c02,10de:10f1
+    '';
+    boot.postBootCommands = ''
+      DEVS="0000:01:00.0 0000:01:00.1"
+
+      for DEV in $DEVS; do
+        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+      done
+
+      modprobe -i vfio-pci
     '';
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
