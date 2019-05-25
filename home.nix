@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    firefox
     (makeDesktopItem rec {
       name = "nintendo_switch";
       exec = "switch";
@@ -68,7 +69,6 @@ in {
     grub2
     xorriso
     qemu
-    google-chrome
     gitAndTools.git-annex
     gitAndTools.gitFull
     mr
