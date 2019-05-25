@@ -1,20 +1,11 @@
 let lib = import ../lib; in
 lib.makeComponent "gui"
 ({cfg, pkgs, lib, ...}: with lib; {
-  opts = {
-    firefox = mkOption {
-      default = false;
-      type = types.bool;
-    };
-  };
+  opts = {};
 
   config = {
     # Use PulseAudio
     hardware.pulseaudio.enable = true;
-    
-    environment.systemPackages = with pkgs; [
-      (if cfg.firefox then firefox else google-chrome) 
-    ];
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
