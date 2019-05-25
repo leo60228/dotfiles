@@ -1,0 +1,16 @@
+#!/usr/bin/env -S bash -e
+function connect_pro {
+  grep -l 057e /sys/bus/usb/devices/*/idVendor | sed 's;/idVendor$;;' | \
+    sudo xargs -I {} bash -c 'echo 1 > {}/authorized' # reconnect pro controller
+}
+
+trap connect_pro EXIT
+
+# disconnect pro controller data and keep charging
+grep -l 057e /sys/bus/usb/devices/*/idVendor | sed 's;/idVendor$;;' | \
+  sudo xargs -I {} bash -c 'echo 0 > {}/authorized'
+
+mpv --osd-level=0 --video-osd=no --no-osc --profile=low-latency \
+  --audio-file=av://alsa:hw:3,0 av://v4l2:/dev/video2 --video-sync=display-adrop \
+  --no-initial-audio-sync --vo=gpu --gpu-api=vulkan --untimed \
+  --title='Nintendo Switch' # display switch

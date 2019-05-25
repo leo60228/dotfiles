@@ -3,6 +3,15 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    (makeDesktopItem rec {
+      name = "nintendo_switch";
+      exec = "switch";
+      icon = ./files/switch.svg;
+      desktopName = "Nintendo Switch";
+      genericName = desktopName;
+      categories = "Games;";
+    })
+    mpv
     gnupg
     (hiPrio gtk2)
     gtk3
