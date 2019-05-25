@@ -4,6 +4,7 @@ let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
     firefox
+    (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
       exec = "switch";
@@ -108,6 +109,8 @@ in {
   programs.home-manager.enable = true;
   programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
 
+  systemd.user.startServices = true;
+
   systemd.user.services.gmusicproxy = {
     Unit = {
       Description = "play music proxy";
@@ -122,6 +125,36 @@ in {
 
     Install = {
       WantedBy = [ "network-online.target" ];
+    };
+  };
+
+  systemd.user.services.twibd = {
+    Unit = {
+      Description = "Twili Bridge Daemon";
+      Requires = [ "twibd.socket" ];
+    };
+
+    Service = {
+      Type = "notify";
+      NotifyAccess = "all";
+      ExecStart = "${pkgs.callPackage ./twib.nix {}}/bin/twibd --systemd";
+      StandardError = "journal";
+    };
+  };
+
+  systemd.user.sockets.twibd = {
+    Unit = {
+      Description = "Twili Bridge Daemon";
+    };
+
+    Socket = {
+      ListenStream = "/run/user/1000/twibd.sock";
+      ListenMode = "0666";
+      Accept = "no";
+    };
+
+    Install = {
+      WantedBy = [ "sockets.target" ];
     };
   };
 
@@ -148,6 +181,7 @@ in {
 
   programs.bash.sessionVariables = {
     EDITOR = "vim";
+    TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
   };
 
   xdg.configFile."kitty/kitty.conf".text = ''
