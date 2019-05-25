@@ -33,7 +33,10 @@ in {
     (hiPrio gtk2)
     gtk3
     (lowPrio llvmPackages_39.clang-unwrapped)
-    latest.rustChannels.nightly.rust
+    (rustChannelOf {
+      date = "2019-05-11";
+      channel = "nightly";
+    }).rust
     libreoffice
     tmux
     screen
