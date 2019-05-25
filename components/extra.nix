@@ -43,5 +43,8 @@ lib.makeComponent "extra"
       SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}=="7321", MODE="0666"
       SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="8b00", MODE="0666"
     '';
+
+    # tmpfs
+    boot.tmpOnTmpfs = true;
   };
 })

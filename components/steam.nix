@@ -7,9 +7,7 @@ lib.makeComponent "steam"
     # Steam
     hardware.opengl.driSupport32Bit = true;
     hardware.pulseaudio.support32Bit = true;
-
-    # tmpfs
-    boot.tmpOnTmpfs = true;
+    environment.systemPackages = [ pkgs.steam ];
     
     services.udev.extraRules = ''
   # This rule is needed for basic functionality of the controller in Steam and keyboard/mouse emulation
