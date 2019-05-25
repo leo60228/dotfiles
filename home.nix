@@ -15,6 +15,20 @@ in {
       categories = "Games;";
     })
     mpv
+    cmake
+    pkgconfig
+    libGL
+    xorg.libXi
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libX11
+    xorg.xorgproto
+    xorg.libxcb
+    xorg.libXi.dev
+    xorg.libXrandr.dev
+    xorg.libXcursor.dev
+    xorg.libX11.dev
+    xorg.libxcb.dev
     gnupg
     (hiPrio gtk2)
     gtk3
