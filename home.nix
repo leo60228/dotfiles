@@ -200,6 +200,8 @@ in {
   programs.bash.sessionVariables = {
     EDITOR = "vim";
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
+    LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
+    PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
   };
 
   xdg.configFile."kitty/kitty.conf".text = ''
