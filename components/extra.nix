@@ -5,6 +5,8 @@ lib.makeComponent "extra"
 
   config = {
     security.sudo.wheelNeedsPassword = false;
+
+    services.pcscd.enable = true;
     
     hardware.enableAllFirmware = true;
     
