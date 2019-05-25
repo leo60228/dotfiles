@@ -204,6 +204,12 @@ in {
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
   };
 
+  programs.bash.shellAliases."xargo-nx" =
+    ''docker run --rm -it -v "$(pwd):/workdir" '' +
+    ''-v "/run/user/1000/twibd.sock:/var/run/twibd.sock" '' +
+    ''-v "/home/leo60228/.cargo/git/:/root/.cargo/git/" '' +
+    ''-v "/home/leo60228/.cargo/registry/:/root/.cargo/registry/" '' +
+    ''rustyhorizon/docker:latest xargo'';
 
     xdg.configFile."kitty/kitty.conf".text = ''
       remember_window_size no
