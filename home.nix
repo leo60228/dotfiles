@@ -204,32 +204,35 @@ in {
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
   };
 
-  xdg.configFile."kitty/kitty.conf".text = ''
-    remember_window_size no
-    initial_window_width 1700
-    initial_window_height 1100
-  '';
 
-  home.file.".mrconfig".source = ./mrconfig;
+    xdg.configFile."kitty/kitty.conf".text = ''
+      remember_window_size no
+      initial_window_width 1700
+      initial_window_height 1100
+    '';
 
-  home.file.".tmux.conf".text = ''
-    set -g mouse on
-    set-window-option -g mode-keys vi
-    bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
+    home.file.".mrconfig".source = ./mrconfig;
+
+    home.file.".tmux.conf".text = ''
+      set -g mouse on
+      set-window-option -g mode-keys vi
+      bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
 
     # Plugins
-    set -g @plugin 'tmux-plugins/tpm'
-    set -g @plugin 'tmux-plugins/tmux-sensible'
+      set -g @plugin 'tmux-plugins/tpm'
+      set -g @plugin 'tmux-plugins/tmux-sensible'
 
     # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-    run -b '~/.tmux/plugins/tpm/tpm'
-  '';
+      run -b '~/.tmux/plugins/tpm/tpm'
+    '';
 
-  home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
-  home.file.".frei0r-1/lib".recursive = true;
+    home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
+    home.file.".frei0r-1/lib".recursive = true;
+
+    xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
-  nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
-  nixpkgs.config.allowUnfree = true;
-}
+    nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
+    nixpkgs.config.allowUnfree = true;
+  }
