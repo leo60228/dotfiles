@@ -1,0 +1,85 @@
+" Misc settings {{{
+set nocp
+set history=50                  " keep 50 lines of command line history
+set ruler                       " show the cursor position all the time
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.png,.jpg
+set backspace=indent,eol,start  " more powerful backspacing
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab ai
+set relativenumber wrap shiftround
+let mapleader = ","
+let localleader = "\\"
+set encoding=utf-8
+set statusline=%f\ (%y)
+set pastetoggle=<f5>
+set foldlevelstart=0
+set hlsearch incsearch
+
+set background=dark
+colorscheme solarized
+
+syntax on
+filetype plugin indent on
+" }}}
+
+" Restore cursor {{{
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+" }}}
+
+" Formatting {{{
+
+" tabs
+highlight SpecialKey ctermfg=1
+set list
+set listchars=tab:T>,trail:◌
+" }}}
+
+" Mappings {{{
+noremap - ddp
+noremap _ ddkP
+inoremap <c-d> <esc>"_ddi
+inoremap <c-u> <esc>maviwU`aa
+nnoremap <c-u> maviwU`a
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap H ^
+nnoremap L $
+inoremap jk <esc>
+inoremap <esc> <nop>
+nnoremap <leader>w <c-w>
+onoremap p i(
+nnoremap <leader>c :nohlsearch<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cN :cprevious<cr>
+" }}}
+
+" Plugin settings {{{
+let g:hardtime_allow_different_key = 1
+let g:hardtime_default_on = 1
+let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+" }}}
+
+" Filetype commands {{{
+augroup vimrc
+    autocmd!
+
+    autocmd FileType rust nnoremap <buffer> <localleader>c I// <esc>
+    autocmd FileType vim nnoremap <buffer> <localleader>c I" <esc>
+
+    autocmd FileType rust iabbrev <buffer> retu return
+    autocmd FileType rust iabbrev <buffer> return <nop>
+
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}

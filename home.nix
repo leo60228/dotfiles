@@ -76,7 +76,7 @@ in {
     #dolphinEmuMaster
     openalSoft
     multimc
-    vimHugeX
+    (callPackage ./vim {})
     openscad
     dpkg
     (lib.setPrio (-20) binutils-unwrapped)
