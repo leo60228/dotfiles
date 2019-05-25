@@ -29,6 +29,7 @@ in {
     xorg.libXcursor.dev
     xorg.libX11.dev
     xorg.libxcb.dev
+    youtube-dl
     gnupg
     (hiPrio gtk2)
     gtk3
