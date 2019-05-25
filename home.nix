@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
