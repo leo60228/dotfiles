@@ -5,6 +5,8 @@
       [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ];
 
+    environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
+
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
