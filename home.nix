@@ -221,16 +221,11 @@ in {
 
   programs.bash.sessionVariables = {
     EDITOR = "vim";
-<<<<<<< HEAD
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
-=======
     CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk_pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
-    LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     LIBCLANG_PATH = "${pkgs.llvmPackages_39.clang-unwrapped.lib}/lib";
-    PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig/";
->>>>>>> Add accidentally removed libraries and applications
   };
 
   programs.bash.shellAliases."xargo-nx" =
@@ -258,7 +253,7 @@ in {
       set -g @plugin 'tmux-plugins/tmux-sensible'
 
     # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-      run -b '~/.tmux/plugins/tpm/tpm'
+    #run -b '~/.tmux/plugins/tpm/tpm'
     '';
 
     home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
