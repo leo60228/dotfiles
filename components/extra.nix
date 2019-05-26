@@ -4,6 +4,8 @@ lib.makeComponent "extra"
   opts = {};
 
   config = {
+    services.openssh.forwardX11 = true;
+
     security.sudo.wheelNeedsPassword = false;
 
     services.pcscd.enable = true;
