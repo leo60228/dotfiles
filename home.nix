@@ -5,6 +5,7 @@ in {
   home.packages = with pkgs; [
     openssl.out
     openssl.dev
+    carnix
     nix-prefetch-git
     pandoc
     firefox
