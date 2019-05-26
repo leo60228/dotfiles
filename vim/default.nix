@@ -1,4 +1,4 @@
-{ vim_configurable, python3, vimPlugins, lib }:
+{ vim_configurable, python3, vimPlugins, callPackage, lib }:
 let ftPlugins = with vimPlugins; [
         { plug = vim-nix; ft = "nix"; }
     ];
@@ -19,7 +19,7 @@ in (vim_configurable.override {
             ) plugins;
 
         packages.leovim = with vimPlugins; {
-            start = [ vim-hardtime vim-colors-solarized ];
+            start = [ vim-hardtime (callPackage ./solarized8.nix {}) ];
 
             opt = []
                 ++ map (x: x.plug) ftPlugins;

@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    nix-prefetch-git
     pandoc
     firefox
     (callPackage ./twib.nix {})
@@ -103,7 +104,9 @@ in {
     #dolphinEmuMaster
     openalSoft
     multimc
-    (callPackage ./vim {})
+    (callPackage ./vim {
+      vimPlugins = (import <unstable> {}).vimPlugins;
+    })
     openscad
     dpkg
     (lib.setPrio (-20) binutils-unwrapped)
@@ -208,7 +211,7 @@ in {
     [[ $- != *i* ]] && return
 
     if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-      exec tmux -u
+      exec tmux -u -2
     fi
 
     export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin"
@@ -252,8 +255,9 @@ in {
       set -g @plugin 'tmux-plugins/tpm'
       set -g @plugin 'tmux-plugins/tmux-sensible'
 
-    # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-    #run -b '~/.tmux/plugins/tpm/tpm'
+    # Colors
+      set -s default-terminal "xterm-256color"
+      set-option -sa terminal-overrides ",xterm-256color:Tc"
     '';
 
     home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
