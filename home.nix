@@ -104,7 +104,7 @@ in {
     #dolphinEmuMaster
     openalSoft
     multimc
-    (callPackage ./vim {
+    (callPackage ./neovim {
       vimPlugins = (import <unstable> {}).vimPlugins;
     })
     openscad
@@ -258,6 +258,8 @@ in {
     # Colors
       set -s default-terminal "xterm-256color"
       set-option -sa terminal-overrides ",xterm-256color:Tc"
+    # Misc
+      set-option -sg escape-time 10
     '';
 
     home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
