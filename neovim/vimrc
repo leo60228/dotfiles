@@ -55,8 +55,8 @@ noremap _ ddkP
 inoremap <c-d> <esc>"_ddi
 inoremap <c-u> <esc>maviwU`aa
 nnoremap <c-u> maviwU`a
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $HOME/Dotfiles/neovim/vimrc<cr>
+nnoremap <leader>sv :source $HOME/Dotfiles/neovim/vimrc<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
@@ -79,6 +79,7 @@ augroup vimrc
     autocmd!
 
     autocmd FileType rust nnoremap <buffer> <localleader>c I// <esc>
+    autocmd FileType rust nnoremap <buffer> <localleader>sr ^O#[serde(rename = "")]<esc>^ci"
     autocmd FileType vim nnoremap <buffer> <localleader>c I" <esc>
 
     autocmd FileType rust iabbrev <buffer> retu return
