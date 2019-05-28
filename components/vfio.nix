@@ -14,7 +14,9 @@ lib.makeComponent "vfio"
           "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
           "/dev/rtc","/dev/hpet",
           "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
-          "/dev/input/by-id/usb-LEOPOLD_Mini_Keyboard-event-kbd"
+          "/dev/input/event_m570",
+          "/dev/input/by-id/usb-LEOPOLD_Mini_Keyboard-event-kbd",
+          "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd",
       ]
     '';
     environment.systemPackages = [ pkgs.virtmanager pkgs.OVMF ];
