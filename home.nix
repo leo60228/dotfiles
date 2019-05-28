@@ -213,7 +213,7 @@ in {
   programs.bash.initExtra = ''
     [[ $- != *i* ]] && return
 
-    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [[ "$TERM" == "xterm-256color" ]] ; then
       exec tmux -u -2
     fi
 
@@ -268,6 +268,9 @@ in {
 
     home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
     home.file.".frei0r-1/lib".recursive = true;
+
+    home.file.".terminfo".source = ./files/terminfo;
+    home.file.".terminfo".recursive = true;
 
     xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
