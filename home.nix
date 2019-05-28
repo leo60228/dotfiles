@@ -260,8 +260,12 @@ in {
       set -g @plugin 'tmux-plugins/tmux-sensible'
 
     # Colors
-      set -s default-terminal "xterm-256color"
-      set-option -sa terminal-overrides ",xterm-256color:Tc"
+      if-shell -b '[[ "$TERM" == "xterm-256color" ]]' " \
+      set -s default-terminal \"xterm-256color\" \
+      set-option -sa terminal-overrides \",xterm-256color:Tc\" "
+      if-shell -b '[[ "$TERM" != "xterm-256color" ]]' " \
+      set -s default-terminal \"xterm-256color\" \
+      set-environment -g TMUX_FORCE_NO_TRUECOLOR 1 "
     # Misc
       set-option -sg escape-time 10
     '';
