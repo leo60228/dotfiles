@@ -33,8 +33,8 @@
       ];
 
     nix.maxJobs = lib.mkDefault 4;
-    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-    
+    powerManagement.cpuFreqGovernor = "performance";
+
     services.xserver.videoDrivers = [ "amdgpu" ];
     hardware.enableRedistributableFirmware = true;
     hardware.cpu.amd.updateMicrocode = true;

@@ -31,6 +31,7 @@
       ];
 
     nix.maxJobs = lib.mkDefault 16;
+    powerManagement.cpuFreqGovernor = "performance";
   };
 
   nixops = {
