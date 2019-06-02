@@ -15,6 +15,7 @@ in {
     dbus.dev
     gnome3.zenity
     gnuplot
+    androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
     carnix
@@ -232,7 +233,7 @@ in {
       exec tmux -u -2
     fi
 
-    export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin"
+    export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin:${pkgs.androidenv.androidPkgs_9_0.ndk-bundle}/libexec/android-sdk/ndk-bundle/"
     export EDITOR=vim
 
     export NIX_REMOTE=daemon
