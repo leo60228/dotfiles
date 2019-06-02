@@ -51,5 +51,8 @@ lib.makeComponent "extra"
 
     # tmpfs
     boot.tmpOnTmpfs = true;
+
+    # adb
+    programs.adb.enable = true;
   };
 })
