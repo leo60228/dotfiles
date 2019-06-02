@@ -78,10 +78,10 @@ in {
     xorg.libxcb.dev
     xorg.xorgproto
     youtube-dl
-    (rustChannelOf {
-      date = "2019-05-11";
-      channel = "nightly";
-    }).rust
+    (rustChannelOfTargets "nightly" "2019-06-02" [
+        "x86_64-unknown-linux-gnu"
+        "arm-linux-androideabi"
+    ])
     libreoffice
     tmux
     screen
