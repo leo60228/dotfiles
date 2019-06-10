@@ -3,6 +3,9 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    dbus
+    dbus.lib
+    dbus.dev
     gnome3.zenity
     gnuplot
     openssl.out
