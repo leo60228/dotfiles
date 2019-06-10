@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    gnome3.zenity
     gnuplot
     openssl.out
     openssl.dev
@@ -55,6 +56,7 @@ in {
     portaudio
     xorg.libX11
     xorg.libX11.dev
+    xorg.libXtst
     xorg.libXcursor
     xorg.libXcursor.dev
     xorg.libXi
