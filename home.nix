@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    nodejs
     xdotool
     dbus
     dbus.lib
@@ -156,6 +157,8 @@ in {
     (import ./julia-oldpkgs.nix {version = "07";})
     (import ./julia-oldpkgs.nix {version = "11";})
   ];
+
+  programs.go.enable = true;
 
   services.gpg-agent = {
     enable = true;
