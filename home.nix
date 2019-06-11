@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    go-bindata
     nodejs
     xdotool
     dbus
