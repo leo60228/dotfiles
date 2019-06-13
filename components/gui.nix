@@ -15,6 +15,6 @@ lib.makeComponent "gui"
     services.xserver.libinput.enable = true;
 
     # Fonts
-    fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji dejavu_fonts corefonts ];
+    fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji dejavu_fonts corefonts steamPackages.steam-fonts ];
   };
 })
