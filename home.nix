@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    calibre
     (import <unstable> {}).xpra
     go-bindata
     nodejs
