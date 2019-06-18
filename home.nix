@@ -3,7 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
-    (callPackage ./kshare.nix {})
+    (import <unstable> {}).xpra
     go-bindata
     nodejs
     xdotool
