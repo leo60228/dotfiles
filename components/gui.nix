@@ -17,5 +17,8 @@ lib.makeComponent "gui"
     # Fonts
     fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji dejavu_fonts corefonts steamPackages.steam-fonts ];
     fonts.fontconfig.cache32Bit = true;
+
+    # dconf
+    programs.dconf.enable = true;
   };
 })
