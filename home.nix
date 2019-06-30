@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    cantata
     calibre
     (import <unstable> {}).xpra
     go-bindata
@@ -298,4 +299,6 @@ in {
 
     nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
     nixpkgs.config.allowUnfree = true;
+
+    services.mpd.enable = true;
   }
