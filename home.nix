@@ -301,5 +301,13 @@ in {
     nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
     nixpkgs.config.allowUnfree = true;
 
-    services.mpd.enable = true;
+    services.mpd = {
+        enable = true;
+        extraConfig = ''
+            audio_output {
+                type    "pulse"
+                name    "My Pulse Output"
+            }
+        '';
+    };
   }
