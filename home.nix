@@ -15,6 +15,7 @@ in {
     dbus.dev
     gnome3.zenity
     gnuplot
+    bat
     androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
