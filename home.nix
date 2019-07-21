@@ -16,6 +16,8 @@ in {
     gnome3.zenity
     gnuplot
     bat
+    nodejs-10_x
+    (hiPrio nodePackages_10_x.npm)
     androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
