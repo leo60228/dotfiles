@@ -6,7 +6,7 @@ in {
     easytag
     cantata
     calibre
-    (import <unstable> {}).xpra
+    #(import <unstable> {}).xpra
     go-bindata
     nodejs
     xdotool
