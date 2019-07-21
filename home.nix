@@ -250,6 +250,7 @@ in {
     CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk_pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
     LIBCLANG_PATH = "${pkgs.llvmPackages_39.clang-unwrapped.lib}/lib";
     OPENSSL_DIR = "/home/leo60228/.nix-profile";
+    BAT_THEME = "Solarized";
   };
 
   programs.bash.shellAliases."xargo-nx" =
@@ -264,8 +265,10 @@ in {
       initial_window_width 1700
       initial_window_height 1100
     '';
+  programs.bash.shellAliases.cat = "bat";
 
     home.file.".mrconfig".source = ./mrconfig;
+  xdg.configFile."bat/themes/Solarized.tmTheme".source = ./Solarized.tmtheme;
 
     home.file.".tmux.conf".text = ''
       set -g mouse on
