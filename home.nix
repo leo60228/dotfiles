@@ -8,7 +8,6 @@ in {
     calibre
     #(import <unstable> {}).xpra
     go-bindata
-    nodejs
     xdotool
     dbus
     dbus.lib
