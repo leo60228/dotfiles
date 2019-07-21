@@ -15,6 +15,7 @@ in {
     dbus.dev
     gnome3.zenity
     gnuplot
+    (callPackage ./amdgpu-utils {})
     bat
     nodejs-10_x
     (hiPrio nodePackages_10_x.npm)

@@ -11,3 +11,7 @@
 [submodule "pass-rotate"]
 	path = pass-rotate
 	url = https://github.com/ddevault/pass-rotate.git
+[submodule "amdgpu-utils"]
+	path = amdgpu-utils
+	url = https://github.com/leo60228/amdgpu-utils.git
+	branch = nix
