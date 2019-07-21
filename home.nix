@@ -264,59 +264,52 @@ in {
     ''-v "/home/leo60228/.cargo/registry/:/root/.cargo/registry/" '' +
     ''rustyhorizon/docker:latest xargo'';
 
-    xdg.configFile."kitty/kitty.conf".text = ''
-      remember_window_size no
-      initial_window_width 1700
-      initial_window_height 1100
-    '';
   programs.bash.shellAliases.cat = "bat";
 
-    home.file.".mrconfig".source = ./mrconfig;
+  xdg.configFile."kitty/kitty.conf".text = ''
+    remember_window_size no
+    initial_window_width 1700
+    initial_window_height 1100
+  '';
+
   xdg.configFile."bat/themes/Solarized.tmTheme".source = ./Solarized.tmtheme;
 
-    home.file.".tmux.conf".text = ''
-      set -g mouse on
-      set-window-option -g mode-keys vi
-      bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
+  home.file.".mrconfig".source = ./mrconfig;
 
-    # Plugins
-      set -g @plugin 'tmux-plugins/tpm'
-      set -g @plugin 'tmux-plugins/tmux-sensible'
+  home.file.".tmux.conf".text = ''
+    set -g mouse on
+    set-window-option -g mode-keys vi
+    bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
 
-    # Colors
-      if-shell -b '[[ "$TERM" == "xterm-256color" ]]' " \
-      set -s default-terminal \"xterm-256color\" \
-      set-option -sa terminal-overrides \",xterm-256color:Tc\" "
-      if-shell -b '[[ "$TERM" != "xterm-256color" ]]' " \
-      set -s default-terminal \"xterm-256color\" \
-      set-environment -g TMUX_FORCE_NO_TRUECOLOR 1 "
-    # Misc
-      set-option -sg escape-time 10
+  # Colors
+    set -s default-terminal "xterm-256color"
+    set-option -sa terminal-overrides ",xterm-256color:Tc"
+  # Misc
+    set-option -sg escape-time 10
+  '';
+
+  home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
+  home.file.".frei0r-1/lib".recursive = true;
+
+  home.file.".terminfo".source = ./files/terminfo;
+  home.file.".terminfo".recursive = true;
+
+  home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5";
+  home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD bat cache --build";
+  home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
+    $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target
+  ''; # dirty hack
+
+  services.mpd = {
+    enable = true;
+    extraConfig = ''
+        audio_output {
+            type    "pulse"
+            name    "My Pulse Output"
+        }
     '';
+  };
 
-    home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
-    home.file.".frei0r-1/lib".recursive = true;
-
-    home.file.".terminfo".source = ./files/terminfo;
-    home.file.".terminfo".recursive = true;
-
-    xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
-
-    home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5";
-    home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
-      $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target
-    ''; # dirty hack
-
-    nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
-    nixpkgs.config.allowUnfree = true;
-
-    services.mpd = {
-        enable = true;
-        extraConfig = ''
-            audio_output {
-                type    "pulse"
-                name    "My Pulse Output"
-            }
-        '';
-    };
-  }
+  nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
+  nixpkgs.config.allowUnfree = true;
+}
