@@ -85,6 +85,7 @@ in {
     (rustChannelOfTargets "nightly" "2019-06-02" [
         "x86_64-unknown-linux-gnu"
         "arm-linux-androideabi"
+        "wasm32-unknown-unknown"
     ])
     libreoffice
     tmux
