@@ -18,6 +18,7 @@ in {
     bat
     nodejs-10_x
     (hiPrio nodePackages_10_x.npm)
+    (callPackage ./jetbrains.nix {}).rider
     androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
