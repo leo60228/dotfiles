@@ -82,9 +82,9 @@ in {
     xorg.libxcb.dev
     xorg.xorgproto
     youtube-dl
-    (rustChannelOfTargets "nightly" "2019-06-02" [
+    (rustChannelOfTargets "nightly" "2019-07-22" [
         "x86_64-unknown-linux-gnu"
-        "arm-linux-androideabi"
+        "armv7-linux-androideabi"
         "wasm32-unknown-unknown"
     ])
     libreoffice
@@ -238,7 +238,7 @@ in {
       exec tmux -u -2
     fi
 
-    export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin:${pkgs.androidenv.androidPkgs_9_0.ndk-bundle}/libexec/android-sdk/ndk-bundle/"
+    export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin:$HOME/NDK/arm/bin"
     export EDITOR=vim
 
     export NIX_REMOTE=daemon
@@ -248,6 +248,8 @@ in {
 
   programs.bash.sessionVariables = {
     EDITOR = "vim";
+    RUSTFMT = "rustfmt";
+    CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
