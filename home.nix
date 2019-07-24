@@ -82,11 +82,8 @@ in {
     xorg.libxcb.dev
     xorg.xorgproto
     youtube-dl
-    (rustChannelOfTargets "nightly" "2019-07-22" [
-        "x86_64-unknown-linux-gnu"
-        "armv7-linux-androideabi"
-        "wasm32-unknown-unknown"
-    ])
+    (callPackage ./rust.nix {}).rust
+    (callPackage ./rust.nix {}).clippy
     libreoffice
     tmux
     screen
