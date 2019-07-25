@@ -40,6 +40,14 @@
             serviceConfig.Type = "oneshot";
             script = "${../files/gpu-fixup.sh}";
         };
+
+        systemd.services.perf-checkup = {
+            description = "Performance monitor";
+            wantedBy = [ "multi-user.target" ];
+            after = [ "display-manager.service" ];
+            serviceConfig.User = "leo60228";
+            script = "DISPLAY=:0 /home/leo60228/.cargo/bin/perf-checkup";
+        };
     };
 
     nixops = {
