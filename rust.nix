@@ -3,7 +3,7 @@
 rec {
   channel = rustChannelOf {
     channel = "nightly";
-    date = "2019-07-26";
+    date = "2019-07-25";
   };
   rust = channel.rust.override {
     targets = [
