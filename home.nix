@@ -241,6 +241,8 @@ in {
 
     export NIX_REMOTE=daemon
 
+    . $HOME/.credentials >& /dev/null || true
+
     eval $(hub alias -s)
   '';
 
