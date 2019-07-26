@@ -85,7 +85,6 @@ in {
     xorg.xorgproto
     youtube-dl
     (callPackage ./rust.nix {}).rust
-    (callPackage ./rust.nix {}).clippy
     libreoffice
     tmux
     screen
