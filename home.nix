@@ -247,6 +247,7 @@ in {
   home.sessionVariables = {
     EDITOR = "vim";
     RUSTFMT = "rustfmt";
+    RUSTC_WRAPPER = "${(import <unstable> {}).sccache}/bin/sccache";
     CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
@@ -275,6 +276,12 @@ in {
   xdg.configFile."bat/themes/Solarized.tmTheme".source = ./Solarized.tmtheme;
 
   home.file.".mrconfig".source = ./mrconfig;
+
+  home.file.".inputrc".text = ''
+  $include /etc/inputrc
+  "\e[A":history-search-backward
+  "\e[B":history-search-forward
+  '';
 
   home.file.".tmux.conf".text = ''
     set -g mouse on
