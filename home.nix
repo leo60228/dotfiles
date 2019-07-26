@@ -244,7 +244,7 @@ in {
     eval $(hub alias -s)
   '';
 
-  programs.bash.sessionVariables = {
+  home.sessionVariables = {
     EDITOR = "vim";
     RUSTFMT = "rustfmt";
     CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
