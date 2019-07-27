@@ -9,11 +9,18 @@
 
     systemd.package = pkgs.callPackage ../systemd-zen2.nix {};
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = (import /home/leo60228/nixpkgs {}).linuxPackages_testing;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.kernelModules = [ "kvm-amd" ];
     boot.extraModulePackages = [ ];
+
+    hardware.firmware = [ (import /home/leo60228/nixpkgs {}).navifw ];
+
+    hardware.opengl.package = pkgs.buildEnv {
+        name = "navi-opengl";
+        paths = let mesa = (import /home/leo60228/nixpkgs {}).mesa; in [ mesa mesa.drivers ];
+    };
 
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";

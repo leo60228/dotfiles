@@ -295,7 +295,7 @@ in {
   home.file.".terminfo".recursive = true;
 
   home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5";
-  home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD bat cache --build";
+  home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
   home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
     $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target
   ''; # dirty hack
