@@ -7,6 +7,8 @@
 
     environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
 
+    systemd.package = pkgs.callPackage ../systemd-zen2.nix {};
+
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
