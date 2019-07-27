@@ -18,6 +18,7 @@ lib.makeComponent "vfio"
           "/dev/input/by-id/usb-LEOPOLD_Mini_Keyboard-event-kbd",
           "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd",
       ]
+      nographics_allow_host_audio = 1
     '';
     environment.systemPackages = [ pkgs.virtmanager pkgs.OVMF ];
     boot.kernelParams = [ "amd_iommu=on" "iommu=pt" ];
@@ -37,5 +38,11 @@ lib.makeComponent "vfio"
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     users.groups.libvirtd.members = [ "root" "leo60228" ];
+    hardware.pulseaudio.extraConfig = ''
+        load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+    '';
+    hardware.pulseaudio.extraClientConf = ''
+        default-server = 127.0.0.1
+    '';
   };
 })
