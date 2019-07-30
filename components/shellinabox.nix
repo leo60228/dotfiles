@@ -5,7 +5,13 @@ lib.makeComponent "shellinabox"
 
   config = {
     services.shellinabox.enable = true;
-    services.shellinabox.extraOptions = [ "--port=80" ];
+    services.shellinabox.extraOptions = [
+      "--port=8022"
+      "--css=${../files/solarized.css}"
+      "--static-file=hack.ttf:${../files/hack.ttf}"
+      "--static-file=hack-bold.ttf:${../files/hack-bold.ttf}"
+      "--static-file=ShellInABox.js:${../files/ShellInABox.js}"
+    ];
 
     systemd.timers.shellinabox = {
       requires = [ "shellinaboxd.service" ];
