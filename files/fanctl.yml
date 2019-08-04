@@ -1,0 +1,46 @@
+interval: 1000
+log_iterations: 10
+inputs:
+  gpu_temp:
+    ty: HwmonSensor
+    args:
+      path: /sys/class/hwmon/hwmon0/temp1_input
+outputs:
+  gpu_fan:
+    ty: PwmFan
+    args:
+      path: /sys/class/drm/card0/device/hwmon/hwmon0
+      name: pwm1
+# gpu_fan:
+#   ty: AmdgpuFan
+#   args:
+#     path: /sys/class/drm/card0/device/hwmon/hwmon0
+#     prefix: fan1
+rules:
+  - outputs:
+      - gpu_fan
+    rule:
+      ty: Maximum
+      config:
+        - ty: GateCritical
+          config:
+            input: gpu_temp
+            value: 1.0
+        - ty: Static
+          config: 0.4
+        - ty: Curve
+          config:
+            input: gpu_temp
+            keys:
+              - input: 0.0
+                output: 0.0
+              - input: 40.0
+                output: 0.25
+              - input: 45.0
+                output: 0.4
+              - input: 50.0
+                output: 0.5
+              - input: 60.0
+                output: 0.9
+              - input: 70
+                output: 1.0

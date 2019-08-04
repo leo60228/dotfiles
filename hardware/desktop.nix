@@ -14,12 +14,25 @@
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.kernelModules = [ "kvm-amd" ];
     boot.extraModulePackages = [ ];
+    boot.kernelParams = [
+        "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
+        "idle=nomwait" # possible workaround to hangs
+    ];
 
     hardware.firmware = [ (import /home/leo60228/nixpkgs {}).navifw ];
+
+    nixpkgs.overlays = [ (self: super: {
+        amdMicrocode = (import /home/leo60228/nixpkgs {}).amdMicrocode;
+    }) ];
 
     hardware.opengl.package = pkgs.buildEnv {
         name = "navi-opengl";
         paths = let mesa = (import /home/leo60228/nixpkgs {}).mesa; in [ mesa mesa.drivers ];
+    };
+
+    hardware.opengl.package32 = pkgs.buildEnv {
+        name = "navi-opengl";
+        paths = let mesa = (import /home/leo60228/nixpkgs {}).pkgsi686Linux.mesa; in [ mesa mesa.drivers ];
     };
 
     fileSystems."/" =
@@ -47,6 +60,22 @@
     services.xserver.videoDrivers = [ "amdgpu" ];
     hardware.enableRedistributableFirmware = true;
     hardware.cpu.amd.updateMicrocode = true;
+
+    systemd.services.gpu-fixup = {
+        description = "GPU performance fixer";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Type = "oneshot";
+        script = ''
+            echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
+        '';
+    };
+
+    systemd.services.fanctl = {
+        description = "GPU fan controller";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Restart = "always";
+        script = "${../files/fanctl} -c ${../files/fanctl.yml}";
+    };
   };
 
   nixops = {
