@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    (callPackage ./twili-gdb.nix {})
     (callPackage ./zenstates.nix {})
     (callPackage ./unityenv.nix {})
     easytag
