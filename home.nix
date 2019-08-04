@@ -156,7 +156,7 @@ in {
     meteor
     hplip
     virtualbox
-    dotnet-sdk
+    (callPackage ./dotnet.nix {})
     gmusicproxy
     mono5
     #julia_06
