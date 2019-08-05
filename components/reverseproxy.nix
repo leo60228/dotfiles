@@ -10,14 +10,14 @@ lib.makeComponent "reverseproxy"
 
   config = {
     services.nginx = lib.mkMerge [
-      #(if cfg.host != "digitalocean" then throw "Invalid nginx host" else {})
+      #(if cfg.host != "aws" then throw "Invalid nginx host" else {})
       (lib.mkIf (cfg.host == "aws") (lib.mkForce {
         enable = true;
         recommendedTlsSettings = true;
         recommendedOptimisation = true;
         recommendedGzipSettings = true;
         virtualHosts = {
-          "digitalocean.leo60228.space" = {
+          "aws.leo60228.space" = {
             onlySSL = true;
             enableACME = true;
             acmeRoot = "/var/lib/acme/acme-challenge";
@@ -29,12 +29,12 @@ lib.makeComponent "reverseproxy"
                 proxyPass = if builtins.isString port then port else "http://localhost:${toString port}/";
                 extraConfig = ''
                 sub_filter '${if !builtins.isString port then ":" else ""}${toString port}' '/${loc}';
-                sub_filter 's.jezevec10.com' 'digitalocean.leo60228.space/jstrisassets';
+                sub_filter 's.jezevec10.com' 'aws.leo60228.space/jstrisassets';
                 sub_filter 'src="/lang/' 'src="/jstris/lang/';
+                sub_filter '__webpack_hmr' 'testing/__webpack_hmr';
                 sub_filter_types *;
                 sub_filter_once off;
                 proxy_set_header Host $proxy_host;
-                proxy_set_header Accept-Encoding "";
                 proxy_ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
                 proxy_ssl_ciphers HIGH:!aNULL:!MD5;
                 proxy_ssl_server_name on;
@@ -60,8 +60,9 @@ lib.makeComponent "reverseproxy"
               (mkFilter "codeserver" 8443 true)
               (mkFilter "shell" 8022 false)
               (mkFilter "xpra" 14500 true)
-              (mkFilter "gitea" 3000 false)
+              (mkFilter "testing2" 8000 true)
               (mkFilter "everestapi" "https://everestapi.github.io/" false)
+              (mkFilter "gba" "https://jsemu2.github.io" false)
               (mkFilter "cookieclicker" "https://orteil.dashnet.org" false) # lack of final slash intentional
               (mkFilter "jstris" "https://jstris.jezevec10.com/" false)
               (mkFilter "jstrisassets" "https://s.jezevec10.com/" false)
@@ -163,7 +164,7 @@ lib.makeComponent "reverseproxy"
             default = true;
             locations = {
               "/" = {
-                extraConfig = "return 301 https://digitalocean.leo60228.space$request_uri;";
+                extraConfig = "return 301 https://aws.leo60228.space$request_uri;";
               };
               "/http/pack.zip" = {
                 alias = ../files/pack.zip;

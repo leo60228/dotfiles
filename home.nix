@@ -26,7 +26,7 @@ in {
     nodejs-10_x
     (hiPrio nodePackages_10_x.npm)
     (callPackage ./jetbrains.nix {}).rider
-    androidenv.androidPkgs_9_0.ndk-bundle
+    (import <unstable> {}).androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
     carnix
@@ -109,7 +109,7 @@ in {
     google-musicmanager
     symbola
     kitty
-    (python36.withPackages (ps: with ps; [ pyusb neovim ]))
+    (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
     #(obs-studio.override {
     #  ffmpeg = ffmpeg-full.override {
     #    inherit nvidia-video-sdk;
@@ -238,13 +238,16 @@ in {
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
   '';
   programs.bash.initExtra = ''
+    export PATH="$HOME/.nix-profile/bin/:$HOME/.bin/:$PATH:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+    export NIX_PATH='/home/leo60228/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels'
+    export PS1=\\n\\\[\\033\[1\;32m\\\]\[\\\[\\e\]0\;leo60228@leoservices:\ \\w\\a\\\]\\u@\\h:\\w\]\\\$\\\[\\033\[0m\\\]\ 
+
     [[ $- != *i* ]] && return
 
-    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] ; then
+    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM_PROGRAM" =~ vscode ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] ; then
       exec tmux -u -2
     fi
 
-    export PATH="$HOME/.bin/:$PATH:$HOME/.cargo/bin:$HOME/NDK/arm/bin"
     export EDITOR=vim
 
     export NIX_REMOTE=daemon
@@ -298,9 +301,6 @@ in {
     set-window-option -g mode-keys vi
     bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
 
-  # Colors
-    set -s default-terminal "xterm-256color"
-    set-option -sa terminal-overrides ",xterm-256color:Tc"
   # Misc
     set-option -sg escape-time 10
   '';
@@ -311,7 +311,7 @@ in {
   home.file.".terminfo".source = ./files/terminfo;
   home.file.".terminfo".recursive = true;
 
-  home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5";
+  home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5 || true";
   home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
   home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
     $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target

@@ -23,7 +23,7 @@ set foldlevelstart=0
 set hlsearch incsearch
 
 set background=dark
-colorscheme solarized8
+colorscheme solarized8_flat
 
 syntax on
 filetype plugin indent on

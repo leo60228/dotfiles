@@ -1,1 +1,1 @@
-/home/leo60228/nixpkgs-mozilla/rust-overlay.nix
+import ../nixpkgs-mozilla/rust-overlay.nix

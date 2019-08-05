@@ -1,7 +1,8 @@
 { pkgs, ... }: with import ../components; rec {
-  components = en_us est extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; };
+  components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
+  environment.sessionVariables.TERM = "vt100";
 
   systemd.services.minecraft = {
     wantedBy = [ "multi-user.target" ];
