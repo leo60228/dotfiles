@@ -20,7 +20,9 @@ lib.makeComponent "gui"
     services.xserver.libinput.enable = true;
 
     # Fonts
-    fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji dejavu_fonts (import <unstable> {}).corefonts steamPackages.steam-fonts ];
+    fonts.fonts = with pkgs; [ noto-fonts noto-fonts-emoji dejavu_fonts (import <unstable> {
+      config.allowUnfree = true;
+    }).corefonts steamPackages.steam-fonts ];
     fonts.fontconfig.cache32Bit = true;
 
     # dconf
