@@ -48,6 +48,14 @@
             serviceConfig.User = "leo60228";
             script = "DISPLAY=:0 /home/leo60228/.cargo/bin/perf-checkup";
         };
+
+        services.xserver.videoDrivers =  [ "amdgpu" ];
+        services.xserver.deviceSection = ''
+        Option "DRI" "3"
+        Option "VariableRefresh" "true"
+        '';
+        services.xserver.exportConfiguration = true;
+        nixpkgs.overlays = [ (import ../nixpkgs/xorg.nix) ];
     };
 
     nixops = {
