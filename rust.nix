@@ -11,6 +11,7 @@ rec {
       "armv7-linux-androideabi"
       "wasm32-unknown-unknown"
       "x86_64-unknown-linux-musl"
+      "riscv64gc-unknown-none-elf"
     ];
     extensions = [ "rust-src" ];
   };
