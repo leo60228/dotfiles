@@ -76,6 +76,18 @@
         serviceConfig.Restart = "always";
         script = "${../files/fanctl} -c ${../files/fanctl.yml}";
     };
+
+    # hidpi
+    services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
+    boot.earlyVconsoleSetup = true;
+    i18n.consolePackages = [ pkgs.terminus_font ];
+    i18n.consoleFont = "ter-128n";
+    services.xserver.deviceSection = ''
+    Option "DRI" "3"
+    Option "VariableRefresh" "true"
+    '';
+    services.xserver.exportConfiguration = true;
+    nixpkgs.overlays = [ (import ../nixpkgs/xorg.nix) ];
   };
 
   nixops = {

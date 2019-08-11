@@ -15,6 +15,7 @@ lib.makeComponent "kde"
 
     # Enable the KDE Desktop Environment.
     services.xserver.displayManager.sddm.enable = true;
+    services.xserver.displayManager.sddm.enableHidpi = true;
     services.xserver.desktopManager.plasma5.enable = true;
   } (mkIf cfg.bluetooth {
     hardware.bluetooth.enable = true;

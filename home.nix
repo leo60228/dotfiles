@@ -232,6 +232,9 @@ in {
   };
 
   programs.bash.enable = true;
+  programs.bash.bashrcExtra = ''
+  [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
+  '';
   programs.bash.initExtra = ''
     [[ $- != *i* ]] && return
 
