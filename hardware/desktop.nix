@@ -23,7 +23,7 @@
 
     nixpkgs.overlays = [ (self: super: {
         amdMicrocode = (import /home/leo60228/nixpkgs {}).amdMicrocode;
-    }) ];
+    }) (import ../nixpkgs/xorg.nix) ];
 
     hardware.opengl.package = pkgs.buildEnv {
         name = "navi-opengl";
@@ -87,7 +87,6 @@
     Option "VariableRefresh" "true"
     '';
     services.xserver.exportConfiguration = true;
-    nixpkgs.overlays = [ (import ../nixpkgs/xorg.nix) ];
   };
 
   nixops = {
