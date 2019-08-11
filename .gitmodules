@@ -15,3 +15,6 @@
 	path = amdgpu-utils
 	url = https://github.com/leo60228/amdgpu-utils.git
 	branch = nix
+[submodule "kflash.py"]
+	path = kflash.py
+	url = https://github.com/leo60228/kflash.py

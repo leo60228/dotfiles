@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    (callPackage ./kflash.py {})
     alsaLib
     alsaLib.dev
     (callPackage ./twili-gdb.nix {})
