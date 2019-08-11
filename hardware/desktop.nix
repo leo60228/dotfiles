@@ -9,7 +9,7 @@
 
     systemd.package = pkgs.callPackage ../systemd-zen2.nix {};
 
-    boot.kernelPackages = (import /home/leo60228/nixpkgs {}).linuxPackages_testing;
+    boot.kernelPackages = (import /home/leo60228/nixpkgs-navi {}).linuxPackages_testing;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.kernelModules = [ "kvm-amd" ];
@@ -19,20 +19,20 @@
         "idle=nomwait" # possible workaround to hangs
     ];
 
-    hardware.firmware = [ (import /home/leo60228/nixpkgs {}).navifw ];
+    hardware.firmware = [ (import /home/leo60228/nixpkgs-navi {}).navifw ];
 
     nixpkgs.overlays = [ (self: super: {
-        amdMicrocode = (import /home/leo60228/nixpkgs {}).amdMicrocode;
+        amdMicrocode = (import /home/leo60228/nixpkgs-navi {}).amdMicrocode;
     }) (import ../nixpkgs/xorg.nix) ];
 
     hardware.opengl.package = pkgs.buildEnv {
         name = "navi-opengl";
-        paths = let mesa = (import /home/leo60228/nixpkgs {}).mesa; in [ mesa mesa.drivers ];
+        paths = let mesa = (import /home/leo60228/nixpkgs-navi {}).mesa; in [ mesa mesa.drivers ];
     };
 
     hardware.opengl.package32 = pkgs.buildEnv {
         name = "navi-opengl";
-        paths = let mesa = (import /home/leo60228/nixpkgs {}).pkgsi686Linux.mesa; in [ mesa mesa.drivers ];
+        paths = let mesa = (import /home/leo60228/nixpkgs-navi {}).pkgsi686Linux.mesa; in [ mesa mesa.drivers ];
     };
 
     fileSystems."/" =
