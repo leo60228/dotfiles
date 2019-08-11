@@ -50,7 +50,7 @@ augroup END
 " tabs
 highlight SpecialKey ctermfg=1
 set list
-set listchars=tab:T>,trail:◌
+set listchars=tab:\ \ ,trail:◌
 " }}}
 
 " Mappings {{{

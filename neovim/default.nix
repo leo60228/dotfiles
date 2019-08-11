@@ -17,7 +17,7 @@ in neovim.override {
             ) plugins;
 
         packages.leovim = with vimPlugins; {
-            start = [ vim-hardtime (callPackage ./solarized8.nix {}) ];
+            start = [ vim-hardtime (callPackage ./solarized8.nix {}) editorconfig-vim ];
 
             opt = []
                 ++ map (x: x.plug) ftPlugins;
