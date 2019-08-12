@@ -9,7 +9,11 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9YgtqLs76ZQHml8rzwRzJgR1xWmeBAZ+NTXCX3UQ63vmKOYCzQn5WbDiKxs5dIPq1cFYHMnx2QstGYmRyAS8DCyhGYciu8BIXG/4lswWmheOhuQDM2sEgqZSOUekf5W+f9fxvkZwem7oZfTJk/WGs0junbCpvTl/lFZts8qX7osyhHQ4AtbUKzj9vwsAukwgzzGXAUhT9+Fqs9j4lWmRJGRH4lN0wvsAXpufLR5GAjS0IWazo/xleMVSz8AOYY0kA8yn5TzQq5RAuN6zUE8LiIFBrO0QKiTIwpXGj7FF7+ULFXYTHy8AwsagN5Fn6HWMKqAWaLwh7RtKGzhQAmx1n leo60228@digitaleo"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPBGeYEbAh7SLuTQCQ7i+W2ssiONuGkPMtZmQ7z986lKhR0uTTBblsuhAyQ3wN9Zn94cVLNlzTkseMo9ZZtCzpyqZ7FrQxnEQUX3Q3gKMkBhgpj06Gh9sqODoqRhstEWLdvwYHA+yYEFSxrbww5pZQrSmN1o/adscN9nYRIJGB6Oe4sUj/nkAcrdeTCbAV7SwKTNQSkks1ZDzFvMEO7kfLUm9X6gaINWPOiyEGVlVFVSG8o8ZE1uNUC/2ZtITYHaWgX5TIGHHJPXYQrt9A4cDgX2AMjWqvYKhmrsSfVtSZyrQC9S0ZSe7GDRdUuaYBjYFds5w3AbCATjtG7NncmK1B leo60228@DESKTOP-NBAEBEJ"
     ];
-    networking.firewall.enable = false;
+
+    swapDevices = [ {
+      device = "/var/swapfile";
+      size = 4096;
+    } ];
   };
 
   nixops = {
