@@ -39,7 +39,7 @@
   services.xserver.displayManager.leoxpra = {
     enable = true;
     bindTcp = "0.0.0.0:14500";
-    extraOptions = [ "--html=on" "--tcp-auth=none" ":0" ];
+    extraOptions = [ "--tcp-auth=none" ":0" ];
   };
 
   services.postgresql.enable = true;

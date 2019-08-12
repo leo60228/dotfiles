@@ -5,6 +5,27 @@ with lib;
 let
   cfg = config.services.xserver.displayManager.leoxpra;
   dmcfg = config.services.xserver.displayManager;
+  xpra = (pkgs.xpra.override {
+    pulseaudio = pkgs.pulseaudioFull;
+  }).overrideAttrs (oldAttrs: rec {
+    pname = "xpra";
+    version = "2.5.3";
+    name = "${pname}-${version}";
+    src = pkgs.fetchurl {
+      url = "https://xpra.org/src/${pname}-${version}.tar.xz";
+      sha256 = "1ys35lj28903alccks9p055psy1fsk1nxi8ncchvw8bfxkkkvbys";
+    };
+    patches = with pkgs; [
+      (substituteAll {
+        src = ../files/fix-paths.patch;
+        inherit (xorg) xkeyboardconfig;
+      })
+    ];
+  });
+  xpra-html5 = builtins.fetchTarball {
+    url = "https://xpra.org/src/xpra-html5-2.5.3.tar.xz";
+    sha256 = "1wfdmmv3xzi6apxnsxighacfbxzk56c8ffc3yrwq450adaip1yql";
+  };
 
 in
 
@@ -221,8 +242,11 @@ in
 
     services.xserver.displayManager.lightdm.enable = lib.mkForce false;
     services.xserver.displayManager.job.execCmd = ''
+      export XPRA_SOUND_QUEUE_TIME=2500
       exec /run/wrappers/bin/sudo -u leo60228 \
-        ${pkgs.xpra}/bin/xpra start \
+        ${xpra}/bin/xpra start \
+        --speaker=on \
+        --html=${xpra-html5}/html5/ \
         --daemon=off \
         --log-dir=/var/log \
         --log-file=xpra.log \
@@ -236,9 +260,16 @@ in
 
     services.xserver.terminateOnReset = false;
 
-    environment.systemPackages = [pkgs.xpra];
 
     virtualisation.virtualbox.guest.x11 = false;
+    #hardware.pulseaudio.enable = true;
+    #hardware.pulseaudio.systemWide = true;
+    hardware.pulseaudio.enable = lib.mkForce false;
+    sound.enable = true;
+    users.groups.xpra = {};
+    users.extraUsers.leo60228.extraGroups = [ "audio" "xpra" ];
+
+    environment.systemPackages = [ pkgs.pulseaudioFull pkgs.pavucontrol xpra ];
   };
 
 }
