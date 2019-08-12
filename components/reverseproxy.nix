@@ -54,7 +54,6 @@ lib.makeComponent "reverseproxy"
                 sub_filter '__webpack_hmr' 'testing/__webpack_hmr';
                 sub_filter_types *;
                 sub_filter_once off;
-                proxy_set_header Host $proxy_host;
                 proxy_ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
                 proxy_ssl_ciphers HIGH:!aNULL:!MD5;
                 proxy_ssl_server_name on;
@@ -65,7 +64,13 @@ lib.makeComponent "reverseproxy"
                 '' + (if sec then ''
                 auth_basic "Secured";
                 auth_basic_user_file /var/keys/htpasswd;
-                '' else "");
+                '' else "") + (if builtins.isString port then ''
+                proxy_set_header Host $proxy_host;
+                '' else ''
+                proxy_set_header Host aws.leo60228.space:443;
+                proxy_ssl_verify off;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                '');
               };
             }; in builtins.foldl' /*' yay for syntax bugs */ (a: b: a // b) {} [
               (let orig = mkFilter "icecast" 14501 true; in orig // {
