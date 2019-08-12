@@ -9,6 +9,26 @@ lib.makeComponent "reverseproxy"
   };
 
   config = {
+    services.phpfpm = lib.mkIf (cfg.host == "aws") (lib.mkForce {
+      poolConfigs."php" = ''
+              listen = /tmp/php.socket
+              user = nginx
+              group = nginx
+              pm = dynamic
+              pm.max_children = 32
+              pm.max_requests = 500
+              pm.start_servers = 2
+              pm.min_spare_servers = 2
+              pm.max_spare_servers = 5
+              listen.owner = nginx
+              listen.group = nginx
+              php_admin_value[error_log] = 'stderr'
+              php_admin_flag[log_errors] = on
+              env[PATH] = ${lib.makeBinPath [ pkgs.php ]}
+              catch_workers_output = yes
+      '';
+    });
+
     services.nginx = lib.mkMerge [
       #(if cfg.host != "aws" then throw "Invalid nginx host" else {})
       (lib.mkIf (cfg.host == "aws") (lib.mkForce {
@@ -74,6 +94,22 @@ lib.makeComponent "reverseproxy"
                   '';
                   extraConfig = ''
                   etag off;
+                  '';
+                };
+                "/miniproxy" = {
+                  root = pkgs.runCommand "proxyroot" {} ''
+                  mkdir -p $out
+                  cp -v ${../files/miniproxy.php} $out/index.php
+                  '';
+                  extraConfig = ''
+                  auth_basic "Secured";
+                  auth_basic_user_file /var/keys/htpasswd;
+                  include ${pkgs.nginx}/conf/fastcgi_params;
+                  include ${pkgs.nginx}/conf/fastcgi.conf;
+                  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                  fastcgi_param SCRIPT_FILENAME ${../files/miniproxy.php};
+                  fastcgi_pass unix:/tmp/php.socket;
+                  fastcgi_index index.php;
                   '';
                 };
                 "/http" = {
