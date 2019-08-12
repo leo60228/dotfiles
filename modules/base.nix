@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./xpra.nix ];
+
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;

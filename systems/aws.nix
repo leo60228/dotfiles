@@ -35,16 +35,15 @@
     };
   };
 
-  services.postgresql.enable = true;
-  services.redis.enable = true;
-
   services.xserver.enable = true;
-  services.xserver.displayManager.xpra = {
+  services.xserver.displayManager.leoxpra = {
     enable = true;
     bindTcp = "0.0.0.0:14500";
-    extraOptions = [ '''--start=/bin/sh -c "${pkgs.xorg.xhost}/bin/xhost +; sudo -u leo60228 ${pkgs.xterm}/bin/xterm"' '' "--html=on" "--tcp-auth=none" "--no-keyboard-sync" "--local-clipboard" ":0" ];
-    auth = "none";
+    extraOptions = [ "--html=on" "--tcp-auth=none" ":0" ];
   };
+
+  services.postgresql.enable = true;
+  services.redis.enable = true;
 
   boot.cleanTmpDir = true;
   networking.hostName = "leoservices";
