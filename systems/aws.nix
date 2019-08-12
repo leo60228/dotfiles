@@ -1,10 +1,25 @@
+# includes = ../rawConfig.nix:../hardware/aws.nix:../components/{en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
 { pkgs, ... }: with import ../components; rec {
   components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
+
+  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 25565 ];
+  networking.firewall.allowedUDPPorts = [ 2782 ];
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
   environment.sessionVariables.TERM = "vt100";
 
+  systemd.services.codeserver = {
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.docker ];
+    script = "./codeserver.sh";
+    serviceConfig = {
+      User = "leo60228";
+      WorkingDirectory = "/home/leo60228/code-server-docker";
+    };
+  };
+
   systemd.services.minecraft = {
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.jre8 ];
     script = "java -XX:+UseG1GC -Xmx3G -Xms3G -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -jar ./FTBserver.jar nogui";

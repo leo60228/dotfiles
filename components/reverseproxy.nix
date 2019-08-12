@@ -50,6 +50,7 @@ lib.makeComponent "reverseproxy"
                 extraConfig = ''
                 sub_filter '${if !builtins.isString port then ":" else ""}${toString port}' '/${loc}';
                 sub_filter 's.jezevec10.com' 'aws.leo60228.space/jstrisassets';
+                sub_filter 'localhost/codeserver:80/' 'aws.leo60228.space/codeserver/';
                 sub_filter 'src="/lang/' 'src="/jstris/lang/';
                 sub_filter '__webpack_hmr' 'testing/__webpack_hmr';
                 sub_filter_types *;

@@ -236,10 +236,10 @@ in {
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
+  export PATH="$HOME/.nix-profile/bin/:$HOME/.bin/:$PATH:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+  export NIX_PATH='/home/leo60228/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels'
   '';
   programs.bash.initExtra = ''
-    export PATH="$HOME/.nix-profile/bin/:$HOME/.bin/:$PATH:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
-    export NIX_PATH='/home/leo60228/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels'
     export PS1=\\n\\\[\\033\[1\;32m\\\]\[\\\[\\e\]0\;leo60228@leoservices:\ \\w\\a\\\]\\u@\\h:\\w\]\\\$\\\[\\033\[0m\\\]\ 
 
     [[ $- != *i* ]] && return
