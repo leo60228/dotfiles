@@ -15,6 +15,5 @@ rec {
       "x86_64-unknown-linux-musl"
       "riscv64gc-unknown-none-elf"
     ];
-    extensions = [ "rust-src" ];
   };
 }
