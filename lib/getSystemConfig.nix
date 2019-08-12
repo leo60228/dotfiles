@@ -1,3 +1,4 @@
+# includes = ../modules/componentBase.nix
 let lib = import ./.; in
 (nixops: name: {...}: let base = ({
   imports = [ (lib.generateHardware (../hardware + "/${name}")) (../systems + "/${name}") ../modules/componentBase.nix ../modules/base.nix ../modules/external.nix];

@@ -1,3 +1,4 @@
+# includes = ./lib/*
 skip:
 let lib = import ./lib;
     genSystems = generator: (let read = builtins.readDir ./systems; in
