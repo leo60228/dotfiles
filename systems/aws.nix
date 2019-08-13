@@ -1,6 +1,6 @@
-# includes = ../rawConfig.nix:../hardware/aws.nix:../components/{en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
+# includes = ../rawConfig.nix:../hardware/aws.nix:../components/{mailserver,en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
 { pkgs, ... }: with import ../components; rec {
-  components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
+  components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 25565 ];
   networking.firewall.allowedUDPPorts = [ 2782 ];

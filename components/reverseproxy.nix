@@ -180,6 +180,16 @@ lib.makeComponent "reverseproxy"
                 '';
             };
           };
+          "***REMOVED***" = {
+            forceSSL = true;
+            enableACME = true;
+            acmeRoot = "/var/lib/acme/acme-challenge";
+            locations = {
+              "/" = {
+                extraConfig = "return 301 https://aws.leo60228.space$request_uri;";
+              };
+            };
+          };
           "blog.leo60228.space" = {
             forceSSL = true;
             enableACME = true;
