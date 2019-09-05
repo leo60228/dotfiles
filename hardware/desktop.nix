@@ -77,6 +77,8 @@
         script = "${../files/fanctl} -c ${../files/fanctl.yml}";
     };
 
+    environment.sessionVariables.AMD_DEBUG = "nodma"; # workaround for navi hang
+
     # hidpi
     services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
     boot.earlyVconsoleSetup = true;
