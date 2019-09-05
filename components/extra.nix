@@ -23,10 +23,6 @@ lib.makeComponent "extra"
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.hplip pkgs.gutenprint pkgs.gutenprintBin ];
 
-    environment.systemPackages = with pkgs; [
-      wget vim qemu
-    ];
-
     programs.bash.enableCompletion = true;
 
     networking.networkmanager.enable = true; # Enable NetworkManager to manage Wi-Fi connections
@@ -53,6 +49,10 @@ lib.makeComponent "extra"
     boot.tmpOnTmpfs = true;
 
     # adb
-    programs.adb.enable = true;
+    services.udev.packages = [ pkgs.android-udev-rules ];
+
+    environment.systemPackages = with pkgs; [
+      wget vim qemu (import <unstable> {}).androidenv.androidPkgs_9_0.platform-tools
+    ];
   };
 })
