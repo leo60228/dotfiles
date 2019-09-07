@@ -14,7 +14,7 @@ while getopts ":v:" opt; do
 done
 shift $((OPTIND -1))
 
-docker run -u $(id -u):$(id -g) \
+docker run \
            --rm -it \
            -v $(pwd):/work \
            -v /tmp/.X11-unix:/tmp/.X11-unix \
