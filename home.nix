@@ -304,6 +304,10 @@ in {
     set-window-option -g mode-keys vi
     bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xsel -ib" \; display-message 'Copied to system clipboard' \; send Escape
 
+  # Colors
+    set -g default-terminal "tmux-256color"
+    set -ga terminal-overrides ",*256col*:Tc"
+
   # Misc
     set-option -sg escape-time 10
   '';
