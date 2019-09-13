@@ -4,8 +4,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "misson20000";
     repo = "twili";
-    rev = "c88a0930cdfd8715223f6d912cbab1b56188532e";
-    sha256 = "02ypicdpc5m9k1vdh1vppxd2slws5j571x0q1qfygappv7yrjx0a";
+    rev = "683972eb0bb7c000570fd639e64eb06b761b0aa2";
+    sha256 = "11ammi5dz1mmxavj5fpfkw9ad9x2vkav70w7jz669im7baj5f0d3";
     fetchSubmodules = true;
   };
   preConfigure = "cd twib";

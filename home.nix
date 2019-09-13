@@ -9,7 +9,8 @@ in {
     alsaLib
     alsaLib.dev
     (callPackage ./twili-gdb.nix {})
-    (import <unstable> {}).llvm_8
+    (lib.setPrio (-100) (import <unstable> {}).llvmPackages_8.clang)
+    (import <unstable> {}).llvmPackages_8.llvm
     (callPackage ./zenstates.nix {})
     (callPackage ./unityenv.nix {})
     easytag
