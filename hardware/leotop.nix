@@ -10,7 +10,9 @@
         boot.extraModulePackages = [ ];
         boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
 
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;
+
+        hardware.enableAllFirmware = true;
 
         fileSystems."/" =
         { device = "/dev/disk/by-uuid/54f28256-31de-4eb2-af7b-a8f1e2c1ea4e";
@@ -56,6 +58,11 @@
         '';
         services.xserver.exportConfiguration = true;
         nixpkgs.overlays = [ (import ../nixpkgs/xorg.nix) ];
+
+        hardware.bluetooth.extraConfig = ''
+        [General]
+        ControllerMode = bredr
+        '';
     };
 
     nixops = {
