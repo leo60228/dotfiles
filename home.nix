@@ -36,7 +36,7 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    firefox
+    (import <unstable> {}).firefox
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
