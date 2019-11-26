@@ -3,7 +3,7 @@
 rec {
   channel = rustChannelOf {
     channel = "nightly";
-    date = "2019-09-13";
+    date = "2019-11-06";
   };
   rust = channel.rust.override {
     extensions = [ "clippy-preview" "rls-preview" "rust-src" "rust-analysis" ];
