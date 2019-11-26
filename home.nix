@@ -4,6 +4,7 @@ let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
     lftp
+    google-play-music-desktop-player
     (import <unstable> {}).dolphinEmuMaster
     #(callPackage ./kflash.py {})
     alsaLib
