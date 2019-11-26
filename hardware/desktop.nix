@@ -49,7 +49,7 @@
       [ { device = "/dev/disk/by-uuid/2804b7e0-0256-431b-8ea8-31817a48d05a"; }
       ];
 
-    nix.maxJobs = lib.mkDefault 4;
+    nix.maxJobs = lib.mkDefault 12;
     powerManagement.cpuFreqGovernor = "performance";
 
     services.xserver.videoDrivers = [ "amdgpu" ];
