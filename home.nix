@@ -5,7 +5,7 @@ in {
   home.packages = with pkgs; [
     lftp
     (import <unstable> {}).dolphinEmuMaster
-    (callPackage ./kflash.py {})
+    #(callPackage ./kflash.py {})
     alsaLib
     alsaLib.dev
     (callPackage ./twili-gdb.nix {})
@@ -24,7 +24,7 @@ in {
     dbus.dev
     gnome3.zenity
     gnuplot
-    (callPackage ./amdgpu-utils {})
+    #(callPackage ./amdgpu-utils {})
     bat
     nodejs-10_x
     (hiPrio nodePackages_10_x.npm)
