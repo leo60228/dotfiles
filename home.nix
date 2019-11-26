@@ -105,7 +105,7 @@ in {
     #gimpPlugins.gap
     steam-run-native
     vscode
-    discord
+    (callPackage ./discord.nix {})
     xclip
     xsel
     gimp

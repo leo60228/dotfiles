@@ -1,0 +1,36 @@
+{ branch ? "canary", pkgs }:
+let
+  inherit (pkgs) callPackage fetchurl;
+  base = ./powercord-base.nix;
+in {
+  stable = callPackage base rec {
+    pname = "discord";
+    binaryName = "Discord";
+    desktopName = "Discord";
+    version = "0.0.9";
+    src = fetchurl {
+      url = "https://dl.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
+      sha256 = "1i0f8id10rh2fx381hx151qckvvh8hbznfsfav8w0dfbd1bransf";
+    };
+  };
+  ptb = callPackage base rec {
+    pname = "discord-ptb";
+    binaryName = "DiscordPTB";
+    desktopName = "Discord PTB";
+    version = "0.0.16";
+    src = fetchurl {
+      url = "https://dl-ptb.discordapp.net/apps/linux/${version}/discord-ptb-${version}.tar.gz";
+      sha256 = "1ia94xvzygim9rx1sjnnss518ggw0i20mhp9pby33q70ha35n0aq";
+    };
+  };
+  canary = callPackage base rec {
+    pname = "discord-canary";
+    binaryName = "DiscordCanary";
+    desktopName = "Discord Canary";
+    version = "0.0.98";
+    src = fetchurl {
+      url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
+      sha256 = "0raqsfakjbcsh7g280yi7sg2jsrmy2q4jldg73wb868z35radld4";
+    };
+  };
+}.${branch}
