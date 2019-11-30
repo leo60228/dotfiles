@@ -23,7 +23,7 @@
 
     nixpkgs.overlays = [ (self: super: {
         amdMicrocode = (import /home/leo60228/nixpkgs-navi {}).amdMicrocode;
-    }) (import ../nixpkgs/xorg.nix) ];
+    }) (import ../xorg-overlay.nix) ];
 
     hardware.opengl.package = pkgs.buildEnv {
         name = "navi-opengl";
