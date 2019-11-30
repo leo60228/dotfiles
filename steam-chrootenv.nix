@@ -106,7 +106,7 @@ in buildFHSUserEnv rec {
     gtk2
     bzip2
     zlib
-    gdk-pixbuf
+    gdk_pixbuf
 
     # Without these it silently fails
     xorg.libXinerama
