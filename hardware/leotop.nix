@@ -57,7 +57,6 @@
         Option "VariableRefresh" "true"
         '';
         services.xserver.exportConfiguration = true;
-        nixpkgs.overlays = [ (import ../nixpkgs/xorg.nix) ];
 
         hardware.bluetooth.extraConfig = ''
         [General]
