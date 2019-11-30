@@ -10,5 +10,16 @@ lib.makeComponent "en_us"
       consoleKeyMap = "us";
       defaultLocale = "en_US.UTF-8";
     };
+    environment.systemPackages = with pkgs; [
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
+    ];
+    environment.etc."/etc/aspell.conf".text = ''
+    master en_US
+    extra-dicts en-computers.rws
+    add-extra-dicts en_US-science.rws
+    '';
   };
 })
