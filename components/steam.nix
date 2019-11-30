@@ -7,8 +7,14 @@ lib.makeComponent "steam"
     # Steam
     hardware.opengl.driSupport32Bit = true;
     hardware.pulseaudio.support32Bit = true;
-    environment.systemPackages = [ pkgs.steam ];
-    
+    environment.systemPackages = [ ((pkgs.newScope pkgs.steamPackages) ../steam-chrootenv.nix {
+      glxinfo-i686 = pkgs.pkgsi686Linux.glxinfo;
+      steam-runtime-wrapped-i686 =
+        if pkgs.stdenv.hostPlatform.system == "x86_64-linux"
+        then pkgs.pkgsi686Linux.steamPackages.steam-runtime-wrapped
+        else null;
+    }) ];
+
     services.udev.extraRules = ''
   # This rule is needed for basic functionality of the controller in Steam and keyboard/mouse emulation
   SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0666"
