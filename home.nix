@@ -36,7 +36,7 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    (import <unstable> {}).firefox
+    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) ]; }).firefox
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
@@ -186,7 +186,7 @@ in {
   };
 
   programs.home-manager.enable = true;
-  programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
+  programs.home-manager.path = https://github.com/rycee/home-manager/archive/release-19.09.tar.gz;
 
   systemd.user.startServices = true;
 
