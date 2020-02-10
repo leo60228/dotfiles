@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    (hiPrio rustup)
     pciutils
     lftp
     google-play-music-desktop-player
@@ -321,6 +322,8 @@ in {
 
   home.file.".terminfo".source = ./files/terminfo;
   home.file.".terminfo".recursive = true;
+
+  home.file.".rustup/toolchains/system".source = (pkgs.callPackage ./rust.nix {}).rust;
 
   home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5 || true";
   home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
