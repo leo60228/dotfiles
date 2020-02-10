@@ -1,4 +1,4 @@
-#!/usr/bin/env -S perl -w
+#!/usr/bin/perl -w
 # Dualstrusion post-processing script for Slic3r output and a Replicator Dual-like printer.
 # Version: 0.8
 # Alexander Thomas a.k.a. DrLex, https://www.dr-lex.be/

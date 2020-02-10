@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash -e
+#!/bin/bash -e
 function connect_pro {
   grep -l 057e /sys/bus/usb/devices/*/idVendor | sed 's;/idVendor$;;' | \
     sudo xargs -I {} bash -c 'echo 1 > {}/authorized' # reconnect pro controller
