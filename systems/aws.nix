@@ -105,4 +105,18 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9YgtqLs76ZQHml8rzwRzJgR1xWmeBAZ+NTXCX3UQ63vmKOYCzQn5WbDiKxs5dIPq1cFYHMnx2QstGYmRyAS8DCyhGYciu8BIXG/4lswWmheOhuQDM2sEgqZSOUekf5W+f9fxvkZwem7oZfTJk/WGs0junbCpvTl/lFZts8qX7osyhHQ4AtbUKzj9vwsAukwgzzGXAUhT9+Fqs9j4lWmRJGRH4lN0wvsAXpufLR5GAjS0IWazo/xleMVSz8AOYY0kA8yn5TzQq5RAuN6zUE8LiIFBrO0QKiTIwpXGj7FF7+ULFXYTHy8AwsagN5Fn6HWMKqAWaLwh7RtKGzhQAmx1n leo60228@digitaleo"
     ];
   };
+
+  networking.wireguard.enable = true;
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.9.0.2/32" ];
+    privateKeyFile = "/var/keys/wireguard";
+    peers = [
+      {
+        publicKey = "Y4VJQCdUnyANBWU9+Ce8E4Sjs54oycrJc9ODH84FMjo=";
+        allowedIPs = [ "192.168.1.0/24" ];
+        endpoint = "98.121.248.25:43331";
+        persistentKeepalive = 25;
+      }
+    ];
+  };
 }
