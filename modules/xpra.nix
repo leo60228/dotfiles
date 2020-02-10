@@ -243,8 +243,13 @@ in
     services.xserver.displayManager.lightdm.enable = lib.mkForce false;
     services.xserver.displayManager.job.execCmd = ''
       export XPRA_SOUND_QUEUE_TIME=2500
+      export XPRA_SYSTEMD_RUN=0
+      export PATH=$PATH:${pkgs.systemd}/bin
       exec /run/wrappers/bin/sudo -u leo60228 \
+        env XPRA_SOUND_QUEUE_TIME=2500 \
+            XPRA_SYSTEMD_RUN=0 \
         ${xpra}/bin/xpra start \
+        --start-via-proxy=no \
         --speaker=on \
         --html=${xpra-html5}/html5/ \
         --daemon=off \
