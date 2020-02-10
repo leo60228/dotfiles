@@ -259,6 +259,8 @@ in {
     . $HOME/.credentials >& /dev/null || true
 
     eval $(hub alias -s)
+
+    alias sw='exec tmux switch -t'
   '';
 
   home.sessionVariables = {
