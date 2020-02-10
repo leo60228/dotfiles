@@ -78,6 +78,24 @@
     serviceConfig.WorkingDirectory = "/home/leo60228/writefreely";
   };
 
+  systemd.services.ghastly = {
+    description = "ghastly";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    script = "${pkgs.callPackage ../celesters.nix {}}/bin/ghastly";
+  };
+
+  systemd.services.ghostbridge = {
+    description = "ghostbridge";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    script = ''
+    export DISCORD_TOKEN="$(< /var/keys/ghostbridge-token)"
+    ${pkgs.callPackage ../celesters.nix {}}/bin/bridge celeste.0x0ade.ga:2782
+    '';
+    serviceConfig.Restart = "always";
+  };
+
   users.extraUsers.thefox = {
     isNormalUser = true;
     shell = pkgs.shadow;
