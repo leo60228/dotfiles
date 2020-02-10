@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    pciutils
     lftp
     google-play-music-desktop-player
     (import <unstable> {}).dolphinEmuMaster
