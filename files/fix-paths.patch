@@ -1,20 +1,30 @@
+diff --git a/setup.py b/setup.py
+index 733d89a..1f85720 100755
 --- a/setup.py
 +++ b/setup.py
-@@ -2363,10 +2363,7 @@
-     v4l2_pkgconfig = pkgconfig()
-     #fuly warning: cython makes this difficult,
+@@ -2321,14 +2321,9 @@ if v4l2_ENABLED:
      #we have to figure out if "device_caps" exists in the headers:
--    ENABLE_DEVICE_CAPS = False
--    if os.path.exists("/usr/include/linux/videodev2.h"):
--        hdata = open("/usr/include/linux/videodev2.h").read()
--        ENABLE_DEVICE_CAPS = hdata.find("device_caps")>=0
-+    ENABLE_DEVICE_CAPS = True
-     kwargs = {"ENABLE_DEVICE_CAPS" : ENABLE_DEVICE_CAPS}
-     make_constants("xpra", "codecs", "v4l2", "constants", **kwargs)
+     videodev2_h = "/usr/include/linux/videodev2.h"
+     constants_pxi = "xpra/codecs/v4l2/constants.pxi"
+-    if not os.path.exists(videodev2_h) or should_rebuild(videodev2_h, constants_pxi):
+-        ENABLE_DEVICE_CAPS = 0
+-        if os.path.exists(videodev2_h):
+-            with open(videodev2_h) as f:
+-                hdata = f.read()
+-            ENABLE_DEVICE_CAPS = int(hdata.find("device_caps")>=0)
+-        with open(constants_pxi, "wb") as f:
+-            f.write(b"DEF ENABLE_DEVICE_CAPS=%i" % ENABLE_DEVICE_CAPS)
++    ENABLE_DEVICE_CAPS = 1
++    with open(constants_pxi, "wb") as f:
++        f.write(b"DEF ENABLE_DEVICE_CAPS=%i" % ENABLE_DEVICE_CAPS)
      cython_add(Extension("xpra.codecs.v4l2.pusher",
+                 ["xpra/codecs/v4l2/pusher.pyx"],
+                 **v4l2_pkgconfig))
+diff --git a/xpra/x11/bindings/keyboard_bindings.pyx b/xpra/x11/bindings/keyboard_bindings.pyx
+index e21356c..df71adb 100644
 --- a/xpra/x11/bindings/keyboard_bindings.pyx
 +++ b/xpra/x11/bindings/keyboard_bindings.pyx
-@@ -19,7 +19,7 @@
+@@ -21,7 +21,7 @@ from libc.stdlib cimport free, malloc
  
  DEF PATH_MAX = 1024
  DEF DFLT_XKB_RULES_FILE = b"base"
