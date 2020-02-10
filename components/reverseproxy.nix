@@ -1,6 +1,6 @@
 let lib = import ../lib; in
 lib.makeComponent "reverseproxy"
-({cfg, pkgs, lib, ...}: with lib; {
+({cfg, config, pkgs, lib, ...}: with lib; {
   opts = {
     host = mkOption {
       type = types.nullOr types.string;
@@ -10,23 +10,22 @@ lib.makeComponent "reverseproxy"
 
   config = {
     services.phpfpm = lib.mkIf (cfg.host == "aws") (lib.mkForce {
-      poolConfigs."php" = ''
-              listen = /tmp/php.socket
-              user = nginx
-              group = nginx
-              pm = dynamic
-              pm.max_children = 32
-              pm.max_requests = 500
-              pm.start_servers = 2
-              pm.min_spare_servers = 2
-              pm.max_spare_servers = 5
-              listen.owner = nginx
-              listen.group = nginx
-              php_admin_value[error_log] = 'stderr'
-              php_admin_flag[log_errors] = on
-              env[PATH] = ${lib.makeBinPath [ pkgs.php ]}
-              catch_workers_output = yes
-      '';
+      pools."php" = {
+        user = "nginx";
+        group = "nginx";
+        phpPackage = pkgs.php;
+        settings = {
+          "pm" = "dynamic";
+          "pm.max_children" = 32;
+          "pm.max_requests" = 500;
+          "pm.start_servers" = 2;
+          "pm.min_spare_servers" = 2;
+          "pm.max_spare_servers" = 5;
+          "php_admin_value[error_log]" = "stderr";
+          "php_admin_flag[log_errors]" = true;
+          "catch_workers_output" = true;
+        };
+      };
     });
 
     services.nginx = lib.mkMerge [
@@ -41,6 +40,7 @@ lib.makeComponent "reverseproxy"
             onlySSL = true;
             enableACME = true;
             acmeRoot = "/var/lib/acme/acme-challenge";
+            serverAliases = [ "net-ref.com.leo60228.space" ];
             # breaks websockets
             #http2 = true;
             locations = let mkFilter = loc: port: sec: {
@@ -82,6 +82,8 @@ lib.makeComponent "reverseproxy"
                 };
               })
               (mkFilter "testing" 8080 true)
+              (mkFilter "desktopxpra" "http://192.168.1.131:14500/" true)
+              (mkFilter "pubtesting" 8081 true)
               (mkFilter "ahorn" 8103 true)
               (mkFilter "codeserver" 8443 true)
               (mkFilter "shell" 8022 false)
@@ -114,7 +116,7 @@ lib.makeComponent "reverseproxy"
                   include ${pkgs.nginx}/conf/fastcgi.conf;
                   fastcgi_split_path_info ^(.+\.php)(/.+)$;
                   fastcgi_param SCRIPT_FILENAME ${../files/miniproxy.php};
-                  fastcgi_pass unix:/tmp/php.socket;
+                  fastcgi_pass unix:${config.services.phpfpm.pools.php.socket};
                   fastcgi_index index.php;
                   '';
                 };
@@ -212,13 +214,64 @@ lib.makeComponent "reverseproxy"
                 '';
             };
           };
+          "ghastly.leo60228.space" = {
+            forceSSL = true;
+            enableACME = true;
+            acmeRoot = "/var/lib/acme/acme-challenge";
+            locations."/" = {
+                proxyPass = "http://leo60228.github.io";
+                proxyWebsockets = true;
+                extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto https;
+                proxy_set_header Proxy "";
+                proxy_pass_header Server;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $connection_upgrade;
+                '';
+            };
+          };
+          "levelbot.leo60228.space" = {
+            forceSSL = true;
+            enableACME = true;
+            acmeRoot = "/var/lib/acme/acme-challenge";
+            locations."/" = {
+                proxyPass = "http://192.168.1.146:3000";
+                proxyWebsockets = true;
+                extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto https;
+                proxy_set_header Proxy "";
+                proxy_pass_header Server;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $connection_upgrade;
+                '';
+            };
+          };
+          "net-ref.com.leo6028.space" = {
+            locations = {
+              "/" = {
+                extraConfig = "return 301 https://net-ref.com.leo60228.space$request_uri;";
+              };
+              "=/http/pack.zip" = {
+                alias = ../files/pack.zip;
+                extraConfig = ''
+                etag off;
+                '';
+              };
+            };
+          };
           "localhost" = {
             default = true;
             locations = {
               "/" = {
                 extraConfig = "return 301 https://aws.leo60228.space$request_uri;";
               };
-              "/http/pack.zip" = {
+              "=/http/pack.zip" = {
                 alias = ../files/pack.zip;
                 extraConfig = ''
                 etag off;
