@@ -7,7 +7,8 @@
 
     environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
 
-    systemd.package = pkgs.callPackage ../systemd-zen2.nix {};
+    systemd.package = (import <unstable> {}).systemd;
+    systemd.additionalUpstreamSystemUnits = [ "dbus-org.freedesktop.import1.service" "systemd-importd.service" ];
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
