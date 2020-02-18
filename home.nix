@@ -117,25 +117,8 @@ in {
     symbola
     kitty
     (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
-    #(obs-studio.override {
-    #  ffmpeg = ffmpeg-full.override {
-    #    inherit nvidia-video-sdk;
-    #    nvenc = true;
-    #    nonfreeLicensing = true;
-    #  };
-    #})
-    #frei0r
-    #(ffmpeg-full.override {
-    #  inherit nvidia-video-sdk;
-    #  nvenc = true;
-    #  nonfreeLicensing = true;
-    #})
-    #kdeApplications.kdenlive
     vlc
-    multimc
-    #dolphinEmuMaster
-    openalSoft
-    multimc
+    (import <unstable> {}).multimc
     (callPackage ./neovim {
       vimPlugins = (import <unstable> {}).vimPlugins;
     })
@@ -264,6 +247,11 @@ in {
     eval $(hub alias -s)
 
     alias sw='exec tmux switch -t'
+
+    if [ -z "$NEOFETCH_RAN" ]; then
+        ${pkgs.neofetch}/bin/neofetch --config ${./files/neofetch.conf}
+        export NEOFETCH_RAN=1
+    fi
   '';
 
   home.sessionVariables = {
