@@ -43,6 +43,7 @@ lib.makeComponent "extra"
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0200|0402|0403|0406|0407|0410", TAG+="uaccess", GROUP="users", MODE="0666"
       ATTRS{name}=="Logitech M570", ENV{IS_M570}="yes"
       ENV{IS_M570}=="yes", SYMLINK+="input/event_m570"
+      SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="0666"
     '';
 
     # tmpfs
