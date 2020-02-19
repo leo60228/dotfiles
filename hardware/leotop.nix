@@ -41,6 +41,7 @@
             wantedBy = [ "multi-user.target" ];
             serviceConfig.Type = "oneshot";
             script = "${../files/gpu-fixup.sh}";
+            serviceConfig.User = "root";
         };
 
         systemd.services.perf-checkup = {
