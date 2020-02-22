@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    (callPackage ./nnasos.nix {})
     rclone
     (hiPrio rustup)
     pciutils
