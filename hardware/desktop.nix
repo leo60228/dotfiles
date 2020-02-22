@@ -17,6 +17,15 @@
         "idle=nomwait" # possible workaround to hangs
     ];
 
+    hardware.opengl.package = pkgs.buildEnv {
+        name = "navi-opengl";
+        paths = let mesa = pkgs.callPackage ../mesa {
+            llvmPackages = pkgs.llvmPackages_9;
+            inherit (pkgs.darwin.apple_sdk.frameworks) OpenGL;
+            inherit (pkgs.darwin.apple_sdk.libs) Xplugin;
+        }; in [ mesa mesa.drivers ];
+    };
+
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
         fsType = "ext4";
