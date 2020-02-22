@@ -68,10 +68,10 @@
     boot.earlyVconsoleSetup = true;
     i18n.consolePackages = [ pkgs.terminus_font ];
     i18n.consoleFont = "ter-128n";
-    #services.xserver.deviceSection = ''
-    #Option "DRI" "3"
-    #Option "VariableRefresh" "true"
-    #'';
+    services.xserver.deviceSection = ''
+    Option "DRI" "3"
+    Option "VariableRefresh" "true"
+    '';
     services.xserver.exportConfiguration = true;
   };
 
