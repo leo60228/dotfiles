@@ -51,7 +51,7 @@ in {
       categories = "Games;";
     })
     (hiPrio gtk2)
-    (lowPrio llvmPackages_39.clang-unwrapped)
+    (lowPrio llvmPackages.clang-unwrapped)
     SDL
     SDL2
     atk
@@ -158,9 +158,9 @@ in {
     (pkgs.hiPrio (callPackage ./bin.nix {}))
     (callPackage ./fuseenano.nix {})
     (python27.withPackages (ps: with ps; [ neovim ]))
-    (import ./julia-oldpkgs.nix {version = "06";})
-    (import ./julia-oldpkgs.nix {version = "07";})
-    (import ./julia-oldpkgs.nix {version = "11";})
+    #(import ./julia-oldpkgs.nix {version = "06";})
+    #(import ./julia-oldpkgs.nix {version = "07";})
+    #(import ./julia-oldpkgs.nix {version = "11";})
   ];
 
   programs.go.enable = true;
@@ -264,7 +264,7 @@ in {
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
     CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk_pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
-    LIBCLANG_PATH = "${pkgs.llvmPackages_39.clang-unwrapped.lib}/lib";
+    LIBCLANG_PATH = "${pkgs.llvmPackages.clang-unwrapped.lib}/lib";
     OPENSSL_DIR = "/home/leo60228/.nix-profile";
     BAT_THEME = "Solarized";
   };

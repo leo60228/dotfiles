@@ -7,9 +7,6 @@
 
     environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
 
-    systemd.package = (import <unstable> {}).systemd;
-    systemd.additionalUpstreamSystemUnits = [ "dbus-org.freedesktop.import1.service" "systemd-importd.service" ];
-
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
@@ -20,29 +17,13 @@
         "idle=nomwait" # possible workaround to hangs
     ];
 
-    hardware.firmware = [ (import /home/leo60228/nixpkgs-navi {}).navifw ];
-
-    nixpkgs.overlays = [ (self: super: {
-        amdMicrocode = (import /home/leo60228/nixpkgs-navi {}).amdMicrocode;
-    }) (import ../xorg-overlay.nix) ];
-
-    hardware.opengl.package = pkgs.buildEnv {
-        name = "navi-opengl";
-        paths = let mesa = (import /home/leo60228/nixpkgs-navi {}).mesa; in [ mesa mesa.drivers ];
-    };
-
-    hardware.opengl.package32 = pkgs.buildEnv {
-        name = "navi-opengl";
-        paths = let mesa = (import /home/leo60228/nixpkgs-navi {}).pkgsi686Linux.mesa; in [ mesa mesa.drivers ];
-    };
-
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
         fsType = "ext4";
       };
 
     fileSystems."/boot" =
-      { device = "/dev/disk/by-uuid/03F6-A8D5";
+      { device = "/dev/disk/by-uuid/3556-7F76";
         fsType = "vfat";
       };
 
@@ -72,8 +53,6 @@
         serviceConfig.Restart = "always";
         script = "${../files/fanctl} -c ${../files/fanctl.yml}";
     };
-
-    environment.sessionVariables.AMD_DEBUG = "nodma"; # workaround for navi hang
 
     # hidpi
     services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];

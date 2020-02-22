@@ -33,7 +33,6 @@ pkgs.buildFHSUserEnv {
       xlibs.libXrender.out
       freetype.out
       libglvnd.out
-      libGLU_combined.out
       zlib.out
       gnome2.GConf.out
       xlibs.libXtst.out
