@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+shopt -s extglob
+UPSTREAM_SHA="$(git ls-remote origin heads/master | cut -f1)"
+REF="$(git symbolic-ref HEAD)"
+URL="$(git config remote.leo60228.url)"
+REPO="${URL#*leo60228/}"
+REPO="${REPO%.git}"
+hub api -X PATCH "repos/leo60228/${REPO}/git/${REF}" "-Fsha=${UPSTREAM_SHA}"
