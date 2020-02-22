@@ -44,6 +44,7 @@ lib.makeComponent "extra"
       ATTRS{name}=="Logitech M570", ENV{IS_M570}="yes"
       ENV{IS_M570}=="yes", SYMLINK+="input/event_m570"
       SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="0666"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0a5c", ATTRS{idProduct}=="21e8", TAG+="uaccess"
     '';
 
     # tmpfs
