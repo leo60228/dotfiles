@@ -5,11 +5,9 @@ lib.makeComponent "en_us"
 
   config = {
     # Select internationalisation properties.
-    i18n = lib.mkDefault {
-      consoleFont = "Lat2-Terminus16";
-      consoleKeyMap = "us";
-      defaultLocale = "en_US.UTF-8";
-    };
+    i18n.defaultLocale = lib.mkDefault "en_us.UTF-8";
+    console.font = lib.mkDefault "Lat2-Terminus16";
+    console.keyMap = lib.mkDefault "us";
     environment.systemPackages = with pkgs; [
       aspell
       aspellDicts.en
