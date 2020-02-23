@@ -3,7 +3,7 @@ lib.makeComponent "kde"
 ({cfg, pkgs, lib, ...}: with lib; {
   opts = {
     bluetooth = mkOption {
-      default = false;
+      default = true;
       type = types.bool;
     };
   };
