@@ -73,6 +73,11 @@
     Option "VariableRefresh" "true"
     '';
     services.xserver.exportConfiguration = true;
+
+    hardware.pulseaudio.extraConfig = ''
+    load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0c_00.4.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
+    set-default-sink reverse-stereo
+    '';
   };
 
   nixops = {
