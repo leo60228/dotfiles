@@ -26,6 +26,15 @@
         }; in [ mesa mesa.drivers ];
     };
 
+    hardware.opengl.package32 = with pkgs; pkgsi686Linux.buildEnv {
+        name = "navi-opengl32";
+        paths = let mesa = pkgsi686Linux.callPackage ../mesa {
+            llvmPackages = pkgsi686Linux.llvmPackages_9;
+            inherit (pkgsi686Linux.darwin.apple_sdk.frameworks) OpenGL;
+            inherit (pkgsi686Linux.darwin.apple_sdk.libs) Xplugin;
+        }; in [ mesa mesa.drivers ];
+    };
+
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
         fsType = "ext4";
