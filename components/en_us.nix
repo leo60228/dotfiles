@@ -5,7 +5,6 @@ lib.makeComponent "en_us"
 
   config = {
     # Select internationalisation properties.
-    i18n.defaultLocale = lib.mkDefault "en_us.UTF-8";
     console.font = lib.mkDefault "Lat2-Terminus16";
     console.keyMap = lib.mkDefault "us";
     environment.systemPackages = with pkgs; [
