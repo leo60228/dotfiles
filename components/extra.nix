@@ -56,5 +56,8 @@ lib.makeComponent "extra"
     environment.systemPackages = with pkgs; [
       wget vim qemu (import <unstable> {}).androidenv.androidPkgs_9_0.platform-tools
     ];
+
+    # ntfs
+    boot.supportedFilesystems = [ "ntfs" ];
   };
 })
