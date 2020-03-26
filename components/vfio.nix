@@ -19,21 +19,10 @@ lib.makeComponent "vfio"
           "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd",
       ]
       nographics_allow_host_audio = 1
+      user = "leo60228"
     '';
     environment.systemPackages = [ pkgs.virtmanager pkgs.OVMF ];
     boot.kernelParams = [ "amd_iommu=on" "iommu=pt" ];
-    boot.extraModprobeConfig = ''
-      options vfio-pci ids=10de:1c02,10de:10f1
-    '';
-    boot.postBootCommands = ''
-      DEVS="0000:01:00.0 0000:01:00.1"
-
-      for DEV in $DEVS; do
-        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-      done
-
-      modprobe -i vfio-pci
-    '';
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
@@ -44,5 +33,17 @@ lib.makeComponent "vfio"
     hardware.pulseaudio.extraClientConf = ''
         default-server = 127.0.0.1
     '';
+    systemd.services.libvirtd.preStart = let qemuHookFile = ../files/vfio-qemu-hook; in ''
+    mkdir -p /var/lib/libvirt/hooks
+    chown -R leo60228:users /var/lib/libvirt
+    chmod 755 /var/lib/libvirt/hooks
+
+    # Copy hook files
+    cp -f ${qemuHookFile} /var/lib/libvirt/hooks/qemu
+
+    # Make them executable
+    chmod +x /var/lib/libvirt/hooks/qemu
+    '';
+    systemd.services.libvirtd.path = with pkgs; [ bash killall libvirt kmod ];
   };
 })

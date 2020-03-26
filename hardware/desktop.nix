@@ -7,7 +7,19 @@
 
     environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = with pkgs; let
+        baseKernel = linux_5_5;
+        kernel = baseKernel.override {
+            kernelPatches = [ {
+                name = "navi10-vfio-reset";
+                patch = fetchurl {
+                    url = https://gitlab.manjaro.org/packages/core/linux55/-/raw/c93d32d693c7c34da9b30ce81c056588b19ececc/0001-nonupstream-navi10-vfio-reset.patch;
+                    sha256 = "1708sf86hv8yn5w0h94fckrmpdarl2z2vph1307rycyidpw5h9vs";
+                };
+            } ];
+        };
+        kernelPackages = recurseIntoAttrs (linuxPackagesFor kernel);
+        in kernelPackages;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.kernelModules = [ "kvm-amd" ];
@@ -15,6 +27,7 @@
     boot.kernelParams = [
         "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
         "idle=nomwait" # possible workaround to hangs
+        "video=efifb:off"
     ];
 
     hardware.opengl.package = pkgs.buildEnv {
