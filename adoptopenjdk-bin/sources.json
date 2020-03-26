@@ -1,0 +1,24 @@
+{
+  "openjdk9": {
+    "linux": {
+      "jdk": {
+        "hotspot": {
+          "aarch64": {
+            "build": "181",
+            "sha256": "d1ee522053bb4135536b1d3173be8224bf54563d166e882b7ee2ccf609c2517f",
+            "url": "https://github.com/AdoptOpenJDK/openjdk9-binaries/releases/download/jdk-9%2B181/OpenJDK9U-jdk_aarch64_linux_hotspot_9_181.tar.gz",
+            "version": "9.0.0"
+          },
+          "packageType": "jdk",
+          "vmType": "hotspot",
+          "x86_64": {
+            "build": "11",
+            "sha256": "aa4fc8bda11741facaf3b8537258a4497c6e0046b9f4931e31f713d183b951f1",
+            "url": "https://github.com/AdoptOpenJDK/openjdk9-binaries/releases/download/jdk-9.0.4%2B11/OpenJDK9U-jdk_x64_linux_hotspot_9.0.4_11.tar.gz",
+            "version": "9.0.4"
+          }
+        }
+      }
+    }
+  }
+}
