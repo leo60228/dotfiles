@@ -4,6 +4,7 @@ let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
     efibootmgr
+    slop
     jq
     mosquitto
     (callPackage ./nnasos.nix {})
