@@ -3,6 +3,7 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    efibootmgr
     jq
     mosquitto
     (callPackage ./nnasos.nix {})
@@ -51,6 +52,14 @@ in {
       desktopName = "Nintendo Switch";
       genericName = desktopName;
       categories = "Games;";
+    })
+    (makeDesktopItem rec {
+      name = "windows10";
+      exec = "windows";
+      icon = ./files/windows.svg;
+      desktopName = "Windows 10";
+      genericName = desktopName;
+      categories = "System;Utility;";
     })
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)

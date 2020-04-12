@@ -48,7 +48,7 @@
       };
 
     swapDevices =
-      [ { device = "/dev/disk/by-uuid/2804b7e0-0256-431b-8ea8-31817a48d05a"; }
+      [ { device = "/dev/disk/by-partlabel/HIBERNATE"; }
       ];
 
     nix.maxJobs = lib.mkDefault 12;
@@ -88,6 +88,15 @@
     hardware.pulseaudio.extraConfig = ''
     load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0c_00.4.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
     set-default-sink reverse-stereo
+    '';
+
+    systemd.sleep.extraConfig = "HibernateMode=reboot";
+    security.wrappers.windows.source = pkgs.writeShellScript "windows" ''
+    set -e
+    whoami
+    if [[ "$(id -u)" != "0" ]]; then exec sudo -- "$0" "$@"; fi
+    ${pkgs.efibootmgr}/bin/efibootmgr --bootnext 0003
+    ${pkgs.systemd}/bin/systemctl hibernate
     '';
   };
 
