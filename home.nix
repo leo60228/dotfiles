@@ -13,7 +13,7 @@ in {
     pciutils
     lftp
     google-play-music-desktop-player
-    (import <unstable> {}).dolphinEmuMaster
+    (callPackage ./dolphin.nix {}).beta
     #(callPackage ./kflash.py {})
     alsaLib
     alsaLib.dev
