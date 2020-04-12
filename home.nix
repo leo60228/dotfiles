@@ -42,7 +42,7 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) ]; }).firefox
+    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
