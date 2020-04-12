@@ -1,25 +1,22 @@
 {
   nixos = { config, lib, pkgs, ... }:
-  {
+  let mesaPkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/48a137da7301f3ec5e15f8c32945b64581ef9f70.tar.gz";
+    sha256 = "17mrn7y7s2vi6crk6xkcq0hsz56a32y4c2qxxbdxnb7bpy9738gn";
+  }) {};
+      mesa = mesaPkgs.mesa;
+      kernelPkgs = import (builtins.fetchTarball {
+        url = "https://github.com/NixOS/nixpkgs/archive/4fbd9e3ab8b9ff17108371b71db20644747536c6.tar.gz";
+        sha256 = "1s51ps9psds19abjh09dsrlrg9qadgyc7k25b9krj4fkfqb3fr9p";
+      }) {};
+  in {
     imports =
       [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ];
 
     environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools ];
 
-    boot.kernelPackages = with pkgs; let
-        baseKernel = linux_5_5;
-        kernel = baseKernel.override {
-            kernelPatches = [ {
-                name = "navi10-vfio-reset";
-                patch = fetchurl {
-                    url = https://gitlab.manjaro.org/packages/core/linux55/-/raw/c93d32d693c7c34da9b30ce81c056588b19ececc/0001-nonupstream-navi10-vfio-reset.patch;
-                    sha256 = "1708sf86hv8yn5w0h94fckrmpdarl2z2vph1307rycyidpw5h9vs";
-                };
-            } ];
-        };
-        kernelPackages = recurseIntoAttrs (linuxPackagesFor kernel);
-        in kernelPackages;
+    boot.kernelPackages = kernelPkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.kernelModules = [ "kvm-amd" ];
@@ -32,20 +29,12 @@
 
     hardware.opengl.package = pkgs.buildEnv {
         name = "navi-opengl";
-        paths = let mesa = pkgs.callPackage ../mesa {
-            llvmPackages = pkgs.llvmPackages_9;
-            inherit (pkgs.darwin.apple_sdk.frameworks) OpenGL;
-            inherit (pkgs.darwin.apple_sdk.libs) Xplugin;
-        }; in [ mesa mesa.drivers ];
+        paths = [ mesa mesa.drivers ];
     };
 
     hardware.opengl.package32 = with pkgs; pkgsi686Linux.buildEnv {
         name = "navi-opengl32";
-        paths = let mesa = pkgsi686Linux.callPackage ../mesa {
-            llvmPackages = pkgsi686Linux.llvmPackages_9;
-            inherit (pkgsi686Linux.darwin.apple_sdk.frameworks) OpenGL;
-            inherit (pkgsi686Linux.darwin.apple_sdk.libs) Xplugin;
-        }; in [ mesa mesa.drivers ];
+        paths = with mesaPkgs.pkgsi686Linux; [ mesa mesa.drivers ];
     };
 
     fileSystems."/" =
