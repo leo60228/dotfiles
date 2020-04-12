@@ -68,7 +68,9 @@ in {
     SDL2
     atk
     atk.dev
-    audacity
+    (pkgs.writeShellScriptBin "audacity" ''
+    exec env PULSE_LATENCY_MSEC=30 ${audacity}/bin/audacity "$@"
+    '')
     boost
     cairo
     cairo.dev
