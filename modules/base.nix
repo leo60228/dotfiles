@@ -33,4 +33,6 @@
   boot.initrd.extraUtilsCommands = ''
     copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
   '';
+
+  boot.kernel.sysctl."kernel.sysrq" = 1;
 }
