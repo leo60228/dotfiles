@@ -1,0 +1,14 @@
+diff --git a/drivers/tty/sysrq.c b/drivers/tty/sysrq.c
+index 573b20551..0a91e156c 100644
+--- a/drivers/tty/sysrq.c
++++ b/drivers/tty/sysrq.c
+@@ -54,6 +54,9 @@
+ #include <asm/ptrace.h>
+ #include <asm/irq_regs.h>
+ 
++#undef KEY_SYSRQ
++#define KEY_SYSRQ KEY_INSERT
++
+ /* Whether we react on sysrq keys or just ignore them */
+ static int __read_mostly sysrq_enabled = CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE;
+ static bool __read_mostly sysrq_always_enabled;
