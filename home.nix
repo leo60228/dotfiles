@@ -3,6 +3,8 @@
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
   home.packages = with pkgs; [
+    zip
+    glxinfo
     efibootmgr
     slop
     jq
@@ -44,7 +46,7 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
+    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).firefox-bin
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
@@ -54,6 +56,17 @@ in {
       genericName = desktopName;
       categories = "Games;";
     })
+    (let scream = pkgs.scream-receivers.override { pulseSupport = true; }; in writeShellScriptBin "windows" ''
+      sudo virsh start win10 || true
+      until [ -e /dev/shm/looking-glass ]; do
+        sleep 1
+      done
+      ${scream}/bin/scream-pulse -i virbr0 &
+      ${pkgs.looking-glass-client}/bin/looking-glass-client -F &
+      wait -n
+      pkill -P $$
+      ''
+    )
     (makeDesktopItem rec {
       name = "windows10";
       exec = "windows";
@@ -249,10 +262,6 @@ in {
 
     [[ $- != *i* ]] && return
 
-    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM_PROGRAM" =~ vscode ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] ; then
-      exec tmux -u -2
-    fi
-
     export EDITOR=vim
 
     export NIX_REMOTE=daemon
@@ -261,10 +270,8 @@ in {
 
     eval $(hub alias -s)
 
-    alias sw='exec tmux switch -t'
-
     if [ -z "$NEOFETCH_RAN" ]; then
-        ${pkgs.neofetch}/bin/neofetch --config ${./files/neofetch.conf}
+        neofetch --config ${./files/neofetch.conf}
         export NEOFETCH_RAN=1
     fi
   '';
@@ -328,12 +335,6 @@ in {
   home.file.".terminfo".recursive = true;
 
   home.file.".rustup/toolchains/system".source = (pkgs.callPackage ./rust.nix {}).rust;
-
-  home.activation.kbuildsycoca5 = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD kbuildsycoca5 || true";
-  home.activation.batCache = config.lib.dag.entryAfter ["linkGeneration"] "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
-  home.activation.startSockets = config.lib.dag.entryAfter ["reloadSystemD"] ''
-    $DRY_RUN_CMD env XDG_RUNTIME_DIR=/run/user/1000 systemctl --user start sockets.target
-  ''; # dirty hack
 
   services.mpd = {
     enable = true;

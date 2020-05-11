@@ -21,4 +21,9 @@ with import ../components; rec {
     '';
   };
   networking.firewall.allowedTCPPorts = [ 1883 ];
+  networking.firewall.allowedUDPPorts = [ 4010 ];
+  services.xserver.displayManager.sddm.autoLogin = {
+    enable = true;
+    user = "leo60228";
+  };
 }

@@ -6,6 +6,7 @@ lib.makeComponent "steam"
   config = {
     # Steam
     hardware.opengl.driSupport32Bit = true;
+    hardware.opengl.setLdLibraryPath = true;
     hardware.pulseaudio.support32Bit = true;
     environment.systemPackages = [ ((pkgs.newScope pkgs.steamPackages) ../steam-chrootenv.nix {
       glxinfo-i686 = pkgs.pkgsi686Linux.glxinfo;

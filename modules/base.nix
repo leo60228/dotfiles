@@ -19,7 +19,7 @@
   system.stateVersion = "18.03"; # Did you read the comment?
 
   nixpkgs.overlays = map (e: import (../nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ../nixpkgs));
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = { allowUnfree = true; };
 
   # trusted users
   nix.trustedUsers = [ "root" "@wheel" ];

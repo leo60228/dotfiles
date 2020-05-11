@@ -12,7 +12,7 @@ set history=50                  " keep 50 lines of command line history
 set ruler                       " show the cursor position all the time
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.png,.jpg
 set backspace=indent,eol,start  " more powerful backspacing
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab ai
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab ai
 set relativenumber wrap shiftround
 let mapleader = ","
 let localleader = "\\"
