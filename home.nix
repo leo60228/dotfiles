@@ -12,7 +12,6 @@ in {
     bat
     nodejs-13_x
     nix-prefetch-git
-    (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     ffmpeg
     gnupg
     maim
@@ -82,7 +81,6 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
@@ -223,6 +221,24 @@ in {
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
   ];
+
+  programs.firefox = {
+    enable = true;
+    package = (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin.overrideAttrs (oldAttrs: {
+      passthru.browserName = "firefox";
+    });
+    enableAdobeFlash = true;
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader google-search-link-fix old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
+    profiles.default = {
+      settings = {
+        "dom.allow_scripts_to_close_windows" = true;
+        "dom.webgpu.enabled" = true;
+        "gfx.webrender.all" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+      };
+    };
+  };
 
   programs.go.enable = !small;
 
