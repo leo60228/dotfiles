@@ -12,7 +12,7 @@ in {
     bat
     nodejs-13_x
     nix-prefetch-git
-    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
+    (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     ffmpeg
     gnupg
     maim
@@ -53,8 +53,8 @@ in {
     alsaLib
     alsaLib.dev
     (callPackage ./twili-gdb.nix {})
-    (lib.setPrio (-100) (import <unstable> {}).llvmPackages_8.clang)
-    (import <unstable> {}).llvmPackages_8.llvm
+    (lib.setPrio (-100) llvmPackages_8.clang)
+    llvmPackages_8.llvm
     (callPackage ./zenstates.nix {})
     (callPackage ./unityenv.nix {})
     easytag
@@ -72,13 +72,13 @@ in {
     bat
     nodejs-13_x
     (callPackage ./jetbrains.nix {}).rider
-    (import <unstable> {}).androidenv.androidPkgs_9_0.ndk-bundle
+    androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
     carnix
     nix-prefetch-git
     pandoc
-    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
+    (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
@@ -178,10 +178,8 @@ in {
     kitty
     (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
     vlc
-    (import <unstable> {}).multimc
-    (callPackage ./neovim {
-      vimPlugins = (import <unstable> {}).vimPlugins;
-    })
+    multimc
+    (callPackage ./neovim {})
     openscad
     dpkg
     (lib.setPrio (-20) binutils-unwrapped)

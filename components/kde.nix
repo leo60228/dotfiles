@@ -24,10 +24,10 @@ lib.makeComponent "kde"
 
     # software support
     environment.systemPackages = with pkgs; [ bluedevil ];
-    hardware.pulseaudio = {
+    hardware.pulseaudio = with pkgs; {
       enable = true;
-      extraModules = [ (import <unstable> {}).pulseaudio-modules-bt ];
-      package = (import <unstable> {}).pulseaudioFull;
+      extraModules = [ pulseaudio-modules-bt ];
+      package = pulseaudioFull;
     };
   }) ];
 })

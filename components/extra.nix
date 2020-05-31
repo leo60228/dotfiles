@@ -54,7 +54,7 @@ lib.makeComponent "extra"
     services.udev.packages = [ pkgs.android-udev-rules ];
 
     environment.systemPackages = with pkgs; [
-      wget vim qemu (import <unstable> {}).androidenv.androidPkgs_9_0.platform-tools
+      wget vim qemu androidenv.androidPkgs_9_0.platform-tools
     ];
 
     # ntfs
