@@ -28,6 +28,11 @@
     switch() {
       systemctl stop display-manager.service
       /run/current-system/fine-tune/child-1/bin/switch-to-configuration switch
+      sleep 1
+      shopt -s nullglob
+      chgrp video /dev/dri/card*
+      chgrp render /dev/dri/render*
+      chmod g+rw /dev/dri/card* /dev/dri/render*
       systemctl restart display-manager.service
     }
     export -f switch
@@ -46,9 +51,9 @@
     #boot.kernelPackages = kernelPkgs.linuxPackages_latest;
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.kernelPatches = [ {
-      name = "navi-reset";
-      patch = ../files/navi-reset.patch;
-    } {
+    #  name = "navi-reset";
+    #  patch = ../files/navi-reset.patch;
+    #} {
       name = "acs-override";
       patch = ../files/add-acs-overrides.patch;
     } {
@@ -187,7 +192,6 @@
 
     systemd.sleep.extraConfig = "HibernateMode=reboot";
 
-    systemd.services.systemd-udev-settle.enable = false;
     systemd.services.NetworkManager-wait-online.enable = false;
     systemd.services.rngd.conflicts = [ "shutdown.target" ];
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
