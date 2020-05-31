@@ -1,13 +1,15 @@
-{ rustChannelOf, lowPrio }:
+{ rustChannelOf, lowPrio, small ? false }:
 
 rec {
   channel = rustChannelOf {
     channel = "nightly";
-    date = "2020-01-31";
+    date = "2020-05-15";
   };
   rust = channel.rust.override {
     extensions = [ "clippy-preview" "rls-preview" "rust-src" "rust-analysis" ];
-    targets = [
+    targets = if small then [
+      "x86_64-unknown-linux-gnu"
+    ] else [
       "x86_64-unknown-linux-gnu"
       "x86_64-unknown-linux-musl"
       "armv7-linux-androideabi"

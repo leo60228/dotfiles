@@ -6,7 +6,7 @@
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "dialout" ];
+    extraGroups = [ "wheel" "dialout" "video" "render" ];
     openssh.authorizedKeys.keyFiles = [ /home/leo60228/.ssh/id_rsa.pub ];
   };
 

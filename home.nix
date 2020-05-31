@@ -1,8 +1,41 @@
-{ pkgs, config, ... }:
+{ small ? false }:
+{ pkgs, config, lib, ... }:
 
 let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 in {
-  home.packages = with pkgs; [
+  home.packages = with pkgs; if small then [
+    ripgrep
+    (callPackage ./neovim {})
+    zip
+    pciutils
+    lftp
+    bat
+    nodejs-13_x
+    nix-prefetch-git
+    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
+    ffmpeg
+    gnupg
+    maim
+    pkgconfig
+    gist
+    gitAndTools.hub
+    p7zip
+    xclip
+    xsel
+    gimp
+    vlc
+    git
+    file
+    unzip
+    usbutils
+    gnumake
+    (hiPrio gcc)
+    (callPackage ./fuseenano.nix {})
+    hack-font
+    source-sans-pro
+    (pkgs.hiPrio (callPackage ./bin.nix {}))
+  ] else [
+    linuxPackages.perf
     zip
     glxinfo
     efibootmgr
@@ -37,8 +70,7 @@ in {
     gnuplot
     #(callPackage ./amdgpu-utils {})
     bat
-    nodejs-10_x
-    (hiPrio nodePackages_10_x.npm)
+    nodejs-13_x
     (callPackage ./jetbrains.nix {}).rider
     (import <unstable> {}).androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
@@ -46,7 +78,7 @@ in {
     carnix
     nix-prefetch-git
     pandoc
-    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).firefox-bin
+    (import <unstable> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin
     (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
@@ -178,7 +210,7 @@ in {
     meteor
     hplip
     virtualbox
-    (callPackage ./dotnet.nix {})
+    dotnet-sdk_3
     gmusicproxy
     mono5
     #julia_06
@@ -190,7 +222,7 @@ in {
     #(import ./julia-oldpkgs.nix {version = "11";})
   ];
 
-  programs.go.enable = true;
+  programs.go.enable = !small;
 
   services.gpg-agent = {
     enable = true;
@@ -200,11 +232,11 @@ in {
   };
 
   programs.home-manager.enable = true;
-  programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
+  #programs.home-manager.path = /home/leo60228/home-manager;
 
   systemd.user.startServices = true;
 
-  systemd.user.services.gmusicproxy = {
+  systemd.user.services.gmusicproxy = lib.mkIf (!small) {
     Unit = {
       Description = "play music proxy";
       After = [ "network-online.target" ];
@@ -221,7 +253,7 @@ in {
     };
   };
 
-  systemd.user.services.twibd = {
+  systemd.user.services.twibd = lib.mkIf (!small) {
     Unit = {
       Description = "Twili Bridge Daemon";
       Requires = [ "twibd.socket" ];
@@ -235,7 +267,7 @@ in {
     };
   };
 
-  systemd.user.sockets.twibd = {
+  systemd.user.sockets.twibd = lib.mkIf (!small) {
     Unit = {
       Description = "Twili Bridge Daemon";
     };
@@ -254,7 +286,7 @@ in {
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
-  export PATH="$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+  export PATH="$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
   export NIX_PATH='/home/leo60228/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels'
   '';
   programs.bash.initExtra = ''
@@ -284,11 +316,13 @@ in {
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
+    BAT_THEME = "Solarized";
+  } // (if small then {} else {
     CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk_pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
     LIBCLANG_PATH = "${pkgs.llvmPackages.clang-unwrapped.lib}/lib";
-    OPENSSL_DIR = "/home/leo60228/.nix-profile";
-    BAT_THEME = "Solarized";
-  };
+    OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
+    OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
+  });
 
   programs.bash.shellAliases."xargo-nx" =
     ''docker run --rm -it -v "$(pwd):/workdir" '' +
@@ -328,16 +362,20 @@ in {
     set-option -sg escape-time 10
   '';
 
-  home.file.".frei0r-1/lib".source = "${pkgs.frei0r}/lib/frei0r-1";
-  home.file.".frei0r-1/lib".recursive = true;
+  home.file.".frei0r-1/lib" = lib.mkIf (!small) {
+    source = "${pkgs.frei0r}/lib/frei0r-1";
+    recursive = true;
+  };
 
   home.file.".terminfo".source = ./files/terminfo;
   home.file.".terminfo".recursive = true;
 
-  home.file.".rustup/toolchains/system".source = (pkgs.callPackage ./rust.nix {}).rust;
+  home.file.".rustup/toolchains/system".source = (pkgs.callPackage ./rust.nix {
+    inherit small;
+  }).rust;
 
   services.mpd = {
-    enable = true;
+    enable = !small;
     extraConfig = ''
         audio_output {
             type    "pulse"
@@ -349,4 +387,38 @@ in {
   nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+
+  xdg.configFile."openbox" = {
+    source = ./files/openbox;
+    recursive = true;
+  };
+
+  home.file.".themes" = {
+    source = ./files/openbox-themes;
+    recursive = true;
+  };
+
+  #fonts.fontconfig.enable = true;
+  #fonts.fontconfig.aliases = [{
+  #  families = [ "Hack" ];
+  #  default = [ "monospace" ];
+  #}];
+  #fonts.fontconfig.matches = [{
+  #  tests = [
+  #    {
+  #      compare = "eq";
+  #      name = "family";
+  #      exprs = [ "sans-serif" ];
+  #    }
+  #    {
+  #      compare = "eq";
+  #      name = "family";
+  #      exprs = [ "monospace" ];
+  #    }
+  #  ];
+  #  edits = [{
+  #    mode = "delete";
+  #    name = "family";
+  #  }];
+  #}];
 }

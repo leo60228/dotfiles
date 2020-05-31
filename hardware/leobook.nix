@@ -5,7 +5,7 @@
             [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
             ];
 
-        boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
+        boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" "dm-cache" ];
         boot.extraModulePackages = [ ];
 
         # keyboard driver
@@ -22,7 +22,7 @@
         hardware.enableAllFirmware = true;
 
         fileSystems."/" =
-        { device = "/dev/leobook/root";
+        { device = "/dev/chromebook/root";
             fsType = "ext4";
         };
 
@@ -32,13 +32,13 @@
         };
 
         fileSystems."/boot" =
-        { device = "/dev/disk/by-label/EFI";
+        { device = "/dev/disk/by-label/CHR-EFI";
             fsType = "vfat";
         };
 
-        swapDevices =
-            [ { device = "/dev/disk/by-label/SWAP"; }
-            ];
+        #swapDevices =
+        #    [ { device = "/dev/disk/by-label/CHR-SWAP"; }
+        #    ];
 
         nix.maxJobs = lib.mkDefault 2;
         powerManagement.cpuFreqGovernor = "ondemand";
@@ -49,7 +49,5 @@
         };
     };
 
-    nixops = {
-        deployment.targetHost = "leotop2.local";
-    };
+    nixops = {};
 }
