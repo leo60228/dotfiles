@@ -20,8 +20,8 @@ with import ../components; rec {
     topic readwrite #
     '';
   };
-  networking.firewall.allowedTCPPorts = [ 1883 ];
-  networking.firewall.allowedUDPPorts = [ 4010 ];
+  networking.firewall.allowedTCPPorts = [ 1883 3000 34567 34568 ];
+  networking.firewall.allowedUDPPorts = [ 4010 34567 34568 ];
   services.xserver.displayManager.sddm.autoLogin = {
     enable = true;
     user = "leo60228";
