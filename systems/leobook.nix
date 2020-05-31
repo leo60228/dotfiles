@@ -9,5 +9,5 @@ with import ../components; {
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
-  services.xserver.windowManager.openbox.enable = true;
+  environment.sessionVariables.KDEWM = "${pkgs.openbox}/bin/openbox";
 }
