@@ -62,7 +62,7 @@
   <animateIconify>yes</animateIconify>
   <font place="ActiveWindow">
     <name>Source Sans Pro</name>
-    <size>8</size>
+    <size>10</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -71,7 +71,7 @@
   </font>
   <font place="InactiveWindow">
     <name>Source Sans Pro</name>
-    <size>8</size>
+    <size>10</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -80,7 +80,7 @@
   </font>
   <font place="MenuHeader">
     <name>Source Sans Pro</name>
-    <size>9</size>
+    <size>11</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -89,7 +89,7 @@
   </font>
   <font place="MenuItem">
     <name>Source Sans Pro</name>
-    <size>9</size>
+    <size>11</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -98,7 +98,7 @@
   </font>
   <font place="ActiveOnScreenDisplay">
     <name>Source Sans Pro</name>
-    <size>9</size>
+    <size>11</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -107,7 +107,7 @@
   </font>
   <font place="InactiveOnScreenDisplay">
     <name>Source Sans Pro</name>
-    <size>9</size>
+    <size>11</size>
     <!-- font size in points -->
     <weight>normal</weight>
     <!-- 'normal' or 'normal' -->
@@ -125,7 +125,7 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-  <number>4</number>
+  <number>1</number>
   <firstdesk>1</firstdesk>
   <names>
     <!-- set names up here if you want to, like this:
@@ -133,14 +133,14 @@
     <name>desktop 2</name>
     -->
   </names>
-  <popupTime>875</popupTime>
+  <popupTime>0</popupTime>
   <!-- The number of milliseconds to show the popup for when switching
        desktops.  Set this to 0 to disable the popup. -->
 </desktops>
 
 <resize>
   <drawContents>yes</drawContents>
-  <popupShow>Nonpixel</popupShow>
+  <popupShow>Never</popupShow>
   <!-- 'Always', 'Never', or 'Nonpixel' (xterms and such) -->
   <popupPosition>Center</popupPosition>
   <!-- 'Center', 'Top', or 'Fixed' -->
