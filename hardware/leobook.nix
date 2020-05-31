@@ -5,7 +5,8 @@
             [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
             ];
 
-        boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" "dm-cache" ];
+        boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+        boot.initrd.kernelModules = [ "dm_cache" "dm_cache_smq" "dm_bio_prison" "dm_persistent_data" "dm_bufio" "dm_mod" "libcrc32c" ];
         boot.extraModulePackages = [ ];
 
         # keyboard driver
@@ -36,9 +37,9 @@
             fsType = "vfat";
         };
 
-        #swapDevices =
-        #    [ { device = "/dev/disk/by-label/CHR-SWAP"; }
-        #    ];
+        swapDevices =
+            [ { device = "/dev/chromebook/swap"; }
+            ];
 
         nix.maxJobs = lib.mkDefault 2;
         powerManagement.cpuFreqGovernor = "ondemand";
