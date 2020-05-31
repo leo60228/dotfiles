@@ -37,6 +37,7 @@ in {
     ksuperkey
     (callPackage ./opensnap.nix {})
     wmctrl
+    (callPackage ./discord.nix { base = <nixpkgs/pkgs/applications/networking/instant-messengers/discord/base.nix>; })
   ] else [
     linuxPackages.perf
     zip
