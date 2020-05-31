@@ -34,6 +34,9 @@ in {
     hack-font
     source-sans-pro
     (pkgs.hiPrio (callPackage ./bin.nix {}))
+    ksuperkey
+    (callPackage ./opensnap.nix {})
+    wmctrl
   ] else [
     linuxPackages.perf
     zip
@@ -388,6 +391,11 @@ in {
 
   xdg.configFile."openbox" = {
     source = ./files/openbox;
+    recursive = true;
+  };
+
+  xdg.configFile."opensnap" = {
+    source = ./files/opensnap;
     recursive = true;
   };
 

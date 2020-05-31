@@ -369,7 +369,21 @@
 
   <context name="Titlebar">
     <mousebind button="Left" action="Drag">
-      <action name="Move"/>
+      <action name="if">
+        <maximizedvertical>yes</maximizedvertical>
+        <then>
+          <action name="Unmaximize"/>
+            <direction>vertical</direction>
+          <action name="MoveResizeTo">
+            <x>center</x>
+            <y>current</y>
+          </action>
+          <action name="Move"/>
+        </then>
+        <else>
+          <action name="Move"/>
+        </else>
+      </action>
     </mousebind>
     <mousebind button="Left" action="DoubleClick">
       <action name="ToggleMaximize"/>

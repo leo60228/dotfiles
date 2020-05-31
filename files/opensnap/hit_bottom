@@ -1,0 +1,6 @@
+#!/bin/sh
+
+WINDOW_ID="$1"
+
+# close the window gracefully
+wmctrl -i -c $WINDOW_ID
