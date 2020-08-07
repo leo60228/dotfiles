@@ -3,16 +3,16 @@
 {
   beta = qt5.callPackage ./dolphin-base.nix rec {
     inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
-    version = "5.0-11824";
-    rev = "1b97f081b8eff9012132a4124537968bdb0e03e0";
-    sha256 = "1v96hcn34040vjsw83k8p0r0nb8rrdcz80h4ngirxzm36b3l7w6m";
+    version = "5.0-12247";
+    rev = "9c12a843f86d39bc64d9e9b5b670e67455487739";
+    sha256 = "1lqbylyzlkyzdmv7ydi96z6xqm4blpl5sa7bj0g4va0l6gv4qxfx";
     branch = "beta";
   };
   dev = qt5.callPackage ./dolphin-base.nix rec {
     inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
-    version = "5.0-11830";
-    rev = "960ba4fe5e243056c3ef8a71f5298dc48722d29c";
-    sha256 = "0r8gyrlyar2xcqbmvrv7mp1jbiyn38azh1zksx4088qxc5kpa273";
+    version = "5.0-12380";
+    rev = "afd25de85ef836ca376d84062e48674d2a5218d9";
+    sha256 = "0s2qpq0rci74j7jfw2yjhwrm8wx65wixcy8wj51x9dc25dfd901r";
     branch = "dev";
   };
 }
