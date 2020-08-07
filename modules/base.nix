@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./xpra.nix ];
+  imports = [ ./xpra.nix ./mastodon.nix ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
