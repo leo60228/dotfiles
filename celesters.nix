@@ -15,7 +15,7 @@ nightlyRustPlatform.buildRustPackage rec {
     nativeBuildInputs = [ pkgconfig ];
     buildInputs = [ openssl ];
 
-    cargoSha256 = "14qlxpgc4s6immlc2prgj4fqx55hi667cr8grxswg81xyq3xxgbh";
+    cargoSha256 = "08dpivb81pbqvjslwni7q4w1j5qcg8az6wn2mc4gi2i76kcf819j";
     verifyCargoDeps = true;
 
     meta = with stdenv.lib; {
