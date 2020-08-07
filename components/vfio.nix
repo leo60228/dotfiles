@@ -21,6 +21,8 @@ lib.makeComponent "vfio"
       nographics_allow_host_audio = 1
       user = "leo60228"
     '';
+    virtualisation.libvirtd.onBoot = "ignore";
+    virtualisation.libvirtd.onShutdown = "shutdown";
     services.udev.extraRules = ''
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c52b", MODE="0666"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0853", ATTRS{idProduct}=="0134", MODE="0666"
