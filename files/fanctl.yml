@@ -4,12 +4,12 @@ inputs:
   gpu_temp:
     ty: HwmonSensor
     args:
-      path: /sys/class/hwmon/hwmon0/temp1_input
+      path: /sys/class/hwmon/hwmon4/temp1_input
 outputs:
   gpu_fan:
     ty: PwmFan
     args:
-      path: /sys/class/drm/card0/device/hwmon/hwmon0
+      path: /sys/class/hwmon/hwmon4
       name: pwm1
 # gpu_fan:
 #   ty: AmdgpuFan
