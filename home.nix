@@ -1,8 +1,8 @@
 { small ? false }:
 { pkgs, config, lib, ... }:
 
-let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
-in {
+#let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
+{
   home.packages = with pkgs; if small then [
     ripgrep
     (callPackage ./neovim {})
@@ -10,7 +10,7 @@ in {
     pciutils
     lftp
     bat
-    nodejs-13_x
+    nodejs_latest
     nix-prefetch-git
     ffmpeg
     gnupg
@@ -45,7 +45,7 @@ in {
     slop
     jq
     mosquitto
-    (callPackage ./nnasos.nix {})
+    #(callPackage ./nnasos.nix {})
     rclone
     (hiPrio rustup)
     pciutils
@@ -73,7 +73,7 @@ in {
     gnuplot
     #(callPackage ./amdgpu-utils {})
     bat
-    nodejs-13_x
+    nodejs_latest
     (callPackage ./jetbrains.nix {}).rider
     androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
@@ -88,7 +88,6 @@ in {
       icon = ./files/switch.svg;
       desktopName = "Nintendo Switch";
       genericName = desktopName;
-      categories = "Games;";
     })
     (let scream = pkgs.scream-receivers.override { pulseSupport = true; }; in writeShellScriptBin "windows" ''
       sudo virsh start win10 || true
@@ -169,7 +168,7 @@ in {
     appimage-run
     p7zip
     #gimpPlugins.gap
-    steam-run-native
+    steam-run
     vscode
     (callPackage ./discord.nix {})
     xclip
@@ -211,7 +210,7 @@ in {
     hplip
     virtualbox
     dotnet-sdk_3
-    gmusicproxy
+    #gmusicproxy
     mono5
     #julia_06
     (pkgs.hiPrio (callPackage ./bin.nix {}))
@@ -254,22 +253,22 @@ in {
 
   systemd.user.startServices = true;
 
-  systemd.user.services.gmusicproxy = lib.mkIf (!small) {
-    Unit = {
-      Description = "play music proxy";
-      After = [ "network-online.target" ];
-    };
+  #systemd.user.services.gmusicproxy = lib.mkIf (!small) {
+  #  Unit = {
+  #    Description = "play music proxy";
+  #    After = [ "network-online.target" ];
+  #  };
 
-    Service = {
-      Type = "simple";
-      ExecStart = "${gmusicproxy}/bin/gmusicproxy";
-      Restart = "always";
-    };
+  #  Service = {
+  #    Type = "simple";
+  #    ExecStart = "${gmusicproxy}/bin/gmusicproxy";
+  #    Restart = "always";
+  #  };
 
-    Install = {
-      WantedBy = [ "network-online.target" ];
-    };
-  };
+  #  Install = {
+  #    WantedBy = [ "network-online.target" ];
+  #  };
+  #};
 
   systemd.user.services.twibd = lib.mkIf (!small) {
     Unit = {

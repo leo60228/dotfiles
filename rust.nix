@@ -14,6 +14,7 @@ rec {
       "x86_64-unknown-linux-musl"
       "armv7-linux-androideabi"
       "armv7-unknown-linux-musleabihf"
+      "thumbv7m-none-eabi"
       "thumbv7em-none-eabi"
       "thumbv7em-none-eabihf"
       "wasm32-unknown-unknown"
