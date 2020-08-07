@@ -1,72 +1,56 @@
 {
   nixos = { config, lib, pkgs, ... }:
-  let mesaPkgs = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/94d88d3b70916f02ec86bf08945c20bdf5526cc2.tar.gz";
-    sha256 = "1ximzgp1vk8d7055hhz8pl287iy3afph7n4ldj6645ynri5gpyqr";
-  }) {};
-      s3tcSupport = false;
-      makeDriverPackage = p: p.buildEnv {
-        name = "mesa-drivers+txc-${p.mesa.version}";
-        paths =
-          [ p.mesa.drivers
-            (if s3tcSupport then p.libtxc_dxtn else p.libtxc_dxtn_s2tc)
-          ];
-      };
-      kernelPkgs = import (builtins.fetchTarball {
-        url = "https://github.com/NixOS/nixpkgs/archive/4fbd9e3ab8b9ff17108371b71db20644747536c6.tar.gz";
-        sha256 = "1s51ps9psds19abjh09dsrlrg9qadgyc7k25b9krj4fkfqb3fr9p";
-      }) {
-        config.allowUnfree = true;
-      };
-  in {
+  {
     imports =
       [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ];
 
-    environment.systemPackages = with pkgs; [ vulkan-loader vulkan-tools (writeShellScriptBin "switch-to-amd" ''
-    set -e
-    switch() {
-      systemctl stop display-manager.service
-      /run/current-system/fine-tune/child-1/bin/switch-to-configuration switch
-      sleep 1
-      shopt -s nullglob
-      chgrp video /dev/dri/card*
-      chgrp render /dev/dri/render*
-      chmod g+rw /dev/dri/card* /dev/dri/render*
-      systemctl restart display-manager.service
-    }
-    export -f switch
-    setsid bash -c switch
-    '') (writeShellScriptBin "switch-to-nvidia" ''
-    set -e
-    switch() {
-      systemctl stop display-manager.service
-      /nix/var/nix/profiles/system/bin/switch-to-configuration switch
-      systemctl restart display-manager.service
-    }
-    export -f switch
-    setsid bash -c switch
-    '')];
+    environment.systemPackages = with pkgs; [
+      vulkan-loader
+      vulkan-tools
+      #(writeShellScriptBin "switch-to-amd" ''
+      #set -e
+      #switch() {
+      #  systemctl stop display-manager.service
+      #  /run/current-system/specialisation/amdgpu/bin/switch-to-configuration switch
+      #  sleep 1
+      #  shopt -s nullglob
+      #  chgrp video /dev/dri/card*
+      #  chgrp render /dev/dri/render*
+      #  chmod g+rw /dev/dri/card* /dev/dri/render*
+      #  systemctl restart display-manager.service
+      #}
+      #export -f switch
+      #setsid bash -c switch
+      #'')
+      #(writeShellScriptBin "switch-to-nvidia" ''
+      #set -e
+      #switch() {
+      #  systemctl stop display-manager.service
+      #  /nix/var/nix/profiles/system/bin/switch-to-configuration switch
+      #  systemctl restart display-manager.service
+      #}
+      #export -f switch
+      #setsid bash -c switch
+      #'')
+    ];
 
     #boot.kernelPackages = kernelPkgs.linuxPackages_latest;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_5_8;
     boot.kernelPatches = [ {
-    #  name = "navi-reset";
-    #  patch = ../files/navi-reset.patch;
-    #} {
+      name = "navi-reset";
+      patch = ../files/navi-reset.patch;
+    } {
       name = "acs-override";
       patch = ../files/add-acs-overrides.patch;
-    } {
-      name = "ryzen-3-usb-flr";
-      patch = ../files/ryzen-3-usb-flr.patch;
-    }];
+    } ];
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-    boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" ];
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
       "idle=nomwait" # possible workaround to hangs
-      "video=efifb:off"
-      "pcie_acs_override=downstream,multifunction"
+      "pcie_acs_override=downstream,multifunction" # X370 USB passthrough
+      "acpi_enforce_resources=lax" # evil hack for GA-AB350M-DS3H SMBus
     ];
 
     fileSystems."/" =
@@ -86,74 +70,46 @@
     nix.maxJobs = lib.mkDefault 12;
     powerManagement.cpuFreqGovernor = "performance";
 
-    services.xserver.videoDrivers = [ "nvidia" ];
     hardware.enableRedistributableFirmware = true;
     hardware.cpu.amd.updateMicrocode = true;
-    services.xserver.monitorSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
-    VendorName     "Unknown"
-    ModelName      "LG Electronics LG Ultra HD"
-    HorizSync       135.0 - 135.0
-    VertRefresh     40.0 - 61.0
-    '' else "";
-    services.xserver.serverLayoutSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
-    Option "Xinerama" "0"
-    '' else "";
-    services.xserver.screenSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
-    DefaultDepth    24
-    Option         "Stereo" "0"
-    Option         "nvidiaXineramaInfoOrder" "DFP-2"
-    Option         "metamodes" "3840x2160_60 +0+0 {AllowGSYNCCompatible=On}"
-    Option         "SLI" "Off"
-    Option         "MultiGPU" "Off"
-    Option         "BaseMosaic" "off"
-    SubSection     "Display"
-        Depth       24
-    EndSubSection
-    '' else "";
 
-    nesting.clone = [ ({ ... }: {
-      services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
-      hardware.opengl.package = makeDriverPackage mesaPkgs;
-      hardware.opengl.package32 = makeDriverPackage mesaPkgs.pkgsi686Linux;
-
-      system.activationScripts.vfio = lib.mkForce {
-        deps = [];
-        text = ''
-        GPU=0b:00
-        GPU_ID="1002 731f"
-        GPU_AUDIO_ID="1002 ab38"
-
-        # Unbind the GPU from vfio-pci
-        echo -n "0000:''${GPU}.0" > /sys/bus/pci/drivers/vfio-pci/unbind 2>/dev/null || true
-        echo -n "0000:''${GPU}.1" > /sys/bus/pci/drivers/vfio-pci/unbind 2>/dev/null || true
-
-        # Remove GPU from vfio-pci
-        echo -n "$GPU_ID" > /sys/bus/pci/drivers/vfio-pci/remove_id
-        echo -n "$GPU_AUDIO_ID" > /sys/bus/pci/drivers/vfio-pci/remove_id
-
-        # Bind the GPU to it's drivers
-        echo -n "0000:''${GPU}.0" > /sys/bus/pci/drivers/amdgpu/bind 2>/dev/null || true
-        echo -n "0000:''${GPU}.1" > /sys/bus/pci/drivers/snd_hda_intel/bind 2>/dev/null || true
-        '';
-      };
-    }) ];
-
-    system.activationScripts.vfio = {
-      deps = [];
-      text = ''
-      GPU=0b:00
-      GPU_ID="1002 731f"
-      GPU_AUDIO_ID="1002 ab38"
-
-      # Unbind the GPU from it's drivers
-      echo -n "0000:''${GPU}.0" > /sys/bus/pci/drivers/amdgpu/unbind 2>/dev/null || true
-      echo -n "0000:''${GPU}.1" > /sys/bus/pci/drivers/snd_hda_intel/unbind 2>/dev/null || true
-
-      # Hand over GPU to vfio-pci
-      echo -n "$GPU_ID" > /sys/bus/pci/drivers/vfio-pci/new_id 2>/dev/null || true
-      echo -n "$GPU_AUDIO_ID" > /sys/bus/pci/drivers/vfio-pci/new_id 2>/dev/null || true
-      '';
+    hardware.opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
     };
+
+    #services.xserver.videoDrivers = [ "nvidia" ];
+    #services.xserver.monitorSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
+    #VendorName     "Unknown"
+    #ModelName      "LG Electronics LG Ultra HD"
+    #HorizSync       135.0 - 135.0
+    #VertRefresh     40.0 - 61.0
+    #'' else "";
+    #services.xserver.serverLayoutSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
+    #Option "Xinerama" "0"
+    #'' else "";
+    #services.xserver.screenSection = if config.services.xserver.videoDrivers == [ "nvidia" ] then ''
+    #DefaultDepth    24
+    #Option         "Stereo" "0"
+    #Option         "nvidiaXineramaInfoOrder" "DFP-2"
+    #Option         "metamodes" "3840x2160_60 +0+0 {AllowGSYNCCompatible=On}"
+    #Option         "SLI" "Off"
+    #Option         "MultiGPU" "Off"
+    #Option         "BaseMosaic" "off"
+    #SubSection     "Display"
+    #    Depth       24
+    #EndSubSection
+    #'' else "";
+
+    #specialisation.amdgpu.configuration = { ... }: {
+    services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
+    services.xserver.deviceSection = ''
+    BusID "PCI:11:0:0"
+    '';
+    #};
 
     #systemd.services.gpu-fixup = {
     #    description = "GPU performance fixer";
