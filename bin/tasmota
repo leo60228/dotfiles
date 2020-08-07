@@ -1,2 +1,2 @@
 #!/bin/sh
-exec mosquitto_rr -t cmnd/tasmota/"$1" -e stat/tasmota/RESULT -m "$2" | jq '[paths(scalars) as $path | { ($path|join(".")): getpath($path) }] | add | to_entries | map([.key, .value])[] | @tsv' -r | column -t $'-s\t'
+exec mosquitto_rr -t tasmota/cmnd/"$1" -e tasmota/stat/RESULT -m "$2" | jq '[paths(scalars) as $path | { ($path|join(".")): getpath($path) }] | add | to_entries | map([.key, .value])[] | @tsv' -r | column -t $'-s\t'
