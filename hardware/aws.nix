@@ -14,6 +14,8 @@
       device = "/var/swapfile";
       size = 4096;
     } ];
+
+    boot.loader.grub.device = lib.mkForce "/dev/nvme0n1";
   };
 
   nixops = {

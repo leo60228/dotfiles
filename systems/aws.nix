@@ -3,8 +3,8 @@
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
 
-  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 25565 ];
-  networking.firewall.allowedUDPPorts = [ 2782 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 ];
+  networking.firewall.allowedUDPPorts = [ 2782 25565 ];
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
   environment.sessionVariables.TERM = "vt100";
@@ -49,34 +49,17 @@
   boot.cleanTmpDir = true;
   networking.hostName = "leoservices";
 
-  systemd.services.elixire = {
-    description = "elixire";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = "export PATH=$PATH:/home/leo60228/.npm-global/bin:/home/leo60228/.nix-profile/bin; exec python3 run.py";
-    environment.PYTHONPATH = "/home/leo60228/.local/lib/python3.6/site-packages/";
-    environment.LD_LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
-    serviceConfig.User = "leo60228";
-    serviceConfig.WorkingDirectory = "/home/leo60228/elixire";
-  };
-
-  systemd.services.mastodon = {
-    description = "mastodon";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    path = [ pkgs.docker_compose ];
-    script = "docker-compose up";
-    serviceConfig.User = "leo60228";
-    serviceConfig.WorkingDirectory = "/home/leo60228/mastodon";
-  };
-
-  systemd.services.writefreely = {
-    description = "writefreely";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = "./writefreely";
-    serviceConfig.User = "leo60228";
-    serviceConfig.WorkingDirectory = "/home/leo60228/writefreely";
+  services.mastodon = {
+    enable = true;
+    localDomain = "60228.dev";
+    package = (import <nixpkgs> { overlays = [ (import ../nixpkgs/mastodon.nix) ]; }).mastodon;
+    smtp = {
+      createLocally = false;
+      host = "smtp-relay.gmail.com";
+      port = 587;
+      authenticate = false;
+      fromAddress = "Administrator <admin@60228.dev>";
+    };
   };
 
   systemd.services.ghastly = {
@@ -119,4 +102,20 @@
       }
     ];
   };
+
+#  networking.firewall.extraCommands = ''
+#iptables -A FORWARD -i ens5 -o wg0 -p tcp --syn --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
+#iptables -A FORWARD -i ens5 -o wg0 -p udp --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
+#iptables -A FORWARD -i ens5 -o wg0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#iptables -A FORWARD -i wg0 -o ens5 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#iptables -t nat -A PREROUTING -i ens5 -p tcp --dport 25565 -j DNAT --to-destination 192.168.1.140
+#iptables -t nat -A POSTROUTING -o wg0 -p tcp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
+#iptables -t nat -A PREROUTING -i ens5 -p udp --dport 25565 -j DNAT --to-destination 192.168.1.140
+#iptables -t nat -A POSTROUTING -o wg0 -p udp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
+#
+#  '';
+#  boot.kernel.sysctl = {
+#    "net.ipv4.conf.all.forwarding" = true;
+#    "net.ipv4.conf.default.forwarding" = true;
+#  };
 }

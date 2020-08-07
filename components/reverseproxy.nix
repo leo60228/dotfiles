@@ -9,6 +9,9 @@ lib.makeComponent "reverseproxy"
   };
 
   config = {
+    security.acme.email = builtins.readFile /home/leo60228/.email;
+    security.acme.acceptTerms = true;
+
     services.phpfpm = lib.mkIf (cfg.host == "aws") (lib.mkForce {
       pools."php" = {
         user = "nginx";
@@ -35,6 +38,12 @@ lib.makeComponent "reverseproxy"
         recommendedTlsSettings = true;
         recommendedOptimisation = true;
         recommendedGzipSettings = true;
+        recommendedProxySettings = true;
+        commonHttpConfig = ''
+        log_format full '$remote_addr - $remote_user [$time_local] '
+                        '"$request" $status $bytes_sent '
+                        '"$http_referer" "$http_user_agent"';
+        '';
         virtualHosts = {
           "aws.leo60228.space" = {
             onlySSL = true;
@@ -263,6 +272,38 @@ lib.makeComponent "reverseproxy"
                 etag off;
                 '';
               };
+            };
+          };
+          "60228.dev" = {
+            root = "${(import <nixpkgs> { overlays = [ (import ../nixpkgs/mastodon.nix) ]; }).mastodon}/public/";
+            forceSSL = true;
+            enableACME = true;
+
+            locations."/system/".alias = "/var/lib/mastodon/public-system/";
+
+            locations."/" = {
+              tryFiles = "$uri @proxy";
+            };
+
+            locations."@proxy" = {
+              proxyPass = "http://127.0.0.1:55001";
+              proxyWebsockets = true;
+            };
+
+            locations."/api/v1/streaming/" = {
+              proxyPass = "http://127.0.0.1:55000/";
+              proxyWebsockets = true;
+            };
+          };
+          "tcgplayer.leo60228.space" = {
+            forceSSL = true;
+            enableACME = true;
+
+            locations."/" = {
+              extraConfig = ''
+              proxy_set_header User-Agent "leo's scripts";
+              proxy_pass https://api.tcgplayer.com;
+              '';
             };
           };
           "localhost" = {
