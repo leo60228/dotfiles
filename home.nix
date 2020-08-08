@@ -235,6 +235,7 @@
         "gfx.webrender.all" = true;
         "privacy.trackingprotection.enabled" = true;
         "privacy.trackingprotection.socialtracking.enabled" = true;
+        "browser.ctrlTab.recentlyUsedOrder" = false;
       };
     };
   };
