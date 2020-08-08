@@ -3,7 +3,7 @@
 with import ../components; {
   imports = [ ../cachix.nix ];
 
-  components = efi en_us est gui kde { bluetooth = true; } docker steam extra home macvm;
+  components = efi en_us est gui kde { bluetooth = true; } docker steam extra home;
 
   networking.hostName = "leotop2"; # Define your hostname.
 
