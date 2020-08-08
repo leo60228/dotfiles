@@ -328,7 +328,6 @@
   home.sessionVariables = {
     EDITOR = "vim";
     RUSTFMT = "rustfmt";
-    RUSTC_WRAPPER = "sccache";
     CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
     TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
