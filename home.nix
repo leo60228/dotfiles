@@ -38,6 +38,14 @@
     wmctrl
     (callPackage ./discord.nix { base = <nixpkgs/pkgs/applications/networking/instant-messengers/discord/base.nix>; })
   ] else [
+    (let rust = (callPackage ./rust.nix {}).rust; in (ripgrep.override {
+      rustPlatform = makeRustPlatform {
+        cargo = rust;
+        rustc = rust;
+      };
+    }).overrideAttrs (oldAttrs: {
+      buildPhase = builtins.replaceStrings ["pcre2"] ["'pcre2 simd-accel'"] oldAttrs.buildPhase;
+    }))
     linuxPackages.perf
     zip
     glxinfo
