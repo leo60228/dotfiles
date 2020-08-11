@@ -48,9 +48,6 @@
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" ];
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
-      "idle=nomwait" # possible workaround to hangs
-      "pcie_acs_override=downstream,multifunction" # X370 USB passthrough
-      "acpi_enforce_resources=lax" # evil hack for GA-AB350M-DS3H SMBus
     ];
 
     fileSystems."/" =
@@ -107,7 +104,7 @@
     #specialisation.amdgpu.configuration = { ... }: {
     services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
     services.xserver.deviceSection = ''
-    BusID "PCI:11:0:0"
+    BusID "PCI:67:0:0"
     '';
     #};
 
