@@ -6,6 +6,10 @@ lib.makeComponent "gui"
       default = true;
       type = types.bool;
     };
+    autoLogin = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
   config = {
@@ -25,5 +29,11 @@ lib.makeComponent "gui"
 
     # dconf
     programs.dconf.enable = true;
+
+    # auto-login
+    services.xserver.displayManager.autoLogin = lib.mkIf cfg.autoLogin {
+      enable = true;
+      user = "leo60228";
+    };
   };
 })
