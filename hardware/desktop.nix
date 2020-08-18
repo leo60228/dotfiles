@@ -37,6 +37,7 @@
 
     #boot.kernelPackages = kernelPkgs.linuxPackages_latest;
     boot.kernelPackages = pkgs.linuxPackages_5_8;
+    boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
     boot.kernelPatches = [ {
       name = "navi-reset";
       patch = ../files/navi-reset.patch;
@@ -139,9 +140,13 @@
     services.xserver.exportConfiguration = true;
 
     hardware.pulseaudio.extraConfig = ''
-    load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0d_00.4.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
+    load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
     set-default-sink reverse-stereo
     '';
+    hardware.pulseaudio.daemon.config = {
+      default-sample-format = "s32le";
+      #default-sample-rate = 192000;
+    };
 
     systemd.sleep.extraConfig = "HibernateMode=reboot";
 
@@ -149,6 +154,38 @@
     systemd.services.rngd.conflicts = [ "shutdown.target" ];
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
     boot.loader.timeout = null;
+
+    services.acpid = {
+      enable = true;
+      handlers = {
+        headphones = {
+          event = "jack/headphone";
+          action = ''
+          vals=($1)
+          [ "''${vals[0]}" = "jack/headphone" -a "''${vals[1]}" = "HEADPHONE" ] || exit
+          case "''${vals[2]}" in
+            plug)
+              sink=alsa_output.pci-0000_0a_00.3.analog-stereo
+              ;;
+            unplug)
+              sink=reverse-stereo
+              ;;
+            *)
+              echo unknown >> /tmp/acpi.log
+              exit
+              ;;
+          esac
+          for userdir in /run/user/*; do
+            uid="$(basename $userdir)"
+            user="$(id -un $uid)"
+            if [ -f "$userdir/pulse/pid" ]; then
+              PULSE_RUNTIME_PATH="$userdir/pulse" ${pkgs.su}/bin/su "$user" -c "${pkgs.callPackage ../paswitch {}}/bin/paswitch $sink"
+            fi
+          done
+          '';
+        };
+      };
+    };
   };
 
   nixops = {

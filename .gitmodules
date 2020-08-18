@@ -21,3 +21,6 @@
 [submodule "nixpkgs-mozilla"]
 	path = nixpkgs-mozilla
 	url = https://github.com/mozilla/nixpkgs-mozilla.git
+[submodule "paswitch"]
+	path = paswitch
+	url = git://github.com/leo60228/paswitch.git
