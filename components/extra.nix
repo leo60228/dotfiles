@@ -17,7 +17,7 @@ lib.makeComponent "extra"
 
     # java
     programs.java.enable = true;
-    programs.java.package = pkgs.jre;
+    programs.java.package = pkgs.adoptopenjdk-jre-hotspot-bin-8;
 
     # printer
     services.printing.enable = true;
