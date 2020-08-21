@@ -35,8 +35,7 @@
       #'')
     ];
 
-    #boot.kernelPackages = kernelPkgs.linuxPackages_latest;
-    boot.kernelPackages = pkgs.linuxPackages_5_8;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
     boot.kernelPatches = [ {
       name = "navi-reset";
@@ -65,7 +64,7 @@
       [ { device = "/dev/disk/by-uuid/13e11580-45e0-4d16-a67e-27abf1277788"; }
       ];
 
-    nix.maxJobs = lib.mkDefault 12;
+    nix.maxJobs = lib.mkDefault 24;
     powerManagement.cpuFreqGovernor = "performance";
 
     hardware.enableRedistributableFirmware = true;
