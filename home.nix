@@ -67,7 +67,7 @@
     (lib.setPrio (-100) llvmPackages_8.clang)
     llvmPackages_8.llvm
     (callPackage ./zenstates.nix {})
-    (callPackage ./unityenv.nix {})
+    #(callPackage ./unityenv.nix {})
     easytag
     cantata
     calibre
