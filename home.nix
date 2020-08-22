@@ -14,29 +14,19 @@
     nix-prefetch-git
     ffmpeg
     gnupg
-    maim
     pkgconfig
     gist
     gitAndTools.hub
     p7zip
     xclip
     xsel
-    gimp
-    vlc
     git
     file
     unzip
     usbutils
     gnumake
     (hiPrio gcc)
-    (callPackage ./fuseenano.nix {})
-    hack-font
-    source-sans-pro
     (pkgs.hiPrio (callPackage ./bin.nix {}))
-    ksuperkey
-    (callPackage ./opensnap.nix {})
-    wmctrl
-    (callPackage ./discord.nix { base = <nixpkgs/pkgs/applications/networking/instant-messengers/discord/base.nix>; })
   ] else [
     (let rust = (callPackage ./rust.nix {}).rust; in (ripgrep.override {
       rustPlatform = makeRustPlatform {
@@ -230,7 +220,7 @@
   ];
 
   programs.firefox = {
-    enable = true;
+    enable = !small;
     package = (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin.overrideAttrs (oldAttrs: {
       passthru.browserName = "firefox";
     });

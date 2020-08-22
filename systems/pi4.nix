@@ -3,5 +3,5 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = en_us est;
+  components = en_us est home { small = true; } mastocrom upd8r router hass unifi;
 }
