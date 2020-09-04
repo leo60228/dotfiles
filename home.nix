@@ -235,6 +235,33 @@
         "privacy.trackingprotection.enabled" = true;
         "privacy.trackingprotection.socialtracking.enabled" = true;
         "browser.ctrlTab.recentlyUsedOrder" = false;
+        "startup.homepage_welcome_url" = "about:newtab";
+        "datareporting.policy.firstRunURL" = "";
+        "browser.uiCustomization.state" = builtins.toJSON {
+          currentVersion = 16;
+          placements = {
+            PersonalToolbar = [ "personal-bookmarks" ];
+            TabsToolbar = [ "tabbrowser-tabs" "new-tab-button" "alltabs-button" ];
+            nav-bar = [
+              "back-button"
+              "forward-button"
+              "stop-reload-button"
+              "home-button"
+              "urlbar-container"
+              "downloads-button"
+              "library-button"
+              "sidebar-button"
+              "fxa-toolbar-menu-button"
+              "addon_darkreader_org-browser-action"
+              "ublock0_raymondhill_net-browser-action"
+            ];
+            toolbar-menubar = [ "menubar-items" ];
+            widget-overflow-fixed-list = [
+              "_e4a8a97b-f2ed-450b-b12d-ee082ba24781_-browser-action"
+              "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
+            ];
+          };
+        };
       };
     };
   };
