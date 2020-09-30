@@ -6,6 +6,7 @@
       ];
 
     environment.systemPackages = with pkgs; [
+      (callPackage ../joycond.nix {})
       vulkan-loader
       vulkan-tools
       #(writeShellScriptBin "switch-to-amd" ''
@@ -35,8 +36,15 @@
       #'')
     ];
 
+    services.udev.packages = [ (pkgs.callPackage ../joycond.nix {}) ];
+    systemd.services.joycond = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
+    };
+
     boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.kernelPatches = [ {
       name = "navi-reset";
       patch = ../files/navi-reset.patch;
@@ -45,7 +53,7 @@
       patch = ../files/add-acs-overrides.patch;
     } ];
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" ];
+    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" ];
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
     ];
@@ -125,10 +133,10 @@
     #};
 
     # hidpi
-    services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
-    console.earlySetup = true;
-    console.packages = [ pkgs.terminus_font ];
-    console.font = "ter-128n";
+    #services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
+    #console.earlySetup = true;
+    #console.packages = [ pkgs.terminus_font ];
+    #console.font = "ter-128n";
     #services.xserver.deviceSection = ''
     #Option "DRI" "3"
     #BusID "PCI:8:0:0"
@@ -138,10 +146,10 @@
     #'';
     services.xserver.exportConfiguration = true;
 
-    hardware.pulseaudio.extraConfig = ''
-    load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
-    set-default-sink reverse-stereo
-    '';
+    #hardware.pulseaudio.extraConfig = ''
+    #load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
+    #set-default-sink reverse-stereo
+    #'';
     hardware.pulseaudio.daemon.config = {
       default-sample-format = "s32le";
       #default-sample-rate = 192000;
