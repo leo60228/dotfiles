@@ -217,6 +217,7 @@
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
+    (callPackage ./twemoji.nix {})
   ];
 
   programs.firefox = {
@@ -418,7 +419,7 @@
     recursive = true;
   };
 
-  #fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = true;
   #fonts.fontconfig.aliases = [{
   #  families = [ "Hack" ];
   #  default = [ "monospace" ];
