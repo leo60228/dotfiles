@@ -8,7 +8,6 @@
   networking.firewall.allowedUDPPorts = [ 2782 25565 ];
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
-  environment.sessionVariables.TERM = "vt100";
 
   systemd.services.codeserver = {
     wantedBy = [ "multi-user.target" ];
