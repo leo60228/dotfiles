@@ -13,7 +13,7 @@ in {
 EOF
 
 for branch in "" ptb canary; do
-    url=$(curl -sI "https://discordapp.com/api/download${branch:+/}${branch}?platform=linux&format=tar.gz" | grep -oP 'location: \K\S+')
+    url=$(curl -I "https://discordapp.com/api/download${branch:+/}${branch}?platform=linux&format=tar.gz" | grep -oP 'location: \K\S+')
     version=${url##https://dl*.discordapp.net/apps/linux/}
     version=${version%%/*.tar.gz}
     echo "  ${branch:-stable} = callPackage base rec {"
