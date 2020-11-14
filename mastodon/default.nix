@@ -104,6 +104,6 @@ in stdenv.mkDerivation rec {
     homepage = "https://joinmastodon.org";
     license = licenses.agpl3;
     platforms = [ "x86_64-linux" "i686-linux" ];
-    #maintainers = with maintainers; [ petabyteboy happy-river ];
+    maintainers = with maintainers; [ petabyteboy happy-river ];
   };
 }

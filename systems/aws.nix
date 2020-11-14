@@ -2,7 +2,7 @@
 { pkgs, ... }: with import ../components; rec {
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
-  components = en_us est docker extra server gui { audio = false; } reverseproxy { host = "aws"; } home;
+  components = en_us est docker extra server gui { audio = false; } reverseproxy { host = "aws"; } home { small = true; };
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 ];
   networking.firewall.allowedUDPPorts = [ 2782 25565 ];
@@ -63,23 +63,23 @@
     };
   };
 
-  systemd.services.ghastly = {
-    description = "ghastly";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = "${pkgs.callPackage ../celesters.nix {}}/bin/ghastly";
-  };
+  #systemd.services.ghastly = {
+  #  description = "ghastly";
+  #  wantedBy = [ "multi-user.target" ];
+  #  after = [ "network.target" ];
+  #  script = "${pkgs.callPackage ../celesters.nix {}}/bin/ghastly";
+  #};
 
-  systemd.services.ghostbridge = {
-    description = "ghostbridge";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = ''
-    export DISCORD_TOKEN="$(< /var/keys/ghostbridge-token)"
-    ${pkgs.callPackage ../celesters.nix {}}/bin/bridge celeste.0x0ade.ga:2782
-    '';
-    serviceConfig.Restart = "always";
-  };
+  #systemd.services.ghostbridge = {
+  #  description = "ghostbridge";
+  #  wantedBy = [ "multi-user.target" ];
+  #  after = [ "network.target" ];
+  #  script = ''
+  #  export DISCORD_TOKEN="$(< /var/keys/ghostbridge-token)"
+  #  ${pkgs.callPackage ../celesters.nix {}}/bin/bridge celeste.0x0ade.ga:2782
+  #  '';
+  #  serviceConfig.Restart = "always";
+  #};
 
   users.extraUsers.thefox = {
     isNormalUser = true;

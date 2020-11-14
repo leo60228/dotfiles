@@ -306,8 +306,8 @@ in {
 
       package = lib.mkOption {
         type = lib.types.package;
-        # default = pkgs.mastodon;
-        # defaultText = "pkgs.mastodon";
+        default = pkgs.mastodon;
+        defaultText = "pkgs.mastodon";
         description = "Mastodon package to use.";
       };
 
@@ -537,6 +537,5 @@ in {
   };
 
   meta.maintainers = with lib.maintainers; [ happy-river ];
-  #meta.doc = ./mastodon.xml;
 
 }

@@ -18,8 +18,6 @@
     gist
     gitAndTools.hub
     p7zip
-    xclip
-    xsel
     git
     file
     unzip
