@@ -7,10 +7,10 @@
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "dialout" "video" "render" ];
-    openssh.authorizedKeys.keyFiles = [ ~/.ssh/id_rsa.pub ];
+    openssh.authorizedKeys.keyFiles = [ /home/leo60228/.ssh/id_rsa.pub ];
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ~/.ssh/id_rsa.pub ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ /home/leo60228/.ssh/id_rsa.pub ];
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
