@@ -8,7 +8,7 @@
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
         boot.kernelModules = [ "kvm-amd" ];
         boot.extraModulePackages = [ ];
-        boot.kernelParams = [ "amdgpu.dpm=0" "amdgpu.ppfeaturemask=0xffff7fff" ];
+        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
 
         #boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;
 
@@ -33,8 +33,8 @@
             [ { device = "/dev/disk/by-uuid/8f13296f-1aac-4728-acdc-38550d52929c"; }
             ];
 
-        nix.maxJobs = lib.mkDefault 16;
-        powerManagement.cpuFreqGovernor = "performance";
+        nix.maxJobs = lib.mkDefault 8;
+        powerManagement.cpuFreqGovernor = "ondemand";
 
         systemd.services.gpu-fixup = {
             description = "GPU performance fixer";
@@ -44,25 +44,33 @@
             serviceConfig.User = "root";
         };
 
-        systemd.services.perf-checkup = {
-            description = "Performance monitor";
-            wantedBy = [ "multi-user.target" ];
-            after = [ "display-manager.service" ];
-            serviceConfig.User = "leo60228";
-            script = "DISPLAY=:0 /home/leo60228/.cargo/bin/perf-checkup";
-        };
+        #systemd.services.perf-checkup = {
+        #    description = "Performance monitor";
+        #    wantedBy = [ "multi-user.target" ];
+        #    after = [ "display-manager.service" ];
+        #    serviceConfig.User = "leo60228";
+        #    script = "DISPLAY=:0 /home/leo60228/.cargo/bin/perf-checkup";
+        #};
 
         services.xserver.videoDrivers =  [ "amdgpu" ];
         services.xserver.deviceSection = ''
         Option "DRI" "3"
         Option "VariableRefresh" "true"
         '';
+        services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
         services.xserver.exportConfiguration = true;
+        console.packages = [ pkgs.terminus_font ];
+        console.font = "ter-128n";
 
-        hardware.bluetooth.extraConfig = ''
-        [General]
-        ControllerMode = bredr
+        hardware.bluetooth.config.General.ControllerMode = "bredr";
+
+        hardware.pulseaudio.extraConfig = ''
+        load-module module-remap-sink sink_name=reverse-stereo master=0 channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
+        set-default-sink reverse-stereo
+        unload-module module-suspend-on-idle
         '';
+
+        hardware.cpu.amd.updateMicrocode = true;
     };
 
     nixops = {
