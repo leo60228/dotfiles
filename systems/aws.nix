@@ -9,15 +9,15 @@
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
 
-  systemd.services.codeserver = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.docker ];
-    script = "./codeserver.sh";
-    serviceConfig = {
-      User = "leo60228";
-      WorkingDirectory = "/home/leo60228/code-server-docker";
-    };
-  };
+  #systemd.services.codeserver = {
+  #  wantedBy = [ "multi-user.target" ];
+  #  path = [ pkgs.docker ];
+  #  script = "./codeserver.sh";
+  #  serviceConfig = {
+  #    User = "leo60228";
+  #    WorkingDirectory = "/home/leo60228/code-server-docker";
+  #  };
+  #};
 
   systemd.services.minecraft = {
     enable = false;
