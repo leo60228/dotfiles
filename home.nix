@@ -28,6 +28,8 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    libnotify
+    escrotum
     (let rust = (callPackage ./rust.nix {}).rust; in (ripgrep.override {
       rustPlatform = makeRustPlatform {
         cargo = rust;
