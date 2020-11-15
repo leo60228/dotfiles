@@ -294,6 +294,20 @@ lib.makeComponent "reverseproxy"
               proxyPass = "http://127.0.0.1:55000/";
               proxyWebsockets = true;
             };
+
+            locations."~* ^(\\/_matrix|\\/_synapse\\/client)" = {
+              proxyPass = "http://localhost:8008";
+              extraConfig = ''
+              proxy_set_header X-Forwarded-For $remote_addr;
+              client_max_body_size 50M;
+              '';
+            };
+
+            locations."=/.well-known/matrix/server" = {
+              alias = pkgs.writeText "matrix-delegation" (builtins.toJSON {
+                "m.server" = "60228.dev:443";
+              });
+            };
           };
           "tcgplayer.leo60228.space" = {
             forceSSL = true;

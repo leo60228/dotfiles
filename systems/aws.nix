@@ -118,4 +118,28 @@
 #    "net.ipv4.conf.all.forwarding" = true;
 #    "net.ipv4.conf.default.forwarding" = true;
 #  };
+
+  services.matrix-synapse = {
+    enable = true;
+    server_name = "60228.dev";
+    public_baseurl = "https://60228.dev/";
+    listeners = [
+      {
+        port = 8008;
+        bind_address = "127.0.0.1";
+        type = "http";
+        tls = false;
+        x_forwarded = true;
+        resources = [
+          { names = [ "client" ]; compress = true; }
+          { names = [ "federation" ]; compress = false; }
+        ];
+      }
+    ];
+    url_preview_enabled = true;
+    registration_shared_secret = builtins.readFile /home/leo60228/.matrix_signup_secret;
+    extraConfig = ''
+    suppress_key_server_warning: true
+    '';
+  };
 }
