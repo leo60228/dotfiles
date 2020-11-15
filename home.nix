@@ -26,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    element-desktop
     libnotify
     escrotum
     (let rust = (callPackage ./rust.nix {}).rust; in (ripgrep.override {
