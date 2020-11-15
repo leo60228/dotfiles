@@ -4,7 +4,7 @@ let lib = import ./lib;
     genSystems = generator: (let read = builtins.readDir ./systems; in
       builtins.listToAttrs
         (map (x: {
-          name = builtins.elemAt (builtins.match "(.*)\.nix" x) 0;
+          name = builtins.elemAt (builtins.match "(.*)\\.nix" x) 0;
           value = generator x;
         }) (builtins.filter (x: builtins.getAttr (x) (read) == "regular") (builtins.attrNames read))));
     filter = invert: systems: if skip == null then systems else (if skip == true then (if invert then systems else {}) else (builtins.intersectAttrs {${skip} = null;} systems));
