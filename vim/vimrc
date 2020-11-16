@@ -81,6 +81,7 @@ let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 " OmniSharp
 let g:OmniSharp_selector_ui = ''
 let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
+let g:OmniSharp_highlighting = 3
 
 " ALE
 let g:ale_linters = { 'cs': ['OmniSharp'] }
