@@ -390,6 +390,7 @@
   $include /etc/inputrc
   "\e[A":history-search-backward
   "\e[B":history-search-forward
+  set enable-bracketed-paste on
   '';
 
   home.file.".tmux.conf".text = ''
