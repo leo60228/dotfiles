@@ -492,13 +492,13 @@
     ];
   };
 
-  home.file.".vscode/extensions/ms-dotnettools.csharp".recursive = true;
+  home.file.".vscode/extensions/ms-dotnettools.csharp".recursive = lib.mkIf (!small) true;
 
-  home.file.".omnisharp/omnisharp.json".text = builtins.toJSON {
+  home.file.".omnisharp/omnisharp.json".text = lib.mkIf (!small) (builtins.toJSON {
     MsBuild.UseLegacySdkResolver = true;
-  };
+  });
 
-  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = builtins.toJSON {
+  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = lib.mkIf (!small) (builtins.toJSON {
     adapters = {
       netcoredbg = {
         name = "netcoredbg";
@@ -512,5 +512,5 @@
         };
       };
     };
-  };
+  });
 }
