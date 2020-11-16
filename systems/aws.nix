@@ -4,7 +4,7 @@
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   components = en_us est docker extra server gui { audio = false; } reverseproxy { host = "aws"; } home { small = true; };
 
-  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 5222 5269 5280 5443 ];
   networking.firewall.allowedUDPPorts = [ 2782 25565 ];
 
   environment.systemPackages = with pkgs; [ conspy wget vim stress ];
@@ -142,4 +142,14 @@
     suppress_key_server_warning: true
     '';
   };
+
+  services.ejabberd = {
+    enable = true;
+    configFile = ../files/ejabberd.yml;
+    imagemagick = true;
+  };
+
+  security.acme.certs."60228.dev".group = "acme";
+  users.users.nginx.extraGroups = [ "acme" ];
+  users.users.ejabberd.extraGroups = [ "acme" ];
 }
