@@ -23,7 +23,16 @@ in (vim_configurable.override {
             + "let g:OmniSharp_server_path = '${omnisharp-roslyn}/bin/omnisharp'";
 
         packages.leovim = with vimPlugins; {
-            start = [ vim-hardtime (callPackage ./solarized8.nix {}) (callPackage ./graphql.nix {}) (callPackage ./omnisharp-vim.nix {}) editorconfig-vim vim-sleuth ale (callPackage ./vimspector.nix {}) ];
+            start = [
+                vim-hardtime
+                (callPackage ./solarized8.nix {})
+                (callPackage ./graphql.nix {})
+                (callPackage ./omnisharp-vim.nix {})
+                editorconfig-vim
+                vim-sleuth
+                ale
+                (callPackage ./vimspector.nix {})
+            ];
 
             opt = [ ]
                 ++ map (x: x.plug) ftPlugins;
