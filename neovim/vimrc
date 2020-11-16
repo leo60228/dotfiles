@@ -73,9 +73,21 @@ nnoremap <leader>cN :cprevious<cr>
 " }}}
 
 " Plugin settings {{{
+" hardtime
 let g:hardtime_allow_different_key = 1
 let g:hardtime_default_on = 1
 let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+
+" OmniSharp
+let g:OmniSharp_selector_ui = ''
+let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
+
+" ALE
+let g:ale_linters = { 'cs': ['OmniSharp'] }
+
+" Vimspector
+let g:vimspector_base_dir = expand('$HOME/.vimspector')
+let g:vimspector_enable_mappings = 'HUMAN'
 " }}}
 
 " Filetype commands {{{

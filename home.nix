@@ -168,7 +168,6 @@
     p7zip
     #gimpPlugins.gap
     steam-run
-    vscode
     (callPackage ./discord.nix {})
     xclip
     xsel
@@ -447,7 +446,7 @@
     recursive = true;
   };
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = lib.mkForce true;
   #fonts.fontconfig.aliases = [{
   #  families = [ "Hack" ];
   #  default = [ "monospace" ];
@@ -470,4 +469,47 @@
   #    name = "family";
   #  }];
   #}];
+
+  programs.vscode = lib.mkIf (!small) {
+    enable = true;
+    package = pkgs.callPackage ./vscode-fhs.nix {};
+    userSettings = {
+      "omnisharp.path" = "${pkgs.omnisharp-roslyn}/bin/omnisharp";
+      "workbench.colorTheme" = "Solarized Dark";
+      "telemetry.enableTelemetry" = false;
+    };
+    extensions = (with pkgs.vscode-extensions; [
+      bbenoist.Nix
+      vscodevim.vim
+    ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "csharp";
+        publisher = "ms-dotnettools";
+        version = "1.23.6";
+        sha256 = "0dc0krp5z8ayk59jhm1n91lldwgr7a8f6al8h5m75kl7q4ib7rlk";
+      }
+    ];
+  };
+
+  home.file.".vscode/extensions/ms-dotnettools.csharp".recursive = true;
+
+  home.file.".omnisharp/omnisharp.json".text = builtins.toJSON {
+    MsBuild.UseLegacySdkResolver = true;
+  };
+
+  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = builtins.toJSON {
+    adapters = {
+      netcoredbg = {
+        name = "netcoredbg";
+        command = [ "${pkgs.callPackage ./netcoredbg {}}/netcoredbg" "--interpreter=vscode" ];
+        attach = {
+          pidProperty = "processId";
+          pidSelect = "ask";
+        };
+        configuration = {
+          cwd = "\${workspaceRoot}";
+        };
+      };
+    };
+  };
 }

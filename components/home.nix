@@ -12,6 +12,5 @@ lib.makeComponent "home"
     home-manager.users.leo60228 = import ../home.nix {
       inherit (cfg) small;
     };
-    home-manager.useUserPackages = true;
   };
 })
