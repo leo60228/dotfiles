@@ -5,7 +5,7 @@
 {
   home.packages = with pkgs; if small then [
     ripgrep
-    (callPackage ./vim {})
+    (callPackage ./neovim {})
     zip
     pciutils
     lftp
@@ -175,10 +175,10 @@
     google-musicmanager
     symbola
     kitty
-    (python36.withPackages (ps: with ps; [ pyusb pillow cryptography ]))
+    (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
     vlc
     multimc
-    (callPackage ./vim {})
+    (callPackage ./neovim {})
     openscad
     dpkg
     (lib.setPrio (-20) binutils-unwrapped)
@@ -213,7 +213,7 @@
     #julia_06
     (pkgs.hiPrio (callPackage ./bin.nix {}))
     (callPackage ./fuseenano.nix {})
-    python27
+    (python27.withPackages (ps: with ps; [ neovim ]))
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
