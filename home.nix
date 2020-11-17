@@ -26,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    nix-prefetch-github
     element-desktop
     libnotify
     escrotum
