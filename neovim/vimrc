@@ -28,7 +28,6 @@ let &t_EI .= "\<Esc>[2 q"
 set background=dark
 colorscheme solarized8_flat
 
-syntax on
 filetype plugin indent on
 " }}}
 
@@ -108,8 +107,5 @@ augroup vimrc
     autocmd FileType rust iabbrev <buffer> return <nop>
 
     autocmd FileType vim setlocal foldmethod=marker
-
-    autocmd BufNewFile,BufRead *.nix set filetype=nix
-    autocmd BufNewFile,BufRead *.nix syntax on
 augroup END
 " }}}

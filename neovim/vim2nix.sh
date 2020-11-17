@@ -19,14 +19,15 @@ rm -rf $name
 echo "
 { vimUtils, fetchgit, stdenv }:
 vimUtils.buildVimPlugin {
-  name = \"$name-git-$version\";
+  pname = \"$name\";
+  version = \"git-$version\";
   src = fetchgit {
     url = \"$rep\";
     rev = \"$rev\";
     sha256 = \"$hash\";
   };
   meta = {
-    homepage = $homepage; 
+    homepage = $homepage;
     maintainers = [ stdenv.lib.maintainers.leo60228 ];
   };
 }

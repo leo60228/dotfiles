@@ -1,6 +1,7 @@
 { vimUtils, fetchgit, stdenv }:
 vimUtils.buildVimPlugin {
-  name = "ale-git-2020-11-14";
+  pname = "ale";
+  version = "git-2020-11-14";
   patches = [ ../files/ale-codefix-hack.diff ];
   src = fetchgit {
     url = "https://github.com/dense-analysis/ale.git";

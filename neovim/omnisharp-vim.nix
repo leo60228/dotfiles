@@ -1,6 +1,7 @@
 { vimUtils, fetchgit, stdenv }:
 vimUtils.buildVimPlugin {
-  name = "omnisharp-vim-git-2020-11-11";
+  pname = "omnisharp-vim";
+  version = "git-2020-11-11";
   src = fetchgit {
     url = "https://github.com/OmniSharp/omnisharp-vim.git";
     rev = "25f486c4c42a712148d06812794753f8291ef17c";
