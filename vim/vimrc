@@ -22,6 +22,8 @@ set pastetoggle=<f5>
 set foldlevelstart=0
 set hlsearch incsearch
 set t_PS=[200~
+let &t_SI .= "\<Esc>[6 q"
+let &t_EI .= "\<Esc>[2 q"
 
 set background=dark
 colorscheme solarized8_flat
