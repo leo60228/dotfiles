@@ -73,6 +73,7 @@ onoremap p i(
 nnoremap <leader>c :nohlsearch<cr>
 nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cN :cprevious<cr>
+nnoremap <leader>a :ALECodeAction<cr>
 " }}}
 
 " Plugin settings {{{
@@ -87,7 +88,8 @@ let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
 let g:OmniSharp_highlighting = 3
 
 " ALE
-let g:ale_linters = { 'cs': ['OmniSharp'] }
+let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'] }
+let g:ale_lint_on_text_changed = 'always'
 
 " Vimspector
 let g:vimspector_base_dir = expand('$HOME/.vimspector')
