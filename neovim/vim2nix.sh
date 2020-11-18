@@ -7,7 +7,7 @@
 rep="https://github.com/"$1".git"
 homepage="https://github.com/"$1
 rev=$(git ls-remote "$rep" | head -1 | cut -f1)
-name=$(echo "$1" | sed 's/\(.*\)\/\(.*\)/\2/g' | sed 's/vim-\(.*\)/\1/g' | sed 's/\(.*\)\.vim/\1/g')
+name=$(echo "$1" | sed 's/\(.*\)\/\(.*\)/\2/g' | sed 's/^vim-\(.*\)/\1/g' | sed 's/\(.*\)\.vim/\1/g')
 #basename=$(echo $name | sed 's/\([a-zA-Z]\+\)[-_\.]\([a-zA-Z]\)\([a-zA-Z]\+\)/\1\U\2\L\3/g')
 hash=$(nix-prefetch-git --url $rep 2>&1 | grep hash | sed 's/hash is \(.*\)/\1/g')
 git clone $rep $name

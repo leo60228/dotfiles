@@ -93,6 +93,25 @@ let g:ale_lint_on_text_changed = 'always'
 " Vimspector
 let g:vimspector_base_dir = expand('$HOME/.vimspector')
 let g:vimspector_enable_mappings = 'HUMAN'
+
+" nvim-treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      ["comment"] = "Comment",
+      ["string.special"] = "Special",
+      ["include"] = "Keyword",
+    },
+  },
+  playground = {
+    enable = true,
+  },
+}
+EOF
+
+hi default link TSVariable Identifier
 " }}}
 
 " Filetype commands {{{
@@ -105,6 +124,10 @@ augroup vimrc
 
     autocmd FileType rust iabbrev <buffer> retu return
     autocmd FileType rust iabbrev <buffer> return <nop>
+
+    autocmd FileType rust iabbrev <buffer> return <nop>
+
+    autocmd BufRead,BufNewFile *.nix set filetype=nix
 
     autocmd FileType vim setlocal foldmethod=marker
 augroup END

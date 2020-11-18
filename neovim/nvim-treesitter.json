@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/nvim-treesitter/nvim-treesitter.git",
+  "rev": "00d5408527ffff3deffc750a8f46c1e916e730b8",
+  "date": "2020-11-17T08:52:53+01:00",
+  "path": "/nix/store/m8546jkiw3pqb6nrw2pjn1rxh02m3glf-nvim-treesitter",
+  "sha256": "1fdpvq0613j0sdadw3nng895vhvhj4x504nd0x255qdn7k8l7pl8",
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

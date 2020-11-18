@@ -10,8 +10,10 @@
   jsdoc = (builtins.fromJSON (builtins.readFile ./tree-sitter-jsdoc.json));
   json = (builtins.fromJSON (builtins.readFile ./tree-sitter-json.json));
   lua = (builtins.fromJSON (builtins.readFile ./tree-sitter-lua.json));
+  nix = (builtins.fromJSON (builtins.readFile ./tree-sitter-nix.json));
   php = (builtins.fromJSON (builtins.readFile ./tree-sitter-php.json));
   python = (builtins.fromJSON (builtins.readFile ./tree-sitter-python.json));
+  query = (builtins.fromJSON (builtins.readFile ./tree-sitter-query.json));
   ruby = (builtins.fromJSON (builtins.readFile ./tree-sitter-ruby.json));
   rust = (builtins.fromJSON (builtins.readFile ./tree-sitter-rust.json));
   typescript = (builtins.fromJSON (builtins.readFile ./tree-sitter-typescript.json));
