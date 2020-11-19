@@ -74,7 +74,7 @@
     #(callPackage ./amdgpu-utils {})
     bat
     nodejs_latest
-    (callPackage ./jetbrains.nix {}).rider
+    jetbrains.rider
     androidenv.androidPkgs_9_0.ndk-bundle
     openssl.out
     openssl.dev
@@ -223,7 +223,7 @@
 
   programs.firefox = {
     enable = !small;
-    package = (import <nixpkgs> { config = import ./nixpkgs-config.nix; overlays = [ (import ./nixpkgs/flashplayer.nix) (import ./nixpkgs-mozilla/firefox-overlay.nix) ]; }).latest.firefox-beta-bin.overrideAttrs (oldAttrs: {
+    package = (pkgs.callPackage ./firefox.nix {}).overrideAttrs (oldAttrs: {
       passthru.browserName = "firefox";
     });
     enableAdobeFlash = true;
@@ -377,6 +377,9 @@
 
   programs.bash.shellAliases.cat = "bat";
 
+  programs.bash.shellAliases."nixos-rebuild" = "nixos-rebuild -L";
+  programs.bash.shellAliases.sudo = "sudo ";
+
   xdg.configFile."kitty/kitty.conf".text = ''
     remember_window_size no
     initial_window_width 1700
@@ -429,8 +432,6 @@
     '';
   };
 
-  nixpkgs.overlays = map (e: import (./nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ./nixpkgs));
-  nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   xdg.configFile."openbox" = {

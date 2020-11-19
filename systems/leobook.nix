@@ -5,8 +5,6 @@ with import ../components; {
 
   components = efi en_us est gui kde steam extra home { small = true; };
 
-  networking.hostName = "leobook"; # Define your hostname.
-
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
   environment.sessionVariables.KDEWM = "${pkgs.openbox}/bin/openbox";

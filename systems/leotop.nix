@@ -5,9 +5,8 @@ with import ../components; {
 
   components = efi { removable = true; } en_us est gui kde { bluetooth = true; } docker steam extra home;
 
-  networking.hostName = "leotop2"; # Define your hostname.
-
   users.extraUsers.leo60228.extraGroups = [ "wheel" "docker" "bumblebee" "vboxusers" ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  networking.firewall.allowedTCPPorts = [ 3000 ];
 }

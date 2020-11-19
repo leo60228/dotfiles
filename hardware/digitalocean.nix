@@ -41,4 +41,6 @@
   nixops = {
     deployment.targetHost = "104.131.74.33";
   };
+
+  system = "x86_64-linux";
 }

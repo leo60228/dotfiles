@@ -1,8 +1,8 @@
 {
-    nixos = { config, lib, pkgs, ... }:
+    nixos = { config, lib, modulesPath, pkgs, ... }:
     {
         imports =
-            [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+            [ "${modulesPath}/installer/scan/not-detected.nix"
             ];
 
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
@@ -76,4 +76,6 @@
     nixops = {
         deployment.targetHost = "leotop2.local";
     };
+
+    system = "x86_64-linux";
 }

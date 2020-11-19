@@ -161,41 +161,11 @@
     systemd.services.rngd.conflicts = [ "shutdown.target" ];
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
     boot.loader.timeout = null;
-
-    services.acpid = {
-      enable = true;
-      handlers = {
-        headphones = {
-          event = "jack/headphone";
-          action = ''
-          vals=($1)
-          [ "''${vals[0]}" = "jack/headphone" -a "''${vals[1]}" = "HEADPHONE" ] || exit
-          case "''${vals[2]}" in
-            plug)
-              sink=alsa_output.pci-0000_0a_00.3.analog-stereo
-              ;;
-            unplug)
-              sink=reverse-stereo
-              ;;
-            *)
-              echo unknown >> /tmp/acpi.log
-              exit
-              ;;
-          esac
-          for userdir in /run/user/*; do
-            uid="$(basename $userdir)"
-            user="$(id -un $uid)"
-            if [ -f "$userdir/pulse/pid" ]; then
-              PULSE_RUNTIME_PATH="$userdir/pulse" ${pkgs.su}/bin/su "$user" -c "${pkgs.callPackage ../paswitch {}}/bin/paswitch $sink"
-            fi
-          done
-          '';
-        };
-      };
-    };
   };
 
   nixops = {
     deployment.targetHost = "192.168.1.131";
   };
+
+  system = "x86_64-linux";
 }

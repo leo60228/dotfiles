@@ -21,4 +21,6 @@
   nixops = {
     deployment.targetHost = "aws.leo60228.space";
   };
+
+  system = "x86_64-linux";
 }

@@ -47,7 +47,6 @@
   services.redis.enable = true;
 
   boot.cleanTmpDir = true;
-  networking.hostName = "leoservices";
 
   services.mastodon = {
     enable = true;

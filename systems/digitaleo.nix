@@ -2,7 +2,6 @@
   components = en_us est docker extra cloud9 shellinabox server;
 
   boot.cleanTmpDir = true;
-  networking.hostName = "digitaleo";
 
   networking.firewall.allowedTCPPorts = [ 22 80 3000 5901 5900 6080 5901 4333 21 2782 ];
   networking.firewall.allowedUDPPorts = [ 2782 ];

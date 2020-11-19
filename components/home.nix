@@ -9,8 +9,11 @@ lib.makeComponent "home"
   };
 
   config = {
-    home-manager.users.leo60228 = import ../home.nix {
-      inherit (cfg) small;
+    home-manager = {
+      useGlobalPkgs = true;
+      users.leo60228 = import ../home.nix {
+	inherit (cfg) small;
+      };
     };
   };
 })

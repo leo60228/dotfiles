@@ -1,16 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, flakes, ... }:
 
 {
-  imports = [ ./xpra.nix ./mastodon.nix ];
+  imports = [ ./xpra.nix ./mastodon.nix ./flakes.nix ./nix-daemon.nix ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "dialout" "video" "render" ];
-    openssh.authorizedKeys.keyFiles = [ /home/leo60228/.ssh/id_rsa.pub ];
+    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ /home/leo60228/.ssh/id_rsa.pub ];
+  users.users.root.openssh.authorizedKeys.keys = let
+    text = builtins.readFile ../files/authorized_keys;
+    split = lib.splitString "\n" text;
+    keys = builtins.filter (x: x != "") split;
+  in keys;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -18,7 +22,13 @@
   # should.
   system.stateVersion = "18.03"; # Did you read the comment?
 
-  nixpkgs.overlays = map (e: import (../nixpkgs + ("/" + e))) (builtins.attrNames (builtins.readDir ../nixpkgs));
+  nixpkgs.overlays = map (e:
+    let
+      rawOverlay = import (../nixpkgs + ("/" + e));
+      hasArgs = builtins.functionArgs rawOverlay != {};
+      overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+    in overlay
+  ) (builtins.attrNames (builtins.readDir ../nixpkgs));
   nixpkgs.config = { allowUnfree = true; };
 
   # trusted users

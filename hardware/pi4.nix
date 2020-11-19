@@ -19,4 +19,6 @@
   };
 
   nixops.deployment.targetHost = "10.4.13.1";
+
+  system = "aarch64-linux";
 }
