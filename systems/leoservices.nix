@@ -51,7 +51,6 @@
   services.mastodon = {
     enable = true;
     localDomain = "60228.dev";
-    package = (import <nixpkgs> { overlays = [ (import ../nixpkgs/mastodon.nix) ]; }).mastodon;
     smtp = {
       createLocally = false;
       host = "smtp-relay.gmail.com";

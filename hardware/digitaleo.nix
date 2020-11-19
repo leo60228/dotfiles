@@ -1,6 +1,6 @@
 {
-  nixos = { config, lib, pkgs, ... }: {
-    imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
+  nixos = { config, lib, modulesPath, pkgs, ... }: {
+    imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
     boot.loader.grub.device = "/dev/vda";
     fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
 

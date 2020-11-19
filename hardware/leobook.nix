@@ -1,8 +1,8 @@
 {
-    nixos = { config, lib, pkgs, ... }:
+    nixos = { config, lib, modulesPath, flakes, pkgs, ... }:
     {
         imports =
-            [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+            [ "${modulesPath}/installer/scan/not-detected.nix"
             ];
 
         boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
@@ -11,7 +11,7 @@
 
         # keyboard driver
         boot.kernelPackages = pkgs.linuxPackages_latest.extend (lib.const (ksuper: {
-            kernel = with import <nixpkgs/lib/kernel.nix> { inherit lib; version = ksuper.kernel.version; };
+            kernel = with import "${flake.nixpkgs}/lib/kernel.nix" { inherit lib; version = ksuper.kernel.version; };
             ksuper.kernel.override {
                 structuredExtraConfig = {
                     PINCTRL_CHERRYVIEW = yes;

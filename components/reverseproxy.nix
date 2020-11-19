@@ -275,7 +275,7 @@ lib.makeComponent "reverseproxy"
             };
           };
           "60228.dev" = {
-            root = "${(import <nixpkgs> { overlays = [ (import ../nixpkgs/mastodon.nix) ]; }).mastodon}/public/";
+            root = "${pkgs.mastodon}/public/";
             forceSSL = true;
             enableACME = true;
 

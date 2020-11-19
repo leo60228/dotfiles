@@ -1,6 +1,6 @@
 {
-  nixos = { pkgs, lib, ... }: {
-    imports = [ <nixpkgs/nixos/modules/virtualisation/amazon-image.nix> ];
+  nixos = { pkgs, lib, modulesPath, ... }: {
+    imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ];
     systemd.services.amazon-init.enable = lib.mkForce false;
     users.users.root.openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYYsVZc4wkyT3ZE/f0/1aIXPFjl+XSxUsLGIE2p+B1kQ0hvrz6+d7u7Vvk6GIqI1+n6CEgNOgLKJQgiTy3A+Davotpg6cr4fTMAkOO1rXQWqCKAixy/TgXziBxTV6Jd5GcBnVl8hVQur8jAht1d041zpF51mIUpc2H6eQOi0aM8Xgw3QD5v7zKvZRQuwivk4hU5aNVIQW8Cd5TN7QJWR5/U51I613c5kw2QRRfGedl9TY0S7bhs38GTp0mzGdOllph3kW3BryIabeyvEbLaSwL3J6gY1d/vEuSGaiUTsdjgELQV4OdId/oqA4UrGK4ky/G/WiovSQjhB7mTgXc9RELyscrlRiByhSa0nLWW1S1bE936e1CMPWxHVcN0bMana1ckCGgBILYldus1G2EakQLhOi+gcSz/uBEDybyZ+U2odloep2Q2TpKC1IX5Uq6y8MAUmxuIUfn2U3kHrZvqQoYaQEHu35kHldOU48GBl84zSE9Jho/mXjZZOJYmqk89kXkjm5IjEHsF/l0GKz/HtWLkdSXek0Yy1JRN+HI00iyYb/ILCGGlcCznzY56emCAwN8PRCa5AvyC5lCfCm/SiE7VNqRK21eH/X1cbAS1g/Yx+NTstFH+3lEj4H/UP7We0N3+lc0vteh88sriuHgLYylnJA0DFL0ptteLCo9TeeAmQ== cardno:000608752585"
