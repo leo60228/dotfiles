@@ -11,7 +11,7 @@
   inputs.nur.url = github:nix-community/NUR;
   inputs.flake-utils.url = github:numtide/flake-utils;
 
-  outputs = { self, nixpkgs, flake-utils, ... } @ flakes: rec {
+  outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {
       system = (import (./hardware + "/${n}.nix")).system;
       modules = [ x ];
@@ -19,7 +19,8 @@
         inherit flakes;
       };
     }) (import ./. null).systems;
-    packages = flake-utils.lib.eachDefaultSystem (system: rec {
+  } // (flake-utils.lib.eachDefaultSystem (system: {
+    packages = rec {
       nixos-rebuild =
         let
           baseSystem = nixpkgs.lib.nixosSystem {
@@ -44,6 +45,6 @@
         wrapProgram $out/bin/bootstrap --prefix PATH : ${nixpkgs.lib.makeBinPath [ nix nixos-rebuild ]}
         '';
       };
-    });
-  };
+    };
+  })));
 }
