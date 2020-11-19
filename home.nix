@@ -495,23 +495,27 @@
 
   home.file.".vscode/extensions/ms-dotnettools.csharp".recursive = lib.mkIf (!small) true;
 
-  home.file.".omnisharp/omnisharp.json".text = lib.mkIf (!small) (builtins.toJSON {
-    MsBuild.UseLegacySdkResolver = true;
-  });
+  home.file.".omnisharp/omnisharp.json" = lib.mkIf (!small) {
+    text = builtins.toJSON {
+      MsBuild.UseLegacySdkResolver = true;
+    };
+  };
 
-  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = lib.mkIf (!small) (builtins.toJSON {
-    adapters = {
-      netcoredbg = {
-        name = "netcoredbg";
-        command = [ "${pkgs.callPackage ./netcoredbg {}}/netcoredbg" "--interpreter=vscode" ];
-        attach = {
-          pidProperty = "processId";
-          pidSelect = "ask";
-        };
-        configuration = {
-          cwd = "\${workspaceRoot}";
+  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = lib.mkIf (!small) {
+    text = builtins.toJSON {
+      adapters = {
+        netcoredbg = {
+          name = "netcoredbg";
+          command = [ "${pkgs.callPackage ./netcoredbg {}}/netcoredbg" "--interpreter=vscode" ];
+          attach = {
+            pidProperty = "processId";
+            pidSelect = "ask";
+          };
+          configuration = {
+            cwd = "\${workspaceRoot}";
+          };
         };
       };
     };
-  });
+  };
 }
