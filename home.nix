@@ -501,7 +501,7 @@
     };
   };
 
-  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json".text = lib.mkIf (!small) {
+  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json" = lib.mkIf (!small) {
     text = builtins.toJSON {
       adapters = {
         netcoredbg = {
