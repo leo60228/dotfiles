@@ -135,7 +135,6 @@
       }
     ];
     url_preview_enabled = true;
-    registration_shared_secret = builtins.readFile /home/leo60228/.matrix_signup_secret;
     extraConfig = ''
     suppress_key_server_warning: true
     '';
