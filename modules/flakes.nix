@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, flakes, ... }:
 
 {
   nix = {
@@ -6,5 +6,6 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    registry.nixpkgs.flake = flakes.nixpkgs;
   };
 }
