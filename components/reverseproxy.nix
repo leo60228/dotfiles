@@ -9,7 +9,7 @@ lib.makeComponent "reverseproxy"
   };
 
   config = {
-    security.acme.email = builtins.readFile /home/leo60228/.email;
+    security.acme.email = "leo@60228.dev";
     security.acme.acceptTerms = true;
 
     services.phpfpm = lib.mkIf (cfg.host == "aws") (lib.mkForce {
