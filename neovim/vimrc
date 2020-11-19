@@ -103,10 +103,17 @@ require'nvim-treesitter.configs'.setup {
       ["comment"] = "Comment",
       ["string.special"] = "Special",
       ["include"] = "Keyword",
+      ["punctuation.delimiter"] = "NONE",
+      ["punctuation.bracket"] = "NONE",
     },
   },
   playground = {
     enable = true,
+  },
+  refactor = {
+    navigation = {
+      enable = true,
+    },
   },
 }
 EOF
