@@ -1,13 +1,13 @@
 { lib }:
 lib.firefoxOverlay.firefoxVersion {
   name = "Firefox Beta";
-  version = "84.0b2";
+  version = "84.0b3";
   release = true;
   info = {
-    url = "https://download.cdn.mozilla.net/pub/firefox/releases/84.0b2/linux-x86_64/en-US/firefox-84.0b2.tar.bz2";
-    sha512 = "fb06ccfdef0290850e71d8c45d04f237ac154df53a80a3d139f3cb051b0fa505bea7a83685b4395c6320ef3897e4ee7b1b47577208a401290cb88c84a706e78f";
+    url = "https://download.cdn.mozilla.net/pub/firefox/releases/84.0b3/linux-x86_64/en-US/firefox-84.0b3.tar.bz2";
+    sha512 = "97957fd7958ed9d2d5f17f62969905df6b594e71d9e5c55a353451a1e6e2548e3617c21f39baec46e10372746ac170df07a205963cad167166e3b2dc201eff9c";
     chksumSig = null;
-    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/84.0b2/linux-x86_64/en-US/firefox-84.0b2.tar.bz2.asc";
-    sigSha512 = "6890a8588d19fd713d54231bc38ac8467a9a8d63bab6f41dec024a53775aa01bf2d3229da310b41abd52cb93034e5f4e537a6d61319fae8f535b565169014e0a";
+    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/84.0b3/linux-x86_64/en-US/firefox-84.0b3.tar.bz2.asc";
+    sigSha512 = "13c7eaf3ca1b597516d75f12cc2bf6f27ddeb503fe87c1cbaaf54a30a2c2662ea1a4561c63e94c6b7870f9e9cba79e7eeec24d49b90ad6448719c54721aaf7ef";
   };
 }
