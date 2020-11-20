@@ -45,4 +45,22 @@
   '';
 
   boot.kernel.sysctl."kernel.sysrq" = 1;
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}=="7321", MODE="0666"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="8b00", MODE="0666"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0200|0402|0403|0406|0407|0410", TAG+="uaccess", GROUP="users", MODE="0666"
+    ATTRS{name}=="Logitech M570", ENV{IS_M570}="yes"
+    ENV{IS_M570}=="yes", SYMLINK+="input/event_m570"
+    SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0a5c", ATTRS{idProduct}=="21e8", TAG+="uaccess"
+    ATTRS{id/vendor}=="057e", ATTRS{id/product}=="2009", TAG+="uaccess", MODE="0666"
+  '';
+
+  # tmpfs
+  boot.tmpOnTmpfs = true;
+
+  services.openssh.forwardX11 = true;
+
+  security.sudo.wheelNeedsPassword = false;
 }
