@@ -33,7 +33,7 @@ in stdenv.mkDerivation rec {
     wrapProgram $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
-        --prefix LD_LIBRARY_PATH : ${libPath}
+        --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
 
     ln -s $out/opt/${binaryName}/${binaryName} $out/bin/
     ln -s $out/opt/${binaryName}/discord.png $out/share/pixmaps/${pname}.png
