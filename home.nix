@@ -493,7 +493,9 @@
     ];
   };
 
-  home.file.".vscode/extensions/ms-dotnettools.csharp".recursive = lib.mkIf (!small) true;
+  home.file.".vscode/extensions/ms-dotnettools.csharp" = lib.mkIf (!small) {
+    recursive = true;
+  };
 
   home.file.".omnisharp/omnisharp.json" = lib.mkIf (!small) {
     text = builtins.toJSON {
