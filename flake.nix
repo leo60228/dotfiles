@@ -19,7 +19,7 @@
         inherit flakes;
       };
     }) (import ./. null).systems;
-  } // (flake-utils.lib.eachDefaultSystem (system: {
+  } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nixos-rebuild =
         let
@@ -46,5 +46,9 @@
         '';
       };
     };
+    apps = nixpkgs.lib.mapAttrs (n: x: {
+      type = "app";
+      program = "${x}/bin/${n}";
+    }) packages;
   })));
 }
