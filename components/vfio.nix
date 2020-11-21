@@ -4,8 +4,6 @@ lib.makeComponent "vfio"
   opts = {};
 
   config = {
-    # libvirt
-    virtualisation.libvirtd.enable = true;
     virtualisation.libvirtd.qemuVerbatimConfig = ''
       namespaces = []
       cgroup_device_acl = [
@@ -21,18 +19,14 @@ lib.makeComponent "vfio"
       nographics_allow_host_audio = 1
       user = "leo60228"
     '';
-    virtualisation.libvirtd.onBoot = "ignore";
-    virtualisation.libvirtd.onShutdown = "shutdown";
     services.udev.extraRules = ''
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c52b", MODE="0666"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0853", ATTRS{idProduct}=="0134", MODE="0666"
     '';
-    environment.systemPackages = [ pkgs.virtmanager pkgs.OVMF ];
     boot.kernelParams = [ "amd_iommu=on" "iommu=pt" ];
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
-    users.groups.libvirtd.members = [ "root" "leo60228" ];
     hardware.pulseaudio.extraConfig = ''
         load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
     '';
@@ -50,6 +44,5 @@ lib.makeComponent "vfio"
     # Make them executable
     chmod +x /var/lib/libvirt/hooks/qemu
     '';
-    systemd.services.libvirtd.path = with pkgs; [ bash killall libvirt kmod ];
   };
 })
