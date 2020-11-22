@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
 
 with import ../components; {
-  components = efi en_us est home { small = true; };
-
-  networking.hostName = "leoserv"; # Define your hostname.
+  components = efi en_us est home { small = true; } znc;
 
   #networking.firewall.allowedTCPPorts = [ 25565 25575 38067 ];
   #networking.firewall.allowedUDPPorts = [ 25565 25575 38067 ];
