@@ -334,7 +334,7 @@
   export PATH="$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
   '';
   programs.bash.initExtra = ''
-    export PS1=\\n\\\[\\033\[1\;32m\\\]\[\\\[\\e\]0\;leo60228@leoservices:\ \\w\\a\\\]\\u@\\h:\\w\]\\\$\\\[\\033\[0m\\\]\ 
+    export PS1=\\n\\\[\\033\[?1l\\\[\\033\[1\;32m\\\]\[\\\[\\e\]0\;leo60228@leoservices:\ \\w\\a\\\]\\u@\\h:\\w\]\\\$\\\[\\033\[0m\\\]\ 
 
     [[ $- != *i* ]] && return
 
