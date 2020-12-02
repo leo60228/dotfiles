@@ -18,7 +18,6 @@
     gist
     gitAndTools.hub
     p7zip
-    git
     file
     unzip
     usbutils
@@ -192,7 +191,6 @@
     xorriso
     #qemu
     gitAndTools.git-annex
-    gitAndTools.gitFull
     mr
     stow
     file
@@ -220,6 +218,14 @@
     #(import ./julia-oldpkgs.nix {version = "11";})
     (callPackage ./twemoji.nix {})
   ];
+
+  programs.git = {
+    enable = true;
+    package = if small then pkgs.git else pkgs.gitAndTools.gitFull;
+    userName = "leo60228";
+    userEmail = "leo@60228.dev";
+    extraConfig.init.defaultBranch = "main";
+  };
 
   programs.firefox = {
     enable = !small;
