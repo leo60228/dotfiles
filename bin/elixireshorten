@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -eE
+
+trap 'notify-send -t 5000 "Error!" --hint=int:transient:1' ERR
+
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-bundle.crt
+
+readonly apiurl="https://elixi.re/api"
+readonly apikey="$(cat ~/.config/elixire-apikey)"
+
+url="${1}"
+if [ -z $url ]; then
+	url="$(xclip -o -selection clipboard)"
+fi
+
+shortened="$(jq -nc --arg url "${url}" '{ url: $url }' | curl -X POST --data-binary @- -H "Authorization: ${apikey}" "${apiurl}/shorten" | jq -re .url)"
+
+echo "${shortened}"
+echo -n "${shortened}" | xclip -selection clipboard
+
+notify-send -t 5000 "Success!" "${shortened}" -i "${url}" --hint=int:transient:1
