@@ -4,6 +4,7 @@
 #let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 {
   home.packages = with pkgs; if small then [
+    libwebp
     ripgrep
     (callPackage ./neovim {})
     zip
@@ -25,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    libwebp
     nix-prefetch-github
     element-desktop
     libnotify

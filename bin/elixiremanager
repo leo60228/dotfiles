@@ -6,11 +6,12 @@ readonly prog_ver="7.0"
 
 #defaults
 readonly apiurl="https://elixi.re/api"
-readonly apikey="u775330073988436080.X6lV2g.XwlgyxiirU8EhaG5DHXISxn8AqA"
+readonly apikey="$(cat ~/.config/elixire-apikey)"
 mode=area
 wayland=false
 is_admin=""
 readonly filename_format="/tmp/elixire-$(date +%Y-%m-%dT%H:%M:%S).png"
+readonly webp_filename_format="/tmp/elixire-$(date +%Y-%m-%dT%H:%M:%S).webp"
 readonly upload_connect_timeout="5"
 readonly upload_timeout="120"
 readonly upload_retries="1"
@@ -35,7 +36,7 @@ function version() {
 }
 
 function check_deps() {
-    for i in date jq notify-send curl; do
+    for i in date jq notify-send curl cwebp; do
         (which $i &>/dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
     done
 
@@ -127,10 +128,20 @@ fi
 
 if [[ -z $file_provided ]]; then
     take_screenshot $mode "${file}"
+    size="$(stat -c%s "${file}")"
+    if (( "${size}" > 1024 * 1024 )); then
+        orig_file="${file}"
+        file="${webp_filename_format}"
+        type="image/webp"
+        cwebp "${orig_file}" -o "${file}"
+    fi
 fi
 
-upload_file_and_notify "${file}"
+upload_file_and_notify "${file}${type:+;type=${type}}"
 
 if [[ -z $file_provided && -z $keep ]]; then
     rm -f "${file}"
+    if [[ ! -z $orig_file ]]; then
+        rm -f "${orig_file}"
+    fi
 fi
