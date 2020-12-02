@@ -190,7 +190,7 @@
     nasm
     grub2
     xorriso
-    qemu
+    #qemu
     gitAndTools.git-annex
     gitAndTools.gitFull
     mr

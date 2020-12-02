@@ -3,7 +3,7 @@
 with import ../components; {
   imports = [ ../cachix.nix ];
 
-  components = efi { removable = true; } en_us est gui kde { bluetooth = true; } docker steam extra home;
+  components = efi { removable = true; } en_us est gui kde { bluetooth = true; } docker steam extra home kvm;
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" "docker" "bumblebee" "vboxusers" ];
 
