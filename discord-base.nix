@@ -1,16 +1,31 @@
 { pname, version, src, binaryName, desktopName
-, stdenv, fetchurl, makeDesktopItem, wrapGAppsHook
-, alsaLib, atk, at-spi2-atk, at-spi2-core, cairo, cups, dbus, expat, fontconfig, freetype
-, gdk-pixbuf, glib, gtk3, libnotify, libX11, libXcomposite, libXcursor, libXdamage, libuuid
-, libXext, libXfixes, libXi, libXrandr, libXrender, libXtst, nspr, nss, libxcb
-, pango, systemd, libXScrnSaver, libcxx, libpulseaudio, libdrm }:
+, autoPatchelfHook, fetchurl, makeDesktopItem, stdenv, wrapGAppsHook
+, alsaLib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig
+, freetype, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libnotify, libpulseaudio, libuuid
+, libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
+, libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb
+, mesa, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu
+}:
 
 let
   inherit binaryName;
 in stdenv.mkDerivation rec {
   inherit pname version src;
 
-  nativeBuildInputs = [ wrapGAppsHook ];
+  nativeBuildInputs = [
+    alsaLib
+    autoPatchelfHook
+    cups
+    libdrm
+    libuuid
+    libX11
+    libXScrnSaver
+    libXtst
+    libxcb
+    mesa.drivers
+    nss
+    wrapGAppsHook
+  ];
 
   dontWrapGApps = true;
 
@@ -19,7 +34,8 @@ in stdenv.mkDerivation rec {
     stdenv.cc.cc alsaLib atk at-spi2-atk at-spi2-core cairo cups dbus expat fontconfig freetype
     gdk-pixbuf glib gtk3 libnotify libX11 libXcomposite libuuid
     libXcursor libXdamage libXext libXfixes libXi libXrandr libXrender
-    libXtst nspr nss libxcb pango systemd libXScrnSaver libdrm
+    libXtst nspr nss libxcb pango systemd libXScrnSaver
+    libappindicator-gtk3 libdbusmenu
    ];
 
   installPhase = ''
@@ -33,7 +49,7 @@ in stdenv.mkDerivation rec {
     wrapProgram $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
-        --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
+        --prefix LD_LIBRARY_PATH : ${libPath}
 
     ln -s $out/opt/${binaryName}/${binaryName} $out/bin/
     ln -s $out/opt/${binaryName}/discord.png $out/share/pixmaps/${pname}.png

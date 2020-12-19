@@ -109,15 +109,15 @@
       genericName = desktopName;
       categories = "System;Utility;";
     })
-    (writeShellScriptBin "DiscordPTB" ''
-    systemctl --user start discord-ptb.service
+    (writeShellScriptBin "Discord" ''
+    systemctl --user start discord.service
     '')
     (makeDesktopItem {
-      name = "discord-ptb";
-      exec = "DiscordPTB";
+      name = "discord";
+      exec = "Discord";
       genericName = "All-in-one cross-platform voice and text chat for gamers";
-      desktopName = "Discord PTB";
-      icon = "discord-ptb";
+      desktopName = "Discord";
+      icon = "discord";
       mimeType = "x-scheme-handler/discord";
     })
     (hiPrio gtk2)
@@ -181,7 +181,6 @@
     p7zip
     #gimpPlugins.gap
     steam-run
-    (callPackage ./discord.nix {})
     xclip
     xsel
     gimp
@@ -319,9 +318,9 @@
   #  };
   #};
 
-  systemd.user.services.discord-ptb = lib.mkIf (!small) {
+  systemd.user.services.discord = lib.mkIf (!small) {
     Unit = {
-      Description = "Discord PTB";
+      Description = "Discord";
       After = [ "graphical-session.target" ];
       PartOf = "graphical-session.target";
     };
@@ -329,7 +328,7 @@
     Service = {
       Type = "simple";
       ExecStartPre = "${pkgs.coreutils}/bin/rm -f /run/user/1000/discord-ipc-0";
-      ExecStart = "${pkgs.callPackage ./discord.nix {}}/bin/DiscordPTB";
+      ExecStart = "${pkgs.callPackage ./discord.nix {}}/bin/Discord";
       Restart = "no";
       TimeoutSec = "5s";
     };
@@ -342,8 +341,8 @@
   systemd.user.services.mpd-discord = lib.mkIf (!small) {
     Unit = {
       Description = "mpd-discord";
-      BindsTo = [ "mpd.service" "discord-ptb.service" ];
-      After = [ "mpd.service" "discord-ptb.service" ];
+      BindsTo = [ "mpd.service" "discord.service" ];
+      After = [ "mpd.service" "discord.service" ];
     };
 
     Service = {
@@ -352,7 +351,7 @@
     };
 
     Install = {
-      WantedBy = [ "discord-ptb.service" ];
+      WantedBy = [ "discord.service" ];
     };
   };
 
