@@ -37,7 +37,7 @@
         rustc = rust;
       };
     }).overrideAttrs (oldAttrs: {
-      buildPhase = builtins.replaceStrings ["pcre2"] ["'pcre2 simd-accel'"] oldAttrs.buildPhase;
+      #buildPhase = builtins.replaceStrings ["pcre2"] ["'pcre2 simd-accel'"] oldAttrs.buildPhase;
     }))
     linuxPackages.perf
     zip
@@ -109,6 +109,17 @@
       genericName = desktopName;
       categories = "System;Utility;";
     })
+    (writeShellScriptBin "DiscordPTB" ''
+    systemctl --user start discord-ptb.service
+    '')
+    (makeDesktopItem {
+      name = "discord-ptb";
+      exec = "DiscordPTB";
+      genericName = "All-in-one cross-platform voice and text chat for gamers";
+      desktopName = "Discord PTB";
+      icon = "discord-ptb";
+      mimeType = "x-scheme-handler/discord";
+    })
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
     SDL
@@ -178,7 +189,9 @@
     symbola
     kitty
     (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
-    vlc
+    #vlc
+    #(libsForQt514.callPackage ./vlc-4.nix {})
+    (libsForQt514.callPackage ./vlc.nix {})
     multimc
     (callPackage ./neovim {})
     openscad
@@ -219,6 +232,7 @@
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
     (callPackage ./twemoji.nix {})
+    syncthingtray
   ];
 
   programs.git = {
@@ -305,6 +319,43 @@
   #    WantedBy = [ "network-online.target" ];
   #  };
   #};
+
+  systemd.user.services.discord-ptb = lib.mkIf (!small) {
+    Unit = {
+      Description = "Discord PTB";
+      After = [ "graphical-session.target" ];
+      PartOf = "graphical-session.target";
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/rm -f /run/user/1000/discord-ipc-0";
+      ExecStart = "${pkgs.callPackage ./discord.nix {}}/bin/DiscordPTB";
+      Restart = "no";
+      TimeoutSec = "5s";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  systemd.user.services.mpd-discord = lib.mkIf (!small) {
+    Unit = {
+      Description = "mpd-discord";
+      BindsTo = [ "mpd.service" "discord-ptb.service" ];
+      After = [ "mpd.service" "discord-ptb.service" ];
+    };
+
+    Service = {
+      ExecStartPre = "${pkgs.stdenv.shell} -c 'while ! [ -S /run/user/1000/discord-ipc-0 ]; do ${pkgs.coreutils}/bin/sleep 1; done'";
+      ExecStart = "${pkgs.callPackage ./mpd-discord.nix {}}/bin/mpd_discord_richpresence --no-idle";
+    };
+
+    Install = {
+      WantedBy = [ "discord-ptb.service" ];
+    };
+  };
 
   systemd.user.services.twibd = lib.mkIf (!small) {
     Unit = {
@@ -436,6 +487,7 @@
             type    "pulse"
             name    "My Pulse Output"
         }
+        playlist_directory "~/Playlists"
     '';
   };
 
@@ -456,7 +508,11 @@
     recursive = true;
   };
 
+<<<<<<< HEAD
   fonts.fontconfig.enable = lib.mkForce true;
+=======
+  #fonts.fontconfig.enable = true;
+>>>>>>> 157864f... cursed home.nix
   #fonts.fontconfig.aliases = [{
   #  families = [ "Hack" ];
   #  default = [ "monospace" ];
@@ -480,6 +536,7 @@
   #  }];
   #}];
 
+<<<<<<< HEAD
   programs.vscode = lib.mkIf (!small) {
     enable = true;
     package = pkgs.callPackage ./vscode-fhs.nix {};
@@ -528,4 +585,12 @@
       };
     };
   };
+=======
+  services.syncthing = lib.mkIf (!small) {
+    enable = true;
+  };
+
+  programs.direnv.enable = true;
+  programs.direnv.enableNixDirenvIntegration = true;
+>>>>>>> 157864f... cursed home.nix
 }
