@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-nixOpts=(--option experimental-features 'nix-command flakes')
+nixOpts=(-L --option experimental-features 'nix-command flakes')
 if [ -z "$_BOOTSTRAP_REEXEC" ]; then
   export _BOOTSTRAP_REEXEC=1
   exec nix run nixpkgs.nixFlakes -c nix "${nixOpts[@]}" run '.#nix' -- "${nixOpts[@]}" run '.#bootstrap' -- "$@"

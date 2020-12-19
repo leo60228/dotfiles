@@ -4,6 +4,7 @@ rec {
   channel = rustChannelOf {
     channel = "nightly";
     date = "2020-10-13";
+    sha256 = "0633q60hs579skppz639krfz1c9ir2an4gnimqin5zhbq7cic9pn";
   };
   rust = channel.rust.override {
     extensions = [ "clippy-preview" "rls-preview" "rust-src" "rust-analysis" ];

@@ -248,7 +248,6 @@
     package = (pkgs.callPackage ./firefox.nix {}).overrideAttrs (oldAttrs: {
       passthru.browserName = "firefox";
     });
-    enableAdobeFlash = true;
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader google-search-link-fix old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
     profiles.default = {
       settings = {
@@ -508,11 +507,8 @@
     recursive = true;
   };
 
-<<<<<<< HEAD
   fonts.fontconfig.enable = lib.mkForce true;
-=======
   #fonts.fontconfig.enable = true;
->>>>>>> 157864f... cursed home.nix
   #fonts.fontconfig.aliases = [{
   #  families = [ "Hack" ];
   #  default = [ "monospace" ];
@@ -536,7 +532,6 @@
   #  }];
   #}];
 
-<<<<<<< HEAD
   programs.vscode = lib.mkIf (!small) {
     enable = true;
     package = pkgs.callPackage ./vscode-fhs.nix {};
@@ -585,12 +580,11 @@
       };
     };
   };
-=======
+
   services.syncthing = lib.mkIf (!small) {
     enable = true;
   };
 
   programs.direnv.enable = true;
   programs.direnv.enableNixDirenvIntegration = true;
->>>>>>> 157864f... cursed home.nix
 }

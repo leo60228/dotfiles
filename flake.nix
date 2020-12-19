@@ -29,7 +29,12 @@
         let
           baseSystem = nixpkgs.lib.nixosSystem {
             inherit system;
-            modules = [ ./modules/flakes.nix ];
+            modules = [
+              ./modules/flakes.nix
+              {
+                nixpkgs.overlays = [ (import ./nixpkgs/nix.nix flakes) ];
+              }
+            ];
           };
           nixos-rebuild = baseSystem.config.system.build.nixos-rebuild;
         in nixos-rebuild;

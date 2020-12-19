@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-cd "$(dirname "$0")"
-curl -o flashplayer.nix https://raw.githubusercontent.com/NixOS/nixpkgs/${1:-master}/pkgs/applications/networking/browsers/mozilla-plugins/flashplayer/default.nix
