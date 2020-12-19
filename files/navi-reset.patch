@@ -1,18 +1,8 @@
-From 1a723fd375a530781d344a1315c55467ae9dbb1f Mon Sep 17 00:00:00 2001
-From: Geoffrey McRae <geoff@hostfission.com>
-Date: Wed, 27 Nov 2019 00:32:23 +1100
-Subject: [PATCH] quirk: AMD Navi 10 series vendor specific reset (v2)
-
-Signed-off-by: Geoffrey McRae <geoff@hostfission.com>
----
- drivers/pci/quirks.c | 132 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 132 insertions(+)
-
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 44c4ae1abd00..a3325beff5a6 100644
+index 2a589b6d6ed8..c86bdc1069d3 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -3825,6 +3825,131 @@ static int delay_250ms_after_flr(struct pci_dev *dev, int probe)
+@@ -3969,17 +3969,362 @@ static int delay_250ms_after_flr(struct pci_dev *dev, int probe)
  	return 0;
  }
  
@@ -20,21 +10,44 @@ index 44c4ae1abd00..a3325beff5a6 100644
 + * AMD Navi 10 series GPUs require a vendor specific reset procedure.
 + * According to AMD a PSP mode 2 reset should be enough however at this
 + * time the details of how to perform this are not available to us.
-+ * Instead we can signal the SMU to enter and exit BACO which has the same
-+ * desired effect.
++ * Instead we can signal the PSP to perform a mode 1 reset, which _is_
++ * available to us. Unfortunately, it probably takes more time.
 + */
 +static int reset_amd_navi10(struct pci_dev *dev, int probe)
 +{
-+	const int mmMP0_SMN_C2PMSG_81 = 0x16091;
-+	const int mmMP1_SMN_C2PMSG_66 = 0x16282;
-+	const int mmMP1_SMN_C2PMSG_82 = 0x16292;
-+	const int mmMP1_SMN_C2PMSG_90 = 0x1629a;
++	const int mmMM_INDEX = 0x0000;
++	const int mmMM_DATA = 0x0001;
++	const int mmPCIE_INDEX2 = 0x000e;
++	const int mmPCIE_DATA2 = 0x000f;
++
++	const int MP0_BASE = 0x00016000L;
++	const int mmMP0_SMN_C2PMSG_33 = 0x0061 + MP0_BASE;
++	const int mmMP0_SMN_C2PMSG_35 = 0x0063 + MP0_BASE;
++	const int mmMP0_SMN_C2PMSG_64 = 0x0080 + MP0_BASE;
++	const int mmMP0_SMN_C2PMSG_81 = 0x0091 + MP0_BASE;
++	const int mmMP1_SMN_C2PMSG_66 = 0x0282 + MP0_BASE;
++	const int mmMP1_SMN_C2PMSG_82 = 0x0292 + MP0_BASE;
++	const int mmMP1_SMN_C2PMSG_90 = 0x029a + MP0_BASE;
++
++	const int GFX_CTRL_CMD_ID_MODE1_RST = 0x00070000L;
++	const int MP1_Public = 0x03b00000L;
++	const int smnMP1_PUB_CTRL = 0x3010b14;
++	const int MP1_SMN_PUB_CTRL__RESET_MASK = 0x00000001L;
++	const int smnMP1_FIRMWARE_FLAGS = 0x3010024;
++	const int MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED_MASK = 0x00000001L;
++	const int MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED__SHIFT = 0x0;
++
++	const int mmRCC_DEV0_EPF0_RCC_CONFIG_MEMSIZE = 0x00c3 + 0x00000D20L;
++
++	const int scratch_reg_offset = 0x4c;
++	const int ATOM_S3_ASIC_GUI_ENGINE_HUNG = 0x20000000L;
 +
 +	u16 cfg;
++	u32 tmp, smu_resp, sol, mp1_intr, psp_bl_ready;
 +	resource_size_t mmio_base, mmio_size;
-+	uint32_t __iomem * mmio;
-+	unsigned int sol;
++	uint32_t __iomem *mmio;
 +	unsigned int timeout;
++	spinlock_t pcie_lock;
 +
 +	/*
 +	 * if the device has FLR return -ENOTTY indicating that we have no
@@ -46,8 +59,14 @@ index 44c4ae1abd00..a3325beff5a6 100644
 +	/* bus resets still cause navi to flake out */
 +	dev->dev_flags |= PCI_DEV_FLAGS_NO_BUS_RESET;
 +
++	/* if we're managed by amdgpu, do not reset */
++	if (dev->driver && !strcmp(dev->driver->name, "amdgpu"))
++		return -ENOTTY;
++
 +	if (probe)
 +		return 0;
++
++	spin_lock_init(&pcie_lock);
 +
 +	/* map BAR5 */
 +	mmio_base = pci_resource_start(dev, 5);
@@ -63,91 +82,285 @@ index 44c4ae1abd00..a3325beff5a6 100644
 +	pci_read_config_word(dev, PCI_COMMAND, &cfg);
 +	pci_write_config_word(dev, PCI_COMMAND, cfg | PCI_COMMAND_MEMORY);
 +
-+	#define SMU_WAIT() \
-+	for(timeout = 1000; timeout && (readl(mmio + mmMP1_SMN_C2PMSG_90) & 0xFFFFFFFFL) == 0; --timeout) \
-+		udelay(1000); \
-+	if (readl(mmio + mmMP1_SMN_C2PMSG_90) != 0x1) \
-+		pci_info(dev, "Navi10: SMU error 0x%x (line %d)\n", \
-+				readl(mmio + mmMP1_SMN_C2PMSG_90), __LINE__);
-+
 +	pci_set_power_state(dev, PCI_D0);
 +
++#define RREG32(reg)                                                            \
++	({                                                                     \
++		u32 out;                                                       \
++		if ((reg) < mmio_size)                                         \
++			out = readl(mmio + (reg));                             \
++		else {                                                         \
++			writel((reg), mmio + mmMM_INDEX);                      \
++			out = readl(mmio + mmMM_DATA);                         \
++		}                                                              \
++		out;                                                           \
++	})
++
++#define WREG32(reg, v)                                                         \
++	do {                                                                   \
++		if ((reg) < mmio_size)                                         \
++			writel(v, mmio + (reg));                               \
++		else {                                                         \
++			writel((reg), mmio + mmMM_INDEX);                      \
++			writel(v, mmio + mmMM_DATA);                           \
++		}                                                              \
++	} while (0)
++
++#define WREG32_PCIE(reg, v)                                                    \
++	do {                                                                   \
++		unsigned long __flags;                                         \
++		spin_lock_irqsave(&pcie_lock, __flags);                        \
++		WREG32(mmPCIE_INDEX2, reg);                                    \
++		(void)RREG32(mmPCIE_INDEX2);                                   \
++		WREG32(mmPCIE_DATA2, v);                                       \
++		(void)RREG32(mmPCIE_DATA2);                                    \
++		spin_unlock_irqrestore(&pcie_lock, __flags);                   \
++	} while (0)
++
++#define RREG32_PCIE(reg)                                                       \
++	({                                                                     \
++		unsigned long __flags;                                         \
++		u32 __tmp_read;                                                \
++		spin_lock_irqsave(&pcie_lock, __flags);                        \
++		WREG32(mmPCIE_INDEX2, reg);                                    \
++		(void)RREG32(mmPCIE_INDEX2);                                   \
++		__tmp_read = RREG32(mmPCIE_DATA2);                             \
++		spin_unlock_irqrestore(&pcie_lock, __flags);                   \
++		__tmp_read;                                                    \
++	})
++
++#define SMU_WAIT()                                                             \
++	({                                                                     \
++		u32 __tmp;                                                     \
++		for (timeout = 100000;                                         \
++		     timeout &&                                                \
++		     (RREG32(mmMP1_SMN_C2PMSG_90) & 0xFFFFFFFFL) == 0;         \
++		     --timeout)                                                \
++			udelay(1);                                             \
++		if ((__tmp = RREG32(mmMP1_SMN_C2PMSG_90)) != 0x1)              \
++			pci_info(dev, "Navi10: SMU error 0x%x (line %d)\n",    \
++				 __tmp, __LINE__);                             \
++	})
++
 +	/* it's important we wait for the SOC to be ready */
-+	for(timeout = 1000; timeout; --timeout) {
-+		sol = readl(mmio + mmMP0_SMN_C2PMSG_81);
++	for (timeout = 100000; timeout; --timeout) {
++		sol = RREG32(mmMP0_SMN_C2PMSG_81);
 +		if (sol != 0xFFFFFFFF)
 +			break;
-+		udelay(1000);
++		udelay(1);
 +	}
 +
-+	if (sol == 0xFFFFFFFF)
-+		pci_warn(dev, "Navi10: timeout waiting for wakeup, continuing anyway\n");
++	if (sol == 0xFFFFFFFF) {
++		pci_warn(dev,
++			 "Navi10: Timed out waiting for SOL to be valid\n");
++		goto out;
++	}
++
++	/*
++	 * okay there's three things we need to check:
++	 * sign-of-life, MP1 intr state (enabled means MP1 is probably live),
++	 * and finally PSP bootloader state (needs to be ready)
++	 */
++	smu_resp = RREG32(mmMP1_SMN_C2PMSG_90);
++	mp1_intr = (RREG32_PCIE(MP1_Public |
++				(smnMP1_FIRMWARE_FLAGS & 0xffffffff)) &
++		    MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED_MASK) >>
++		   MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED__SHIFT;
++	psp_bl_ready = !!(RREG32(mmMP0_SMN_C2PMSG_35) & 0x80000000L);
++	pci_info(
++		dev,
++		"Navi10: SMU response reg: %x, sol reg: %x, mp1 intr enabled? %s, bl ready? %s\n",
++		smu_resp, sol, mp1_intr ? "yes" : "no",
++		psp_bl_ready ? "yes" : "no");
 +
 +	/* check the sign of life indicator */
-+	if (sol == 0x0) {
++	if (sol == 0x0 && !mp1_intr && psp_bl_ready) {
++		/* either already clean or in a state we can't fix */
 +		goto out;
 +	}
-+
-+	pci_info(dev, "Navi10: performing BACO reset\n");
 +
 +	/* save the state around the reset */
++	pci_info(dev, "Navi10: Clear master\n");
++	pci_clear_master(dev);
++
 +	pci_save_state(dev);
 +
-+	/* the SMU might be busy already, wait for it */
-+	SMU_WAIT();
++	/* this tells the drivers nvram is lost and everything needs to be reset */
++	pci_info(dev, "Navi10: Clearing scratch regs 6 and 7\n");
++	WREG32(scratch_reg_offset + 6, 0);
++	WREG32(scratch_reg_offset + 7, 0);
 +
-+	/* send PPSMC_MSG_ArmD3 with param */
-+	writel(0x00, mmio + mmMP1_SMN_C2PMSG_90);
-+	writel(0x00, mmio + mmMP1_SMN_C2PMSG_82); // BACO_SEQ_BACO
-+	writel(0x46, mmio + mmMP1_SMN_C2PMSG_66);
-+	SMU_WAIT();
++	/* it only makes sense to reset mp1 if it's running
++	 * XXX: is this even necessary? in early testing, I ran into
++	 * situations where MP1 was alive but not responsive, but in
++	 * later testing I have not been able to replicate this scenario.
++	 */
++	if (smu_resp != 0x01 && mp1_intr) {
++		pci_info(dev, "Navi10: MP1 reset\n");
++		WREG32_PCIE(MP1_Public | (smnMP1_PUB_CTRL & 0xffffffff),
++			    1 & MP1_SMN_PUB_CTRL__RESET_MASK);
++		WREG32_PCIE(MP1_Public | (smnMP1_PUB_CTRL & 0xffffffff),
++			    1 & ~MP1_SMN_PUB_CTRL__RESET_MASK);
 +
-+	/* send PPSMC_MSG_EnterBaco with param */
-+	writel(0x00, mmio + mmMP1_SMN_C2PMSG_90);
-+	writel(0x00, mmio + mmMP1_SMN_C2PMSG_82); // BACO_SEQ_BACO
-+	writel(0x18, mmio + mmMP1_SMN_C2PMSG_66);
-+	SMU_WAIT();
++		pci_info(dev, "Navi10: wait for MP1\n");
++		for (timeout = 100000; timeout; --timeout) {
++			tmp = RREG32_PCIE(MP1_Public |
++					  (smnMP1_FIRMWARE_FLAGS & 0xffffffff));
++			if ((tmp &
++			     MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED_MASK) >>
++			    MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED__SHIFT)
++				break;
++			udelay(1);
++		}
 +
-+	/* wait for the regulators to shutdown */
-+	mdelay(1000);
++		if (!timeout &&
++		    !((tmp & MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED_MASK) >>
++		      MP1_FIRMWARE_FLAGS__INTERRUPTS_ENABLED__SHIFT)) {
++			pci_warn(dev,
++				 "Navi10: timed out waiting for MP1 reset\n");
++		}
 +
-+	/* send PPSMC_MSG_ExitBaco */
-+	writel(0x00, mmio + mmMP1_SMN_C2PMSG_90);
-+	writel(0x19, mmio + mmMP1_SMN_C2PMSG_66);
-+	SMU_WAIT();
++		SMU_WAIT();
++		smu_resp = RREG32(mmMP1_SMN_C2PMSG_90);
++		pci_info(dev, "Navi10: SMU resp reg: %x\n", tmp);
++	}
 +
-+	#undef SMU_WAIT
++	pci_info(dev, "Navi10: begin reset\n");
 +
-+	/* wait for the SOC register to become valid */
-+	for(timeout = 1000; timeout; --timeout) {
-+		sol = readl(mmio + mmMP0_SMN_C2PMSG_81);
-+		if (sol != 0xFFFFFFFF)
++	/*
++	 * again, this only makes sense if we have an SMU to talk to
++	 * some of these may fail, that's okay. we're just turning off as many
++	 * things as possible
++	 */
++	if (mp1_intr) {
++		/* stop SMC */
++		pci_info(dev, "Navi10: gfx off\n");
++		WREG32(mmMP1_SMN_C2PMSG_90, 0x00);
++		WREG32(mmMP1_SMN_C2PMSG_82, 0x00);
++		WREG32(mmMP1_SMN_C2PMSG_66, 0x2A);
++		SMU_WAIT();
++
++		/* stop SMC */
++		pci_info(dev, "Navi10: Prep Reset\n");
++		WREG32(mmMP1_SMN_C2PMSG_90, 0x00);
++		WREG32(mmMP1_SMN_C2PMSG_82, 0x00);
++		/* PPSMC_MSG_PrepareMp1ForReset */
++		WREG32(mmMP1_SMN_C2PMSG_66, 0x33);
++		SMU_WAIT();
++	}
++
++#define PSP_WAIT(reg_index, reg_val, mask, err_exit)                                                                         \
++	do {                                                                                                                 \
++		for (timeout = 1000000; timeout; --timeout) {                                                                \
++			tmp = RREG32(reg_index);                                                                             \
++			if ((tmp & mask) == reg_val)                                                                         \
++				break;                                                                                       \
++			udelay(1);                                                                                           \
++		}                                                                                                            \
++		if (((tmp & mask) != reg_val)) {                                                                             \
++			pci_err(dev,                                                                                         \
++				"Navi10: reg %08x (0x%08x, masked 0x%08x) did not reach needed value (0x%08x), (line %d)\n", \
++				reg_index, tmp, (tmp & mask), reg_val,                                                       \
++				__LINE__);                                                                                   \
++			if (err_exit)                                                                                        \
++				goto mode1_out;                                                                              \
++		}                                                                                                            \
++	} while (0)
++
++	pci_info(dev, "Navi10: begin psp mode 1 reset\n");
++
++	/* mark amdgpu_atombios_scratch_regs_engine_hung */
++	tmp = RREG32(scratch_reg_offset + 3);
++	tmp |= ATOM_S3_ASIC_GUI_ENGINE_HUNG;
++	WREG32(scratch_reg_offset + 3, tmp);
++
++	/* check validity of PSP before reset */
++	pci_info(dev, "Navi10: PSP wait\n");
++	PSP_WAIT(mmMP0_SMN_C2PMSG_64, 0x80000000, 0x8000FFFF, false);
++
++	/* reset command */
++	pci_info(dev, "Navi10: do mode1 reset\n");
++	WREG32(mmMP0_SMN_C2PMSG_64, GFX_CTRL_CMD_ID_MODE1_RST);
++	msleep(500);
++
++	/* wait for ACK */
++	pci_info(dev, "Navi10: PSP wait\n");
++	PSP_WAIT(mmMP0_SMN_C2PMSG_33, 0x80000000, 0x80000000, true);
++
++	pci_info(dev, "Navi10: psp mode1 succeeded\n");
++
++	/* restore state here and wait */
++	pci_restore_state(dev);
++
++	for (timeout = 100000; timeout; --timeout) {
++		tmp = RREG32(mmRCC_DEV0_EPF0_RCC_CONFIG_MEMSIZE);
++
++		if (tmp != 0xffffffff)
 +			break;
-+		udelay(1000);
++		udelay(1);
++	}
++	pci_info(dev, "Navi10: memsize: %x\n", tmp);
++
++	/* unmark amdgpu_atombios_scratch_regs_engine_hung */
++	tmp = RREG32(scratch_reg_offset + 3);
++	tmp &= ~ATOM_S3_ASIC_GUI_ENGINE_HUNG;
++	WREG32(scratch_reg_offset + 3, tmp);
++
++	/* this takes a long time :( */
++	for (timeout = 100; timeout; --timeout) {
++		/* see if PSP bootloader comes back */
++		if (RREG32(mmMP0_SMN_C2PMSG_35) & 0x80000000L)
++			break;
++
++		pci_info(dev, "Navi10: PSP bootloader flags? %x, timeout: %s\n",
++			 RREG32(mmMP0_SMN_C2PMSG_35), !timeout ? "yes" : "no");
++
++		msleep(100);
 +	}
 +
-+	if (sol != 0x0) {
-+		pci_err(dev, "Navi10: sol register = 0x%x\n", sol);
-+		goto out;
++	if (!timeout && !(RREG32(mmMP0_SMN_C2PMSG_35) & 0x80000000L)) {
++		pci_info(
++			dev,
++			"Navi10: timed out waiting for PSP bootloader to respond after reset\n");
++	} else {
++		pci_set_power_state(dev, PCI_D3hot);
++		pci_info(dev, "Navi10: PSP mode1 reset successful\n");
 +	}
++
++mode1_out:
++	pci_restore_state(dev);
++
++#undef RREG32
++#undef WREG32
++#undef RREG32_PCIE
++#undef WREG32_PCIE
++#undef PSP_WAIT
++#undef SMU_WAIT
 +
 +out:
 +	/* unmap BAR5 */
 +	iounmap(mmio);
 +
 +	/* restore the state and command register */
-+	pci_restore_state(dev);
 +	pci_write_config_word(dev, PCI_COMMAND, cfg);
 +	return 0;
 +}
 +
  static const struct pci_dev_reset_methods pci_dev_reset_methods[] = {
  	{ PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82599_SFP_VF,
- 		 reset_intel_82599_sfp_virtfn },
-@@ -3836,6 +3961,13 @@ static const struct pci_dev_reset_methods pci_dev_reset_methods[] = {
+-		 reset_intel_82599_sfp_virtfn },
+-	{ PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_IVB_M_VGA,
+-		reset_ivb_igd },
+-	{ PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_IVB_M2_VGA,
+-		reset_ivb_igd },
++	  reset_intel_82599_sfp_virtfn },
++	{ PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_IVB_M_VGA, reset_ivb_igd },
++	{ PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_IVB_M2_VGA, reset_ivb_igd },
+ 	{ PCI_VENDOR_ID_SAMSUNG, 0xa804, nvme_disable_and_flr },
  	{ PCI_VENDOR_ID_INTEL, 0x0953, delay_250ms_after_flr },
- 	{ PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
- 		reset_chelsio_generic_dev },
+-	{ PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
+-		reset_chelsio_generic_dev },
++	{ PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID, reset_chelsio_generic_dev },
 +	{ PCI_VENDOR_ID_ATI, 0x7310, reset_amd_navi10 },
 +	{ PCI_VENDOR_ID_ATI, 0x7312, reset_amd_navi10 },
 +	{ PCI_VENDOR_ID_ATI, 0x7318, reset_amd_navi10 },
@@ -155,8 +368,6 @@ index 44c4ae1abd00..a3325beff5a6 100644
 +	{ PCI_VENDOR_ID_ATI, 0x731a, reset_amd_navi10 },
 +	{ PCI_VENDOR_ID_ATI, 0x731b, reset_amd_navi10 },
 +	{ PCI_VENDOR_ID_ATI, 0x731f, reset_amd_navi10 },
++	{ PCI_VENDOR_ID_ATI, 0x7340, reset_amd_navi10 },
  	{ 0 }
  };
- 
--- 
-2.20.1
