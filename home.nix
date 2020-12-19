@@ -181,7 +181,6 @@
     p7zip
     #gimpPlugins.gap
     steam-run
-    (callPackage ./discord.nix {})
     xclip
     xsel
     gimp
