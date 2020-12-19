@@ -2,6 +2,8 @@
 let ftPlugins = with vimPlugins; [
         { plug = callPackage ./graphql.nix {}; ft = "graphql"; ext = "graphql"; }
         { plug = callPackage ./omnisharp-vim.nix {}; ft = "cs"; ext = "cs"; }
+        { plug = vim-qml; ft = "qml"; ext = "qml"; set = "smartindent"; }
+        { plug = vim-toml; ft = "toml"; ext = "toml"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in neovim.override {
