@@ -11,7 +11,6 @@ lib.makeComponent "en_us"
       aspell
       aspellDicts.en
       aspellDicts.en-computers
-      aspellDicts.en-science
     ];
     environment.etc."/etc/aspell.conf".text = ''
     master en_US
