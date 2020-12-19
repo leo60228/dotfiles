@@ -43,19 +43,34 @@
       script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
     };
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = with pkgs; recurseIntoAttrs (linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
+      inherit stdenv;
+      inherit (linux_5_9) src;
+      version = "${linux_5_9.version}-custom";
+      modDirVersion = linux_5_9.modDirVersion;
+      configfile = ../files/desktop-kconfig;
+      allowImportFromDerivation = true;
+      kernelPatches = [ {
+        name = "navi-reset";
+        patch = ../files/navi-reset.patch;
+      } {
+        name = "acs-override";
+        patch = ../files/add-acs-overrides.patch;
+      } ];
+    }).overrideAttrs (oldAttrs: {
+      passthru = oldAttrs.passthru // {
+        features = {
+          efiBootStub = true;
+          ia32Emulation = true;
+        };
+      };
+    }))) {}));
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
-    boot.kernelPatches = [ {
-      name = "navi-reset";
-      patch = ../files/navi-reset.patch;
-    } {
-      name = "acs-override";
-      patch = ../files/add-acs-overrides.patch;
-    } ];
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" ];
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
+      "iommu=off"
     ];
 
     fileSystems."/" =
@@ -113,6 +128,8 @@
     services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
     services.xserver.deviceSection = ''
     BusID "PCI:67:0:0"
+    Option "DRI" "3"
+    Option "VariableRefresh" "true"
     '';
     #};
 
@@ -139,7 +156,6 @@
     #console.font = "ter-128n";
     #services.xserver.deviceSection = ''
     #Option "DRI" "3"
-    #BusID "PCI:8:0:0"
     #'';
     #services.xserver.serverFlagsSection = ''
     #Option "AutoAddGPU" "off"
@@ -161,6 +177,14 @@
     systemd.services.rngd.conflicts = [ "shutdown.target" ];
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
     boot.loader.timeout = null;
+
+    systemd.shutdown.reset-gpu = pkgs.writeScript "reset-gpu" ''
+    #!${pkgs.bash}/bin/bash
+    [[ "$1" == "kexec" ]] || exit
+    echo 0000:43:00.0 > /sys/bus/pci/devices/0000\:43\:00.0/driver/unbind || true
+    echo 0000:43:00.1 > /sys/bus/pci/devices/0000\:43\:00.1/driver/unbind || true
+    echo 1 > /sys/bus/pci/devices/0000\:43\:00.0/reset
+    '';
   };
 
   nixops = {
