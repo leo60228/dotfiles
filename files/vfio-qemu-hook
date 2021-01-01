@@ -1,62 +1,31 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-## QEMU hooks. How to use.
-# chmod +x qemu
-# sudo ln -sf "$(pwd)/qemu" /etc/libvirt/hooks/qemu
+RSET=/
+HSET=/host.slice
+HNODE=N0
+MSET=/machine.slice
+MNODE=N1
 
-## Virsh devices.
-VIRSH_GPU="pci_0000_0a_00_0"
-VIRSH_GPU_AUDIO="pci_0000_0a_00_1"
+disable_isolation () {
+    vfio-isolate \
+        cpuset-delete $HSET \
+        cpuset-delete $MSET
+}
 
-## Log file. Only tells if the GPU was un/binded correctly.
-LOG=/tmp/qemu_log.txt
+enable_isolation () {
+    vfio-isolate \
+        drop-caches \
+        compact-memory \
+        cpuset-create --cpus $HNODE --mems $HNODE -mm $HSET \
+        cpuset-create --cpus $MNODE --mems $MNODE -ce -me -mm $MSET \
+        move-tasks $RSET $HSET
+}
 
-if [[ "$1" == "GPU"* ]]; then
-	if [ "$2" == "prepare" ]; then
-
-		## Kill the Window Manager. Yours may vary.
-		killall kwin_x11 > /dev/null 2>&1
-		sleep 5 ## Just in case
-
-		## Remove the framebuffer and console
-		echo 0 > /sys/class/vtconsole/vtcon0/bind
-		echo 0 > /sys/class/vtconsole/vtcon1/bind
-		echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
-
-		## Detach the GPU and USB
-		virsh nodedev-detach "$VIRSH_GPU" >> "$LOG" 2>&1
-		virsh nodedev-detach "$VIRSH_GPU_AUDIO" >> "$LOG" 2>&1
-
-		## Load vfio.
-		modprobe vfio-pci
-
-    ## Start the network.
-		if [[ $(virsh net-list --all | grep "virt1" | awk '{print $2}') != "active" ]]; then
-			virsh net-start virt1
-		fi
-
-	fi
-	if [ "$2" == "release" ]; then
-
-    ## Stop the network.
-		if [ "$(virsh net-list --all | grep "virt1" | awk '{print $2}')" == "active" ]; then
-			## "destroy" actually stops it.
-			virsh net-destroy virt1
-		fi
-
-		## Unload vfio module.
-		modprobe -r vfio-pci
-		modprobe -r vfio_iommu_type1
-		modprobe -r vfio
-
-		## Reattach the GPU and USB.
-		virsh nodedev-reattach "$VIRSH_GPU_AUDIO" >> "$LOG" 2>&1
-		virsh nodedev-reattach "$VIRSH_GPU" >> "$LOG" 2>&1
-
-		## Reload the framebuffer and console.
-		echo 1 > /sys/class/vtconsole/vtcon0/bind
-		# nvidia-xconfig --query-gpu-info > /dev/null 2>&1
-		echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
-
-	fi
-fi
+case "$2" in
+"prepare")
+    enable_isolation
+    ;;
+"release")
+    disable_isolation
+    ;;
+esac

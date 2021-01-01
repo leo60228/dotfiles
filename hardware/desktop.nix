@@ -43,11 +43,11 @@
       script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
     };
 
-    boot.kernelPackages = with pkgs; recurseIntoAttrs (linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
+    boot.kernelPackages = with pkgs; let baseLinux = linux_5_9; in recurseIntoAttrs ((linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
       inherit stdenv;
-      inherit (linux_5_9) src;
-      version = "${linux_5_9.version}-custom";
-      modDirVersion = linux_5_9.modDirVersion;
+      inherit (baseLinux) src;
+      version = "${baseLinux.version}-custom";
+      modDirVersion = baseLinux.modDirVersion;
       configfile = ../files/desktop-kconfig;
       allowImportFromDerivation = true;
       kernelPatches = [ {
@@ -64,13 +64,21 @@
           ia32Emulation = true;
         };
       };
-    }))) {}));
+    }))) {})).extend (self: super: rec {
+      nvidiaPackages = pkgs.dontRecurseIntoAttrs (self.callPackage ../nvidia-x11 { });
+
+      nvidia_x11_legacy304   = nvidiaPackages.legacy_304;
+      nvidia_x11_legacy340   = nvidiaPackages.legacy_340;
+      nvidia_x11_legacy390   = nvidiaPackages.legacy_390;
+      nvidia_x11_beta        = nvidiaPackages.beta;
+      nvidia_x11_vulkan_beta = nvidiaPackages.vulkan_beta;
+      nvidia_x11             = nvidiaPackages.stable;
+    }));
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" ];
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
-      "iommu=off"
     ];
 
     fileSystems."/" =
@@ -126,11 +134,12 @@
 
     #specialisation.amdgpu.configuration = { ... }: {
     services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
-    services.xserver.deviceSection = ''
-    BusID "PCI:67:0:0"
-    Option "DRI" "3"
-    Option "VariableRefresh" "true"
-    '';
+    #services.xserver.videoDrivers = lib.mkForce [ "nvidiaBeta" ];
+    #services.xserver.deviceSection = ''
+    #BusID "PCI:67:0:0"
+    #Option "DRI" "3"
+    #Option "VariableRefresh" "true"
+    #'';
     #};
 
     #systemd.services.gpu-fixup = {
@@ -142,18 +151,18 @@
     #    '';
     #};
 
-    #systemd.services.fanctl = {
-    #    description = "GPU fan controller";
-    #    wantedBy = [ "multi-user.target" ];
-    #    serviceConfig.Restart = "always";
-    #    script = "${../files/fanctl} -c ${../files/fanctl.yml}";
-    #};
+    systemd.services.fanctl = {
+        description = "GPU fan controller";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Restart = "always";
+        script = "${pkgs.bash}/bin/bash ${../files/amdgpu-fancontrol}";
+    };
 
     # hidpi
-    #services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
-    #console.earlySetup = true;
-    #console.packages = [ pkgs.terminus_font ];
-    #console.font = "ter-128n";
+    services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
+    console.earlySetup = true;
+    console.packages = [ pkgs.terminus_font ];
+    console.font = "ter-128n";
     #services.xserver.deviceSection = ''
     #Option "DRI" "3"
     #'';

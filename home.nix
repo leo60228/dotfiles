@@ -355,6 +355,21 @@
     };
   };
 
+  systemd.user.services.scream-receiver = {
+    Unit = {
+      BindsTo = [ "pulseaudio.socket" ];
+      After = [ "pulseaudio.socket" ];
+    };
+
+    Service = {
+      ExecStart = let scream = pkgs.scream-receivers.override { pulseSupport = true; }; in "${scream}/bin/scream-pulse -i virbr0";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   systemd.user.services.twibd = lib.mkIf (!small) {
     Unit = {
       Description = "Twili Bridge Daemon";

@@ -23,16 +23,15 @@ lib.makeComponent "vfio"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c52b", MODE="0666"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0853", ATTRS{idProduct}=="0134", MODE="0666"
     '';
-    #boot.kernelParams = [ "amd_iommu=on" "iommu=pt" ];
+    boot.kernelParams = [
+      "amd_iommu=on"
+      "iommu=pt"
+      "vfio_iommu_type1.allow_unsafe_interrupts=1"
+      "kvm.ignore_msrs=1"
+    ];
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
-    hardware.pulseaudio.extraConfig = ''
-        load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-    '';
-    hardware.pulseaudio.extraClientConf = ''
-        default-server = 127.0.0.1
-    '';
     systemd.services.libvirtd.preStart = let qemuHookFile = ../files/vfio-qemu-hook; in ''
     mkdir -p /var/lib/libvirt/hooks
     chown -R leo60228:users /var/lib/libvirt
