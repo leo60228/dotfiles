@@ -26,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    qbittorrent
     libwebp
     nix-prefetch-github
     element-desktop
