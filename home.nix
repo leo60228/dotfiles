@@ -26,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    cargo-expand
     qbittorrent
     libwebp
     nix-prefetch-github
