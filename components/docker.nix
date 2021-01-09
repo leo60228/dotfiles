@@ -4,9 +4,12 @@ lib.makeComponent "docker"
   opts = {};
 
   config = {
-    virtualisation.docker.enable = true;
-    virtualisation.docker.enableOnBoot = false;
-    virtualisation.docker.package = pkgs.docker-edge;
+    virtualisation.docker = {
+      enable = true;
+      enableOnBoot = false;
+      package = pkgs.docker-edge;
+      extraOptions = "--experimental";
+    };
 
     users.extraUsers.leo60228.extraGroups = [ "docker" ];
   };
