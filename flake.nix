@@ -14,6 +14,10 @@
     url = github:NixOS/nix;
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.naersk = {
+    url = github:nmattia/naersk;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

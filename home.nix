@@ -26,6 +26,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    (callPackage ./cargo-sync-readme.nix {})
     cargo-expand
     cargo-edit
     qbittorrent
