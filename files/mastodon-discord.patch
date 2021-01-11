@@ -1,0 +1,106 @@
+diff --git a/app/controllers/api/oembed_controller.rb b/app/controllers/api/oembed_controller.rb
+index 66da65b..f4ca73f 100644
+--- a/app/controllers/api/oembed_controller.rb
++++ b/app/controllers/api/oembed_controller.rb
+@@ -7,7 +7,8 @@ class Api::OEmbedController < Api::BaseController
+   before_action :require_public_status!
+ 
+   def show
+-    render json: @status, serializer: OEmbedSerializer, width: maxwidth_or_default, height: maxheight_or_default
++    is_discord = request.user_agent.include? "Discordbot"
++    render json: @status, serializer: OEmbedSerializer, width: maxwidth_or_default, height: maxheight_or_default, discord: is_discord
+   end
+ 
+   private
+diff --git a/app/helpers/statuses_helper.rb b/app/helpers/statuses_helper.rb
+index 1f654f3..5416534 100644
+--- a/app/helpers/statuses_helper.rb
++++ b/app/helpers/statuses_helper.rb
+@@ -50,8 +50,13 @@ module StatusesHelper
+     status.preloadable_poll.options.map { |o| "[ ] #{o}" }.join("\n")
+   end
+ 
+-  def status_description(status)
+-    components = [[media_summary(status), status_text_summary(status)].reject(&:blank?).join(' · ')]
++  def status_description(status, discord=false)
++    components = []
++    if discord
++      components << status_text_summary(status)
++    else
++      components << [media_summary(status), status_text_summary(status)].reject(&:blank?).join(' · ')
++    end
+ 
+     if status.spoiler_text.blank?
+       components << status.text
+diff --git a/app/serializers/oembed_serializer.rb b/app/serializers/oembed_serializer.rb
+index d6261d7..12fe3f4 100644
+--- a/app/serializers/oembed_serializer.rb
++++ b/app/serializers/oembed_serializer.rb
+@@ -17,7 +17,15 @@ class OEmbedSerializer < ActiveModel::Serializer
+   end
+ 
+   def author_name
+-    object.account.display_name.presence || object.account.username
++    if instance_options[:discord]
++      if object.account.local?
++        "@#{object.account.local_username_and_domain}"
++      else
++        "@#{object.account.pretty_acct}"
++      end
++    else
++      object.account.display_name.presence || object.account.username
++    end
+   end
+ 
+   def author_url
+@@ -25,7 +33,11 @@ class OEmbedSerializer < ActiveModel::Serializer
+   end
+ 
+   def provider_name
+-    Rails.configuration.x.local_domain
++    if instance_options[:discord]
++      InstancePresenter.new.site_title
++    else
++      Rails.configuration.x.local_domain
++    end
+   end
+ 
+   def provider_url
+diff --git a/app/views/statuses/_og_description.html.haml b/app/views/statuses/_og_description.html.haml
+index a7b1842..ccc3005 100644
+--- a/app/views/statuses/_og_description.html.haml
++++ b/app/views/statuses/_og_description.html.haml
+@@ -1,4 +1,4 @@
+-- description = status_description(activity)
++- description = status_description(activity, request.user_agent.include?("Discordbot"))
+ 
+ %meta{ name: 'description', content: description }/
+ = opengraph 'og:description', description
+diff --git a/app/views/statuses/show.html.haml b/app/views/statuses/show.html.haml
+index 7ef7b09..7a49eec 100644
+--- a/app/views/statuses/show.html.haml
++++ b/app/views/statuses/show.html.haml
+@@ -8,12 +8,18 @@
+   %link{ rel: 'alternate', type: 'application/json+oembed', href: api_oembed_url(url: short_account_status_url(@account, @status), format: 'json') }/
+   %link{ rel: 'alternate', type: 'application/activity+json', href: ActivityPub::TagManager.instance.uri_for(@status) }/
+ 
+-  = opengraph 'og:site_name', site_title
+-  = opengraph 'og:type', 'article'
+-  = opengraph 'og:title', "#{display_name(@account)} (#{acct(@account)})"
+-  = opengraph 'og:url', short_account_status_url(@account, @status)
+-  = opengraph 'og:published_time', @status.created_at.iso8601
++  - if request.user_agent.include? "Discordbot"
++    = opengraph 'og:type', 'article'
++    = opengraph 'og:title', "#{display_name(@account)}"
++    = opengraph 'og:url', short_account_status_url(@account, @status)
++    = render 'og_description', activity: @status
++  - else
++    = opengraph 'og:site_name', site_title
++    = opengraph 'og:type', 'article'
++    = opengraph 'og:title', "#{display_name(@account)} (#{acct(@account)})"
++    = opengraph 'og:url', short_account_status_url(@account, @status)
+ 
++  = opengraph 'og:published_time', @status.created_at.iso8601
+   = render 'og_description', activity: @status
+   = render 'og_image', activity: @status, account: @account
+ 
