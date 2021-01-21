@@ -1,0 +1,6 @@
+include "%L"
+<Multi_key> <x> <o> <r> : "⊕"
+<Multi_key> <n> <o> <t> : "¬"
+<Multi_key> <c> <n> <o> <t> : "̅"
+<Multi_key> <asciitilde> <equal> : "≈"
+<Multi_key> <equal> <asciitilde> : "≈"

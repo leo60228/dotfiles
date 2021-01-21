@@ -497,6 +497,8 @@
     inherit small;
   }).rust;
 
+  home.file.".XCompose".source = ./files/XCompose;
+
   services.mpd = {
     enable = !small;
     extraConfig = ''
