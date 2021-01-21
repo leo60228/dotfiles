@@ -77,6 +77,9 @@
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" "edac_mce_amd" ];
+    boot.extraModprobeConfig = ''
+    options kvm-amd nested=1
+    '';
     boot.kernelParams = [
       "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
     ];
