@@ -1,0 +1,31 @@
+diff --git a/gui/covers.cpp b/gui/covers.cpp
+index 9635622..6712d13 100644
+--- a/gui/covers.cpp
++++ b/gui/covers.cpp
+@@ -240,7 +240,7 @@ static inline QString albumKey(const Song &s)
+     if (isOnlineServiceImage(s)) {
+         return s.onlineService();
+     }
+-    return "{"+s.albumArtist()+"}{"+s.albumId()+"}";
++    return "{"+s.albumArtist()+"}{"+s.albumId()+"}{"+s.entryName()+"}";
+ }
+ 
+ static inline QString artistKey(const Song &s)
+@@ -270,7 +270,7 @@ static inline QString cacheKey(const Song &song, int size)
+         return song.onlineService()+QString::number(size);
+     }
+ 
+-    return songKey(song)+QString::number(size);
++    return songKey(song)+song.entryName()+QString::number(size);
+ }
+ 
+ static QString getScaledCoverName(const Song &song, int size, bool createDir)
+@@ -286,7 +286,7 @@ static QString getScaledCoverName(const Song &song, int size, bool createDir)
+     }
+ 
+     QString dir=Utils::cacheDir(Covers::constScaledCoverDir+QString::number(size)+QLatin1Char('/')+Covers::encodeName(song.albumArtist()), createDir);
+-    return dir.isEmpty() ? QString() : (dir+Covers::encodeName(song.albumId())+constScaledExtension);
++    return dir.isEmpty() ? QString() : (dir+Covers::encodeName(song.albumId()+song.entryName())+constScaledExtension);
+ }
+ 
+ static void clearScaledCache(const Song &song)
