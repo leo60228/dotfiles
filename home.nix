@@ -3,6 +3,8 @@
 
 #let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 {
+  imports = [ ./hm-modules/mopidy.nix ];
+
   home.packages = with pkgs; if small then [
     libwebp
     ripgrep
@@ -345,8 +347,8 @@
   systemd.user.services.mpd-discord = lib.mkIf (!small) {
     Unit = {
       Description = "mpd-discord";
-      BindsTo = [ "mpd.service" "discord.service" ];
-      After = [ "mpd.service" "discord.service" ];
+      BindsTo = [ "mopidy.service" "discord.service" ];
+      After = [ "mopidy.service" "discord.service" ];
     };
 
     Service = {
@@ -499,14 +501,24 @@
 
   home.file.".XCompose".source = ./files/XCompose;
 
-  services.mpd = {
+  services.mopidy = {
     enable = !small;
-    extraConfig = ''
-        audio_output {
-            type    "pulse"
-            name    "My Pulse Output"
-        }
-        playlist_directory "~/Playlists"
+    extensionPackages = with pkgs.mopidyPackages; [ mopidy-mpd mopidy-local mopidy-iris ];
+    configuration = ''
+    [mpd]
+    hostname = ::
+
+    [file]
+    enabled = false
+
+    [local]
+    media_dir = $XDG_MUSIC_DIR
+
+    [m3u]
+    playlists_dir = /home/leo60228/Playlists
+    base_dir = $XDG_MUSIC_DIR
+    default_encoding = utf-8
+    default_extension = .m3u
     '';
   };
 
