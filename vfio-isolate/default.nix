@@ -1,4 +1,7 @@
-{ pkgs ? import <nixpkgs> {},
-  overrides ? ({ pkgs, python }: self: super: {})
-} @ args:
-(import ./requirements.nix args).packages.vfio-isolate
+{ src, poetry2nix }:
+poetry2nix.mkPoetryApplication {
+  inherit src;
+  projectDir = src;
+  pyproject = ./pyproject.toml;
+  poetrylock = ./poetry.lock;
+}

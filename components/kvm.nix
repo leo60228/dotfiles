@@ -32,6 +32,6 @@ lib.makeComponent "kvm"
     });
     environment.systemPackages = with pkgs; [ OVMF config.virtualisation.libvirtd.qemuPackage virt-manager ];
     users.groups.libvirtd.members = [ "root" "leo60228" ];
-    systemd.services.libvirtd.path = with pkgs; [ bash killall libvirt kmod (callPackage ../vfio-isolate {}) ];
+    systemd.services.libvirtd.path = with pkgs; [ bash killall libvirt kmod vfio-isolate ];
   };
 })

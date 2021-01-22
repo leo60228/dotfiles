@@ -18,6 +18,11 @@
     url = github:nmattia/naersk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.poetry2nix-src.url = github:nix-community/poetry2nix;
+  inputs.vfio-isolate = {
+    url = github:spheenik/vfio-isolate;
+    flake = false;
+  };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

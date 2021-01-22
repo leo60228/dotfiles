@@ -1,5 +1,0 @@
-click==7.1.2
-parsimonious==0.8.1
-psutil==5.7.3
-six==1.15.0
-vfio-isolate==0.3.1
