@@ -191,7 +191,7 @@
     google-musicmanager
     symbola
     kitty
-    (python36.withPackages (ps: with ps; [ pyusb neovim pillow cryptography ]))
+    (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip ]))
     #vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
     (libsForQt514.callPackage ./vlc.nix {})
@@ -407,7 +407,10 @@
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
-  export PATH="$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+  export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+  export PATH="$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')"
+  export PYTHONPATH="$(python3 -c 'print(__import__("site").USER_SITE)')''${PYTHONPATH:+:}"
+  export PYTHONPATH="$(printf "%s" "$PYTHONPATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')"
   '';
   programs.bash.initExtra = ''
     export PS1=\\n\\\[\\033\[?1l\\\[\\033\[1\;32m\\\]\[\\\[\\e\]0\;leo60228@leoservices:\ \\w\\a\\\]\\u@\\h:\\w\]\\\$\\\[\\033\[0m\\\]\ 
