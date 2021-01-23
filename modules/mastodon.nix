@@ -307,6 +307,7 @@ in {
       package = lib.mkOption {
         type = lib.types.package;
         default = pkgs.mastodon;
+        #type = lib.types.str;
         defaultText = "pkgs.mastodon";
         description = "Mastodon package to use.";
       };
@@ -530,6 +531,7 @@ in {
           inherit (cfg) group;
         };
       })
+      #(lib.attrsets.setAttrByPath [ cfg.user "packages" ] [ pkgs.mastodon mastodonEnv ])
       (lib.attrsets.setAttrByPath [ cfg.user "packages" ] [ cfg.package mastodonEnv ])
     ];
 

@@ -23,6 +23,7 @@ in stdenv.mkDerivation rec {
     ruby = ruby_2_7;
     gemdir = src;
     gemset = dependenciesDir + "/gemset.nix";
+    gemConfig = callPackage ./gem-config.nix {};
     # This fix (copied from https://github.com/NixOS/nixpkgs/pull/76765) replaces the gem
     # symlinks with directories, resolving this error when running rake:
     #   /nix/store/451rhxkggw53h7253izpbq55nrhs7iv0-mastodon-gems-3.0.1/lib/ruby/gems/2.6.0/gems/bundler-1.17.3/lib/bundler/settings.rb:6:in `<module:Bundler>': uninitialized constant Bundler::Settings (NameError)

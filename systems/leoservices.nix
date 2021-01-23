@@ -50,6 +50,7 @@
 
   services.mastodon = {
     enable = true;
+    #package = "/home/leo60228/mastodon-src-current/";
     localDomain = "60228.dev";
     smtp = {
       createLocally = false;
@@ -149,4 +150,6 @@
   security.acme.certs."60228.dev".group = "acme";
   users.users.nginx.extraGroups = [ "acme" ];
   users.users.ejabberd.extraGroups = [ "acme" ];
+
+  #systemd.services.nginx.serviceConfig.ProtectHome = false;
 }
