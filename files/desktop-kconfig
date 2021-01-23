@@ -1619,7 +1619,8 @@ CONFIG_WIREGUARD=y
 # CONFIG_EQUALIZER is not set
 # CONFIG_NET_FC is not set
 # CONFIG_NET_TEAM is not set
-# CONFIG_MACVLAN is not set
+CONFIG_MACVLAN=m
+# CONFIG_MACVTAP is not set
 # CONFIG_IPVLAN is not set
 # CONFIG_VXLAN is not set
 # CONFIG_GENEVE is not set
