@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash jq bundix yarn2nix
 set -e
 
 URL=https://github.com/tootsuite/mastodon.git

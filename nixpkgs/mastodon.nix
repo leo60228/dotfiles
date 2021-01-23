@@ -1,9 +1,8 @@
 self: super: rec {
     mastodonUpstream = self.callPackage ../mastodon {};
     mastodon = mastodonUpstream.override {
-        srcOverride = self.applyPatches {
-            inherit (mastodonUpstream) src;
-            patches = [ ../files/mastodon-10k.patch ../files/long-display-name.patch ../files/mastodon-discord.patch ];
-        };
+        version = import ../glitch-soc/version.nix;
+        srcOverride = self.callPackage ../glitch-soc/source.nix {};
+        dependenciesDir = ../glitch-soc;
     };
 }

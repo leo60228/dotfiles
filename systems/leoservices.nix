@@ -59,6 +59,11 @@
       authenticate = false;
       fromAddress = "Administrator <admin@60228.dev>";
     };
+    extraConfig = {
+      MAX_TOOT_CHARS = "10000";
+      MAX_DISPLAY_NAME_CHARS = "100";
+      MAX_POLL_OPTIONS = "15";
+    };
   };
 
   #systemd.services.ghastly = {

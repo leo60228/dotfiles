@@ -1,0 +1,45 @@
+From 8dc106e8e1883038e908dbd55b70f176176681f5 Mon Sep 17 00:00:00 2001
+From: leo60228 <leo@60228.dev>
+Date: Sat, 23 Jan 2021 13:15:27 -0500
+Subject: [PATCH 1/2] Support customizing poll option limits
+
+---
+ .env.production.sample           | 6 ++++++
+ app/validators/poll_validator.rb | 4 ++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/.env.production.sample b/.env.production.sample
+index d51144d96..12ca64a06 100644
+--- a/.env.production.sample
++++ b/.env.production.sample
+@@ -254,6 +254,12 @@ MAX_PROFILE_FIELDS=4
+ # Maximum allowed display name characters
+ MAX_DISPLAY_NAME_CHARS=30
+ 
++# Maximum allowed poll options
++MAX_POLL_OPTIONS=5
++
++# Maximum allowed poll option characters
++MAX_POLL_OPTION_CHARS=100
++
+ # Maximum image and video/audio upload sizes
+ # Units are in bytes
+ # 1048576 bytes equals 1 megabyte
+diff --git a/app/validators/poll_validator.rb b/app/validators/poll_validator.rb
+index 8259a62e5..1aaf5a5d0 100644
+--- a/app/validators/poll_validator.rb
++++ b/app/validators/poll_validator.rb
+@@ -1,8 +1,8 @@
+ # frozen_string_literal: true
+ 
+ class PollValidator < ActiveModel::Validator
+-  MAX_OPTIONS      = 5
+-  MAX_OPTION_CHARS = 100
++  MAX_OPTIONS      = (ENV['MAX_POLL_OPTIONS'] || 5).to_i
++  MAX_OPTION_CHARS = (ENV['MAX_POLL_OPTION_CHARS'] || 100).to_i
+   MAX_EXPIRATION   = 1.month.freeze
+   MIN_EXPIRATION   = 5.minutes.freeze
+ 
+-- 
+2.28.0
+
