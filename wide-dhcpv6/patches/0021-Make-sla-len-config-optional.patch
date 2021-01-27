@@ -1,0 +1,32 @@
+From: Roger Shimizu <rosh@debian.org>
+Date: Sun, 6 Sep 2020 14:34:36 +0900
+Subject: Make sla-len config optional
+
+Cherry-pick from Fedora:
+https://src.fedoraproject.org/rpms/wide-dhcpv6/blob/master/f/wide-dhcpv6-0008-Make-sla-len-config-optional.patch
+---
+ prefixconf.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/prefixconf.c b/prefixconf.c
+index 15b5417..98d9b77 100644
+--- a/prefixconf.c
++++ b/prefixconf.c
+@@ -460,6 +460,17 @@ add_ifprefix(siteprefix, prefix, pconf)
+ 	ifpfx->paddr.sin6_len = sizeof(struct sockaddr_in6);
+ #endif
+ 	ifpfx->paddr.sin6_addr = prefix->addr;
++
++	/*
++         * dave (bevhost) thinks this should fix it rather than
++         * generare the error below "invalid prefix length"
++         * this way the sla-len can be left out of the config file
++         * and calculated when the prefix is received
++         */
++	if (prefix->plen + pconf->ifid_len + pconf->sla_len > 128) {
++		pconf->sla_len = 128 - pconf->ifid_len - prefix->plen;
++	}
++
+ 	ifpfx->plen = prefix->plen + pconf->sla_len;
+ 	/*
+ 	 * XXX: our current implementation assumes ifid len is a multiple of 8

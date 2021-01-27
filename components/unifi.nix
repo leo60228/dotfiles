@@ -4,6 +4,9 @@ lib.makeComponent "unifi"
   opts = {};
 
   config = {
-    services.unifi.enable = true;
+    services.unifi = {
+      enable = true;
+      unifiPackage = (pkgs.callPackage ../unifi.nix {}).unifi6;
+    };
   };
 })

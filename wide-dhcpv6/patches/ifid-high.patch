@@ -1,0 +1,88 @@
+diff --git a/cfparse.y b/cfparse.y
+index 9e685f4..d7b6fac 100644
+--- a/cfparse.y
++++ b/cfparse.y
+@@ -104,7 +104,7 @@ static void cleanup_cflist __P((struct cf_list *));
+ 
+ %token INTERFACE IFNAME
+ %token PROFILE PROFILENAME
+-%token PREFIX_INTERFACE SLA_ID SLA_LEN IFID IFID_RAND DUID_ID
++%token PREFIX_INTERFACE SLA_ID SLA_LEN IFID IFID_HIGH IFID_RAND DUID_ID
+ %token ID_ASSOC IA_PD IAID IA_NA
+ %token ADDRESS
+ %token REQUEST SEND ALLOW PREFERENCE
+@@ -1064,6 +1064,14 @@ ifparam:
+ 			l->num = (u_int64_t)$2;
+ 			$$ = l;
+ 		}
++	|	IFID_HIGH NUMBER EOS
++		{
++			struct cf_list *l;
++
++			MAKE_CFLIST(l, IFPARAM_IFID_HIGH, NULL, NULL);
++			l->num = (u_int64_t)$2;
++			$$ = l;
++		}
+ 	|	IFID_RAND EOS
+ 		{
+ 			struct cf_list *l;
+diff --git a/cftoken.l b/cftoken.l
+index e266ac2..5bd4b9d 100644
+--- a/cftoken.l
++++ b/cftoken.l
+@@ -244,6 +244,7 @@ ecl		\}
+ <S_CNF>sla-id { DECHO; return (SLA_ID); }
+ <S_CNF>sla-len { DECHO; return (SLA_LEN); }
+ <S_CNF>ifid { DECHO; return (IFID); }
++<S_CNF>ifid-high { DECHO; return (IFID_HIGH); }
+ <S_CNF>ifid-random { DECHO; return (IFID_RAND); }
+ 
+ 	/* duration */
+diff --git a/config.c b/config.c
+index 70f6287..522afa9 100644
+--- a/config.c
++++ b/config.c
+@@ -529,11 +529,16 @@ add_pd_pif(iapdc, cfl0, if_count)
+ 			break;
+ 		case IFPARAM_IFID:
+ 			if (use_default_ifid) {
+-				for (i = sizeof(pif->ifid) - 1; i >= 0; i--)
++				for (i = 15; i >= 8; i--)
+ 					pif->ifid[i] = (cfl->num >> 8*(sizeof(pif->ifid) - 1 - i)) & 0xff;
+ 				use_default_ifid = 0;
+ 			}
+ 			break;
++		case IFPARAM_IFID_HIGH:
++			pif->ifid_len = 72;
++			for (i = 7; i >= 0; i--)
++				pif->ifid[i] = (cfl->num >> 8*(sizeof(pif->ifid) - 1 - i)) & 0xff;
++			break;
+ 		case IFPARAM_IFID_RAND:
+ 			for (i = 0; i < pif->ifid_len ; i++)
+ 				cfl->num = cfl->num*2 + rand()%2;
+diff --git a/config.h b/config.h
+index 36a5aa3..432d3a3 100644
+--- a/config.h
++++ b/config.h
+@@ -266,7 +266,7 @@ enum { DECL_SEND, DECL_ALLOW, DECL_INFO_ONLY, DECL_REQUEST, DECL_DUID,
+        DECL_PREFIX, DECL_PREFERENCE, DECL_SCRIPT, DECL_DELAYEDKEY,
+        DECL_ADDRESS,
+        DECL_RANGE, DECL_ADDRESSPOOL,
+-       IFPARAM_SLA_ID, IFPARAM_SLA_LEN, IFPARAM_IFID, IFPARAM_IFID_RAND,
++       IFPARAM_SLA_ID, IFPARAM_SLA_LEN, IFPARAM_IFID, IFPARAM_IFID_HIGH, IFPARAM_IFID_RAND,
+        DHCPOPT_RAPID_COMMIT, DHCPOPT_AUTHINFO,
+        DHCPOPT_DNS, DHCPOPT_DNSNAME,
+        DHCPOPT_IA_PD, DHCPOPT_IA_NA, DHCPOPT_NTP,
+diff --git a/prefixconf.c b/prefixconf.c
+index 98d9b77..36fb5cb 100644
+--- a/prefixconf.c
++++ b/prefixconf.c
+@@ -503,7 +503,7 @@ add_ifprefix(siteprefix, prefix, pconf)
+ 
+ 	/* configure the corresponding address */
+ 	ifpfx->ifaddr = ifpfx->paddr;
+-	for (i = 15; i >= pconf->ifid_len / 8; i--)
++	for (i = 15; i >= 16 - (pconf->ifid_len / 8); i--)
+ 		ifpfx->ifaddr.sin6_addr.s6_addr[i] = pconf->ifid[i];
+ 	if (pd_ifaddrconf(IFADDRCONF_ADD, ifpfx))
+ 		goto bad;

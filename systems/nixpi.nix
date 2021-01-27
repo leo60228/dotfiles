@@ -3,5 +3,7 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = en_us est home { small = true; } mastocrom upd8r router hass unifi;
+  components = en_us est home { small = true; } mastocrom upd8r blasebot router hass unifi apcupsd-server;
+
+  services.openssh.passwordAuthentication = false;
 }
