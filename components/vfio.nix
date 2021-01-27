@@ -32,16 +32,16 @@ lib.makeComponent "vfio"
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
-    systemd.services.libvirtd.preStart = let qemuHookFile = ../files/vfio-qemu-hook; in ''
-    mkdir -p /var/lib/libvirt/hooks
-    chown -R leo60228:users /var/lib/libvirt
-    chmod 755 /var/lib/libvirt/hooks
+    #systemd.services.libvirtd.preStart = let qemuHookFile = ../files/vfio-qemu-hook; in ''
+    #mkdir -p /var/lib/libvirt/hooks
+    #chown -R leo60228:users /var/lib/libvirt
+    #chmod 755 /var/lib/libvirt/hooks
 
-    # Copy hook files
-    cp -f ${qemuHookFile} /var/lib/libvirt/hooks/qemu
+    ## Copy hook files
+    #cp -f ${qemuHookFile} /var/lib/libvirt/hooks/qemu
 
-    # Make them executable
-    chmod +x /var/lib/libvirt/hooks/qemu
-    '';
+    ## Make them executable
+    #chmod +x /var/lib/libvirt/hooks/qemu
+    #'';
   };
 })

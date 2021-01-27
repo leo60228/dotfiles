@@ -191,7 +191,7 @@
     google-musicmanager
     symbola
     kitty
-    (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip ]))
+    (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
     #vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
     (libsForQt514.callPackage ./vlc.nix {})
@@ -511,6 +511,7 @@
         }
         playlist_directory "~/Playlists"
     '';
+    network.listenAddress = "0.0.0.0";
   };
 
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
