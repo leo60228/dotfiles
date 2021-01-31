@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+maim -Bs | xclip -i -selection clipboard -target image/png
