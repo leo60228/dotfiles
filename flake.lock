@@ -90,11 +90,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1612025004,
-        "narHash": "sha256-oYcF9/AqMm0oTkGdyIq+o/qkikXqk1CiO7H8b1c0bRI=",
+        "lastModified": 1612127762,
+        "narHash": "sha256-RaeEmMVSkAhFJycRxLBZPWQDUxsUmIuD+voOiLGVx3k=",
         "owner": "leo60228",
         "repo": "mpdiscord",
-        "rev": "b9ae6c007cb8e6e9f9d073200b45d3c7b55678e0",
+        "rev": "3c4fd9697c5a6961927988af17e6fafd184da6bd",
         "type": "github"
       },
       "original": {

@@ -350,7 +350,7 @@
     };
 
     Service = {
-      ExecStart = "${pkgs.mpdiscord}/bin/mpdiscord ${./files/mpdiscord-artfiles.txt}";
+      ExecStart = "${pkgs.mpdiscord}/bin/mpdiscord /home/leo60228/.config/mpdiscord.toml";
     };
 
     Install = {
