@@ -342,16 +342,15 @@
     };
   };
 
-  systemd.user.services.mpd-discord = lib.mkIf (!small) {
+  systemd.user.services.mpdiscord = lib.mkIf (!small) {
     Unit = {
-      Description = "mpd-discord";
-      BindsTo = [ "mpd.service" "discord.service" ];
-      After = [ "mpd.service" "discord.service" ];
+      Description = "mpdiscord";
+      BindsTo = [ "mpd.service" ];
+      After = [ "mpd.service" ];
     };
 
     Service = {
-      ExecStartPre = "${pkgs.stdenv.shell} -c 'while ! [ -S /run/user/1000/discord-ipc-0 ]; do ${pkgs.coreutils}/bin/sleep 1; done'";
-      ExecStart = "${pkgs.callPackage ./mpd-discord.nix {}}/bin/mpd_discord_richpresence --no-idle";
+      ExecStart = "${pkgs.mpdiscord}/bin/mpdiscord ${./files/mpdiscord-artfiles.txt}";
     };
 
     Install = {

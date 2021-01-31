@@ -23,6 +23,7 @@
     url = github:spheenik/vfio-isolate;
     flake = false;
   };
+  inputs.mpdiscord.url = github:leo60228/mpdiscord;
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {
