@@ -1,0 +1,8 @@
+Version=5
+
+Id=hm_kglobalshortcutsrc
+File=hm_kglobalshortcutsrc,kglobalshortcutsrc
+Options=copy,overwrite
+AllKeys
+Options=copy,overwrite
+AllGroups

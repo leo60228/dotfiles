@@ -610,4 +610,11 @@
 
   programs.direnv.enable = true;
   programs.direnv.enableNixDirenvIntegration = true;
+
+  xdg.configFile."hm_kglobalshortcutsrc".source = ./files/hm_kglobalshortcutsrc;
+  xdg.configFile."khotkeysrc".source = ./files/khotkeysrc;
+
+  home.activation.kconf = lib.hm.dag.entryAfter ["linkGeneration"] ''
+  $DRY_RUN_CMD ${pkgs.kdeFrameworks.kconfig.out}/libexec/kf5/kconf_update ${VERBOSE:+--debug} "${./files/kconf.upd}"
+  '';
 }
