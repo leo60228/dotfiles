@@ -24,6 +24,7 @@ set hlsearch incsearch
 set t_PS=[200~
 let &t_SI .= "\<Esc>[6 q"
 let &t_EI .= "\<Esc>[2 q"
+set undofile
 
 set background=dark
 colorscheme solarized8_flat
@@ -87,7 +88,8 @@ let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
 let g:OmniSharp_highlighting = 3
 
 " ALE
-let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'], 'rust': ['rls'] }
+let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'], 'rust': ['cargo', 'analyzer'] }
+let g:ale_rust_cargo_use_clippy = 1
 let g:ale_lint_on_text_changed = 'always'
 
 " Vimspector
@@ -119,6 +121,10 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 hi default link TSVariable Identifier
+
+" vim-auto-save
+let g:auto_save = 0
+
 " }}}
 
 " Filetype commands {{{
@@ -133,6 +139,8 @@ augroup vimrc
     autocmd FileType rust iabbrev <buffer> return <nop>
 
     autocmd FileType rust iabbrev <buffer> return <nop>
+
+    autocmd FileType rust let b:auto_save = 1
 
     autocmd BufRead,BufNewFile *.nix set filetype=nix
 

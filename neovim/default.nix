@@ -39,6 +39,7 @@ in neovim.override {
                 (callPackage ./playground.nix {})
                 (callPackage ./nvim-treesitter-refactor.nix {})
                 (callPackage ./ts-queries.nix {})
+                vim-auto-save
             ];
 
             opt = [
