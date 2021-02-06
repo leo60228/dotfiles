@@ -1426,10 +1426,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "01n90s1jcc05dc9a70k3c3aa4gc9j49k9iv56n2k4jm949dacms6";
+      sha256 = "0d6r7df919jwj0xwmr95xqjqp7937djysrq2v3qvwhddhx7mfpkv";
       type = "gem";
     };
-    version = "0.4.1";
+    version = "0.5.0";
   };
   marcel = {
     dependencies = ["mimemagic"];

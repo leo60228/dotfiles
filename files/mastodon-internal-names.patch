@@ -1,0 +1,903 @@
+From 2c912d7a07eac985b786a93f84ce0030c294ea85 Mon Sep 17 00:00:00 2001
+From: leo60228 <leo@60228.dev>
+Date: Thu, 28 Jan 2021 09:56:51 -0500
+Subject: [PATCH] Internal names
+
+---
+ .../flavours/glitch/features/status/index.js  |   2 +-
+ app/javascript/flavours/glitch/locales/en.js  |  16 +--
+ app/javascript/mastodon/locales/en.json       | 100 +++++++++---------
+ config/locales-glitch/en.yml                  |   8 +-
+ config/locales-glitch/simple_form.en.yml      |  10 +-
+ config/locales/en.yml                         |  54 +++++-----
+ config/locales/en_GB.yml                      |  54 +++++-----
+ config/locales/simple_form.en.yml             |  36 +++----
+ config/locales/simple_form.en_GB.yml          |  26 ++---
+ 9 files changed, 153 insertions(+), 153 deletions(-)
+
+diff --git a/app/javascript/flavours/glitch/features/status/index.js b/app/javascript/flavours/glitch/features/status/index.js
+index b330adf3f..c4f7098e9 100644
+--- a/app/javascript/flavours/glitch/features/status/index.js
++++ b/app/javascript/flavours/glitch/features/status/index.js
+@@ -55,7 +55,7 @@ const messages = defineMessages({
+   detailedStatus: { id: 'status.detailed_status', defaultMessage: 'Detailed conversation view' },
+   replyConfirm: { id: 'confirmations.reply.confirm', defaultMessage: 'Reply' },
+   replyMessage: { id: 'confirmations.reply.message', defaultMessage: 'Replying now will overwrite the message you are currently composing. Are you sure you want to proceed?' },
+-  tootHeading: { id: 'column.toot', defaultMessage: 'Toots and replies' },
++  tootHeading: { id: 'account.posts_with_replies', defaultMessage: 'Toots and replies' },
+ });
+ 
+ const makeMapStateToProps = () => {
+diff --git a/app/javascript/flavours/glitch/locales/en.js b/app/javascript/flavours/glitch/locales/en.js
+index 90e924d4a..eb642f0e7 100644
+--- a/app/javascript/flavours/glitch/locales/en.js
++++ b/app/javascript/flavours/glitch/locales/en.js
+@@ -13,19 +13,19 @@ const messages = {
+   'onboarding.page_six.github': '{domain} runs on Glitchsoc. Glitchsoc is a friendly {fork} of {Mastodon}, and is compatible with any Mastodon instance or app. Glitchsoc is entirely free and open-source. You can report bugs, request features, or contribute to the code on {github}.',
+   'settings.auto_collapse': 'Automatic collapsing',
+   'settings.auto_collapse_all': 'Everything',
+-  'settings.auto_collapse_lengthy': 'Lengthy toots',
+-  'settings.auto_collapse_media': 'Toots with media',
++  'settings.auto_collapse_lengthy': 'Lengthy posts',
++  'settings.auto_collapse_media': 'Posts with media',
+   'settings.auto_collapse_notifications': 'Notifications',
+-  'settings.auto_collapse_reblogs': 'Boosts',
++  'settings.auto_collapse_reblogs': 'Reblogs',
+   'settings.auto_collapse_replies': 'Replies',
+-  'settings.show_action_bar': 'Show action buttons in collapsed toots',
++  'settings.show_action_bar': 'Show action buttons in collapsed posts',
+   'settings.close': 'Close',
+-  'settings.collapsed_statuses': 'Collapsed toots',
+-  'settings.enable_collapsed': 'Enable collapsed toots',
++  'settings.collapsed_statuses': 'Collapsed posts',
++  'settings.enable_collapsed': 'Enable collapsed posts',
+   'settings.general': 'General',
+   'settings.image_backgrounds': 'Image backgrounds',
+-  'settings.image_backgrounds_media': 'Preview collapsed toot media',
+-  'settings.image_backgrounds_users': 'Give collapsed toots an image background',
++  'settings.image_backgrounds_media': 'Preview collapsed post media',
++  'settings.image_backgrounds_users': 'Give collapsed posts an image background',
+   'settings.media': 'Media',
+   'settings.media_letterbox': 'Letterbox media',
+   'settings.media_fullwidth': 'Full-width media previews',
+diff --git a/app/javascript/mastodon/locales/en.json b/app/javascript/mastodon/locales/en.json
+index e6773487b..865b47221 100644
+--- a/app/javascript/mastodon/locales/en.json
++++ b/app/javascript/mastodon/locales/en.json
+@@ -21,7 +21,7 @@
+   "account.following_counter": "{count, plural, one {{counter} Following} other {{counter} Following}}",
+   "account.follows.empty": "This user doesn't follow anyone yet.",
+   "account.follows_you": "Follows you",
+-  "account.hide_reblogs": "Hide boosts from @{name}",
++  "account.hide_reblogs": "Hide reblogs from @{name}",
+   "account.last_status": "Last active",
+   "account.link_verified_on": "Ownership of this link was checked on {date}",
+   "account.locked_info": "This account privacy status is set to locked. The owner manually reviews who can follow them.",
+@@ -32,13 +32,13 @@
+   "account.mute_notifications": "Mute notifications from @{name}",
+   "account.muted": "Muted",
+   "account.never_active": "Never",
+-  "account.posts": "Toots",
+-  "account.posts_with_replies": "Toots and replies",
++  "account.posts": "Posts",
++  "account.posts_with_replies": "Posts and replies",
+   "account.report": "Report @{name}",
+   "account.requested": "Awaiting approval. Click to cancel follow request",
+   "account.share": "Share @{name}'s profile",
+-  "account.show_reblogs": "Show boosts from @{name}",
+-  "account.statuses_counter": "{count, plural, one {{counter} Toot} other {{counter} Toots}}",
++  "account.show_reblogs": "Show reblogs from @{name}",
++  "account.statuses_counter": "{count, plural, one {{counter} Post} other {{counter} Posts}}",
+   "account.unblock": "Unblock @{name}",
+   "account.unblock_domain": "Unblock domain {domain}",
+   "account.unendorse": "Don't feature on profile",
+@@ -71,7 +71,7 @@
+   "column.lists": "Lists",
+   "column.mutes": "Muted users",
+   "column.notifications": "Notifications",
+-  "column.pins": "Pinned toots",
++  "column.pins": "Pinned posts",
+   "column.public": "Federated timeline",
+   "column_back_button.label": "Back",
+   "column_header.hide_settings": "Hide settings",
+@@ -88,9 +88,9 @@
+   "community.column_settings.local_only": "Local only",
+   "community.column_settings.media_only": "Media Only",
+   "community.column_settings.remote_only": "Remote only",
+-  "compose_form.direct_message_warning": "This toot will only be sent to the mentioned users.",
++  "compose_form.direct_message_warning": "This post will only be sent to the mentioned users.",
+   "compose_form.direct_message_warning_learn_more": "Learn more",
+-  "compose_form.hashtag_warning": "This toot won't be listed under any hashtag as it is unlisted. Only public toots can be searched by hashtag.",
++  "compose_form.hashtag_warning": "This post won't be listed under any hashtag as it is unlisted. Only public posts can be searched by hashtag.",
+   "compose_form.lock_disclaimer": "Your account is not {locked}. Anyone can follow you to view your follower-only posts.",
+   "compose_form.lock_disclaimer.lock": "locked",
+   "compose_form.placeholder": "What's on your mind?",
+@@ -100,7 +100,7 @@
+   "compose_form.poll.remove_option": "Remove this choice",
+   "compose_form.poll.switch_to_multiple": "Change poll to allow multiple choices",
+   "compose_form.poll.switch_to_single": "Change poll to allow for a single choice",
+-  "compose_form.publish": "Toot",
++  "compose_form.publish": "Post",
+   "compose_form.publish_loud": "{publish}!",
+   "compose_form.sensitive.hide": "{count, plural, one {Mark media as sensitive} other {Mark media as sensitive}}",
+   "compose_form.sensitive.marked": "{count, plural, one {Media is marked as sensitive} other {Media is marked as sensitive}}",
+@@ -113,7 +113,7 @@
+   "confirmations.block.confirm": "Block",
+   "confirmations.block.message": "Are you sure you want to block {name}?",
+   "confirmations.delete.confirm": "Delete",
+-  "confirmations.delete.message": "Are you sure you want to delete this toot?",
++  "confirmations.delete.message": "Are you sure you want to delete this post?",
+   "confirmations.delete_list.confirm": "Delete",
+   "confirmations.delete_list.message": "Are you sure you want to permanently delete this list?",
+   "confirmations.domain_block.confirm": "Block entire domain",
+@@ -124,7 +124,7 @@
+   "confirmations.mute.explanation": "This will hide posts from them and posts mentioning them, but it will still allow them to see your posts and follow you.",
+   "confirmations.mute.message": "Are you sure you want to mute {name}?",
+   "confirmations.redraft.confirm": "Delete & redraft",
+-  "confirmations.redraft.message": "Are you sure you want to delete this toot and re-draft it? Favourites and boosts will be lost, and replies to the original post will be orphaned.",
++  "confirmations.redraft.message": "Are you sure you want to delete this post and re-draft it? Favourites and reblogs will be lost, and replies to the original post will be orphaned.",
+   "confirmations.reply.confirm": "Reply",
+   "confirmations.reply.message": "Replying now will overwrite the message you are currently composing. Are you sure you want to proceed?",
+   "confirmations.unfollow.confirm": "Unfollow",
+@@ -137,7 +137,7 @@
+   "directory.local": "From {domain} only",
+   "directory.new_arrivals": "New arrivals",
+   "directory.recently_active": "Recently active",
+-  "embed.instructions": "Embed this toot on your website by copying the code below.",
++  "embed.instructions": "Embed this post on your website by copying the code below.",
+   "embed.preview": "Here is what it will look like:",
+   "emoji_button.activity": "Activity",
+   "emoji_button.custom": "Custom",
+@@ -154,20 +154,20 @@
+   "emoji_button.symbols": "Symbols",
+   "emoji_button.travel": "Travel & Places",
+   "empty_column.account_suspended": "Account suspended",
+-  "empty_column.account_timeline": "No toots here!",
++  "empty_column.account_timeline": "No posts here!",
+   "empty_column.account_unavailable": "Profile unavailable",
+   "empty_column.blocks": "You haven't blocked any users yet.",
+-  "empty_column.bookmarked_statuses": "You don't have any bookmarked toots yet. When you bookmark one, it will show up here.",
++  "empty_column.bookmarked_statuses": "You don't have any bookmarked posts yet. When you bookmark one, it will show up here.",
+   "empty_column.community": "The local timeline is empty. Write something publicly to get the ball rolling!",
+   "empty_column.direct": "You don't have any direct messages yet. When you send or receive one, it will show up here.",
+   "empty_column.domain_blocks": "There are no blocked domains yet.",
+-  "empty_column.favourited_statuses": "You don't have any favourite toots yet. When you favourite one, it will show up here.",
+-  "empty_column.favourites": "No one has favourited this toot yet. When someone does, they will show up here.",
++  "empty_column.favourited_statuses": "You don't have any favourite posts yet. When you favourite one, it will show up here.",
++  "empty_column.favourites": "No one has favourited this post yet. When someone does, they will show up here.",
+   "empty_column.follow_requests": "You don't have any follow requests yet. When you receive one, it will show up here.",
+   "empty_column.hashtag": "There is nothing in this hashtag yet.",
+   "empty_column.home": "Your home timeline is empty! Visit {public} or use search to get started and meet other users.",
+   "empty_column.home.public_timeline": "the public timeline",
+-  "empty_column.list": "There is nothing in this list yet. When members of this list post new toots, they will appear here.",
++  "empty_column.list": "There is nothing in this list yet. When members of this list post new posts, they will appear here.",
+   "empty_column.lists": "You don't have any lists yet. When you create one, it will show up here.",
+   "empty_column.mutes": "You haven't muted any users yet.",
+   "empty_column.notifications": "You don't have any notifications yet. Interact with others to start the conversation.",
+@@ -200,7 +200,7 @@
+   "hashtag.column_settings.tag_mode.none": "None of these",
+   "hashtag.column_settings.tag_toggle": "Include additional tags for this column",
+   "home.column_settings.basic": "Basic",
+-  "home.column_settings.show_reblogs": "Show boosts",
++  "home.column_settings.show_reblogs": "Show reblogs",
+   "home.column_settings.show_replies": "Show replies",
+   "home.hide_announcements": "Hide announcements",
+   "home.show_announcements": "Show announcements",
+@@ -216,23 +216,23 @@
+   "introduction.federation.local.text": "Public posts from people on the same server as you will appear in the local timeline.",
+   "introduction.interactions.action": "Finish tutorial!",
+   "introduction.interactions.favourite.headline": "Favourite",
+-  "introduction.interactions.favourite.text": "You can save a toot for later, and let the author know that you liked it, by favouriting it.",
+-  "introduction.interactions.reblog.headline": "Boost",
+-  "introduction.interactions.reblog.text": "You can share other people's toots with your followers by boosting them.",
++  "introduction.interactions.favourite.text": "You can save a post for later, and let the author know that you liked it, by favouriting it.",
++  "introduction.interactions.reblog.headline": "Reblog",
++  "introduction.interactions.reblog.text": "You can share other people's posts with your followers by reblogging them.",
+   "introduction.interactions.reply.headline": "Reply",
+-  "introduction.interactions.reply.text": "You can reply to other people's and your own toots, which will chain them together in a conversation.",
++  "introduction.interactions.reply.text": "You can reply to other people's and your own posts, which will chain them together in a conversation.",
+   "introduction.welcome.action": "Let's go!",
+   "introduction.welcome.headline": "First steps",
+   "introduction.welcome.text": "Welcome to the fediverse! In a few moments, you'll be able to broadcast messages and talk to your friends across a wide variety of servers. But this server, {domain}, is special—it hosts your profile, so remember its name.",
+   "keyboard_shortcuts.back": "to navigate back",
+   "keyboard_shortcuts.blocked": "to open blocked users list",
+-  "keyboard_shortcuts.boost": "to boost",
+-  "keyboard_shortcuts.column": "to focus a toot in one of the columns",
++  "keyboard_shortcuts.boost": "to reblog",
++  "keyboard_shortcuts.column": "to focus a post in one of the columns",
+   "keyboard_shortcuts.compose": "to focus the compose textarea",
+   "keyboard_shortcuts.description": "Description",
+   "keyboard_shortcuts.direct": "to open direct messages column",
+   "keyboard_shortcuts.down": "to move down in the list",
+-  "keyboard_shortcuts.enter": "to open toot",
++  "keyboard_shortcuts.enter": "to open post",
+   "keyboard_shortcuts.favourite": "to favourite",
+   "keyboard_shortcuts.favourites": "to open favourites list",
+   "keyboard_shortcuts.federated": "to open federated timeline",
+@@ -246,7 +246,7 @@
+   "keyboard_shortcuts.my_profile": "to open your profile",
+   "keyboard_shortcuts.notifications": "to open notifications column",
+   "keyboard_shortcuts.open_media": "to open media",
+-  "keyboard_shortcuts.pinned": "to open pinned toots list",
++  "keyboard_shortcuts.pinned": "to open pinned posts list",
+   "keyboard_shortcuts.profile": "to open author's profile",
+   "keyboard_shortcuts.reply": "to reply",
+   "keyboard_shortcuts.requests": "to open follow requests list",
+@@ -255,7 +255,7 @@
+   "keyboard_shortcuts.start": "to open \"get started\" column",
+   "keyboard_shortcuts.toggle_hidden": "to show/hide text behind CW",
+   "keyboard_shortcuts.toggle_sensitivity": "to show/hide media",
+-  "keyboard_shortcuts.toot": "to start a brand new toot",
++  "keyboard_shortcuts.toot": "to start a brand new post",
+   "keyboard_shortcuts.unfocus": "to un-focus compose textarea/search",
+   "keyboard_shortcuts.up": "to move up in the list",
+   "lightbox.close": "Close",
+@@ -288,7 +288,7 @@
+   "navigation_bar.blocks": "Blocked users",
+   "navigation_bar.bookmarks": "Bookmarks",
+   "navigation_bar.community_timeline": "Local timeline",
+-  "navigation_bar.compose": "Compose new toot",
++  "navigation_bar.compose": "Compose new post",
+   "navigation_bar.direct": "Direct messages",
+   "navigation_bar.discover": "Discover",
+   "navigation_bar.domain_blocks": "Blocked domains",
+@@ -304,17 +304,17 @@
+   "navigation_bar.logout": "Logout",
+   "navigation_bar.mutes": "Muted users",
+   "navigation_bar.personal": "Personal",
+-  "navigation_bar.pins": "Pinned toots",
++  "navigation_bar.pins": "Pinned posts",
+   "navigation_bar.preferences": "Preferences",
+   "navigation_bar.public_timeline": "Federated timeline",
+   "navigation_bar.security": "Security",
+-  "notification.favourite": "{name} favourited your toot",
++  "notification.favourite": "{name} favourited your post",
+   "notification.follow": "{name} followed you",
+   "notification.follow_request": "{name} has requested to follow you",
+   "notification.mention": "{name} mentioned you",
+   "notification.own_poll": "Your poll has ended",
+   "notification.poll": "A poll you have voted in has ended",
+-  "notification.reblog": "{name} boosted your toot",
++  "notification.reblog": "{name} reblogged your post",
+   "notification.status": "{name} just posted",
+   "notifications.clear": "Clear notifications",
+   "notifications.clear_confirmation": "Are you sure you want to permanently clear all your notifications?",
+@@ -328,12 +328,12 @@
+   "notifications.column_settings.mention": "Mentions:",
+   "notifications.column_settings.poll": "Poll results:",
+   "notifications.column_settings.push": "Push notifications",
+-  "notifications.column_settings.reblog": "Boosts:",
++  "notifications.column_settings.reblog": "Reblogs:",
+   "notifications.column_settings.show": "Show in column",
+   "notifications.column_settings.sound": "Play sound",
+-  "notifications.column_settings.status": "New toots:",
++  "notifications.column_settings.status": "New posts:",
+   "notifications.filter.all": "All",
+-  "notifications.filter.boosts": "Boosts",
++  "notifications.filter.boosts": "Reblogs",
+   "notifications.filter.favourites": "Favourites",
+   "notifications.filter.follows": "Follows",
+   "notifications.filter.mentions": "Mentions",
+@@ -357,7 +357,7 @@
+   "poll.voted": "You voted for this answer",
+   "poll_button.add_poll": "Add a poll",
+   "poll_button.remove_poll": "Remove poll",
+-  "privacy.change": "Adjust toot privacy",
++  "privacy.change": "Adjust post privacy",
+   "privacy.direct.long": "Visible for mentioned users only",
+   "privacy.direct.short": "Direct",
+   "privacy.private.long": "Visible for followers only",
+@@ -384,23 +384,23 @@
+   "report.target": "Reporting {target}",
+   "search.placeholder": "Search",
+   "search_popout.search_format": "Advanced search format",
+-  "search_popout.tips.full_text": "Simple text returns toots you have written, favourited, boosted, or have been mentioned in, as well as matching usernames, display names, and hashtags.",
++  "search_popout.tips.full_text": "Simple text returns posts you have written, favourited, reblogged, or have been mentioned in, as well as matching usernames, display names, and hashtags.",
+   "search_popout.tips.hashtag": "hashtag",
+-  "search_popout.tips.status": "toot",
++  "search_popout.tips.status": "post",
+   "search_popout.tips.text": "Simple text returns matching display names, usernames and hashtags",
+   "search_popout.tips.user": "user",
+   "search_results.accounts": "People",
+   "search_results.hashtags": "Hashtags",
+-  "search_results.statuses": "Toots",
+-  "search_results.statuses_fts_disabled": "Searching toots by their content is not enabled on this Mastodon server.",
++  "search_results.statuses": "Posts",
++  "search_results.statuses_fts_disabled": "Searching posts by their content is not enabled on this Mastodon server.",
+   "search_results.total": "{count, number} {count, plural, one {result} other {results}}",
+   "status.admin_account": "Open moderation interface for @{name}",
+-  "status.admin_status": "Open this toot in the moderation interface",
++  "status.admin_status": "Open this post in the moderation interface",
+   "status.block": "Block @{name}",
+   "status.bookmark": "Bookmark",
+-  "status.cancel_reblog_private": "Unboost",
+-  "status.cannot_reblog": "This post cannot be boosted",
+-  "status.copy": "Copy link to toot",
++  "status.cancel_reblog_private": "Unreblog",
++  "status.cannot_reblog": "This post cannot be reblogged",
++  "status.copy": "Copy link to post",
+   "status.delete": "Delete",
+   "status.detailed_status": "Detailed conversation view",
+   "status.direct": "Direct message @{name}",
+@@ -413,14 +413,14 @@
+   "status.more": "More",
+   "status.mute": "Mute @{name}",
+   "status.mute_conversation": "Mute conversation",
+-  "status.open": "Expand this toot",
++  "status.open": "Expand this post",
+   "status.pin": "Pin on profile",
+-  "status.pinned": "Pinned toot",
++  "status.pinned": "Pinned post",
+   "status.read_more": "Read more",
+-  "status.reblog": "Boost",
+-  "status.reblog_private": "Boost with original visibility",
+-  "status.reblogged_by": "{name} boosted",
+-  "status.reblogs.empty": "No one has boosted this toot yet. When someone does, they will show up here.",
++  "status.reblog": "Reblog",
++  "status.reblog_private": "Reblog with original visibility",
++  "status.reblogged_by": "{name} reblogged",
++  "status.reblogs.empty": "No one has reblogged this post yet. When someone does, they will show up here.",
+   "status.redraft": "Delete & re-draft",
+   "status.remove_bookmark": "Remove bookmark",
+   "status.reply": "Reply",
+@@ -451,7 +451,7 @@
+   "timeline_hint.remote_resource_not_displayed": "{resource} from other servers are not displayed.",
+   "timeline_hint.resources.followers": "Followers",
+   "timeline_hint.resources.follows": "Follows",
+-  "timeline_hint.resources.statuses": "Older toots",
++  "timeline_hint.resources.statuses": "Older posts",
+   "trends.counter_by_accounts": "{count, plural, one {{counter} person} other {{counter} people}} talking",
+   "trends.trending_now": "Trending now",
+   "ui.beforeunload": "Your draft will be lost if you leave Mastodon.",
+diff --git a/config/locales-glitch/en.yml b/config/locales-glitch/en.yml
+index 6268727a7..180269d62 100644
+--- a/config/locales-glitch/en.yml
++++ b/config/locales-glitch/en.yml
+@@ -8,14 +8,14 @@ en:
+         desc_html: Allow your users to prove their identity via keybase
+         title: Enable keybase integration
+       outgoing_spoilers:
+-        desc_html: When federating toots, add this content warning to toots that do not have one. It is useful if your server is specialized in content other servers might want to have under a Content Warning. Media will also be marked as sensitive.
+-        title: Content warning for outgoing toots
++        desc_html: When federating posts, add this content warning to posts that do not have one. It is useful if your server is specialized in content other servers might want to have under a Content Warning. Media will also be marked as sensitive.
++        title: Content warning for outgoing posts
+       hide_followers_count:
+         desc_html: Do not show followers count on user profiles
+         title: Hide followers count
+       show_reblogs_in_public_timelines:
+-        desc_html: Show public boosts of public toots in local and public timelines.
+-        title: Show boosts in public timelines
++        desc_html: Show public reblogs of public posts in local and public timelines.
++        title: Show reblogs in public timelines
+       show_replies_in_public_timelines:
+         desc_html: In addition to public self-replies (threads), show public replies in local and public timelines.
+         title: Show replies in public timelines
+diff --git a/config/locales-glitch/simple_form.en.yml b/config/locales-glitch/simple_form.en.yml
+index 612943571..c3aa1e598 100644
+--- a/config/locales-glitch/simple_form.en.yml
++++ b/config/locales-glitch/simple_form.en.yml
+@@ -3,14 +3,14 @@ en:
+   simple_form:
+     hints:
+       defaults:
+-        setting_default_content_type_html: When writing toots, assume they are written in raw HTML, unless specified otherwise
+-        setting_default_content_type_markdown: When writing toots, assume they are using Markdown for rich text formatting, unless specified otherwise
+-        setting_default_content_type_plain: When writing toots, assume they are plain text with no special formatting, unless specified otherwise (default Mastodon behavior)
+-        setting_default_language: The language of your toots can be detected automatically, but it's not always accurate
++        setting_default_content_type_html: When writing posts, assume they are written in raw HTML, unless specified otherwise
++        setting_default_content_type_markdown: When writing posts, assume they are using Markdown for rich text formatting, unless specified otherwise
++        setting_default_content_type_plain: When writing posts, assume they are plain text with no special formatting, unless specified otherwise (default Mastodon behavior)
++        setting_default_language: The language of your posts can be detected automatically, but it's not always accurate
+         setting_skin: Reskins the selected Mastodon flavour
+     labels:
+       defaults:
+-        setting_default_content_type: Default format for toots
++        setting_default_content_type: Default format for posts
+         setting_default_content_type_html: HTML
+         setting_default_content_type_markdown: Markdown
+         setting_default_content_type_plain: Plain text
+diff --git a/config/locales/en.yml b/config/locales/en.yml
+index 8245397d7..2478b291b 100644
+--- a/config/locales/en.yml
++++ b/config/locales/en.yml
+@@ -1,7 +1,7 @@
+ ---
+ en:
+   about:
+-    about_hashtag_html: These are public toots tagged with <strong>#%{hashtag}</strong>. You can interact with them if you have an account anywhere in the fediverse.
++    about_hashtag_html: These are public posts tagged with <strong>#%{hashtag}</strong>. You can interact with them if you have an account anywhere in the fediverse.
+     about_mastodon_html: 'The social network of the future: No ads, no corporate surveillance, ethical design, and decentralization! Own your data with Mastodon!'
+     about_this: About
+     active_count_after: active
+@@ -74,10 +74,10 @@ en:
+     pin_errors:
+       following: You must be already following the person you want to endorse
+     posts:
+-      one: Toot
+-      other: Toots
+-    posts_tab_heading: Toots
+-    posts_with_replies: Toots and replies
++      one: Post
++      other: Posts
++    posts_tab_heading: Posts
++    posts_with_replies: Posts and replies
+     reserved_username: The username is reserved
+     roles:
+       admin: Admin
+@@ -489,11 +489,11 @@ en:
+     relays:
+       add_new: Add new relay
+       delete: Delete
+-      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public toots between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local users manually following other people on remote servers.
++      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public posts between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local users manually following other people on remote servers.
+       disable: Disable
+       disabled: Disabled
+       enable: Enable
+-      enable_hint: Once enabled, your server will subscribe to all public toots from this relay, and will begin sending this server's public toots to it.
++      enable_hint: Once enabled, your server will subscribe to all public posts from this relay, and will begin sending this server's public posts to it.
+       enabled: Enabled
+       inbox_url: Relay URL
+       pending: Waiting for relay's approval
+@@ -707,7 +707,7 @@ en:
+       guide_link: https://crowdin.com/project/mastodon
+       guide_link_text: Everyone can contribute.
+     sensitive_content: Sensitive content
+-    toot_layout: Toot layout
++    toot_layout: Post layout
+   application_mailer:
+     notification_preferences: Change e-mail preferences
+     salutation: "%{name},"
+@@ -851,7 +851,7 @@ en:
+     archive_takeout:
+       date: Date
+       download: Download your archive
+-      hint_html: You can request an archive of your <strong>toots and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
++      hint_html: You can request an archive of your <strong>posts and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
+       in_progress: Compiling your archive...
+       request: Request your archive
+       size: Size
+@@ -917,7 +917,7 @@ en:
+     i_am_html: I am %{username} on %{service}.
+     identity: Identity
+     inactive: Inactive
+-    publicize_checkbox: 'And toot this:'
++    publicize_checkbox: 'And post this:'
+     publicize_toot: 'It is proven! I am %{username} on %{service}: %{url}'
+     remove: Remove proof from account
+     removed: Successfully removed proof from account
+@@ -1039,9 +1039,9 @@ en:
+       subject: You were mentioned by %{name}
+       title: New mention
+     reblog:
+-      body: 'Your status was boosted by %{name}:'
+-      subject: "%{name} boosted your status"
+-      title: New boost
++      body: 'Your status was reblogged by %{name}:'
++      subject: "%{name} reblogged your status"
++      title: New reblog
+   notifications:
+     email_events: Events for e-mail notifications
+     email_events_hint: 'Select events that you want to receive notifications for:'
+@@ -1117,16 +1117,16 @@ en:
+   remote_interaction:
+     favourite:
+       proceed: Proceed to favourite
+-      prompt: 'You want to favourite this toot:'
++      prompt: 'You want to favourite this post:'
+     reblog:
+-      proceed: Proceed to boost
+-      prompt: 'You want to boost this toot:'
++      proceed: Proceed to reblog
++      prompt: 'You want to reblog this post:'
+     reply:
+       proceed: Proceed to reply
+-      prompt: 'You want to reply to this toot:'
++      prompt: 'You want to reply to this post:'
+   scheduled_statuses:
+-    over_daily_limit: You have exceeded the limit of %{limit} scheduled toots for that day
+-    over_total_limit: You have exceeded the limit of %{limit} scheduled toots
++    over_daily_limit: You have exceeded the limit of %{limit} scheduled posts for that day
++    over_total_limit: You have exceeded the limit of %{limit} scheduled posts
+     too_soon: The scheduled date must be in the future
+   sessions:
+     activity: Last activity
+@@ -1205,7 +1205,7 @@ en:
+       video:
+         one: "%{count} video"
+         other: "%{count} videos"
+-    boosted_from_html: Boosted from %{acct_link}
++    boosted_from_html: Reblogged from %{acct_link}
+     content_warning: 'Content warning: %{warning}'
+     disallowed_hashtags:
+       one: 'contained a disallowed hashtag: %{tags}'
+@@ -1216,10 +1216,10 @@ en:
+     open_in_web: Open in web
+     over_character_limit: character limit of %{max} exceeded
+     pin_errors:
+-      limit: You have already pinned the maximum number of toots
+-      ownership: Someone else's toot cannot be pinned
+-      private: Non-public toot cannot be pinned
+-      reblog: A boost cannot be pinned
++      limit: You have already pinned the maximum number of posts
++      ownership: Someone else's post cannot be pinned
++      private: Non-public post cannot be pinned
++      reblog: A reblog cannot be pinned
+     poll:
+       total_people:
+         one: "%{count} person"
+@@ -1242,8 +1242,8 @@ en:
+       unlisted: Unlisted
+       unlisted_long: Everyone can see, but not listed on public timelines
+   stream_entries:
+-    pinned: Pinned toot
+-    reblogged: boosted
++    pinned: Pinned post
++    reblogged: reblogged
+     sensitive_content: Sensitive content
+   tags:
+     does_not_match_previous_name: does not match the previous name
+@@ -1368,7 +1368,7 @@ en:
+       explanation:
+         disable: You can no longer login to your account or use it in any other way, but your profile and other data remains intact.
+         sensitive: Your uploaded media files and linked media will be treated as sensitive.
+-        silence: You can still use your account but only people who are already following you will see your toots on this server, and you may be excluded from various public listings. However, others may still manually follow you.
++        silence: You can still use your account but only people who are already following you will see your posts on this server, and you may be excluded from various public listings. However, others may still manually follow you.
+         suspend: You can no longer use your account, and your profile and other data are no longer accessible. You can still login to request a backup of your data until the data is fully removed, but we will retain some data to prevent you from evading the suspension.
+       get_in_touch: You can reply to this e-mail to get in touch with the staff of %{instance}.
+       review_server_policies: Review server policies
+diff --git a/config/locales/en_GB.yml b/config/locales/en_GB.yml
+index d3461474b..ae1e4db30 100644
+--- a/config/locales/en_GB.yml
++++ b/config/locales/en_GB.yml
+@@ -1,7 +1,7 @@
+ ---
+ en_GB:
+   about:
+-    about_hashtag_html: These are public toots tagged with <strong>#%{hashtag}</strong>. You can interact with them if you have an account anywhere in the fediverse.
++    about_hashtag_html: These are public posts tagged with <strong>#%{hashtag}</strong>. You can interact with them if you have an account anywhere in the fediverse.
+     about_mastodon_html: Mastodon is a social network based on open web protocols and free, open-source software. It is decentralized like e-mail.
+     about_this: About
+     active_count_after: active
+@@ -59,10 +59,10 @@ en_GB:
+     pin_errors:
+       following: You must be already following the person you want to endorse
+     posts:
+-      one: Toot
+-      other: Toots
+-    posts_tab_heading: Toots
+-    posts_with_replies: Toots and replies
++      one: Post
++      other: Posts
++    posts_tab_heading: Posts
++    posts_with_replies: Posts and replies
+     reserved_username: The username is reserved
+     roles:
+       admin: Admin
+@@ -327,11 +327,11 @@ en_GB:
+     relays:
+       add_new: Add new relay
+       delete: Delete
+-      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public toots between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local users manually following other people on remote servers.
++      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public posts between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local users manually following other people on remote servers.
+       disable: Disable
+       disabled: Disabled
+       enable: Enable
+-      enable_hint: Once enabled, your server will subscribe to all public toots from this relay, and will begin sending this server's public toots to it.
++      enable_hint: Once enabled, your server will subscribe to all public posts from this relay, and will begin sending this server's public posts to it.
+       enabled: Enabled
+       inbox_url: Relay URL
+       pending: Waiting for relay's approval
+@@ -417,7 +417,7 @@ en_GB:
+           open: Anyone can sign up
+         title: Registrations mode
+       show_known_fediverse_at_about_page:
+-        desc_html: When toggled, it will show toots from all the known fediverse on preview. Otherwise it will only show local toots.
++        desc_html: When toggled, it will show posts from all the known fediverse on preview. Otherwise it will only show local posts.
+         title: Show known fediverse on timeline preview
+       show_staff_badge:
+         desc_html: Show a staff badge on a user page
+@@ -583,7 +583,7 @@ en_GB:
+     archive_takeout:
+       date: Date
+       download: Download your archive
+-      hint_html: You can request an archive of your <strong>toots and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
++      hint_html: You can request an archive of your <strong>posts and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
+       in_progress: Compiling your archive...
+       request: Request your archive
+       size: Size
+@@ -723,9 +723,9 @@ en_GB:
+       subject: You were mentioned by %{name}
+       title: New mention
+     reblog:
+-      body: 'Your status was boosted by %{name}:'
+-      subject: "%{name} boosted your status"
+-      title: New boost
++      body: 'Your status was reblogged by %{name}:'
++      subject: "%{name} reblogged your status"
++      title: New reblog
+   number:
+     human:
+       decimal_units:
+@@ -775,20 +775,20 @@ en_GB:
+   remote_interaction:
+     favourite:
+       proceed: Proceed to favourite
+-      prompt: 'You want to favourite this toot:'
++      prompt: 'You want to favourite this post:'
+     reblog:
+-      proceed: Proceed to boost
+-      prompt: 'You want to boost this toot:'
++      proceed: Proceed to reblog
++      prompt: 'You want to reblog this post:'
+     reply:
+       proceed: Proceed to reply
+-      prompt: 'You want to reply to this toot:'
++      prompt: 'You want to reply to this post:'
+   remote_unfollow:
+     error: Error
+     title: Title
+     unfollowed: Unfollowed
+   scheduled_statuses:
+-    over_daily_limit: You have exceeded the limit of %{limit} scheduled toots for that day
+-    over_total_limit: You have exceeded the limit of %{limit} scheduled toots
++    over_daily_limit: You have exceeded the limit of %{limit} scheduled posts for that day
++    over_total_limit: You have exceeded the limit of %{limit} scheduled posts
+     too_soon: The scheduled date must be in the future
+   sessions:
+     activity: Last activity
+@@ -855,7 +855,7 @@ en_GB:
+       video:
+         one: "%{count} video"
+         other: "%{count} videos"
+-    boosted_from_html: Boosted from %{acct_link}
++    boosted_from_html: Reblogged from %{acct_link}
+     content_warning: 'Content warning: %{warning}'
+     disallowed_hashtags:
+       one: 'contained a disallowed hashtag: %{tags}'
+@@ -864,10 +864,10 @@ en_GB:
+     open_in_web: Open in web
+     over_character_limit: character limit of %{max} exceeded
+     pin_errors:
+-      limit: You have already pinned the maximum number of toots
+-      ownership: Someone else's toot cannot be pinned
+-      private: Non-public toot cannot be pinned
+-      reblog: A boost cannot be pinned
++      limit: You have already pinned the maximum number of posts
++      ownership: Someone else's post cannot be pinned
++      private: Non-public post cannot be pinned
++      reblog: A reblog cannot be pinned
+     poll:
+       total_votes:
+         one: "%{count} vote"
+@@ -884,8 +884,8 @@ en_GB:
+       unlisted: Unlisted
+       unlisted_long: Everyone can see, but not listed on public timelines
+   stream_entries:
+-    pinned: Pinned toot
+-    reblogged: boosted
++    pinned: Pinned post
++    reblogged: rebloged
+     sensitive_content: Sensitive content
+   terms:
+     body_html: |
+@@ -1002,8 +1002,8 @@ en_GB:
+     warning:
+       explanation:
+         disable: While your account is frozen, your account data remains intact, but you cannot perform any actions until it is unlocked.
+-        silence: While your account is limited, only people who are already following you will see your toots on this server, and you may be excluded from various public listings. However, others may still manually follow you.
+-        suspend: Your account has been suspended, and all of your toots and your uploaded media files have been irreversibly removed from this server, and servers where you had followers.
++        silence: While your account is limited, only people who are already following you will see your posts on this server, and you may be excluded from various public listings. However, others may still manually follow you.
++        suspend: Your account has been suspended, and all of your posts and your uploaded media files have been irreversibly removed from this server, and servers where you had followers.
+       review_server_policies: Review server policies
+       subject:
+         disable: Your account %{acct} has been frozen
+diff --git a/config/locales/simple_form.en.yml b/config/locales/simple_form.en.yml
+index 20c916560..9f0d451dc 100644
+--- a/config/locales/simple_form.en.yml
++++ b/config/locales/simple_form.en.yml
+@@ -7,12 +7,12 @@ en:
+       account_migration:
+         acct: Specify the username@domain of the account you want to move to
+       account_warning_preset:
+-        text: You can use toot syntax, such as URLs, hashtags and mentions
++        text: You can use post syntax, such as URLs, hashtags and mentions
+         title: Optional. Not visible to the recipient
+       admin_account_action:
+-        include_statuses: The user will see which toots have caused the moderation action or warning
++        include_statuses: The user will see which posts have caused the moderation action or warning
+         send_email_notification: The user will receive an explanation of what happened with their account
+-        text_html: Optional. You can use toot syntax. You can <a href="%{path}">add warning presets</a> to save time
++        text_html: Optional. You can use post syntax. You can <a href="%{path}">add warning presets</a> to save time
+         type_html: Choose what to do with <strong>%{acct}</strong>
+         warning_preset_id: Optional. You can still add custom text to end of the preset
+       announcement:
+@@ -20,7 +20,7 @@ en:
+         ends_at: Optional. Announcement will be automatically unpublished at this time
+         scheduled_at: Leave blank to publish the announcement immediately
+         starts_at: Optional. In case your announcement is bound to a specific time range
+-        text: You can use toot syntax. Please be mindful of the space the announcement will take up on the user's screen
++        text: You can use post syntax. Please be mindful of the space the announcement will take up on the user's screen
+       defaults:
+         autofollow: People who sign up through the invite will automatically follow you
+         avatar: PNG, GIF or JPG. At most %{size}. Will be downscaled to %{dimensions}px
+@@ -34,20 +34,20 @@ en:
+         fields: You can have up to 4 items displayed as a table on your profile
+         header: PNG, GIF or JPG. At most %{size}. Will be downscaled to %{dimensions}px
+         inbox_url: Copy the URL from the frontpage of the relay you want to use
+-        irreversible: Filtered toots will disappear irreversibly, even if filter is later removed
++        irreversible: Filtered posts will disappear irreversibly, even if filter is later removed
+         locale: The language of the user interface, e-mails and push notifications
+         locked: Requires you to manually approve followers
+         password: Use at least 8 characters
+-        phrase: Will be matched regardless of casing in text or content warning of a toot
++        phrase: Will be matched regardless of casing in text or content warning of a post
+         scopes: Which APIs the application will be allowed to access. If you select a top-level scope, you don't need to select individual ones.
+-        setting_aggregate_reblogs: Do not show new boosts for toots that have been recently boosted (only affects newly-received boosts)
++        setting_aggregate_reblogs: Do not show new reblogs for posts that have been recently reblogged (only affects newly-received reblogs)
+         setting_default_sensitive: Sensitive media is hidden by default and can be revealed with a click
+         setting_display_media_default: Hide media marked as sensitive
+         setting_display_media_hide_all: Always hide media
+         setting_display_media_show_all: Always show media
+         setting_hide_network: Who you follow and who follows you will not be shown on your profile
+         setting_noindex: Affects your public profile and status pages
+-        setting_show_application: The application you use to toot will be displayed in the detailed view of your toots
++        setting_show_application: The application you use to post will be displayed in the detailed view of your posts
+         setting_use_blurhash: Gradients are based on the colors of the hidden visuals but obfuscate any details
+         setting_use_pending_items: Hide timeline updates behind a click instead of automatically scrolling the feed
+         username: Your username will be unique on %{domain}
+@@ -79,7 +79,7 @@ en:
+       tag:
+         name: You can only change the casing of the letters, for example, to make it more readable
+       user:
+-        chosen_languages: When checked, only toots in selected languages will be displayed in public timelines
++        chosen_languages: When checked, only posts in selected languages will be displayed in public timelines
+     labels:
+       account:
+         fields:
+@@ -93,7 +93,7 @@ en:
+         text: Preset text
+         title: Title
+       admin_account_action:
+-        include_statuses: Include reported toots in the e-mail
++        include_statuses: Include reported posts in the e-mail
+         send_email_notification: Notify the user per e-mail
+         text: Custom warning
+         type: Action
+@@ -138,24 +138,24 @@ en:
+         password: Password
+         phrase: Keyword or phrase
+         setting_advanced_layout: Enable advanced web interface
+-        setting_aggregate_reblogs: Group boosts in timelines
++        setting_aggregate_reblogs: Group reblogs in timelines
+         setting_auto_play_gif: Auto-play animated GIFs
+-        setting_boost_modal: Show confirmation dialog before boosting
+-        setting_crop_images: Crop images in non-expanded toots to 16x9
++        setting_boost_modal: Show confirmation dialog before reblogging
++        setting_crop_images: Crop images in non-expanded posts to 16x9
+         setting_default_language: Posting language
+         setting_default_privacy: Posting privacy
+         setting_default_sensitive: Always mark media as sensitive
+-        setting_delete_modal: Show confirmation dialog before deleting a toot
++        setting_delete_modal: Show confirmation dialog before deleting a post
+         setting_disable_swiping: Disable swiping motions
+         setting_display_media: Media display
+         setting_display_media_default: Default
+         setting_display_media_hide_all: Hide all
+         setting_display_media_show_all: Show all
+-        setting_expand_spoilers: Always expand toots marked with content warnings
++        setting_expand_spoilers: Always expand posts marked with content warnings
+         setting_hide_network: Hide your network
+         setting_noindex: Opt-out of search engine indexing
+         setting_reduce_motion: Reduce motion in animations
+-        setting_show_application: Disclose application used to send toots
++        setting_show_application: Disclose application used to send posts
+         setting_system_font_ui: Use system's default font
+         setting_theme: Site theme
+         setting_trends: Show today's trends
+@@ -194,14 +194,14 @@ en:
+         follow_request: Someone requested to follow you
+         mention: Someone mentioned you
+         pending_account: New account needs review
+-        reblog: Someone boosted your status
++        reblog: Someone reblogged your status
+         report: New report is submitted
+         trending_tag: An unreviewed hashtag is trending
+       tag:
+         listable: Allow this hashtag to appear in searches and on the profile directory
+         name: Hashtag
+         trendable: Allow this hashtag to appear under trends
+-        usable: Allow toots to use this hashtag
++        usable: Allow posts to use this hashtag
+     'no': 'No'
+     recommended: Recommended
+     required:
+diff --git a/config/locales/simple_form.en_GB.yml b/config/locales/simple_form.en_GB.yml
+index 8752d81bb..d63590b46 100644
+--- a/config/locales/simple_form.en_GB.yml
++++ b/config/locales/simple_form.en_GB.yml
+@@ -3,10 +3,10 @@ en_GB:
+   simple_form:
+     hints:
+       account_warning_preset:
+-        text: You can use toot syntax, such as URLs, hashtags and mentions
++        text: You can use post syntax, such as URLs, hashtags and mentions
+       admin_account_action:
+         send_email_notification: The user will receive an explanation of what happened with their account
+-        text_html: Optional. You can use toot syntax. You can <a href="%{path}">add warning presets</a> to save time
++        text_html: Optional. You can use post syntax. You can <a href="%{path}">add warning presets</a> to save time
+         type_html: Choose what to do with <strong>%{acct}</strong>
+         warning_preset_id: Optional. You can still add custom text to end of the preset
+       defaults:
+@@ -20,19 +20,19 @@ en_GB:
+         fields: You can have up to 4 items displayed as a table on your profile
+         header: PNG, GIF or JPG. At most %{size}. Will be downscaled to %{dimensions}px
+         inbox_url: Copy the URL from the frontpage of the relay you want to use
+-        irreversible: Filtered toots will disappear irreversibly, even if filter is later removed
++        irreversible: Filtered posts will disappear irreversibly, even if filter is later removed
+         locale: The language of the user interface, e-mails and push notifications
+         locked: Requires you to manually approve followers
+         password: Use at least 8 characters
+-        phrase: Will be matched regardless of casing in text or content warning of a toot
++        phrase: Will be matched regardless of casing in text or content warning of a post
+         scopes: Which APIs the application will be allowed to access. If you select a top-level scope, you don't need to select individual ones.
+-        setting_aggregate_reblogs: Do not show new boosts for toots that have been recently boosted (only affects newly-received boosts)
++        setting_aggregate_reblogs: Do not show new posts for posts that have been recently posted (only affects newly-received posts)
+         setting_display_media_default: Hide media marked as sensitive
+         setting_display_media_hide_all: Always hide all media
+         setting_display_media_show_all: Always show media marked as sensitive
+         setting_hide_network: Who you follow and who follows you will not be shown on your profile
+         setting_noindex: Affects your public profile and status pages
+-        setting_show_application: The application you use to toot will be displayed in the detailed view of your toots
++        setting_show_application: The application you use to post will be displayed in the detailed view of your posts
+         username: Your username will be unique on %{domain}
+         whole_word: When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word
+       featured_tag:
+@@ -42,7 +42,7 @@ en_GB:
+       sessions:
+         otp: 'Enter the two-factor code generated by your phone app or use one of your recovery codes:'
+       user:
+-        chosen_languages: When checked, only toots in selected languages will be displayed in public timelines
++        chosen_languages: When checked, only posts in selected languages will be displayed in public timelines
+     labels:
+       account:
+         fields:
+@@ -86,22 +86,22 @@ en_GB:
+         otp_attempt: Two-factor code
+         password: Password
+         phrase: Keyword or phrase
+-        setting_aggregate_reblogs: Group boosts in timelines
++        setting_aggregate_reblogs: Group posts in timelines
+         setting_auto_play_gif: Auto-play animated GIFs
+-        setting_boost_modal: Show confirmation dialog before boosting
++        setting_boost_modal: Show confirmation dialog before posting
+         setting_default_language: Posting language
+         setting_default_privacy: Post privacy
+         setting_default_sensitive: Always mark media as sensitive
+-        setting_delete_modal: Show confirmation dialog before deleting a toot
++        setting_delete_modal: Show confirmation dialog before deleting a post
+         setting_display_media: Media display
+         setting_display_media_default: Default
+         setting_display_media_hide_all: Hide all
+         setting_display_media_show_all: Show all
+-        setting_expand_spoilers: Always expand toots marked with content warnings
++        setting_expand_spoilers: Always expand posts marked with content warnings
+         setting_hide_network: Hide your network
+         setting_noindex: Opt-out of search engine indexing
+         setting_reduce_motion: Reduce motion in animations
+-        setting_show_application: Disclose application used to send toots
++        setting_show_application: Disclose application used to send posts
+         setting_system_font_ui: Use system's default font
+         setting_theme: Site theme
+         setting_unfollow_modal: Show confirmation dialog before unfollowing someone
+@@ -122,7 +122,7 @@ en_GB:
+         follow: Send e-mail when someone follows you
+         follow_request: Send e-mail when someone requests to follow you
+         mention: Send e-mail when someone mentions you
+-        reblog: Send e-mail when someone boosts your status
++        reblog: Send e-mail when someone posts your status
+         report: Send e-mail when a new report is submitted
+     'no': 'No'
+     required:
+-- 
+2.28.0
+
