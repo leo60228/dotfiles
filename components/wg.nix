@@ -1,28 +1,15 @@
 let lib = import ../lib; in
 lib.makeComponent "wg"
-({cfg, pkgs, lib, ...}: with lib; {
-  opts = {
-    ip = mkOption {
-      type = types.str;
-    };
-  };
+({config, pkgs, lib, ...}: with lib; {
+  opts = {};
 
   config = {
     networking.wireguard.interfaces = {
-      wg0 = {
-	ips = [ "${cfg.ip}/24" ];
-
-	privateKeyFile = "/home/leo60228/wireguard-keys/private";
-
-	peers = [
-	  {
-	    publicKey = "R19IME8fMBp2/FOKzEWnECn1yMyWjPsZNXaD6q0jTTc=";
-	    allowedIPs = [ "10.100.0.0/24" ];
-	    endpoint = "68.183.115.15:51820";
-	    persistentKeepalive = 25;
-	  }
-	];
-      };
+      wg0 = let
+	p2p = import ../p2p/peers.nix pkgs;
+	inherit (config.networking) hostName;
+	host = p2p.hosts.${hostName};
+      in host;
     };
   };
 })
