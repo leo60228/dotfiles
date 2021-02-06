@@ -295,7 +295,7 @@
 
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    # enableSshSupport = true;
     enableExtraSocket = true;
     grabKeyboardAndMouse = false;
   };
