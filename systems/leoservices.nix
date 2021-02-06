@@ -123,34 +123,34 @@
 #    "net.ipv4.conf.default.forwarding" = true;
 #  };
 
-  services.matrix-synapse = {
-    enable = true;
-    server_name = "60228.dev";
-    public_baseurl = "https://60228.dev/";
-    listeners = [
-      {
-        port = 8008;
-        bind_address = "127.0.0.1";
-        type = "http";
-        tls = false;
-        x_forwarded = true;
-        resources = [
-          { names = [ "client" ]; compress = true; }
-          { names = [ "federation" ]; compress = false; }
-        ];
-      }
-    ];
-    url_preview_enabled = true;
-    extraConfig = ''
-    suppress_key_server_warning: true
-    '';
-  };
+  #services.matrix-synapse = {
+  #  enable = true;
+  #  server_name = "60228.dev";
+  #  public_baseurl = "https://60228.dev/";
+  #  listeners = [
+  #    {
+  #      port = 8008;
+  #      bind_address = "127.0.0.1";
+  #      type = "http";
+  #      tls = false;
+  #      x_forwarded = true;
+  #      resources = [
+  #        { names = [ "client" ]; compress = true; }
+  #        { names = [ "federation" ]; compress = false; }
+  #      ];
+  #    }
+  #  ];
+  #  url_preview_enabled = true;
+  #  extraConfig = ''
+  #  suppress_key_server_warning: true
+  #  '';
+  #};
 
-  services.ejabberd = {
-    enable = true;
-    configFile = ../files/ejabberd.yml;
-    imagemagick = true;
-  };
+  #services.ejabberd = {
+  #  enable = true;
+  #  configFile = ../files/ejabberd.yml;
+  #  imagemagick = true;
+  #};
 
   security.acme.certs."60228.dev".group = "acme";
   users.users.nginx.extraGroups = [ "acme" ];
