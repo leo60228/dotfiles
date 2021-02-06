@@ -90,11 +90,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1612127762,
-        "narHash": "sha256-RaeEmMVSkAhFJycRxLBZPWQDUxsUmIuD+voOiLGVx3k=",
+        "lastModified": 1612569812,
+        "narHash": "sha256-JRzsqz99yFQQA7lhxqHjjotMAUZH54nxHgeLiuKORTs=",
         "owner": "leo60228",
         "repo": "mpdiscord",
-        "rev": "3c4fd9697c5a6961927988af17e6fafd184da6bd",
+        "rev": "a19a65c100bd3ede48936a925ac6e7cbfae1034a",
         "type": "github"
       },
       "original": {
@@ -167,13 +167,16 @@
       "locked": {
         "lastModified": 1605721780,
         "narHash": "sha256-MhaNS4HGHcOCwW+HadSxustHTzD1LWznh584eYBvJ5Q=",
-        "path": "/nix/store/5c45nyf2kwjq40lz4nfycwkhjwg21rhn-source",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
         "rev": "58f9c4c7d3a42c912362ca68577162e38ea8edfb",
-        "type": "path"
+        "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "NixOS",
+        "ref": "nixos-20.09",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-mozilla": {
@@ -194,19 +197,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1609079092,
-        "narHash": "sha256-KhyKfxBHtZlAgudpZ0EJVzeuqROjKfVOwj8j0cuhU50=",
-        "path": "/nix/store/5pmay8rdvgw5ml1xi6189xhdbygc850k-source",
-        "rev": "2f47650c2f28d87f86ab807b8a339c684d91ec56",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1605721780,
         "narHash": "sha256-MhaNS4HGHcOCwW+HadSxustHTzD1LWznh584eYBvJ5Q=",
         "owner": "NixOS",
@@ -221,7 +211,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1610729867,
         "narHash": "sha256-bk/SBaBLqZX/PEqal27DMQwAHHl0dcZMp8NNksQr80s=",
@@ -254,7 +244,7 @@
     "poetry2nix-src": {
       "inputs": {
         "flake-utils": "flake-utils_3",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1610904359,
@@ -277,7 +267,7 @@
         "mpdiscord": "mpdiscord",
         "naersk": "naersk_2",
         "nix": "nix",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nur": "nur",
         "poetry2nix-src": "poetry2nix-src",
@@ -287,7 +277,9 @@
     "rust-overlay": {
       "inputs": {
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1611974270,
