@@ -56,7 +56,10 @@
       } {
         name = "acs-override";
         patch = ../files/add-acs-overrides.patch;
-      } ];
+      } {
+        name = "tpm-threadripper";
+        patch = ../files/tpm-threadripper.patch;
+      }];
     }).overrideAttrs (oldAttrs: {
       passthru = oldAttrs.passthru // {
         features = {
