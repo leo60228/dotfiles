@@ -147,6 +147,15 @@
   #  '';
   #};
 
+  services.matrix-dendrite = {
+    enable = true;
+    httpPort = 8008;
+    settings = {
+      global.server_name = "60228.dev";
+      client_api.registration_disabled = true;
+    };
+  };
+
   #services.ejabberd = {
   #  enable = true;
   #  configFile = ../files/ejabberd.yml;
