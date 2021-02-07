@@ -151,7 +151,10 @@
     enable = true;
     httpPort = 8008;
     settings = {
-      global.server_name = "60228.dev";
+      global = {
+        server_name = "60228.dev";
+        disable_federation = false;
+      };
       client_api.registration_disabled = true;
     };
   };
