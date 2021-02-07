@@ -191,28 +191,6 @@ lib.makeComponent "reverseproxy"
                 '';
             };
           };
-          "blog.leo60228.space" = {
-            forceSSL = true;
-            enableACME = true;
-            acmeRoot = "/var/lib/acme/acme-challenge";
-            locations."~ ^/(css|img|js|fonts)/" = {
-                root = "/home/leo60228/writefreely/static/";
-            };
-            locations."/" = {
-                proxyPass = "http://127.0.0.1:3001";
-                proxyWebsockets = true;
-                extraConfig = ''
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto https;
-                proxy_set_header Proxy "";
-                proxy_pass_header Server;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection $connection_upgrade;
-                '';
-            };
-          };
           "ghastly.leo60228.space" = {
             forceSSL = true;
             enableACME = true;
