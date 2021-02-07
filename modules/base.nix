@@ -1,7 +1,7 @@
 { pkgs, lib, config, flakes, ... }:
 
 {
-  imports = [ ./xpra.nix ./mastodon.nix ./matrix-dendrite.nix ./flakes.nix ./nix-daemon.nix ];
+  imports = [ ./xpra.nix ./mastodon.nix ./flakes.nix ./nix-daemon.nix ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
