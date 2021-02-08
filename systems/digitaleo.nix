@@ -1,26 +1,148 @@
 { pkgs, ... }: with import ../components; rec {
-  components = en_us est docker extra cloud9 shellinabox server;
+  components = en_us est server;
 
   boot.cleanTmpDir = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 80 3000 5901 5900 6080 5901 4333 21 2782 ];
-  networking.firewall.allowedUDPPorts = [ 2782 ];
+  networking.firewall = {
+    allowedTCPPorts = [ 9090 80 443 ];
+    allowedUDPPorts = [ 51820 443 ];
+    allowPing = true;
+  };
 
-  # will remove once i eventually write service support into my config
-  systemd.services.smsforwarder.description = "Discord.js SMS forwarder bot";
-  systemd.services.smsforwarder.script = "${pkgs.nodejs-10_x}/bin/node /home/leo60228/discordsms/index.js";
-  systemd.services.smsforwarder.serviceConfig.Restart = "always";
-  systemd.services.smsforwarder.serviceConfig.RestartSec = 10;
-  systemd.services.smsforwarder.wantedBy = [ "multi-user.target" ];
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.100.0.1/24" ];
 
-  systemd.services.celesteudp.script = "${pkgs.socat}/bin/socat udp4-listen:2782,reuseaddr,fork tcp:localhost:2783";
-  systemd.services.celesteudp.serviceConfig.Restart = "always";
-  systemd.services.celesteudp.serviceConfig.RestartSec = 10;
-  systemd.services.celesteudp.wantedBy = [ "multi-user.target" ];
+      listenPort = 51820;
 
-  security.sudo.extraConfig = ''
-Defaults runaspw
-  '';
+      privateKeyFile = "/root/wireguard-keys/private";
 
-  environment.systemPackages = [ pkgs.ppp ];
+      peers = [
+        { # desktop
+          publicKey = "9uXlgMZ+L53g8ljJwSyeudC21tQw9STuT7Uolyr6fXM=";
+          allowedIPs = [ "10.100.0.2/32" ];
+        }
+        { # nuc
+          publicKey = "emJub19Jado0vqFa5wbziMXjePHYrP8mw+ZiSf5QiUE=";
+          allowedIPs = [ "10.100.0.3/32" ];
+        }
+        { # router
+          publicKey = "Hybix9sHznvwZJ4VCMPHDMFH00camprnXce9fKapkz4=";
+          allowedIPs = [ "10.100.0.4/32" ];
+        }
+      ];
+    };
+  };
+
+  services.prometheus = {
+    enable = true;
+    listenAddress = "10.100.0.1";
+    port = 9090;
+    scrapeConfigs = [
+      {
+        job_name = "prometheus";
+        static_configs = [ {
+          targets = [ "10.100.0.1:9090" ];
+        } ];
+      }
+      {
+        job_name = "prometheus-host";
+        static_configs = [ {
+          targets = [ "localhost:9100" ];
+        } ];
+      }
+      {
+        job_name = "minecraft-ping";
+        scrape_interval = "5s";
+        static_configs = [ {
+          targets = [ "localhost:9427" ];
+        } ];
+      }
+      {
+        job_name = "desktop";
+        static_configs = [ {
+          targets = [ "10.100.0.2:9100" ];
+        } ];
+      }
+      {
+        job_name = "apcupsd";
+        static_configs = [ {
+          targets = [ "10.100.0.2:9162" ];
+        } ];
+      }
+      {
+        job_name = "nucserv";
+        static_configs = [ {
+          targets = [ "10.100.0.3:9100" ];
+        } ];
+      }
+      {
+        job_name = "internet";
+        metrics_path = "/probe";
+        scrape_interval = "5m";
+        scrape_timeout = "45s";
+        static_configs = [ {
+          targets = [ "10.100.0.3:9516" ];
+        } ];
+      }
+      {
+        job_name = "minecraft";
+        static_configs = [ {
+          targets = [ "10.100.0.3:9225" ];
+        } ];
+      }
+      {
+        job_name = "router";
+        static_configs = [ {
+          targets = [ "10.100.0.4:9100" ];
+        } ];
+      }
+    ];
+    exporters = {
+      node = {
+        enable = true;
+      };
+    };
+  };
+
+  services.grafana = {
+    addr = "0.0.0.0";
+    domain = "grafana.leo60228.space";
+    enable = true;
+    protocol = "http";
+    security.adminUser = "leo60228";
+    security.adminPasswordFile = "/var/lib/grafana/grafana-password.txt";
+    auth.anonymous.enable = true;
+  };
+
+  systemd.services.grafana.serviceConfig.AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
+
+  systemd.services.ping_exporter = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    script = "${pkgs.callPackage ../ping_exporter {}}/bin/ping_exporter mc.vsix.dev";
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "grafana.leo60228.space" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:3000";
+        };
+      };
+      "jellyfin.leo60228.space" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.0.3:8096";
+        };
+      };
+    };
+  };
+
+  security.acme.email = "leo@60228.dev";
+  security.acme.acceptTerms = true;
 }

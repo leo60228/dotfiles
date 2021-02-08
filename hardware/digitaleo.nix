@@ -8,38 +8,36 @@
     # details gathered from the active system.
     networking = {
       nameservers = [
-        "67.207.67.3"
-        "67.207.67.2"
+        "8.8.8.8"
       ];
-      defaultGateway = "104.131.64.1";
+      defaultGateway = "68.183.112.1";
       defaultGateway6 = "2604:a880:800:10::1";
+      dhcpcd.enable = false;
+      usePredictableInterfaceNames = lib.mkForce true;
       interfaces = {
         eth0 = {
           ipv4.addresses = [
-            { address="104.131.74.33"; prefixLength=18; }
-            { address="10.17.0.5"; prefixLength=16; }
+            { address="68.183.115.15"; prefixLength=20; }
+            { address="165.227.252.37"; prefixLength=24; }
+            { address="10.10.0.6"; prefixLength=16; }
           ];
           ipv6.addresses = [
-            { address="fe80::d41c:23ff:feaa:812c"; prefixLength=64; }
-            { address="2604:a880:800:10::156:6001"; prefixLength=64; }
+            { address="2604:a880:400:d0::1d2a:b001"; prefixLength=64; }
+            { address="fe80::58a4:c9ff:fe09:ef0b"; prefixLength=64; }
           ];
+          ipv4.routes = [ { address = "68.183.112.1"; prefixLength = 32; } ];
+          ipv6.routes = [ { address = "2604:a880:400:d0::1"; prefixLength = 32; } ];
         };
       };
     };
     services.udev.extraRules = ''
-      ATTR{address}=="d6:1c:23:aa:81:2c", NAME="eth0"
+      ATTR{address}=="5a:a4:c9:09:ef:0b", NAME="eth0"
+      ATTR{address}=="7a:2d:0b:fe:36:27", NAME="eth1"
     '';
-
-    zramSwap.enable = true;
-
-    swapDevices = [ {
-      device = "/var/swapfile";
-      size = 4096;
-    } ];
   };
 
   nixops = {
-    deployment.targetHost = "104.131.74.33";
+    deployment.targetHost = "68.183.115.15";
   };
 
   system = "x86_64-linux";
