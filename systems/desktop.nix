@@ -19,4 +19,6 @@ with import ../components; rec {
     } ];
     ensureDatabases = [ "datablase" ];
   };
+
+  networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
 }
