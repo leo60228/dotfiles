@@ -39,7 +39,7 @@
   nix.trustedUsers = [ "root" "@wheel" ];
 
   environment.systemPackages = with pkgs; [
-    openssh
+    openssh git
   ];
 
   services.openssh.enable = true;
