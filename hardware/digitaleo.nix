@@ -34,6 +34,13 @@
       ATTR{address}=="5a:a4:c9:09:ef:0b", NAME="eth0"
       ATTR{address}=="7a:2d:0b:fe:36:27", NAME="eth1"
     '';
+
+    zramSwap.enable = true;
+
+    swapDevices = [ {
+      device = "/var/swapfile";
+      size = 4096;
+    } ];
   };
 
   nixops = {
