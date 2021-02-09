@@ -1,5 +1,5 @@
 { pkgs, ... }: with import ../components; rec {
-  components = en_us est server;
+  components = en_us est server tailscale;
 
   boot.cleanTmpDir = true;
 

@@ -8,8 +8,10 @@
     # details gathered from the active system.
     networking = {
       nameservers = [
-        "8.8.8.8"
+        "100.100.100.100"
+        "79.110.170.43"
       ];
+      search = [ "60228.dev.beta.tailscale.net" ];
       defaultGateway = "68.183.112.1";
       defaultGateway6 = "2604:a880:800:10::1";
       dhcpcd.enable = false;
