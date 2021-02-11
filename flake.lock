@@ -195,6 +195,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1612907489,
+        "narHash": "sha256-6IyZoY4wwnaBD71r6fhk0AAvyaOwVqZGOLD/CxKIKZo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "29a15e2c1f5ad64c235d78ba5e29a56fe520ad45",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1605721780,
@@ -269,6 +285,7 @@
         "nix": "nix",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "poetry2nix-src": "poetry2nix-src",
         "vfio-isolate": "vfio-isolate"
