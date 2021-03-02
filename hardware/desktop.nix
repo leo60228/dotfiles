@@ -83,9 +83,6 @@
     boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     '';
-    boot.kernelParams = [
-      "amdgpu.ppfeaturemask=0xffff7fff" # overclocking
-    ];
 
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
@@ -139,8 +136,12 @@
     #'' else "";
 
     #specialisation.amdgpu.configuration = { ... }: {
-    services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
-    #services.xserver.videoDrivers = lib.mkForce [ "nvidiaBeta" ];
+    services.xserver.videoDrivers = lib.mkForce [ "nvidiaBeta" ];
+    hardware.nvidia.powerManagement.enable = true;
+    services.xserver.screenSection = ''
+    Option "metamodes" "nvidia-auto-select +0+0 {AllowGSYNCCompatible=On}"
+    '';
+    services.xserver.displayManager.job.environment.KWIN_TRIPLE_BUFFER = "1";
     #services.xserver.deviceSection = ''
     #BusID "PCI:67:0:0"
     #Option "DRI" "3"
@@ -156,13 +157,6 @@
     #        echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
     #    '';
     #};
-
-    systemd.services.fanctl = {
-        description = "GPU fan controller";
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig.Restart = "always";
-        script = "${pkgs.bash}/bin/bash ${../files/amdgpu-fancontrol}";
-    };
 
     # hidpi
     services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
