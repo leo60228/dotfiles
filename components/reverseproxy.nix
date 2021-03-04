@@ -305,6 +305,37 @@ lib.makeComponent "reverseproxy"
           };
         };
       }))
+      (lib.mkIf (cfg.host == "digitaleo") (lib.mkForce {
+        enable = true;
+        recommendedTlsSettings = true;
+        recommendedOptimisation = true;
+        recommendedGzipSettings = true;
+        recommendedProxySettings = true;
+        commonHttpConfig = ''
+        log_format full '$remote_addr - $remote_user [$time_local] '
+                        '"$request" $status $bytes_sent '
+                        '"$http_referer" "$http_user_agent"';
+        '';
+        virtualHosts = {
+          "idoleyes.leo60228.space" = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://10.100.0.3:4130";
+              extraConfig = ''
+              proxy_http_version 1.1;
+              '';
+            };
+          };
+	  "grafana.leo60228.space" = {
+	    forceSSL = true;
+	    enableACME = true;
+	    locations."/" = {
+	      proxyPass = "http://localhost:3000";
+	    };
+	  };
+        };
+      }))
     ];
   };
 })

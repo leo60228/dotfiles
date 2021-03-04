@@ -1,5 +1,5 @@
 { pkgs, ... }: with import ../components; rec {
-  components = en_us est server tailscale;
+  components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
 
   boot.cleanTmpDir = true;
 
@@ -121,26 +121,6 @@
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     script = "${pkgs.callPackage ../ping_exporter {}}/bin/ping_exporter mc.vsix.dev";
-  };
-
-  services.nginx = {
-    enable = true;
-    virtualHosts = {
-      "grafana.leo60228.space" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:3000";
-        };
-      };
-      "jellyfin.leo60228.space" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://10.100.0.3:8096";
-        };
-      };
-    };
   };
 
   security.acme.email = "leo@60228.dev";
