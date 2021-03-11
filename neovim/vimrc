@@ -74,6 +74,7 @@ nnoremap <leader>c :nohlsearch<cr>
 nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cN :cprevious<cr>
 nnoremap <leader>a :ALECodeAction<cr>
+nnoremap <leader>f :ALEFix<cr>
 " }}}
 
 " Plugin settings {{{
@@ -89,6 +90,7 @@ let g:OmniSharp_highlighting = 3
 
 " ALE
 let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'], 'rust': ['analyzer'] }
+let g:ale_fixers = { 'javascript': ['eslint'], 'rust': ['rustfmt'] }
 let b:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}}
 let g:ale_lint_on_text_changed = 'always'
 
