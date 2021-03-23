@@ -238,7 +238,8 @@
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
-    (callPackage ./twemoji.nix {})
+    (callPackage ./twemoji-svg.nix {})
+    (callPackage ./twemoji-colr.nix {})
     syncthingtray
   ];
 
