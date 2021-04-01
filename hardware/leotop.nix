@@ -65,6 +65,26 @@
         hardware.bluetooth.config.General.ControllerMode = "bredr";
 
         hardware.cpu.amd.updateMicrocode = true;
+
+        hardware.firmware = [ (pkgs.runCommand "hda-jack-retask-fw" {} ''
+        mkdir -p $out/lib/firmware
+        cp ${../files/hda-jack-retask.fw} $out/lib/firmware/hda-jack-retask.fw
+        '') ];
+
+        boot.extraModprobeConfig = ''
+        options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
+        '';
+
+        services.tlp = {
+            enable = true;
+            settings = {
+                SOUND_POWER_SAVE_ON_AC = 1;
+                SOUND_POWER_SAVE_ON_BAT = 0;
+                SOUND_POWER_SAVE_CONTROLLER = "Y";
+                RUNTIME_PM_ON_AC = "auto";
+                WIFI_PWR_ON_AC = "on";
+            };
+        };
     };
 
     nixops = {
