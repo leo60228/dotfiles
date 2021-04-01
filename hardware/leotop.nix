@@ -8,7 +8,7 @@
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
         boot.kernelModules = [ "kvm-amd" ];
         boot.extraModulePackages = [ ];
-        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
+        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" "amdgpu.dpm=0" ];
 
         #boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;
 
@@ -57,10 +57,10 @@
         Option "DRI" "3"
         Option "VariableRefresh" "true"
         '';
-        services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
-        services.xserver.exportConfiguration = true;
-        console.packages = [ pkgs.terminus_font ];
-        console.font = "ter-128n";
+        #services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
+        #services.xserver.exportConfiguration = true;
+        #console.packages = [ pkgs.terminus_font ];
+        #console.font = "ter-128n";
 
         hardware.bluetooth.config.General.ControllerMode = "bredr";
 
