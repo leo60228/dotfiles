@@ -8,7 +8,7 @@
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
         boot.kernelModules = [ "kvm-amd" ];
         boot.extraModulePackages = [ ];
-        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" "amdgpu.dpm=0" ];
+        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
 
         #boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;
 
