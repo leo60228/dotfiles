@@ -85,6 +85,11 @@
                 WIFI_PWR_ON_AC = "on";
             };
         };
+
+        hardware.pulseaudio.daemon.config = {
+            remixing-produce-lfe = true;
+            lfe-crossover-freq = 80;
+        };
     };
 
     nixops = {
