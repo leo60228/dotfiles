@@ -26,6 +26,8 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    bitwarden
+    bitwarden-cli
     (callPackage ./gajim.nix {
       inherit (gst_all_1) gstreamer gst-plugins-base gst-libav;
       gst-plugins-good = gst_all_1.gst-plugins-good.override { gtkSupport = true; };
