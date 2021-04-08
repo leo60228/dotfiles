@@ -184,11 +184,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1617910469,
-        "narHash": "sha256-RouflBBmoQzRvrWwrX+Dj1izdS1Ony1jYAIuBnZqIjQ=",
+        "lastModified": 1617914756,
+        "narHash": "sha256-eWRJ+GlEqKDxCQOz4bkvai3Syj7wZnF+NvZHu0a7jZA=",
         "owner": "BlaseballCrabs",
         "repo": "hauntbot",
-        "rev": "86b0e90e764b68621f3f6e6d14aa1b6e4be999b7",
+        "rev": "e863987c7f4ff605f724fd88a21192231b761595",
         "type": "github"
       },
       "original": {
