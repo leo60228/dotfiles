@@ -327,6 +327,16 @@ lib.makeComponent "reverseproxy"
               '';
             };
           };
+          "data-expunged.l3.pm" = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://127.0.0.1:6120";
+              extraConfig = ''
+              proxy_http_version 1.1;
+              '';
+            };
+          };
 	  "grafana.leo60228.space" = {
 	    forceSSL = true;
 	    enableACME = true;

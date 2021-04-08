@@ -125,4 +125,16 @@
 
   security.acme.email = "leo@60228.dev";
   security.acme.acceptTerms = true;
+
+  systemd.services.data_expunged = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/data_expunged";
+      StandardOutput = "null";
+      StandardError = "journal";
+    };
+    script = "${pkgs.data_expunged}/bin/data_expunged";
+  };
 }
