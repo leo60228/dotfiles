@@ -137,4 +137,16 @@
     };
     script = "${pkgs.data_expunged}/bin/data_expunged";
   };
+
+  systemd.services.hauntbot = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/hauntbot";
+      StandardOutput = "null";
+      StandardError = "journal";
+    };
+    script = "${pkgs.hauntbot}/bin/hauntbot";
+  };
 }

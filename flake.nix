@@ -26,6 +26,7 @@
   };
   inputs.mpdiscord.url = github:leo60228/mpdiscord;
   inputs.data_expunged.url = github:BlaseballCrabs/data_expunged;
+  inputs.hauntbot.url = github:BlaseballCrabs/hauntbot;
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {
