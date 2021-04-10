@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -ex
+
+"./update-$1" | tee "$1.nix"
+sudo nixos-rebuild switch
+
+git add "$1.nix"
+git commit -m "upd8 $1"
+git push

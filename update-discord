@@ -2,7 +2,6 @@
 # script to generate `pkgs/networking/instant-messengers/discord/default.nix`
 
 set -e
-exec >${1:?usage: $0 <output-file>}
 
 cat <<EOF
 { branch ? "stable", pkgs, base ? ./discord-base.nix }:
