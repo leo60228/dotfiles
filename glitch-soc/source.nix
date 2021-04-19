@@ -7,5 +7,5 @@
   };
 in applyPatches {
   inherit src;
-  patches = [../files/mastodon-discord.patch ../files/mastodon-internal-names.patch ../files/mastodon-kind-of-deps.patch ./version.patch ];
+  patches = [../files/mastodon-discord.patch ../files/mastodon-internal-names.patch ../files/mastodon-kind-of-deps.patch ../files/mastodon-no-gifv.patch ./version.patch ];
 }
