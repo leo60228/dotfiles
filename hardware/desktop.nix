@@ -194,6 +194,8 @@
     echo 0000:43:00.1 > /sys/bus/pci/devices/0000\:43\:00.1/driver/unbind || true
     echo 1 > /sys/bus/pci/devices/0000\:43\:00.0/reset
     '';
+
+    virtualisation.docker.enableNvidia = true;
   };
 
   nixops = {
