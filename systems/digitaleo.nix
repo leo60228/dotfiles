@@ -4,7 +4,7 @@
   boot.cleanTmpDir = true;
 
   networking.firewall = {
-    allowedTCPPorts = [ 9090 80 443 ];
+    allowedTCPPorts = [ 25565 9090 80 443 ];
     allowedUDPPorts = [ 51820 443 ];
     allowPing = true;
   };
@@ -148,5 +148,14 @@
       StandardError = "journal";
     };
     script = "${pkgs.hauntbot}/bin/hauntbot";
+  };
+
+  systemd.services.minecraft-server-forwarder = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+    };
+    script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:100.115.35.128:25565";
   };
 }
