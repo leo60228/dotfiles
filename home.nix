@@ -502,9 +502,9 @@
   home.file.".terminfo".source = ./files/terminfo;
   home.file.".terminfo".recursive = true;
 
-  home.file.".rustup/toolchains/system".source = (pkgs.callPackage ./rust.nix {
-    inherit small;
-  }).rust;
+  home.file.".rustup/toolchains/system" = lib.mkIf (!small) {
+    source = (pkgs.callPackage ./rust.nix {}).rust;
+  };
 
   home.file.".XCompose".source = ./files/XCompose;
 
