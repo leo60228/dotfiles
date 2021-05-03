@@ -1,7 +1,12 @@
 let lib = import ../lib; in
 lib.makeComponent "extra"
 ({config, cfg, pkgs, lib, ...}: with lib; {
-  opts = {};
+  opts = {
+    graalvm = mkOption {
+      default = false;
+      type = types.bool;
+    };
+  };
 
   config = {
     services.pcscd.enable = true;
@@ -13,7 +18,7 @@ lib.makeComponent "extra"
 
     # java
     programs.java.enable = true;
-    programs.java.package = pkgs.adoptopenjdk-jre-hotspot-bin-8;
+    programs.java.package = if cfg.graalvm then pkgs.graalvm8-ee else pkgs.adoptopenjdk-jre-hotspot-bin-8;
 
     # printer
     services.printing.enable = true;

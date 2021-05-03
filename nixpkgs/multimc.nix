@@ -1,5 +1,5 @@
 self: super: {
-    multimc = super.multimc.overrideAttrs (oldAttrs: {
+    multimc = (self.libsForQt5.callPackage ../multimc.nix {}).overrideAttrs (oldAttrs: {
         patches = [ ../files/multimc-png-logo.patch ];
         postPatch = ''
         mkdir -v application/resources/multimc/512x512
