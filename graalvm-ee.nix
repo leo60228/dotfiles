@@ -10,42 +10,28 @@ let
           (requireFile {
              name   = "graalvm-ee-java${javaVersion}-linux-amd64-${version}.tar.gz";
              sha256 = {  "8" = "0nws0kln0hhsp9ai9740lf47qi9ghpndzqfqfc10kax2cnlf4q8p";
-                        #"11" = "e5d92d361e7859fe5f88c92d7bb466e285e07f1e4e2d9944948f85fa0e3aee2b";
+                        "16" = "0km75axdjw5kgrv865g2c9v14154z03lwrwdavzwvm0gqfgbnm0a";
                       }.${javaVersion};
              url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
           })
           (requireFile {
              name   = "native-image-installable-svm-svmee-java${javaVersion}-linux-amd64-${version}.jar";
              sha256 = {  "8" = "1hvgf9ir3z544jwswp1d8s61w4w5sa1sr92yqjbkxn6hyc6zd2w4";
-                        #"11" = "f62df715ad529f8b84854644ac99e0a9a349232c7f03985d20a2a8be20edaa44";
+                        "16" = "0nikrz2kxb5pb5877qjm0qjchb58jgz3flksxbbjvccy29hnvzw0";
                       }.${javaVersion};
              url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
           })
           (requireFile {
              name   = "llvm-toolchain-installable-java${javaVersion}-linux-amd64-${version}.jar";
              sha256 = {  "8" = "19hnjpkz4wxjpxbglap0vzcsjllc1091ams4raca7n4g9fcn88mz";
-                        #"11" = "fc442c396e92f59d034a69175104cb3565c3d128426bd939cc94c6ceccbb720f";
-                      }.${javaVersion};
-             url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
-          })
-          (requireFile {
-             name   = "ruby-installable-svm-svmee-java${javaVersion}-linux-amd64-${version}.jar";
-             sha256 = {  "8" = "0cmlri9ygbhjd6wp7v7205wdsbyabjxfbacg0348in8v8kvyl2gl";
-                        #"11" = "941f3752ccb097958f49250586f04c305092ded3ea4c1b7d9a0f7632e47fa335";
-                      }.${javaVersion};
-             url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
-          })
-          (requireFile {
-             name   = "python-installable-svm-svmee-java${javaVersion}-linux-amd64-${version}.jar";
-             sha256 = {  "8" = "1k1bckbbi812pahydaxsk03dzis0lnzl2p4yg7ccilj5ixisyq51";
-                        #"11" = "de3ebf35ce47dc399d7976cbd09fde0e85f2c10f85bc3fe8f32bb9e2b500ab70";
+                        "16" = "1ndg16xh93zs8i6s6naylhy5p1nnqvjib67lfjf3n7232g79jn2z";
                       }.${javaVersion};
              url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
           })
           (requireFile {
              name   = "wasm-installable-svm-svmee-java${javaVersion}-linux-amd64-${version}.jar";
-             sha256 = {  "8" = "0jjm5yajkvvz0mh1mh4synvll8p6niwa0g9z2qwjhlfjscykn11a";
-                        #"11" = "9e801071992a0ff976bc40b640a8b9368fd8ea890ba986543658fcbaa3a7fd68";
+             sha256 = {  "8" = "0jjm5yajkvvz0mh1mh4synvll8p6niwa0g9z2qwjhlfjscykn16a";
+                        "16" = "0652jdz9yn1h27p998j05kvzpd7gs1dqprmd0ywxm3n4kqp5a9w8";
                       }.${javaVersion};
              url    = "https://www.oracle.com/technetwork/graalvm/downloads/index.html";
           })
@@ -76,8 +62,6 @@ let
           unpack_jar ''${arr[1]}
           unpack_jar ''${arr[2]}
           unpack_jar ''${arr[3]}
-          unpack_jar ''${arr[4]}
-          unpack_jar ''${arr[5]}
         '';
 
         installPhase = {
@@ -91,11 +75,8 @@ let
             for f in ${glibc}/lib/* ${glibc.static}/lib/* ${zlib.static}/lib/*; do
               ln -s $f $out/jre/lib/svm/clibraries/linux-amd64/$(basename $f)
             done
-
-            # allow using external truffle-api.jar and languages not included in the distrubution
-            #rm $out/jre/lib/jvmci/parentClassLoader.classpath
           '';
-          "11" = ''
+          "16" = ''
             # BUG workaround http://mail.openjdk.java.net/pipermail/graal-dev/2017-December/005141.html
             substituteInPlace $out/conf/security/java.security \
               --replace file:/dev/random    file:/dev/./urandom \
@@ -121,7 +102,7 @@ let
 
         postFixup = ''
           rpath="${ {  "8" = "$out/jre/lib/amd64/jli:$out/jre/lib/amd64/server:$out/jre/lib/amd64";
-                      "11" = "$out/lib/jli:$out/lib/server:$out/lib";
+                      "16" = "$out/lib/jli:$out/lib/server:$out/lib";
                     }.${javaVersion}
                  }:${
             lib.strings.makeLibraryPath [ glibc xorg.libXxf86vm xorg.libX11 xorg.libXext xorg.libXtst xorg.libXi xorg.libXrender
@@ -179,5 +160,5 @@ let
       graalvmXXX-ee;
 in {
   graalvm8-ee  = common  "8";
-  graalvm11-ee = common "11";
+  graalvm16-ee = common "16";
 }
