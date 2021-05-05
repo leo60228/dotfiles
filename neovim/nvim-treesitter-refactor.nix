@@ -4,8 +4,8 @@ vimUtils.buildVimPlugin {
   version = "git-2020-10-07";
   src = fetchgit {
     url = "https://github.com/nvim-treesitter/nvim-treesitter-refactor.git";
-    rev = "9d4b9daf2f138a5de538ee094bd899591004f8e2";
-    sha256 = "0ma5zsl70mi92b9y8nhgkppdiqfjj0bl3gklhjv1c3lg7kny7511";
+    rev = "1a377fafa30920fa974e68da230161af36bf56fb";
+    sha256 = "06vww83i73f4gyp3x0007qqdk06dd2i9v1v9dk12ky9d8r0pmxl6";
   };
   meta = {
     homepage = https://github.com/nvim-treesitter/nvim-treesitter-refactor;

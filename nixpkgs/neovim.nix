@@ -8,8 +8,8 @@ self: super: rec {
     src = self.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      rev = "8c4648421a1e34c3e95e42ea596de36987f02563";
-      sha256 = "119kds8a0l557aapzkgmp9c1c7zqxi9h6yia20yjk88ibx7bswkv";
+      rev = "4ad30f775e5564c539324b4818886f067d2ecd99";
+      sha256 = "1yr95wia1rfz0p4c2krhgz5rp0rvnmfpbwp3l31gfd27vx6xin2x";
       fetchSubmodules = true;
     };
     buildInputs = oldAttrs.buildInputs ++ [ tree-sitter ];
