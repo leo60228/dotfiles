@@ -33,7 +33,10 @@ lib.makeComponent "router"
         extraConfig = ''
         duid
         persistent
-        ipv4only
+
+        interface enp1s0u1u3
+          ia_na 1
+          ia_pd 2/::/56 eth0/0/56/1
         '';
       };
     };

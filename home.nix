@@ -6,7 +6,7 @@
   home.packages = with pkgs; if small then [
     libwebp
     ripgrep
-    (callPackage ./neovim {})
+    (callPackage ./neovim { small = true; tree-sitter = null; })
     zip
     pciutils
     lftp
@@ -202,7 +202,7 @@
     #(libsForQt514.callPackage ./vlc-4.nix {})
     (libsForQt514.callPackage ./vlc.nix {})
     multimc
-    (callPackage ./neovim {})
+    (callPackage ./neovim { small = false; })
     openscad
     dpkg
     (lib.setPrio (-20) binutils-unwrapped)

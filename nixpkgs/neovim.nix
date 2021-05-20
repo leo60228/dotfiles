@@ -3,6 +3,8 @@ self: super: rec {
     inherit (self.darwin.apple_sdk.frameworks) Security;
   };
 
+  neovim-unwrapped-stable = super.neovim-unwrapped;
+
   neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
     version = "nightly";
     src = self.fetchFromGitHub {
