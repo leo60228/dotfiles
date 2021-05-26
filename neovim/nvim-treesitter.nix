@@ -6,7 +6,7 @@ vimUtils.buildVimPlugin {
     inherit (prefetch) url rev sha256 fetchSubmodules;
   };
   preInstall = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''
-  cp ${v}/parser ./parser/${k}.so
+  cp ${v}/parser ./parser/${lib.removePrefix "tree-sitter-" k}.so
   '') grammars);
   meta = {
     homepage = https://github.com/nvim-treesitter/nvim-treesitter;
