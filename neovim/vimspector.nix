@@ -1,4 +1,4 @@
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "vimspector";
   version = "git-2020-11-16";
@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = https://github.com/puremourning/vimspector;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }

@@ -1,4 +1,4 @@
-{ makeRustPlatform, fetchFromGitHub, stdenv, callPackage, pkgconfig, openssl }:
+{ makeRustPlatform, fetchFromGitHub, stdenv, lib, callPackage, pkgconfig, openssl }:
 let rust = (callPackage ./rust.nix {}).channel.rust;
     nightlyRustPlatform = makeRustPlatform { cargo = rust; rustc = rust; }; in
 nightlyRustPlatform.buildRustPackage rec {
@@ -18,7 +18,7 @@ nightlyRustPlatform.buildRustPackage rec {
     cargoSha256 = "08dpivb81pbqvjslwni7q4w1j5qcg8az6wn2mc4gi2i76kcf819j";
     verifyCargoDeps = true;
 
-    meta = with stdenv.lib; {
+    meta = with lib; {
         description = "Crate for formats from the 2018 game Celeste";
         homepage = https://github.com/leo60228/celeste.rs;
         license = licenses.mit;

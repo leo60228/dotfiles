@@ -1,4 +1,4 @@
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "solarized8";
   version = "git-2019-05-02";
@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = https://github.com/lifepillar/vim-solarized8;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }

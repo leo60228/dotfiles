@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ yarn2nix bundix coreutils diffutils nix-prefetch-github gnused jq ];
 
   meta = {
-    maintainers = with stdenv.lib.maintainers; [ happy-river ];
+    maintainers = with lib.maintainers; [ happy-river ];
     description = "Utility to generate Nix expressions for Mastodon's dependencies";
-    platforms = stdenv.lib.platforms.unix;
+    platforms = lib.platforms.unix;
   };
 }

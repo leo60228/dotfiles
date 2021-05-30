@@ -1,5 +1,5 @@
 { pname, version, src, binaryName, desktopName
-, autoPatchelfHook, fetchurl, makeDesktopItem, stdenv, wrapGAppsHook
+, autoPatchelfHook, makeDesktopItem, lib, stdenv, wrapGAppsHook
 , alsaLib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig
 , freetype, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libnotify, libpulseaudio, libuuid
 , libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
@@ -18,19 +18,20 @@ in stdenv.mkDerivation rec {
     cups
     libdrm
     libuuid
+    libXdamage
     libX11
     libXScrnSaver
     libXtst
     libxcb
-    mesa.drivers
+    mesa
     nss
     wrapGAppsHook
   ];
 
   dontWrapGApps = true;
 
-  libPath = stdenv.lib.makeLibraryPath [
-    libcxx systemd libpulseaudio
+  libPath = lib.makeLibraryPath [
+    libcxx systemd libpulseaudio libdrm mesa
     stdenv.cc.cc alsaLib atk at-spi2-atk at-spi2-core cairo cups dbus expat fontconfig freetype
     gdk-pixbuf glib gtk3 libnotify libX11 libXcomposite libuuid
     libXcursor libXdamage libXext libXfixes libXi libXrandr libXrender
@@ -49,7 +50,7 @@ in stdenv.mkDerivation rec {
     wrapProgram $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
-        --prefix LD_LIBRARY_PATH : ${libPath}
+        --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
 
     ln -s $out/opt/${binaryName}/${binaryName} $out/bin/
     ln -s $out/opt/${binaryName}/discord.png $out/share/pixmaps/${pname}.png
@@ -69,12 +70,12 @@ in stdenv.mkDerivation rec {
 
   passthru.updateScript = ./update-discord.sh;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "All-in-one cross-platform voice and text chat for gamers";
     homepage = "https://discordapp.com/";
     downloadPage = "https://discordapp.com/download";
     license = licenses.unfree;
-    maintainers = with maintainers; [ ldesgoui MP2E tadeokondrak ];
+    maintainers = with maintainers; [ ldesgoui MP2E ];
     platforms = [ "x86_64-linux" ];
   };
 }

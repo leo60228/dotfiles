@@ -3,7 +3,7 @@
 , alsaLib, atk, at-spi2-atk, at-spi2-core, cairo, cups, dbus, expat, fontconfig, freetype
 , gdk_pixbuf, glib, gtk3, libnotify, libX11, libXcomposite, libXcursor, libXdamage, libuuid
 , libXext, libXfixes, libXi, libXrandr, libXrender, libXtst, nspr, nss, libxcb
-, pango, systemd, libXScrnSaver, libcxx, libpulseaudio }:
+, pango, systemd, libXScrnSaver, libcxx, libpulseaudio, lib }:
 
 let
   inherit binaryName;
@@ -14,7 +14,7 @@ in stdenv.mkDerivation rec {
 
   dontWrapGApps = true;
 
-  libPath = stdenv.lib.makeLibraryPath [
+  libPath = lib.makeLibraryPath [
     libcxx systemd libpulseaudio
     stdenv.cc.cc alsaLib atk at-spi2-atk at-spi2-core cairo cups dbus expat fontconfig freetype
     gdk_pixbuf glib gtk3 libnotify libX11 libXcomposite libuuid
@@ -54,7 +54,7 @@ in stdenv.mkDerivation rec {
     categories = "Network;InstantMessaging;";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "All-in-one cross-platform voice and text chat for gamers";
     homepage = "https://discordapp.com/";
     downloadPage = "https://discordapp.com/download";

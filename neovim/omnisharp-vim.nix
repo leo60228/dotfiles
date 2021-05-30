@@ -1,4 +1,4 @@
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "omnisharp-vim";
   version = "git-2020-11-11";
@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = https://github.com/OmniSharp/omnisharp-vim; 
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }

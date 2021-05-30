@@ -1,4 +1,4 @@
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "playground";
   version = "git-2020-10-19";
@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = https://github.com/nvim-treesitter/playground;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }

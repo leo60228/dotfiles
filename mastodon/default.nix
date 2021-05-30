@@ -1,5 +1,5 @@
 { nodejs-slim, mkYarnPackage, fetchFromGitHub, bundlerEnv,
-  stdenv, yarn, callPackage, imagemagick, ffmpeg, file, ruby_2_7,
+  stdenv, lib, yarn, callPackage, imagemagick, ffmpeg, file, ruby_2_7,
 
   # Allow building a fork or custom version of Mastodon:
   pname ? "mastodon",
@@ -105,7 +105,7 @@ in stdenv.mkDerivation rec {
     cp -r * $out/
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Self-hosted, globally interconnected microblogging software based on ActivityPub";
     homepage = "https://joinmastodon.org";
     license = licenses.agpl3;

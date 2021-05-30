@@ -1,6 +1,7 @@
 {
   nixos = { config, lib, modulesPath, pkgs, ... }:
   {
+    disabledModules = [ "tasks/swraid.nix" ];
     imports =
       [ "${modulesPath}/installer/scan/not-detected.nix"
       ];
@@ -43,8 +44,8 @@
       script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
     };
 
-    boot.kernelPackages = with pkgs; let baseLinux = linux_5_9; in recurseIntoAttrs ((linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
-      inherit stdenv;
+    boot.kernelPackages = with pkgs; let baseLinux = linux_5_10; in recurseIntoAttrs ((linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
+      inherit stdenv lib;
       inherit (baseLinux) src;
       version = "${baseLinux.version}-custom";
       modDirVersion = baseLinux.modDirVersion;
@@ -78,7 +79,27 @@
       nvidia_x11             = nvidiaPackages.stable;
     }));
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
-    boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+    boot.initrd.includeDefaultModules = false;
+    boot.initrd.availableKernelModules = [
+      # SATA
+      "ahci"
+      "sd_mod"
+
+      # USB
+      "xhci_hcd"
+      "xhci_pci"
+      "usb_storage"
+      "usbhid"
+      "hid_generic"
+
+      # x86 keyboard
+      "atkbd"
+      "i8042"
+
+      # RTC
+      "rtc_cmos"
+    ];
+    boot.initrd.kernelModules = [ "dm_mod" ];
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" "edac_mce_amd" ];
     boot.extraModprobeConfig = ''
     options kvm-amd nested=1

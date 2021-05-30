@@ -1,4 +1,4 @@
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "ale";
   version = "git-2021-02-02";
@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = https://github.com/dense-analysis/ale;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }

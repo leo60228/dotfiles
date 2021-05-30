@@ -17,7 +17,7 @@ cd ../
 rm -rf $name
 
 echo "
-{ vimUtils, fetchgit, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = \"$name\";
   version = \"git-$version\";
@@ -28,7 +28,7 @@ vimUtils.buildVimPlugin {
   };
   meta = {
     homepage = $homepage;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }
 " | sed -r '/^\s*$/d' | tee "${1#*/}.nix"

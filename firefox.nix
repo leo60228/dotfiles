@@ -1,5 +1,4 @@
-{ lib }:
-lib.firefoxOverlay.firefoxVersion {
+lib: lib.firefoxOverlay.firefoxVersion {
   name = "Firefox Beta";
   version = "89.0b15";
   release = true;

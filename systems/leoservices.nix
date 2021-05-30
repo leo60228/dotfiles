@@ -50,6 +50,7 @@
 
   services.mastodon = {
     enable = true;
+    enableUnixSocket = false;
     #package = "/home/leo60228/mastodon-src-current/";
     localDomain = "60228.dev";
     smtp = {

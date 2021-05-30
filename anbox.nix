@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, fetchurl
+{ stdenv, lib, fetchFromGitHub, fetchurl
 , cmake, pkg-config, dbus, makeWrapper
 , boost
 , elfutils # for libdw
@@ -115,7 +115,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     wrapProgram $out/bin/anbox \
-      --prefix LD_LIBRARY_PATH : ${stdenv.lib.makeLibraryPath [libGL libglvnd]} \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [libGL libglvnd]} \
       --prefix PATH : ${git}/bin
 
     mkdir -p $out/share/dbus-1/services
@@ -148,7 +148,7 @@ stdenv.mkDerivation rec {
       };
     }.${stdenv.system} or null;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "https://anbox.io";
     description = "Android in a box";
     license = licenses.gpl2;

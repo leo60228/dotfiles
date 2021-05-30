@@ -18,6 +18,8 @@ gdb.overrideAttrs (oldAttrs: {
         "--enable-targets=twili"
         "--target=twili"
 
+        "--enable-werror=no"
+
         "--enable-64-bit-bfd"
         "--disable-install-libbfd"
         "--disable-shared" "--enable-static"

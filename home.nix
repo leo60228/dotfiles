@@ -3,6 +3,8 @@
 
 #let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 {
+  home.stateVersion = "21.05";
+
   home.packages = with pkgs; if small then [
     libwebp
     ripgrep
@@ -29,10 +31,6 @@
     prusa-slicer
     bitwarden
     bitwarden-cli
-    (callPackage ./gajim.nix {
-      inherit (gst_all_1) gstreamer gst-plugins-base gst-libav;
-      gst-plugins-good = gst_all_1.gst-plugins-good.override { gtkSupport = true; };
-    })
     (callPackage ./cargo-sync-readme.nix {})
     cargo-expand
     cargo-edit
@@ -87,7 +85,7 @@
     bat
     nodejs_latest
     jetbrains.rider
-    androidenv.androidPkgs_9_0.ndk-bundle
+    (androidenv.composeAndroidPackages { includeNDK = true; ndkVersion = "22.1.7171670"; }).ndk-bundle
     openssl.out
     openssl.dev
     carnix
@@ -101,12 +99,12 @@
       desktopName = "Nintendo Switch";
       genericName = desktopName;
     })
-    (let scream = pkgs.scream-receivers.override { pulseSupport = true; }; in writeShellScriptBin "windows" ''
+    (writeShellScriptBin "windows" ''
       sudo virsh start win10 || true
       until [ -e /dev/shm/looking-glass ]; do
         sleep 1
       done
-      ${scream}/bin/scream-pulse -i virbr0 &
+      ${scream}/bin/scream -i virbr0 &
       ${pkgs.looking-glass-client}/bin/looking-glass-client -F &
       wait -n
       pkill -P $$
@@ -195,7 +193,6 @@
     xclip
     xsel
     gimp
-    google-musicmanager
     symbola
     kitty
     (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
@@ -256,7 +253,7 @@
 
   programs.firefox = {
     enable = !small;
-    package = (pkgs.callPackage ./firefox.nix {}).overrideAttrs (oldAttrs: {
+    package = (import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
       passthru.browserName = "firefox";
     });
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader google-search-link-fix old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
@@ -373,7 +370,7 @@
     };
 
     Service = {
-      ExecStart = let scream = pkgs.scream-receivers.override { pulseSupport = true; }; in "${scream}/bin/scream-pulse -i virbr0";
+      ExecStart = "${pkgs.scream}/bin/scream -i virbr0";
     };
 
     Install = {
@@ -623,7 +620,7 @@
   xdg.configFile."khotkeysrc".source = ./files/khotkeysrc;
 
   home.activation.kconf = lib.hm.dag.entryAfter ["linkGeneration"] ''
-  $DRY_RUN_CMD ${pkgs.kdeFrameworks.kconfig.out}/libexec/kf5/kconf_update ${VERBOSE:+--debug} "${./files/kconf.upd}"
+  $DRY_RUN_CMD ${pkgs.plasma5Packages.kconfig.out}/libexec/kf5/kconf_update ${VERBOSE:+--debug} "${./files/kconf.upd}"
   $DRY_RUN_CMD ${pkgs.qt5.qttools.bin}/bin/qdbus org.kde.kded5 /modules/khotkeys reread_configuration || true
   '';
 }

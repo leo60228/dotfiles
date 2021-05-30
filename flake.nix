@@ -1,12 +1,11 @@
 {
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-20.09;
-  inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.05;
   inputs.home-manager = {
-    url = github:nix-community/home-manager/release-20.09;
+    url = github:nix-community/home-manager/release-21.05;
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixpkgs-mozilla = {
-    url = github:mozilla/nixpkgs-mozilla;
+    url = github:andersk/nixpkgs-mozilla/stdenv.lib;
     flake = false;
   };
   inputs.nur.url = github:nix-community/NUR;
@@ -24,9 +23,18 @@
     url = github:spheenik/vfio-isolate;
     flake = false;
   };
-  inputs.mpdiscord.url = github:leo60228/mpdiscord;
-  inputs.data_expunged.url = github:BlaseballCrabs/data_expunged;
-  inputs.hauntbot.url = github:BlaseballCrabs/hauntbot;
+  inputs.mpdiscord = {
+    url = github:leo60228/mpdiscord;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.data_expunged = {
+    url = github:BlaseballCrabs/data_expunged;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.hauntbot = {
+    url = github:BlaseballCrabs/hauntbot;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

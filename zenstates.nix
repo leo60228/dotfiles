@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, writeText, python3 }:
+{ stdenv, lib, fetchFromGitHub, writeText, python3 }:
 stdenv.mkDerivation {
   name = "zenstates";
   version = "2017-05-07";
@@ -19,6 +19,6 @@ stdenv.mkDerivation {
     longDescription =
       "Uses the msr kernel module to edit P-states and toggle C6 support";
     homepage = "https://github.com/r4m0n/ZenStates-Linux";
-    license = stdenv.lib.licenses.mit;
+    license = lib.licenses.mit;
   };
 }

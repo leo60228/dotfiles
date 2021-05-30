@@ -1,4 +1,4 @@
-{ stdenv, fetchgit }:
+{ stdenv, lib, fetchgit }:
 
 stdenv.mkDerivation rec {
   name = "firmware-linux-nonfree-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   outputHashAlgo = "sha256";
   outputHash = "0r2g91hc7csp2fbp2ny4s4rwv0mw2m130gpnisxnhzi05hkwki66";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Binary firmware collection packaged by kernel.org";
     homepage = http://packages.debian.org/sid/firmware-linux-nonfree;
     license = licenses.unfreeRedistributableFirmware;

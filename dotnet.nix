@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchurl
 , libunwind
 , openssl
@@ -9,7 +10,7 @@
 }:
 
 let
-  rpath = stdenv.lib.makeLibraryPath [ stdenv.cc.cc libunwind libuuid icu openssl zlib curl ];
+  rpath = lib.makeLibraryPath [ stdenv.cc.cc libunwind libuuid icu openssl zlib curl ];
 in
   stdenv.mkDerivation rec {
     version = "3.0.100-preview7-012821";
@@ -48,7 +49,7 @@ in
       runHook postInstall
     '';
 
-    meta = with stdenv.lib; {
+    meta = with lib; {
       homepage = https://dotnet.github.io/;
       description = ".NET Core SDK ${version} with .NET Core ${netCoreVersion}";
       platforms = [ "x86_64-linux" ];

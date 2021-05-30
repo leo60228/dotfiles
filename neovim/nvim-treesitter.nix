@@ -10,6 +10,6 @@ vimUtils.buildVimPlugin {
   '') grammars);
   meta = {
     homepage = https://github.com/nvim-treesitter/nvim-treesitter;
-    maintainers = [ stdenv.lib.maintainers.leo60228 ];
+    maintainers = [ lib.maintainers.leo60228 ];
   };
 }
