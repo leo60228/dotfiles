@@ -11,8 +11,7 @@ sig_file="$file.asc"
 sig_url="$version_dir/$sig_file"
 sig_sha512="$(curl "$sig_url" | sha512sum | cut -d " " -f 1)"
 cat <<EOF
-{ lib }:
-lib.firefoxOverlay.firefoxVersion {
+lib: lib.firefoxOverlay.firefoxVersion {
   name = "Firefox Beta";
   version = "$latest_version";
   release = true;
