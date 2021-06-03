@@ -118,17 +118,7 @@
       genericName = desktopName;
       categories = "System;Utility;";
     })
-    (writeShellScriptBin "Discord" ''
-    systemctl --user start discord.service
-    '')
-    (makeDesktopItem {
-      name = "discord";
-      exec = "Discord";
-      genericName = "All-in-one cross-platform voice and text chat for gamers";
-      desktopName = "Discord";
-      icon = "discord";
-      mimeType = "x-scheme-handler/discord";
-    })
+    (callPackage ./discord.nix {})
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
     SDL
@@ -327,25 +317,10 @@
   #  };
   #};
 
-  systemd.user.services.discord = lib.mkIf (!small) {
-    Unit = {
-      Description = "Discord";
-      After = [ "graphical-session.target" ];
-      PartOf = "graphical-session.target";
-    };
-
-    Service = {
-      Type = "simple";
-      ExecStartPre = "${pkgs.coreutils}/bin/rm -f /run/user/1000/discord-ipc-0";
-      ExecStart = "${pkgs.callPackage ./discord.nix {}}/bin/Discord";
-      Restart = "no";
-      TimeoutSec = "5s";
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
+  xdg.configFile."systemd/user/app-discord-.scope.d/override.conf".text = ''
+  [Unit]
+  Wants=mpdiscord.service
+  '';
 
   systemd.user.services.mpdiscord = lib.mkIf (!small) {
     Unit = {
@@ -356,10 +331,6 @@
 
     Service = {
       ExecStart = "${pkgs.mpdiscord}/bin/mpdiscord /home/leo60228/.config/mpdiscord.toml";
-    };
-
-    Install = {
-      WantedBy = [ "discord.service" ];
     };
   };
 
