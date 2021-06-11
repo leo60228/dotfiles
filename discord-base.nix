@@ -3,7 +3,7 @@
 , alsaLib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig
 , freetype, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libnotify, libpulseaudio, libuuid
 , libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
-, libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb
+, libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence
 , mesa, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu
 }:
 
@@ -23,6 +23,7 @@ in stdenv.mkDerivation rec {
     libXScrnSaver
     libXtst
     libxcb
+    libxshmfence
     mesa
     nss
     wrapGAppsHook
@@ -35,7 +36,7 @@ in stdenv.mkDerivation rec {
     stdenv.cc.cc alsaLib atk at-spi2-atk at-spi2-core cairo cups dbus expat fontconfig freetype
     gdk-pixbuf glib gtk3 libnotify libX11 libXcomposite libuuid
     libXcursor libXdamage libXext libXfixes libXi libXrandr libXrender
-    libXtst nspr nss libxcb pango systemd libXScrnSaver
+    libXtst nspr nss libxcb libxshmfence pango systemd libXScrnSaver
     libappindicator-gtk3 libdbusmenu
    ];
 
@@ -49,6 +50,7 @@ in stdenv.mkDerivation rec {
 
     wrapProgram $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
+        --add-flags --force-device-scale-factor=2 \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
         --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
 
