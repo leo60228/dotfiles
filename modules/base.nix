@@ -1,8 +1,7 @@
 { pkgs, lib, config, flakes, ... }:
 
 {
-  disabledModules = [ "services/networking/tailscale.nix" ];
-  imports = [ ./xpra.nix ./flakes.nix ./nix-daemon.nix ./tailscale.nix ];
+  imports = [ ./xpra.nix ./flakes.nix ./nix-daemon.nix ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
