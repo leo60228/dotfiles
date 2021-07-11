@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = efi en_us est home { small = true; } wg { ip = "10.100.0.3"; } prometheus;
+  components = efi en_us est home { small = true; } prometheus;
   services.openssh.forwardX11 = true;
 
   users.extraUsers.minecraft = {
