@@ -30,7 +30,7 @@ with import ../components; rec {
       MemoryMax = "5G";
       CPUQuota = "300%";
     };
-    path = [ (pkgs.callPackage (import ../adoptopenjdk-bin/jdk16-linux.nix).jdk-hotspot {}) ];
+    path = [ pkgs.adoptopenjdk-jre-hotspot-bin-16 ];
     script = "./run.sh";
   };
 
