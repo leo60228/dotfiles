@@ -34,12 +34,6 @@ with import ../components; rec {
     script = "./run.sh";
   };
 
-  systemd.services.prometheus-speedtest-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = "${pkgs.callPackage ../prometheus-speedtest {}}/bin/prometheus_speedtest";
-  };
-
   networking.firewall.allowedTCPPorts = [ 25565 9516 9225 8096 8920 80 443 4001 ];
   networking.firewall.allowedUDPPorts = [ 25565 19132 1900 7359 4001 ];
 
