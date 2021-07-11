@@ -9,7 +9,7 @@ lib.makeComponent "router"
         enable = true;
         internalIPs = [ "10.4.13.0/24" ];
         internalInterfaces = ["eth0"];
-        externalInterface = "enp1s0u1u3";
+        externalInterface = "enp1s0u1";
       };
       useDHCP = false;
       interfaces.eth0 = {
@@ -23,17 +23,20 @@ lib.makeComponent "router"
           prefixLength = 4;
         } ];
       };
-      interfaces.enp1s0u1u3.useDHCP = true;
+      interfaces.enp1s0u1.useDHCP = true;
       firewall = {
         trustedInterfaces = [ "eth0" ];
       };
       dhcpcd = {
-        allowInterfaces = [ "enp1s0u1u3" ];
+        allowInterfaces = [ "enp1s0u1" ];
         wait = "ipv4";
         extraConfig = ''
         duid
         persistent
-        ipv4only
+
+        interface enp1s0u1
+          ia_na 1
+          ia_pd 2/::/56 eth0/0/56/1
         '';
       };
     };
@@ -81,7 +84,7 @@ lib.makeComponent "router"
 
       script = ''
       mkdir -m 755 -p /var/lib/dhclient
-      dhclient -6 -P --prefix-len-hint 56 -d enp1s0u1u3 -e PATH="$PATH" -lf /var/lib/dhclient/leases -sf ${pkgs.dhcp}/sbin/dhclient-script
+      dhclient -6 -P --prefix-len-hint 56 -d enp1s0u1 -e PATH="$PATH" -lf /var/lib/dhclient/leases -sf ${pkgs.dhcp}/sbin/dhclient-script
       '';
     };
 
