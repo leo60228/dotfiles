@@ -19,7 +19,7 @@ let
     inherit pkgs;
     inherit (pkgs) stdenv lib;
     python = pkgs.python3;
-  };
+  } pythonPackages;
 
   commonBuildInputs = [];
   commonDoCheck = false;
