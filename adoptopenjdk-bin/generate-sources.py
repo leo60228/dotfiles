@@ -6,7 +6,7 @@ import re
 import requests
 import sys
 
-releases = ("openjdk9",)
+releases = ("openjdk9", "openjdk16",)
 oses = ("linux",)
 types = ("jdk",)
 impls = ("hotspot",)

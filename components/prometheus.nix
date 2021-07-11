@@ -9,6 +9,7 @@ lib.makeComponent "prometheus"
       node = {
 	enable = true;
 	openFirewall = true;
+	enabledCollectors = [ "systemd" ];
       };
     };
   };

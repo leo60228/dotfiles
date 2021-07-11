@@ -10,6 +10,8 @@ lib.makeComponent "wg"
 	inherit (config.networking) hostName;
 	host = p2p.hosts.${hostName};
       in host;
+
+    networking.firewall.trustedInterfaces = [ "wg0" ];
     };
   };
 })
