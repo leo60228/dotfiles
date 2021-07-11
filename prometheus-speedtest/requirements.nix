@@ -17,7 +17,7 @@ let
   pythonPackages =
   import "${toString pkgs.path}/pkgs/top-level/python-packages.nix" {
     inherit pkgs;
-    inherit (pkgs) stdenv;
+    inherit (pkgs) stdenv lib;
     python = pkgs.python3;
   };
 
