@@ -12,7 +12,7 @@
 let
 
   inherit (pkgs) makeWrapper;
-  inherit (pkgs.stdenv.lib) fix' extends inNixShell;
+  inherit (pkgs.lib) fix' extends inNixShell;
 
   pythonPackages =
   import "${toString pkgs.path}/pkgs/top-level/python-packages.nix" {
@@ -90,7 +90,7 @@ let
       propagatedBuildInputs = [
         self."six"
       ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "https://github.com/abseil/abseil-py";
         license = licenses.asl20;
         description = "Abseil Python Common Libraries, see https://github.com/abseil/abseil-py.";
@@ -109,7 +109,7 @@ let
 
       ];
       propagatedBuildInputs = [ ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "http://mock.readthedocs.org/en/latest/";
         license = licenses.bsdOriginal;
         description = "Rolling backport of unittest.mock for all Pythons";
@@ -128,7 +128,7 @@ let
 
       ];
       propagatedBuildInputs = [ ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "https://github.com/prometheus/client_python";
         license = licenses.asl20;
         description = "Python client for the Prometheus monitoring system.";
@@ -152,7 +152,7 @@ let
         self."prometheus-client"
         self."speedtest-cli"
       ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "https://github.com/jeanralphaviles/prometheus_speedtest";
         license = licenses.asl20;
         description = "Performs speedtest-cli tests and pushes metrics to Prometheus Pushgateway";
@@ -171,7 +171,7 @@ let
 
       ];
       propagatedBuildInputs = [ ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "https://github.com/benjaminp/six";
         license = licenses.mit;
         description = "Python 2 and 3 compatibility utilities";
@@ -190,7 +190,7 @@ let
 
       ];
       propagatedBuildInputs = [ ];
-      meta = with pkgs.stdenv.lib; {
+      meta = with pkgs.lib; {
         homepage = "https://github.com/sivel/speedtest-cli";
         license = licenses.asl20;
         description = "Command line interface for testing internet bandwidth using speedtest.net";
