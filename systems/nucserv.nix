@@ -12,7 +12,6 @@ with import ../components; rec {
     home = "/var/lib/minecraft";
     useDefaultShell = true;
     openssh.authorizedKeys.keys = [
-      (builtins.readFile /home/leo60228/.ssh/id_rsa.pub)
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONVMstvklgtmy9T5J2UGnYJ58lRSA3mlxQafUZEMVIICx7oSyasvdQKDfWXxaTu64xuzx4KtsdVYQrvzPdCCVm9zTuIL/8fISBtntcliTTiK6Mu4dVq9BdRQrZGTUIzQbRpbLov4ZF9keaEtfQDyXLdcOQwiXIHBTwuByQHa9J5RPWdtYfxfJazOa8Z7dl0zroSwRUx1mg+t1UdfO0NE+CEjwoGIIMdf/AVSkyDWH4ehxZhP/gzbvrNvDEw+TfwxXOZurqfnrDr1sQncre5mA2HE2HB/Pbis5j+PB3fUST8R7sjrXQK0S2XBwiG4kzYDUhUwSFBCGPQr/FTELs1CzYWSEyQ/Hwfp5HNvA8L6Tc0JIR2RUlZyhc2fr9AhSY1zM55CU3vKqmw9hek4mMFiZXrN5LQcQCPPDSaD6KRUvZtHFWvJ4oDwq2szx+yn7lrB+tZkI77azVJ4BrBSgVhwTLXUMSasjRSHhD/PAwo2HV+Z0ErlYCucUWMPN3t43ZT0= ally@Invision"
     ];
   };
