@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = efi en_us est home { small = true; } prometheus;
+  components = efi en_us est home { small = true; } prometheus tailscale;
   services.openssh.forwardX11 = true;
 
   users.extraUsers.minecraft = {
