@@ -51,10 +51,7 @@
       modDirVersion = baseLinux.modDirVersion;
       configfile = ../files/desktop-kconfig;
       allowImportFromDerivation = true;
-      kernelPatches = [ {
-        name = "navi-reset";
-        patch = ../files/navi-reset.patch;
-      } {
+      kernelPatches = [  {
         name = "acs-override";
         patch = ../files/add-acs-overrides.patch;
       } {
