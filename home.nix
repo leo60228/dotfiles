@@ -584,8 +584,13 @@
     enable = true;
   };
 
-  programs.direnv.enable = true;
-  programs.direnv.enableNixDirenvIntegration = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+      enableFlakes = true;
+    };
+  };
 
   xdg.configFile."hm_kglobalshortcutsrc".source = ./files/hm_kglobalshortcutsrc;
   xdg.configFile."khotkeysrc".source = ./files/khotkeysrc;

@@ -10,10 +10,6 @@
   };
   inputs.nur.url = github:nix-community/NUR;
   inputs.flake-utils.url = github:numtide/flake-utils;
-  inputs.nix = {
-    url = github:NixOS/nix;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
   inputs.naersk = {
     url = github:nmattia/naersk;
     inputs.nixpkgs.follows = "nixpkgs";
@@ -59,7 +55,7 @@
           };
           nixos-rebuild = baseSystem.config.system.build.nixos-rebuild;
         in nixos-rebuild;
-      nix = flakes.nix.defaultPackage.${system};
+      nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
       bootstrap = let
         inherit (nixpkgs.legacyPackages.${system}) makeWrapper stdenvNoCC;
       in stdenvNoCC.mkDerivation {

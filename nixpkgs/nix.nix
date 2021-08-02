@@ -1,2 +1,6 @@
-{ nix, ... }:
-nix.overlay
+self:
+super:
+
+{
+    nix = self.nixUnstable;
+}
