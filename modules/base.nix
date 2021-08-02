@@ -1,7 +1,7 @@
 { pkgs, lib, config, flakes, ... }:
 
 {
-  imports = [ ./xpra.nix ./flakes.nix ./nix-daemon.nix ];
+  imports = [ ./xpra.nix ./flakes.nix ./nix-daemon.nix ./cachix.nix ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
