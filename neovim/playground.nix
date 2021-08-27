@@ -1,11 +1,11 @@
 { vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "playground";
-  version = "git-2020-10-19";
+  version = "git-2021-07-27";
   src = fetchgit {
     url = "https://github.com/nvim-treesitter/playground.git";
-    rev = "0cb0a18378db84c4c2bdb38c28e897958d2ec14d";
-    sha256 = "1808kwf3ccrjaqxr43l23kfj8s0zijdk0rpriymqk143b29nk52c";
+    rev = "deb887b3f49d66654d9faa9778e8949fe0d80bc3";
+    sha256 = "10jlgsqkplisa1fd7i36yb46fdsa0cx069bpwp2yl4ki2jys953j";
   };
   meta = {
     homepage = https://github.com/nvim-treesitter/playground;

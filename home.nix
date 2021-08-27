@@ -28,6 +28,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    clang-tools
     prusa-slicer
     bitwarden
     bitwarden-cli
