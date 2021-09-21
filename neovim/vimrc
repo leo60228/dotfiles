@@ -93,10 +93,26 @@ let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'], 'c': ['clangd'], '
 let g:ale_fixers = { 'javascript': ['eslint'], 'rust': ['rustfmt'] }
 let g:ale_lint_on_text_changed = 'always'
 
-if empty($RA_TARGET)
-  let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}}
-else
+if !empty($RA_TARGET)
   let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}, 'cargo': {'target': $RA_TARGET}}
+elseif !empty($RA_RUSTC)
+  let g:ale_rust_analyzer_config = {
+    \   'checkOnSave': {
+    \     'overrideCommand': ['./x.py', 'check', '--json-output']
+    \   },
+    \   'rustfmt': {
+    \     'overrideCommand': ['./build/x86_64-unknown-linux-gnu/stage0/bin/rustfmt']
+    \   },
+    \   'cargo': {
+    \     'runBuildScripts': v:false
+    \   },
+    \   'rustcSrc': './Cargo.toml',
+    \   'procMacro': {
+    \     'enable': v:false
+    \   }
+    \ }
+else
+  let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}}
 endif
 
 " Vimspector
