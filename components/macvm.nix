@@ -25,11 +25,5 @@ lib.makeComponent "macvm"
     boot.initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd" ];
     users.groups.libvirtd.members = [ "root" "leo60228" ];
-    hardware.pulseaudio.extraConfig = ''
-        load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-    '';
-    hardware.pulseaudio.extraClientConf = ''
-        default-server = 127.0.0.1
-    '';
   };
 })

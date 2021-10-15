@@ -38,6 +38,16 @@
     ];
 
     services.udev.packages = [ (pkgs.callPackage ../joycond.nix {}) ];
+    services.udev.extraRules = ''
+    SUBSYSTEM!="sound", GOTO="pipewire_end"
+    ACTION!="change", GOTO="pipewire_end"
+    KERNEL!="card*", GOTO="pipewire_end"
+
+    SUBSYSTEMS=="pci", ATTRS{vendor}=="0x1022", ATTRS{device}=="0x1457", ENV{ACP_PROFILE_SET}="reversed-speakers.conf"
+
+    LABEL="pipewire_end"
+    '';
+
     systemd.services.joycond = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];

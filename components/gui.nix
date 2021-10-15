@@ -13,8 +13,19 @@ lib.makeComponent "gui"
   };
 
   config = {
-    # Use PulseAudio
-    hardware.pulseaudio.enable = lib.mkIf cfg.audio true;
+    # Use PipeWire
+    security.rtkit.enable = lib.mkIf cfg.audio true;
+    services.pipewire = lib.mkIf cfg.audio {
+      enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+      config.pipewire = {
+        "context.properties" = {
+          "default.clock.max-quantum" = 1024;
+        };
+      };
+    };
+    systemd.user.services.pipewire-media-session.environment.ACP_PROFILES_DIR = lib.mkIf cfg.audio ../files/profile-sets;
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
