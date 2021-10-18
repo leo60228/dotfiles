@@ -4,6 +4,7 @@ let ftPlugins = with vimPlugins; [
         { plug = callPackage ./omnisharp-vim.nix {}; ft = "cs"; ext = "cs"; }
         { plug = vim-qml; ft = "qml"; ext = "qml"; set = "smartindent"; }
         { plug = vim-toml; ft = "toml"; ext = "toml"; }
+        { plug = vim-terraform; ft = "terraform"; ext = "tf"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in neovim.override {
