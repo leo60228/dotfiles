@@ -247,7 +247,7 @@
     package = (import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
       passthru.browserName = "firefox";
     });
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader google-search-link-fix old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
     profiles.default = {
       settings = {
         "dom.allow_scripts_to_close_windows" = true;
