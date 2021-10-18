@@ -54,7 +54,7 @@
       script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
     };
 
-    boot.kernelPackages = with pkgs; let baseLinux = linux_5_10; in recurseIntoAttrs ((linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
+    boot.kernelPackages = with pkgs; let baseLinux = linux_5_10; in recurseIntoAttrs (linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
       inherit stdenv lib;
       inherit (baseLinux) src;
       version = "${baseLinux.version}-custom";
@@ -75,16 +75,7 @@
           ia32Emulation = true;
         };
       };
-    }))) {})).extend (self: super: rec {
-      nvidiaPackages = pkgs.dontRecurseIntoAttrs (self.callPackage ../nvidia-x11 { });
-
-      nvidia_x11_legacy304   = nvidiaPackages.legacy_304;
-      nvidia_x11_legacy340   = nvidiaPackages.legacy_340;
-      nvidia_x11_legacy390   = nvidiaPackages.legacy_390;
-      nvidia_x11_beta        = nvidiaPackages.beta;
-      nvidia_x11_vulkan_beta = nvidiaPackages.vulkan_beta;
-      nvidia_x11             = nvidiaPackages.stable;
-    }));
+    }))) {}));
     boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.includeDefaultModules = false;
     boot.initrd.availableKernelModules = [
