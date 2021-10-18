@@ -35,7 +35,8 @@ lib.makeComponent "gui"
     services.xserver.libinput.enable = true;
 
     # Fonts
-    fonts.fonts = with pkgs; [ noto-fonts dejavu_fonts corefonts steamPackages.steam-fonts ];
+    fonts.enableDefaultFonts = false;
+    fonts.fonts = with pkgs; [ dejavu_fonts freefont_ttf gyre-fonts liberation_ttf unifont noto-fonts corefonts steamPackages.steam-fonts ];
     fonts.fontconfig.cache32Bit = true;
 
     # dconf
