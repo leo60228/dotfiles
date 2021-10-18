@@ -337,8 +337,8 @@
 
   systemd.user.services.scream-receiver = {
     Unit = {
-      BindsTo = [ "pulseaudio.socket" ];
-      After = [ "pulseaudio.socket" ];
+      BindsTo = [ "pipewire-pulse.socket" ];
+      After = [ "pipewire-pulse.socket" ];
     };
 
     Service = {
