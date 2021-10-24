@@ -62,7 +62,7 @@
         #console.packages = [ pkgs.terminus_font ];
         #console.font = "ter-128n";
 
-        hardware.bluetooth.config.General.ControllerMode = "bredr";
+        hardware.bluetooth.settings.General.ControllerMode = "bredr";
 
         hardware.cpu.amd.updateMicrocode = true;
 
