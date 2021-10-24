@@ -1,4 +1,4 @@
-{ small ? false }:
+{ small ? false, deviceScaleFactor ? 1 }:
 { pkgs, config, lib, ... }:
 
 #let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
@@ -119,7 +119,7 @@
       genericName = desktopName;
       categories = "System;Utility;";
     })
-    (callPackage ./discord.nix {})
+    (callPackage ./discord.nix { inherit deviceScaleFactor; })
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
     SDL

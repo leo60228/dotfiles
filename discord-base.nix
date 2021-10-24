@@ -5,6 +5,7 @@
 , libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
 , libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence
 , mesa, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu
+, deviceScaleFactor ? 1
 }:
 
 let
@@ -50,7 +51,7 @@ in stdenv.mkDerivation rec {
 
     wrapProgram $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
-        --add-flags --force-device-scale-factor=2 \
+        --add-flags --force-device-scale-factor=${builtins.toString deviceScaleFactor} \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
         --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
 

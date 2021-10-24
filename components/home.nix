@@ -6,13 +6,17 @@ lib.makeComponent "home"
       default = false;
       type = types.bool;
     };
+    deviceScaleFactor = mkOption {
+      default = 1;
+      type = types.int;
+    };
   };
 
   config = {
     home-manager = {
       useGlobalPkgs = true;
       users.leo60228 = import ../home.nix {
-	inherit (cfg) small;
+	inherit (cfg) small deviceScaleFactor;
       };
     };
   };
