@@ -383,7 +383,7 @@
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
-  export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
+  export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.bin/:$PATH:$HOME/.nix-profile/bin/:$HOME/.cargo/bin:$HOME/.dotnet/tools:$HOME/NDK/arm/bin:/run/current-system/sw/bin"
   export PATH="$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')"
   export PYTHONPATH="$(python3 -c 'print(__import__("site").USER_SITE)')''${PYTHONPATH:+:}"
   export PYTHONPATH="$(printf "%s" "$PYTHONPATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')"
