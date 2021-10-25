@@ -219,7 +219,7 @@
     meteor
     hplip
     virtualbox
-    dotnet-sdk_3
+    dotnet-sdk_5
     #gmusicproxy
     mono5
     #julia_06
