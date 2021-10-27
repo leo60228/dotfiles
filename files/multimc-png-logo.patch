@@ -1,7 +1,7 @@
-diff --git a/application/resources/multimc/index.theme b/application/resources/multimc/index.theme
+diff --git a/launcher/resources/multimc/index.theme b/launcher/resources/multimc/index.theme
 index 6061b7f..019011f 100644
---- a/application/resources/multimc/index.theme
-+++ b/application/resources/multimc/index.theme
+--- a/launcher/resources/multimc/index.theme
++++ b/launcher/resources/multimc/index.theme
 @@ -2,7 +2,7 @@
  Name=multimc
  Comment=MultiMC Default Icons
@@ -21,10 +21,10 @@ index 6061b7f..019011f 100644
  [scalable]
  Size=48
  Type=Scalable
-diff --git a/application/resources/multimc/multimc.qrc b/application/resources/multimc/multimc.qrc
+diff --git a/launcher/resources/multimc/multimc.qrc b/launcher/resources/multimc/multimc.qrc
 index 4f039a9..db31532 100644
---- a/application/resources/multimc/multimc.qrc
-+++ b/application/resources/multimc/multimc.qrc
+--- a/launcher/resources/multimc/multimc.qrc
++++ b/launcher/resources/multimc/multimc.qrc
 @@ -3,7 +3,7 @@
      <qresource prefix="/icons/multimc">
          <file>index.theme</file>
@@ -34,10 +34,10 @@ index 4f039a9..db31532 100644
  
          <!-- Logo. Our own. For use within the application (Settings pages and similar). -->
          <file>scalable/multimc.svg</file>
-diff --git a/application/resources/multimc/scalable/logo.svg b/application/resources/multimc/scalable/logo.svg
+diff --git a/launcher/resources/multimc/scalable/logo.svg b/launcher/resources/multimc/scalable/logo.svg
 deleted file mode 100644
 index 8bb0e28..0000000
---- a/application/resources/multimc/scalable/logo.svg
+--- a/launcher/resources/multimc/scalable/logo.svg
 +++ /dev/null
 @@ -1,353 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8" standalone="no"?>
