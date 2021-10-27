@@ -584,6 +584,11 @@
     };
   };
 
+  home.file.".gradle/gradle.properties".text = lib.mkIf (!small) ''
+    org.gradle.java.installations.paths=${pkgs.graalvm17-ee},${pkgs.jdk8}
+    org.gradle.java.installations.auto-download=false
+  '';
+
   services.syncthing = lib.mkIf (!small) {
     enable = true;
   };
