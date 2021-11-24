@@ -62,7 +62,7 @@
     pciutils
     lftp
     google-play-music-desktop-player
-    (callPackage ./dolphin.nix {}).beta
+    dolphinEmuMaster
     #(callPackage ./kflash.py {})
     alsaLib
     alsaLib.dev
