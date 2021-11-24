@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation {
   pname = "hid_nintendo";
-  version = "0.3.0";
+  version = "3.2";
   src = fetchFromGitHub {
     owner = "nicman23";
     repo = "dkms-hid-nintendo";
-    rev = "ca684eacf372a21bacffaddf018c2ea2b776a07f";
-    sha256 = "0wyiq4xv8qxw7iyyhnx47a3ygsgzc0ns08sa0fy1kj3ryarwizp2";
+    rev = "6f78c51cd3e4292976ee5304f9dedc316acf5a31";
+    sha256 = "2a+95zwyhJsF/KSo/Pm/JZ7ktDG02UZjsixSnVUXRrA=";
   };
   preBuild = ''
     cp --no-preserve=mode,owner -r $src/src ./src
