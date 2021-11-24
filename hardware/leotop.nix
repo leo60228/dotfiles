@@ -8,7 +8,7 @@
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
         boot.kernelModules = [ "kvm-amd" "hid-nintendo" ];
         boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
-        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" "amdgpu.dpm=0" ];
+        boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
 
         #boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;
 
@@ -36,13 +36,13 @@
         nix.maxJobs = lib.mkDefault 8;
         powerManagement.cpuFreqGovernor = "ondemand";
 
-        #systemd.services.gpu-fixup = {
-        #    description = "GPU performance fixer";
-        #    wantedBy = [ "multi-user.target" ];
-        #    serviceConfig.Type = "oneshot";
-        #    script = "${../files/gpu-fixup.sh}";
-        #    serviceConfig.User = "root";
-        #};
+        systemd.services.gpu-fixup = {
+            description = "GPU performance fixer";
+            wantedBy = [ "multi-user.target" ];
+            serviceConfig.Type = "oneshot";
+            script = "${../files/gpu-fixup.sh}";
+            serviceConfig.User = "root";
+        };
 
         #systemd.services.perf-checkup = {
         #    description = "Performance monitor";
