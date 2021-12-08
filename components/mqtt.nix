@@ -6,14 +6,15 @@ lib.makeComponent "mqtt"
   config = {
     services.mosquitto = {
       enable = true;
-      allowAnonymous = true;
-      host = "0.0.0.0";
-      users = {};
-      aclExtraConf = ''
-      topic readwrite #
-      user DVES_USER
-      topic readwrite #
-      '';
+      listeners = [ {
+        settings.allow_anonymous = true;
+        omitPasswordAuth = true;
+        acl = [
+          "topic readwrite #"
+          "user DVES_USER"
+          "topic readwrite #"
+        ];
+      } ];
     };
     networking.firewall.allowedTCPPorts = [ 1883 ];
   };
