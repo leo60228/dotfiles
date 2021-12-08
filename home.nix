@@ -245,7 +245,7 @@
   programs.firefox = {
     enable = !small;
     package = (import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
-      passthru.browserName = "firefox";
+      passthru.applicationName = "firefox";
     });
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin ];
     profiles.default = {

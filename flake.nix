@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixpkgs-mozilla = {
-    url = github:leo60228/nixpkgs-mozilla/stdenv.lib;
+    url = github:mozilla/nixpkgs-mozilla;
     flake = false;
   };
   inputs.nur.url = github:nix-community/NUR;
