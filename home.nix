@@ -544,7 +544,7 @@
       "telemetry.enableTelemetry" = false;
     };
     extensions = (with pkgs.vscode-extensions; [
-      bbenoist.Nix
+      bbenoist.nix
       vscodevim.vim
     ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
