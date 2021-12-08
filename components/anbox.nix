@@ -3,13 +3,13 @@ lib.makeComponent "anbox"
 ({config, cfg, pkgs, lib, ...}: with lib; {
   opts = {};
 
-  config = let anbox = pkgs.callPackage ../anbox.nix {}; in {
+  config = {
     assertions = singleton {
       assertion = versionAtLeast (getVersion config.boot.kernelPackages.kernel) "4.18";
       message = "Anbox needs user namespace support to work properly";
     };
 
-    environment.systemPackages = [ anbox ];
+    environment.systemPackages = [ pkgs.anbox ];
 
     services.udev.extraRules = ''
       KERNEL=="ashmem", NAME="%k", MODE="0666"
@@ -56,9 +56,9 @@ lib.makeComponent "anbox"
 
       serviceConfig = {
         ExecStart = ''
-          ${anbox}/bin/anbox container-manager \
+          ${pkgs.anbox}/bin/anbox container-manager \
             --data-path=${anboxloc} \
-            --android-image=${anbox.image} \
+            --android-image=${pkgs.anbox.image} \
             --container-network-address=192.168.250.2 \
             --container-network-gateway=192.168.250.1 \
             --container-network-dns-servers=1.1.1.1 \
