@@ -397,8 +397,6 @@
 
     export NIX_REMOTE=daemon
 
-    . ${./files/dotnet-suggest-shim.bash}
-
     . $HOME/.credentials >& /dev/null || true
 
     eval $(hub alias -s)
@@ -422,7 +420,6 @@
     LIBCLANG_PATH = "${pkgs.llvmPackages.clang-unwrapped.lib}/lib";
     OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
     OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
-    DOTNET_ROOT = "${pkgs.dotnet-sdk_5}";
   });
 
   programs.bash.shellAliases."xargo-nx" =
