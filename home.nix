@@ -66,7 +66,7 @@
     #(callPackage ./kflash.py {})
     alsaLib
     alsaLib.dev
-    (callPackage ./twili-gdb.nix {})
+    gdb
     (lib.setPrio (-100) llvmPackages_8.clang)
     llvmPackages_8.llvm
     (callPackage ./zenstates.nix {})
