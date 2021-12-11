@@ -54,28 +54,7 @@
       script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
     };
 
-    boot.kernelPackages = with pkgs; let baseLinux = linux_5_10; in recurseIntoAttrs (linuxPackagesFor (makeOverridable (x: ((pkgs.linuxManualConfig {
-      inherit stdenv lib;
-      inherit (baseLinux) src;
-      version = "${baseLinux.version}-custom";
-      modDirVersion = baseLinux.modDirVersion;
-      configfile = ../files/desktop-kconfig;
-      allowImportFromDerivation = true;
-      kernelPatches = [  {
-        name = "acs-override";
-        patch = ../files/add-acs-overrides.patch;
-      } {
-        name = "tpm-threadripper";
-        patch = ../files/tpm-threadripper.patch;
-      }];
-    }).overrideAttrs (oldAttrs: {
-      passthru = oldAttrs.passthru // {
-        features = {
-          efiBootStub = true;
-          ia32Emulation = true;
-        };
-      };
-    }))) {}));
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.includeDefaultModules = false;
     boot.initrd.availableKernelModules = [
