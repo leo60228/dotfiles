@@ -76,7 +76,7 @@
         };
       };
     }))) {}));
-    boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
+    boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.includeDefaultModules = false;
     boot.initrd.availableKernelModules = [
       # SATA
