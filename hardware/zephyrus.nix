@@ -39,6 +39,7 @@
 
         # high-resolution display
         hardware.video.hidpi.enable = lib.mkDefault true;
+        services.xserver.displayManager.xserverArgs = [ "-dpi 128" ];
         console.earlySetup = true;
         console.packages = [ pkgs.terminus_font ];
         console.font = "ter-v32n";

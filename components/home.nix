@@ -8,7 +8,7 @@ lib.makeComponent "home"
     };
     deviceScaleFactor = mkOption {
       default = 1;
-      type = types.int;
+      type = with types; either int str;
     };
   };
 
