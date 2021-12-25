@@ -42,22 +42,12 @@
     }) (import ./. null).systems;
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
-      nixos-rebuild =
-        let
-          baseSystem = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              ./modules/flakes.nix
-              {
-                nixpkgs.overlays = [ (import ./nixpkgs/nix.nix flakes) ];
-              }
-            ];
-          };
-          nixos-rebuild = baseSystem.config.system.build.nixos-rebuild;
-        in nixos-rebuild;
       nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
+      nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild.override {
+        inherit nix;
+      };
       bootstrap = let
-        inherit (nixpkgs.legacyPackages.${system}) makeWrapper stdenvNoCC;
+        inherit (nixpkgs.legacyPackages.${system}) makeWrapper stdenvNoCC lib;
       in stdenvNoCC.mkDerivation {
         name = "bootstrap";
         nativeBuildInputs = [ makeWrapper ];
@@ -68,7 +58,7 @@
         cp $src $out/bin/bootstrap
         '';
         fixupPhase = ''
-        wrapProgram $out/bin/bootstrap --prefix PATH : ${nixpkgs.lib.makeBinPath [ nix nixos-rebuild ]}
+        wrapProgram $out/bin/bootstrap --prefix PATH : ${lib.makeBinPath [ nix nixos-rebuild ]}
         '';
       };
     };

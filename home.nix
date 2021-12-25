@@ -582,7 +582,7 @@
   };
 
   home.file.".gradle/gradle.properties".text = lib.mkIf (!small) ''
-    org.gradle.java.installations.paths=${pkgs.graalvm17-ee},${pkgs.jdk8}
+    org.gradle.java.installations.paths=${pkgs.adoptopenjdk-hotspot-bin-8}
     org.gradle.java.installations.auto-download=false
   '';
 
