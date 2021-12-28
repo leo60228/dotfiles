@@ -36,6 +36,7 @@
             amdgpuBusId = "PCI:4:0:0";
             nvidiaBusId = "PCI:1:0:0";
         };
+        boot.kernelParams = [ "nvidia.NVreg_EnableS0ixPowerManagement=1" ];
     };
 
     nixops = {
