@@ -29,6 +29,8 @@
 
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+        services.power-profiles-daemon.enable = true;
+
         services.xserver.videoDrivers = [ "nvidia" ];
         hardware.nvidia.modesetting.enable = true;
         hardware.nvidia.prime = {
