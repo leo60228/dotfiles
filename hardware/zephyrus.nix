@@ -7,9 +7,9 @@
 
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "aesni_intel" "cryptd" ];
         boot.initrd.kernelModules = [ "dm-snapshot" ];
-        boot.kernelModules = [ "kvm-amd" ];
+        boot.kernelModules = [ "kvm-amd" "hid-nintendo" ];
         boot.kernelPackages = pkgs.linuxPackages_5_15;
-        boot.extraModulePackages = [ ];
+        boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
 
         fileSystems."/" =
         { device = "/dev/disk/by-uuid/b1a22376-6513-4815-b98d-9a1b6a6069a4";
