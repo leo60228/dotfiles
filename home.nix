@@ -190,9 +190,9 @@
     symbola
     kitty
     (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
-    #vlc
+    vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
-    (libsForQt514.callPackage ./vlc.nix {})
+    #(libsForQt514.callPackage ./vlc.nix {})
     multimc
     (callPackage ./neovim {})
     openscad
