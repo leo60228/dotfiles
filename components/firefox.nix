@@ -40,7 +40,7 @@ lib.makeComponent "firefox"
           };
         };
       };
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin bitwarden ];
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [ darkreader old-reddit-redirect reddit-enhancement-suite stylus greasemonkey ublock-origin bitwarden plasma-integration ];
       extraPolicies = {
         OverrideFirstRunPage = "about:newtab";
         EnableTrackingProtection = {

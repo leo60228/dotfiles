@@ -544,6 +544,8 @@
     org.gradle.java.installations.auto-download=false
   '';
 
+  home.file.".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source = "${pkgs.plasma5Packages.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
+
   services.syncthing = lib.mkIf (!small) {
     enable = true;
   };
