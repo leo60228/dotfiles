@@ -11,10 +11,12 @@ with import ../components; rec {
     createHome = true;
     home = "/var/lib/minecraft";
     useDefaultShell = true;
+    group = "minecraft";
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONVMstvklgtmy9T5J2UGnYJ58lRSA3mlxQafUZEMVIICx7oSyasvdQKDfWXxaTu64xuzx4KtsdVYQrvzPdCCVm9zTuIL/8fISBtntcliTTiK6Mu4dVq9BdRQrZGTUIzQbRpbLov4ZF9keaEtfQDyXLdcOQwiXIHBTwuByQHa9J5RPWdtYfxfJazOa8Z7dl0zroSwRUx1mg+t1UdfO0NE+CEjwoGIIMdf/AVSkyDWH4ehxZhP/gzbvrNvDEw+TfwxXOZurqfnrDr1sQncre5mA2HE2HB/Pbis5j+PB3fUST8R7sjrXQK0S2XBwiG4kzYDUhUwSFBCGPQr/FTELs1CzYWSEyQ/Hwfp5HNvA8L6Tc0JIR2RUlZyhc2fr9AhSY1zM55CU3vKqmw9hek4mMFiZXrN5LQcQCPPDSaD6KRUvZtHFWvJ4oDwq2szx+yn7lrB+tZkI77azVJ4BrBSgVhwTLXUMSasjRSHhD/PAwo2HV+Z0ErlYCucUWMPN3t43ZT0= ally@Invision"
     ];
   };
+  users.extraGroups.minecraft = {};
 
   systemd.services.minecraft = {
     wantedBy = [ "multi-user.target" ];
@@ -53,9 +55,6 @@ with import ../components; rec {
       }
   });
   '';
-
-  services.ipfs.enable = true;
-  users.extraUsers.leo60228.extraGroups = [ "ipfs" ];
 
   networking.hostName = "nucserv";
 }

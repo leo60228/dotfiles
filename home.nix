@@ -539,10 +539,12 @@
     };
   };
 
-  home.file.".gradle/gradle.properties".text = lib.mkIf (!small) ''
-    org.gradle.java.installations.paths=${pkgs.adoptopenjdk-hotspot-bin-8}
-    org.gradle.java.installations.auto-download=false
-  '';
+  home.file.".gradle/gradle.properties" = lib.mkIf (!small) {
+    text = ''
+      org.gradle.java.installations.paths=${pkgs.adoptopenjdk-hotspot-bin-8}
+      org.gradle.java.installations.auto-download=false
+    '';
+  };
 
   home.file.".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source = "${pkgs.plasma5Packages.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
 
