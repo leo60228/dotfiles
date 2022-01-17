@@ -59,12 +59,12 @@ with import ../components; rec {
       RemoveIPC = true;
       ProtectHostname = true;
     };
-    path = [ pkgs.bash pkgs.adoptopenjdk-jre-hotspot-bin-16 ];
+    path = [ pkgs.bash pkgs.jdk17 ];
     script = "bash ./run.sh";
   };
 
-  networking.firewall.allowedTCPPorts = [ 25565 9516 9225 8096 8920 80 443 4001 ];
-  networking.firewall.allowedUDPPorts = [ 25565 19132 1900 7359 4001 ];
+  networking.firewall.allowedTCPPorts = [ 41300 9516 9225 8096 8920 80 443 4001 ];
+  networking.firewall.allowedUDPPorts = [ 41300 19132 1900 7359 4001 ];
 
   services.ddclient = {
     enable = true;
