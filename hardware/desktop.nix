@@ -183,6 +183,7 @@
     systemd.services.rngd.conflicts = [ "shutdown.target" ];
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
     boot.loader.timeout = null;
+    boot.loader.systemd-boot.memtest86.enable = true;
 
     systemd.shutdown.reset-gpu = pkgs.writeScript "reset-gpu" ''
     #!${pkgs.bash}/bin/bash
