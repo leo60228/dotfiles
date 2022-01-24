@@ -5,6 +5,7 @@ let ftPlugins = with vimPlugins; [
         { plug = vim-qml; ft = "qml"; ext = "qml"; set = "smartindent"; }
         { plug = vim-toml; ft = "toml"; ext = "toml"; }
         { plug = vim-terraform; ft = "terraform"; ext = "tf"; }
+        { plug = kotlin-vim; ft = "kotlin"; ext = "kts"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in neovim.override {
