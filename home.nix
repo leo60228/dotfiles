@@ -228,7 +228,6 @@
     #julia_06
     (pkgs.hiPrio (callPackage ./bin.nix {}))
     (callPackage ./fuseenano.nix {})
-    (python27.withPackages (ps: with ps; [ neovim ]))
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
