@@ -9,4 +9,16 @@ with import ../components; rec {
   networking.firewall.allowedUDPPorts = [ 4010 34567 34568 21027 6600 ];
 
   networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
+
+  security.pam.services.sshd.unixAuth = lib.mkForce true;
+
+  services.openssh = {
+    passwordAuthentication = false;
+    challengeResponseAuthentication = false;
+    extraConfig = ''
+    Match Address 10.4.13.0/24,100.64.0.0/10,fd7a:115c:a1e0:ab12::/64
+    	PasswordAuthentication yes
+    	ChallengeResponseAuthentication yes
+    '';
+  };
 }
