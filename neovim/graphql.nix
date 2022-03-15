@@ -1,12 +1,15 @@
-{ vimUtils, fetchFromGitHub, stdenv }:
+{ vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "graphql";
-  version = "2020-03-30";
-  src = fetchFromGitHub {
-    owner = "jparise";
-    repo = "vim-graphql";
-    rev = "a3ff39f955e60baeddd8c3c4d1cab291ce37d66e";
-    sha256 = "0d98b0zpbyjcafp0q25c3qsx13q74nszxsi5jxxjnpz1wv6s83x1";
+  version = "git-2022-02-07";
+  src = fetchgit {
+    url = "https://github.com/jparise/vim-graphql.git";
+    rev = "15c5937688490af8dde09e90c9a5585c840ba81c";
+    sha256 = "092qzsg97qcd2qmv4fxfd8vjjwl11wrv0m2ag2w77354m6zkizwq";
   };
-  meta.homepage = "https://github.com/jparise/vim-graphql/";
+  postPatch = "rm Makefile";
+  meta = {
+    homepage = https://github.com/jparise/vim-graphql;
+    maintainers = [ lib.maintainers.leo60228 ];
+  };
 }

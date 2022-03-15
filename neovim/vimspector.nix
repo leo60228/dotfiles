@@ -1,12 +1,13 @@
 { vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "vimspector";
-  version = "git-2020-11-16";
+  version = "git-2022-03-15";
   src = fetchgit {
     url = "https://github.com/puremourning/vimspector.git";
-    rev = "888c558aa4386710bd3a53ac4bed592993c5a9f3";
-    sha256 = "1cxib3m4n7kyr1bzb1ac1whdqrpzqs7gyygkxmd3j9np76z9ki00";
+    rev = "eaaf5f8f394109bd5c6466ea0528412782ba4426";
+    sha256 = "0yjx5s9plar8j8023j7fcwbzfppvfpyv9j3kkz29f7pqdca8gghd";
   };
+  postPatch = "rm Makefile";
   meta = {
     homepage = https://github.com/puremourning/vimspector;
     maintainers = [ lib.maintainers.leo60228 ];

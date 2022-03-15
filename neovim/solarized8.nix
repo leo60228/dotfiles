@@ -1,11 +1,11 @@
 { vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "solarized8";
-  version = "git-2019-05-02";
+  version = "git-2021-04-24";
   src = fetchgit {
     url = "https://github.com/lifepillar/vim-solarized8.git";
-    rev = "30fd9196e0ae330a33ca00e255c8392516bc242c";
-    sha256 = "1rc6ldh7c5w5sy9xa4lbz0j28jainqfvdlfni7qc5s2wdc4i1jy9";
+    rev = "28b81a4263054f9584a98f94cca3e42815d44725";
+    sha256 = "0vq0fxsdy0mk2zpbd1drrrxnbd44r39gqzp0s71vh9q4bnww7jds";
   };
   meta = {
     homepage = https://github.com/lifepillar/vim-solarized8;

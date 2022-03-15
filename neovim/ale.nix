@@ -1,11 +1,11 @@
 { vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "ale";
-  version = "git-2021-02-02";
+  version = "git-2022-03-05";
   src = fetchgit {
     url = "https://github.com/dense-analysis/ale.git";
-    rev = "9b5c09047361f3ec2cf18afbb6d1e03047a59778";
-    sha256 = "043jbgqw3m8bqsp1piamwgmsqg3136fhksagb157zppxbw25jkgd";
+    rev = "560e6340ce10ce90fac587096fb147eea43e624d";
+    sha256 = "1bkmhqj9hadv9i2zqsnykc7pmql1fxvdd25417g7hxb9ld9n89ca";
   };
   meta = {
     homepage = https://github.com/dense-analysis/ale;

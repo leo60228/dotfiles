@@ -27,10 +27,11 @@ let
   # to update:
   # 1) change all these hashes
   # 2) nix-build -A tree-sitter.updater.update-all-grammars
-  # 3) run the ./result script that is output by that (it updates ./grammars)
-  version = "0.19.3";
-  sha256 = "0zd1p9x32bwdc5cdqr0x8i9fpcykk1zczb8zdjawrrr92465d26y";
-  cargoSha256 = "0mlrbl85x1x2ynwrps94mxn95rjj1r7gb3vdivfaxqv1xvp25m41";
+  # 3) OPTIONAL: Set GITHUB_TOKEN env variable to avoid api rate limit
+  # 4) run the ./result script that is output by that (it updates ./grammars)
+  version = "0.20.6";
+  sha256 = "sha256-zaxy8VCfJKK8NtfuFFojmmP5a19FP1zO/eB5q1EoQPw=";
+  cargoSha256 = "sha256-sOOhzm2nz+HC6dvT+8hj/wh19o+OB2zQ6Uz+H89txSA=";
 
   src = fetchFromGitHub {
     owner = "tree-sitter";
@@ -51,21 +52,22 @@ let
       mkdir $out
     '' + (lib.concatStrings (lib.mapAttrsToList
       (name: grammar: "ln -s ${fetchGrammar grammar} $out/${name}\n")
-      (import ./grammars))));
+      (import ./grammars { inherit lib; }))));
 
   builtGrammars =
     let
       change = name: grammar:
         callPackage ./grammar.nix { } {
-          language = name;
+          language = if grammar ? language then grammar.language else name;
           inherit version;
           source = fetchGrammar grammar;
           location = if grammar ? location then grammar.location else null;
         };
-      grammars' = (import ./grammars);
+      grammars' = (import ./grammars { inherit lib; });
       grammars = grammars' //
         { tree-sitter-ocaml = grammars'.tree-sitter-ocaml // { location = "ocaml"; }; } //
         { tree-sitter-ocaml-interface = grammars'.tree-sitter-ocaml // { location = "interface"; }; } //
+        { tree-sitter-org-nvim = grammars'.tree-sitter-org-nvim // { language = "org"; }; } //
         { tree-sitter-typescript = grammars'.tree-sitter-typescript // { location = "typescript"; }; } //
         { tree-sitter-tsx = grammars'.tree-sitter-typescript // { location = "tsx"; }; };
     in
@@ -90,8 +92,9 @@ let
           in
           {
             name =
-              (lib.strings.removePrefix "tree-sitter-"
-                (lib.strings.removeSuffix "-grammar" name))
+              (lib.strings.replaceStrings [ "-" ] [ "_" ]
+                (lib.strings.removePrefix "tree-sitter-"
+                  (lib.strings.removeSuffix "-grammar" name)))
               + stdenv.hostPlatform.extensions.sharedLibrary;
             path = "${drv}/parser";
           }
