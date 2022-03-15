@@ -423,16 +423,16 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1643788601,
-        "narHash": "sha256-6l5Ax44pC/Oo/Muj5Y/NA27Pd38Wty/7GtGSSmYNug4=",
-        "owner": "NixOS",
+        "lastModified": 1647360949,
+        "narHash": "sha256-TzmPKYAPa98Mjypdq13qvrxYimB4aQtX5sDozGXjmBI=",
+        "owner": "leo60228",
         "repo": "nixpkgs",
-        "rev": "f6ddd55d5f9d5eca08df138c248008c1ba73ecec",
+        "rev": "52c24b939c1151e1d443053812382499931dfa86",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-21.11",
+        "owner": "leo60228",
+        "ref": "backport-tailscale-1.22.1",
         "repo": "nixpkgs",
         "type": "github"
       }
