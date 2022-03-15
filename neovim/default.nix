@@ -6,6 +6,7 @@ let ftPlugins = with vimPlugins; [
         { plug = vim-toml; ft = "toml"; ext = "toml"; }
         { plug = vim-terraform; ft = "terraform"; ext = "tf"; }
         { plug = kotlin-vim; ft = "kotlin"; ext = "kts"; }
+        { plug = coc-nvim; ft = "java"; ext = "java"; "let" = "b:ale_disable_lsp = 1"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in neovim.override {
@@ -20,7 +21,8 @@ in neovim.override {
             + lib.concatMapStrings (x:
                 "autocmd BufRead,BufNewFile *.${x.ext} packadd ${x.plug.pname} | set filetype=${x.ft}\n" +
                 "autocmd FileType ${x.ft} packadd ${x.plug.pname}\n" +
-                (if x ? set then "autocmd FileType ${x.ft} set ${x.set}\n" else "")
+                (if x ? set then "autocmd FileType ${x.ft} set ${x.set}\n" else "") +
+                (if x ? "let" then "autocmd FileType ${x.ft} let ${x."let"}\n" else "")
             ) ftPlugins
             + "\" }}}\n\n\" vimrc.d/ contents:\n\n" + lib.concatMapStrings (x:
                 "\" ${x}\n${(builtins.readFile (./vimrc.d + "/${x}"))}\n\n"

@@ -28,7 +28,6 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
-    (callPackage ./jdt-language-server {})
     ((import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
       passthru.applicationName = "firefox";
     }))
@@ -537,6 +536,16 @@
         };
       };
     };
+  };
+
+  xdg.configFile."nvim/coc-settings.json" = lib.mkIf (!small) {
+    text =
+      let
+        jdt = pkgs.callPackage ./jdt-language-server {};
+      in
+        builtins.toJSON {
+          "diagnostic.displayByAle" = true;
+        };
   };
 
   home.file.".gradle/gradle.properties" = lib.mkIf (!small) {
