@@ -28,6 +28,7 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    (callPackage ./jdt-language-server {})
     ((import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
       passthru.applicationName = "firefox";
     }))
