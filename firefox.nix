@@ -1,12 +1,12 @@
 lib: lib.firefoxOverlay.firefoxVersion {
   name = "Firefox Beta";
-  version = "100.0b2";
+  version = "100.0b3";
   release = true;
   info = {
-    url = "https://download.cdn.mozilla.net/pub/firefox/releases/100.0b2/linux-x86_64/en-US/firefox-100.0b2.tar.bz2";
-    sha512 = "e5857f84cd02a9280e69e392f9c77d54eaafc6558f1e4003eb4fd326b7c9b16256439628e8ada48865152fcc7a4e6eeac4c051968a6bd4cb2d6b4cbf1c49be5d";
+    url = "https://download.cdn.mozilla.net/pub/firefox/releases/100.0b3/linux-x86_64/en-US/firefox-100.0b3.tar.bz2";
+    sha512 = "72bc67d15ab67972457639766c19c52703365a96fd5a97541cfaba38337756b5f42cf19657065515faef1666b854e0acf9dbc43fa6bd6b38b3b4c9b5f0c5d370";
     chksumSig = null;
-    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/100.0b2/linux-x86_64/en-US/firefox-100.0b2.tar.bz2.asc";
-    sigSha512 = "09c6392ebea01a6446fbe3814a84a50041c5a6719e3970ed6e18da9281f47e04a38dfdaec5d17ab89888d14f124915c062d98288207024335a5101d8eb7bba21";
+    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/100.0b3/linux-x86_64/en-US/firefox-100.0b3.tar.bz2.asc";
+    sigSha512 = "50704cfecd54626ad5115969459d38afbccca03f2724bb473b097e765ca834eef12c637be8edcaa49d0728f1e9a1212882b0c84de46d7c26f373dadcd2c55bc2";
   };
 }
