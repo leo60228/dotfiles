@@ -2,7 +2,7 @@
 , wrapQtAppsHook, qtbase, bluez, ffmpeg, libao, libGLU, libGL, pcre, gettext
 , libXrandr, libusb1, lzo, libpthreadstubs, libXext, libXxf86vm, libXinerama
 , libSM, libXdmcp, readline, openal, udev, libevdev, portaudio, curl, alsa-lib
-, miniupnpc, enet, mbedtls, soundtouch, sfml
+, miniupnpc, enet, mbedtls, soundtouch, sfml, writeScript
 , vulkan-loader ? null, libpulseaudio ? null
 
 # - Inputs used for Darwin
@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation rec {
   pname = "dolphin-emu";
-  version = "5.0-15445";
+  version = "5.0-16101";
 
   src = fetchFromGitHub {
     owner = "dolphin-emu";
     repo = "dolphin";
-    rev = "db02b50d2ecdfbbc21e19aadc57253c353069f77";
-    sha256 = "l2vbTZOcjfyZjKOI3n5ig2f7cDYR22GcqKS479LMtP8=";
+    rev = "8ecfa537a242de74d2e372e30d9d79b14584b2fb";
+    sha256 = "3jLGVzTDzEtHWvIb9DFTbJiA9dE9Pm14vYER998Zln0=";
     fetchSubmodules = true;
   };
 
@@ -64,11 +64,22 @@ stdenv.mkDerivation rec {
     install -D $src/Data/51-usb-device.rules $out/etc/udev/rules.d/51-usb-device.rules
   '';
 
+
+  passthru.updateScript = writeScript "dolphin-update-script" ''
+    #!/usr/bin/env nix-shell
+    #!nix-shell -i bash -p curl jq common-updater-scripts
+    set -eou pipefail
+    json="$(curl -s https://dolphin-emu.org/update/latest/beta)"
+    version="$(jq -r '.shortrev' <<< "$json")"
+    rev="$(jq -r '.hash' <<< "$json")"
+    update-source-version dolphin-emu-beta "$version" --rev="$rev"
+  '';
+
   meta = with lib; {
     homepage = "https://dolphin-emu.org";
     description = "Gamecube/Wii/Triforce emulator for x86_64 and ARMv8";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ MP2E ashkitten ];
+    maintainers = with maintainers; [ MP2E ashkitten xfix ];
     branch = "master";
     # x86_32 is an unsupported platform.
     # Enable generic build if you really want a JIT-less binary.
