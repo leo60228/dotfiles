@@ -1,56 +1,108 @@
-{ lib, mkDerivation, fetchFromGitHub, cmake, jdk8, jdk, zlib, file, makeWrapper, xorg, libpulseaudio, qtbase, libGL, msaClientID ? "" }:
-
+{ lib, stdenv, bash
+, jdk17, jre8
+, buildFHSUserEnv
+, fetchurl
+, runCommand
+, makeDesktopItem
+# `extraJVMs` allows the user to specify additional JVMs to be made available
+# in `/opt/jvms`. This is a path MultiMC searches for Java installs, so these
+# will all be presented in the Java "auto-detect" list in MultiMC.
+# Keys in this attribute set will be used to generate the paths for each Java
+# install.
+, extraJVMs ? {}
+# It's possible for certain mods to depend on some native libraries. This
+# option allows the user to add additional libraries to the FHS environment so
+# these mods will work properly.
+, extraPkgs ? []
+}:
 let
-  libpath = with xorg; lib.makeLibraryPath [ libX11 libXext libXcursor libXrandr libXxf86vm libpulseaudio libGL ];
-in mkDerivation rec {
-  pname = "multimc";
-  version = "unstable-2021-09-08";
-  src = fetchFromGitHub {
-    owner = "MultiMC";
-    repo = "MultiMC5";
-    rev = "e2355eb276bf355ca4acf526a0f3cc390aa88f8b";
-    sha256 = "3G9QPoAbC+uVfUYR0Kq6hnxl9c2mvCzIEYGjwfarQJ8=";
-    fetchSubmodules = true;
-  };
-  nativeBuildInputs = [ cmake file makeWrapper ];
-  buildInputs = [ qtbase jdk8 zlib ];
+icon = fetchurl {
+  url = "https://raw.githubusercontent.com/MultiMC/Launcher/ca117654368c21ea55fe51b82500447404d9beae/application/resources/multimc/scalable/logo.svg";
+  hash = "sha256-p4q3XXU8IOmYmScj+WgUNR3OCBfX2/bOuIux1PH1G9Y=";
+};
 
-  patches = [ ./files/multimc-pick-latest-java-first.patch ];
+multimc = stdenv.mkDerivation rec {
+  name = "multimc-bin";
 
-  postPatch = ''
-    # hardcode jdk paths
-    substituteInPlace launcher/java/JavaUtils.cpp \
-      --replace 'scanJavaDir("/usr/lib/jvm")' 'javas.append("${jdk}/lib/openjdk/bin/java")' \
-      --replace 'scanJavaDir("/usr/lib32/jvm")' 'javas.append("${jdk8}/lib/openjdk/bin/java")'
+  src = ./files/mmc-run.sh;
+  dontUnpack = true;
 
-    # add client ID
-    substituteInPlace notsecrets/Secrets.cpp \
-      --replace 'QString MSAClientID = "";' 'QString MSAClientID = "${msaClientID}";'
-  '';
-
-  cmakeFlags = [ "-DMultiMC_LAYOUT=lin-system" ];
-
-  postInstall = ''
-    install -Dm644 ../launcher/resources/multimc/scalable/multimc.svg $out/share/pixmaps/multimc.svg
-    install -Dm755 ../launcher/package/linux/multimc.desktop $out/share/applications/multimc.desktop
-
-    # xorg.xrandr needed for LWJGL [2.9.2, 3) https://github.com/LWJGL/lwjgl/issues/128
-    wrapProgram $out/bin/multimc \
-      --set GAME_LIBRARY_PATH /run/opengl-driver/lib:${libpath} \
-      --prefix PATH : ${lib.makeBinPath [ xorg.xrandr ]}
+  installPhase = ''
+    install -Dm755 $src $out/bin/multimc
   '';
 
   meta = with lib; {
-    homepage = "https://multimc.org/";
-    description = "A free, open source launcher for Minecraft";
-    longDescription = ''
-      Allows you to have multiple, separate instances of Minecraft (each with their own mods, texture packs, saves, etc) and helps you manage them and their associated options with a simple interface.
-    '';
-    platforms = platforms.linux;
+    description = "Free, open source launcher and instance manager for Minecraft";
+    platforms = [ "x86_64-linux" "i686-linux" ];
     license = licenses.asl20;
-    # upstream don't want us to re-distribute this application:
-    # https://github.com/NixOS/nixpkgs/issues/131983
-    hydraPlatforms = [];
-    maintainers = with maintainers; [ cleverca22 starcraft66 ];
+    maintainers = with maintainers; [ forkk ];
   };
+};
+
+desktopItem = makeDesktopItem rec {
+  name = "multimc";
+  desktopName = "MultiMC";
+  exec = "multimc";
+  icon = "multimc";
+  terminal = "false";
+  type = "Application";
+  categories = "Game;";
+  startupNotify = "true";
+};
+
+# List of JDKs to smylink inside the path where MultiMC looks for JVMs.
+jvms = {
+  jre8 = jre8;
+  jre17 = jdk17;
+} // extraJVMs;
+
+# Path we expect MultiMC to search for Java installs.
+javaSymlinkPath = "opt/jdks";
+
+# This takes the JVM packages and symlinks them inside the `javaSymlinkPath` in
+# the FHS env.
+#
+# Different versions of minecraft now depend on different Java versions, and
+# MultiMC allows users to have a different Java binary associated with
+# different installs of the game.
+#
+# For this reason, we take the JVMs this package supports and put each one in a
+# folder inside `/opt/jdks`. This is one of the paths MultiMC searches for
+# JVMs, so it should detect these automatically and allow the user to select
+# one.
+#
+# This works better than pointing MultiMC at a JVM inside the nix store, as
+# doing that may result in said JVM disappearing when the user collects
+# garbage.
+jvmSymlinks = runCommand "multimc-jvm-symlinks" {} ''
+    mkdir -p $out/${javaSymlinkPath}
+  '' + (builtins.concatStringsSep "\n" jvmInstallCmds);
+
+jvmInstallCmds = builtins.attrValues (builtins.mapAttrs (name: value:
+  "cp -rsHf ${value} $out/${javaSymlinkPath}/${name}"
+) jvms);
+in
+buildFHSUserEnv {
+  name = "multimc";
+  targetPkgs = pkgs: with pkgs; with xorg; [
+    # MultiMC and direct dependencies.
+    multimc qt5.full zlib
+    # Tools used by the start scripts.
+    wget gnused gnutar gnome.zenity
+    # Base libraries the game needs.
+    libX11 libXext libXcursor libXrandr libXxf86vm libpulseaudio libGL
+    glfw openal # Needed for the "use native glfw/openal" settings
+    # Symlink JVMs in `/usr/lib/java`
+    jvmSymlinks
+  ] ++ extraPkgs;
+
+  extraOutputsToInstall = ["${javaSymlinkPath}"];
+  extraInstallCommands = ''
+    mkdir -p $out/share/pixmaps
+    install -Dm644 ${./files/multimc.png} $out/share/pixmaps/multimc.png
+    install -Dm755 ${desktopItem}/share/applications/multimc.desktop $out/share/applications/multimc.desktop
+  '';
+  runScript = "multimc";
+
+  meta = multimc.meta;
 }
