@@ -39,11 +39,10 @@ with import ../components; {
   #  };
   #};
 
-  #services.ddclient = {
-  #  enable = true;
-  #  domains = [ "vsix-modded-mc" ];
-  #  protocol = "duckdns";
-  #};
+  services.ddclient = {
+    enable = true;
+    configFile = "/root/ddclient.conf";
+  };
 
   networking.dhcpcd.extraConfig = ''
   static domain_name_servers=100.100.100.100 79.110.170.43 1.1.1.1 1.0.0.1
