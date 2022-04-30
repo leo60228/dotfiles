@@ -10,6 +10,7 @@ with import ../components; {
 
   users.users.minecraft = {
     home = "/var/lib/minecraft";
+    group = "nogroup";
     createHome = true;
     isSystemUser = true;
   };
