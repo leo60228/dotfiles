@@ -11,5 +11,6 @@ lib.makeComponent "steam"
     environment.systemPackages = with pkgs; [ steam ];
 
     hardware.steam-hardware.enable = true;
+    boot.blacklistedKernelModules = [ "hid-steam" ];
   };
 })
