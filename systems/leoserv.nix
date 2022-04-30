@@ -3,8 +3,8 @@
 with import ../components; {
   components = efi en_us est home { small = true; } tailscale znc;
 
-  networking.firewall.allowedTCPPorts = [ 41300 19132 ];
-  networking.firewall.allowedUDPPorts = [ 41300 19132 ];
+  networking.firewall.allowedTCPPorts = [ 25565 25575 ];
+  networking.firewall.allowedUDPPorts = [ 25565 25575 ];
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
