@@ -28,6 +28,8 @@
     (hiPrio gcc)
     (pkgs.hiPrio (callPackage ./bin.nix {}))
   ] else [
+    alsaUtils
+    gitAndTools.lab
     ((import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
       passthru.applicationName = "firefox";
     }))
