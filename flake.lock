@@ -497,8 +497,7 @@
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nur": "nur",
-        "poetry2nix-src": "poetry2nix-src",
-        "vfio-isolate": "vfio-isolate"
+        "poetry2nix-src": "poetry2nix-src"
       }
     },
     "rust-overlay": {
@@ -555,22 +554,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "vfio-isolate": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1629412469,
-        "narHash": "sha256-c+SK+lMHBNAcDlOOpXMWd6RXIfnDZp6CPCmmI1VdBVk=",
-        "owner": "spheenik",
-        "repo": "vfio-isolate",
-        "rev": "6d6a1f0d5e5d84a5ad9911c635a81b86710d12d5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "spheenik",
-        "repo": "vfio-isolate",
         "type": "github"
       }
     }

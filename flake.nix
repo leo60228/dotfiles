@@ -15,10 +15,6 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.poetry2nix-src.url = github:nix-community/poetry2nix;
-  inputs.vfio-isolate = {
-    url = github:spheenik/vfio-isolate;
-    flake = false;
-  };
   inputs.mpdiscord = {
     url = github:leo60228/mpdiscord;
     inputs.nixpkgs.follows = "nixpkgs";
