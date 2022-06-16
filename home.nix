@@ -413,7 +413,7 @@
     network.listenAddress = "0.0.0.0";
   };
 
-  xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+  xdg.configFile."nixpkgs/config.nix".source = ./files/nixpkgs-config.nix;
 
   xdg.configFile."openbox" = {
     source = ./files/openbox;
