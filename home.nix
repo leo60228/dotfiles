@@ -367,8 +367,6 @@
 
   xdg.configFile."bat/themes/Solarized.tmTheme".source = ./Solarized.tmtheme;
 
-  home.file.".mrconfig".source = ./mrconfig;
-
   home.file.".inputrc".text = ''
   $include /etc/inputrc
   "\e[A":history-search-backward
