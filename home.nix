@@ -37,7 +37,7 @@
     prusa-slicer
     bitwarden
     bitwarden-cli
-    (callPackage ./cargo-sync-readme.nix {})
+    cargo-sync-readme
     cargo-expand
     cargo-edit
     qbittorrent
