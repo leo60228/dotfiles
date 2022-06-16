@@ -9,40 +9,15 @@
     allowPing = true;
   };
 
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "10.100.0.1/24" ];
-
-      listenPort = 51820;
-
-      privateKeyFile = "/root/wireguard-keys/private";
-
-      peers = [
-        { # desktop
-          publicKey = "9uXlgMZ+L53g8ljJwSyeudC21tQw9STuT7Uolyr6fXM=";
-          allowedIPs = [ "10.100.0.2/32" ];
-        }
-        { # nuc
-          publicKey = "emJub19Jado0vqFa5wbziMXjePHYrP8mw+ZiSf5QiUE=";
-          allowedIPs = [ "10.100.0.3/32" ];
-        }
-        { # router
-          publicKey = "Hybix9sHznvwZJ4VCMPHDMFH00camprnXce9fKapkz4=";
-          allowedIPs = [ "10.100.0.4/32" ];
-        }
-      ];
-    };
-  };
-
   services.prometheus = {
     enable = true;
-    listenAddress = "10.100.0.1";
+    listenAddress = "100.84.68.17";
     port = 9090;
     scrapeConfigs = [
       {
         job_name = "prometheus";
         static_configs = [ {
-          targets = [ "10.100.0.1:9090" ];
+          targets = [ "100.84.68.17:9090" ];
         } ];
       }
       {
@@ -61,19 +36,19 @@
       {
         job_name = "desktop";
         static_configs = [ {
-          targets = [ "10.100.0.2:9100" ];
+          targets = [ "100.70.195.127:9100" ];
         } ];
       }
       {
         job_name = "apcupsd";
         static_configs = [ {
-          targets = [ "10.100.0.2:9162" ];
+          targets = [ "100.70.195.127:9162" ];
         } ];
       }
       {
         job_name = "nucserv";
         static_configs = [ {
-          targets = [ "10.100.0.3:9100" ];
+          targets = [ "100.98.216.28:9100" ];
         } ];
       }
       {
@@ -82,19 +57,13 @@
         scrape_interval = "5m";
         scrape_timeout = "45s";
         static_configs = [ {
-          targets = [ "10.100.0.3:9516" ];
+          targets = [ "100.98.216.28:9516" ];
         } ];
       }
       {
         job_name = "minecraft";
         static_configs = [ {
-          targets = [ "10.100.0.3:9225" ];
-        } ];
-      }
-      {
-        job_name = "router";
-        static_configs = [ {
-          targets = [ "10.100.0.4:9100" ];
+          targets = [ "100.98.216.28:9225" ];
         } ];
       }
     ];
