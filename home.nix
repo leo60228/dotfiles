@@ -522,24 +522,6 @@
     };
   };
 
-  home.file.".vimspector/gadgets/linux/.gadgets.d/hm.json" = lib.mkIf (!small) {
-    text = builtins.toJSON {
-      adapters = {
-        netcoredbg = {
-          name = "netcoredbg";
-          command = [ "${pkgs.callPackage ./netcoredbg {}}/netcoredbg" "--interpreter=vscode" ];
-          attach = {
-            pidProperty = "processId";
-            pidSelect = "ask";
-          };
-          configuration = {
-            cwd = "\${workspaceRoot}";
-          };
-        };
-      };
-    };
-  };
-
   xdg.configFile."nvim/coc-settings.json" = lib.mkIf (!small) {
     text =
       let
