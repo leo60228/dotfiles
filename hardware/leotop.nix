@@ -6,8 +6,7 @@
             ];
 
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
-        boot.kernelModules = [ "kvm-amd" "hid-nintendo" ];
-        boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
+        boot.kernelModules = [ "kvm-amd" ];
         boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffff7fff" ];
 
         #boot.kernelPackages = (import <unstable> {}).linuxPackages_latest;

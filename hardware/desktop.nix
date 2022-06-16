@@ -55,7 +55,6 @@
     };
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.extraModulePackages = [ (pkgs.callPackage ../hid-nintendo.nix { inherit (config.boot.kernelPackages) kernel; }) ];
     boot.initrd.includeDefaultModules = false;
     boot.initrd.availableKernelModules = [
       # SATA
@@ -77,7 +76,7 @@
       "rtc_cmos"
     ];
     boot.initrd.kernelModules = [ "dm_mod" ];
-    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "hid-nintendo" "edac_mce_amd" ];
+    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "edac_mce_amd" ];
     boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     '';
