@@ -96,32 +96,6 @@
     carnix
     nix-prefetch-git
     pandoc
-    (makeDesktopItem rec {
-      name = "nintendo_switch";
-      exec = "switch";
-      icon = ./files/switch.svg;
-      desktopName = "Nintendo Switch";
-      genericName = desktopName;
-    })
-    (writeShellScriptBin "windows" ''
-      sudo virsh start win10 || true
-      until [ -e /dev/shm/looking-glass ]; do
-        sleep 1
-      done
-      ${scream}/bin/scream -i virbr0 &
-      ${pkgs.looking-glass-client}/bin/looking-glass-client -F &
-      wait -n
-      pkill -P $$
-      ''
-    )
-    (makeDesktopItem rec {
-      name = "windows10";
-      exec = "windows";
-      icon = ./files/windows.svg;
-      desktopName = "Windows 10";
-      genericName = desktopName;
-      categories = "System;Utility;";
-    })
     (leoPkgs.discord.override { inherit deviceScaleFactor; })
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
