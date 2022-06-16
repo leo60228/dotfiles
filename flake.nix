@@ -58,6 +58,7 @@
         '';
       };
     };
+    legacyPackages = flakes.nixpkgs.legacyPackages.${system}.callPackages ./pkgs {};
     apps = nixpkgs.lib.mapAttrs (n: x: {
       type = "app";
       program = "${x}/bin/${n}";

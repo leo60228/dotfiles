@@ -4,7 +4,6 @@
   bin = callPackage ./bin {};
   discord = callPackage ./discord {};
   firefox = callPackage ./firefox {};
-  glitch-soc = callPackage ./glitch-soc {};
   graalvm-ee = callPackage ./graalvm-ee {};
   mastodon = callPackage ./mastodon {};
   multimc = callPackage ./multimc {};
