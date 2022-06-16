@@ -229,7 +229,6 @@
     mono5
     #julia_06
     (pkgs.hiPrio (callPackage ./bin.nix {}))
-    (callPackage ./fuseenano.nix {})
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
