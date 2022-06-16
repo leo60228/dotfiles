@@ -456,11 +456,6 @@
     recursive = true;
   };
 
-  xdg.configFile."opensnap" = {
-    source = ./files/opensnap;
-    recursive = true;
-  };
-
   home.file.".themes" = {
     source = ./files/openbox-themes;
     recursive = true;

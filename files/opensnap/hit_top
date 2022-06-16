@@ -1,6 +1,0 @@
-#!/bin/sh
-
-WINDOW_ID="$1"
-
-# maximize it vertically/horicontally via EWMH so padding (taskbar for example) is respected
-wmctrl -i -r "$WINDOW_ID" -b add,maximized_vert,maximized_horz
