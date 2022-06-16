@@ -97,7 +97,6 @@
     carnix
     nix-prefetch-git
     pandoc
-    (callPackage ./twib.nix {})
     (makeDesktopItem rec {
       name = "nintendo_switch";
       exec = "switch";
@@ -309,36 +308,6 @@
     };
   };
 
-  systemd.user.services.twibd = lib.mkIf (!small) {
-    Unit = {
-      Description = "Twili Bridge Daemon";
-      Requires = [ "twibd.socket" ];
-    };
-
-    Service = {
-      Type = "notify";
-      NotifyAccess = "all";
-      ExecStart = "${pkgs.callPackage ./twib.nix {}}/bin/twibd --systemd";
-      StandardError = "journal";
-    };
-  };
-
-  systemd.user.sockets.twibd = lib.mkIf (!small) {
-    Unit = {
-      Description = "Twili Bridge Daemon";
-    };
-
-    Socket = {
-      ListenStream = "/run/user/1000/twibd.sock";
-      ListenMode = "0666";
-      Accept = "no";
-    };
-
-    Install = {
-      WantedBy = [ "sockets.target" ];
-    };
-  };
-
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
   [ -z "$QT_SCREEN_SCALE_FACTORS" ] && [ ! -z "$_QT_SCREEN_SCALE_FACTORS" ] && export QT_SCREEN_SCALE_FACTORS="$_QT_SCREEN_SCALE_FACTORS"
@@ -370,7 +339,6 @@
     EDITOR = "vim";
     RUSTFMT = "rustfmt";
     CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
-    TWIB_UNIX_FRONTEND_PATH = "/run/user/1000/twibd.sock";
     LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
     BAT_THEME = "Solarized";
@@ -383,7 +351,6 @@
 
   programs.bash.shellAliases."xargo-nx" =
     ''docker run --rm -it -v "$(pwd):/workdir" '' +
-    ''-v "/run/user/1000/twibd.sock:/var/run/twibd.sock" '' +
     ''-v "/home/leo60228/.cargo/git/:/root/.cargo/git/" '' +
     ''-v "/home/leo60228/.cargo/registry/:/root/.cargo/registry/" '' +
     ''rustyhorizon/docker:latest xargo'';
