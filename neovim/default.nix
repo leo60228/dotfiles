@@ -36,7 +36,7 @@ in neovim.override {
                 (callPackage ./ale.nix {})
                 (callPackage ./nvim-treesitter.nix {
                     grammars = {
-                        inherit (tree-sitter.builtGrammars) tree-sitter-nix tree-sitter-javascript tree-sitter-html tree-sitter-regex;
+                        inherit (tree-sitter.builtGrammars) tree-sitter-nix tree-sitter-javascript tree-sitter-html tree-sitter-regex tree-sitter-pioasm;
                     };
                 })
                 (callPackage ./playground.nix {})
