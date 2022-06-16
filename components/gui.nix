@@ -36,7 +36,7 @@ lib.makeComponent "gui"
 
     # Fonts
     fonts.enableDefaultFonts = false;
-    fonts.fonts = with pkgs; [ dejavu_fonts freefont_ttf gyre-fonts liberation_ttf unifont noto-fonts corefonts steamPackages.steam-fonts ];
+    fonts.fonts = with pkgs; [ dejavu_fonts freefont_ttf gyre-fonts liberation_ttf unifont noto-fonts corefonts ];
     fonts.fontconfig.cache32Bit = true;
 
     # dconf

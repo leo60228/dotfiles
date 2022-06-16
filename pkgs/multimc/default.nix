@@ -44,10 +44,10 @@ desktopItem = makeDesktopItem rec {
   desktopName = "MultiMC";
   exec = "multimc";
   icon = "multimc";
-  terminal = "false";
+  terminal = false;
   type = "Application";
-  categories = "Game;";
-  startupNotify = "true";
+  categories = [ "Game" ];
+  startupNotify = true;
 };
 
 # List of JDKs to smylink inside the path where MultiMC looks for JVMs.

@@ -7,5 +7,6 @@ lib.makeComponent "tailscale"
     environment.systemPackages = [ pkgs.tailscale ];
     services.tailscale.enable = true;
     networking.firewall.trustedInterfaces = [ "tailscale0" ]; # tailscale has its own firewall, and default-deny on tailscale0 causes breakage
+    networking.firewall.checkReversePath = "loose";
   };
 })

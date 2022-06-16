@@ -113,8 +113,8 @@
     curl.dev
     desktop-file-utils
     ffmpeg
-    gdk_pixbuf
-    gdk_pixbuf.dev
+    gdk-pixbuf.dev
+    gdk-pixbuf
     glib
     glib.dev
     glib.out
@@ -316,7 +316,7 @@
     PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
     BAT_THEME = "Solarized";
   } // (if small then {} else {
-    CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk_pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
+    CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk-pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
     LIBCLANG_PATH = "${pkgs.llvmPackages.clang-unwrapped.lib}/lib";
     OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
     OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
@@ -472,7 +472,6 @@
     enable = true;
     nix-direnv = {
       enable = true;
-      enableFlakes = true;
     };
   };
 

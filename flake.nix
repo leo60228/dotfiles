@@ -1,7 +1,7 @@
 {
-  inputs.nixpkgs.url = github:leo60228/nixpkgs/backport-tailscale-1.22.1;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-22.05;
   inputs.home-manager = {
-    url = github:nix-community/home-manager/release-21.11;
+    url = github:nix-community/home-manager/release-22.05;
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixpkgs-mozilla = {

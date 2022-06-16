@@ -1,5 +1,6 @@
 { lib }: lib.firefoxOverlay.firefoxVersion {
   name = "Firefox Beta";
+  wmClass = "firefox-beta";
   version = "102.0b8";
   release = true;
   info = {
