@@ -365,7 +365,7 @@
     initial_window_height 1100
   '';
 
-  xdg.configFile."bat/themes/Solarized.tmTheme".source = ./Solarized.tmtheme;
+  xdg.configFile."bat/themes/Solarized.tmTheme".source = ./files/Solarized.tmtheme;
 
   home.file.".inputrc".text = ''
   $include /etc/inputrc
