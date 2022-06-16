@@ -6,7 +6,7 @@ lib.makeComponent "unifi"
   config = {
     services.unifi = {
       enable = true;
-      unifiPackage = (pkgs.callPackage ../unifi.nix {}).unifi6;
+      unifiPackage = pkgs.leoPkgs.unifi.unifi6;
     };
   };
 })

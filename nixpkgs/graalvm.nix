@@ -2,5 +2,5 @@ self:
 super:
 
 {
-    inherit (self.callPackages ../graalvm-ee.nix {}) graalvm17-ee;
+    inherit (self.leoPkgs.graalvm-ee) graalvm17-ee;
 }

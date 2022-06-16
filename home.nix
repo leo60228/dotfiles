@@ -26,11 +26,11 @@
     usbutils
     gnumake
     (hiPrio gcc)
-    (pkgs.hiPrio (callPackage ./bin.nix {}))
+    leoPkgs.bin
   ] else [
     alsaUtils
     gitAndTools.lab
-    ((import ./firefox.nix pkgs.lib).overrideAttrs (oldAttrs: {
+    (leoPkgs.firefox.overrideAttrs (oldAttrs: {
       passthru.applicationName = "firefox";
     }))
     clang-tools
@@ -46,7 +46,7 @@
     element-desktop
     libnotify
     escrotum
-    (let rust = (callPackage ./rust.nix {}).rust; in (ripgrep.override {
+    (let rust = leoPkgs.rust.rust; in (ripgrep.override {
       rustPlatform = makeRustPlatform {
         cargo = rust;
         rustc = rust;
@@ -122,7 +122,7 @@
       genericName = desktopName;
       categories = "System;Utility;";
     })
-    (callPackage ./discord.nix { inherit deviceScaleFactor; })
+    (leoPkgs.discord.override { inherit deviceScaleFactor; })
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
     SDL
@@ -172,7 +172,7 @@
     xorg.libxcb.dev
     xorg.xorgproto
     youtube-dl
-    (callPackage ./rust.nix {}).rust
+    leoPkgs.rust.rust
     libreoffice
     tmux
     screen
@@ -193,7 +193,7 @@
     vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
     #(libsForQt514.callPackage ./vlc.nix {})
-    multimc
+    leoPkgs.multimc
     (callPackage ./neovim {})
     openscad
     dpkg
@@ -226,12 +226,12 @@
     #gmusicproxy
     mono5
     #julia_06
-    (pkgs.hiPrio (callPackage ./bin.nix {}))
+    leoPkgs.bin
     #(import ./julia-oldpkgs.nix {version = "06";})
     #(import ./julia-oldpkgs.nix {version = "07";})
     #(import ./julia-oldpkgs.nix {version = "11";})
-    (callPackage ./twemoji-svg.nix {})
-    (callPackage ./twemoji-colr.nix {})
+    leoPkgs.twemoji-svg
+    leoPkgs.twemoji-colr
     syncthingtray
   ];
 
@@ -396,7 +396,7 @@
   home.file.".terminfo".recursive = true;
 
   home.file.".rustup/toolchains/system" = lib.mkIf (!small) {
-    source = (pkgs.callPackage ./rust.nix {}).rust;
+    source = pkgs.leoPkgs.rust.rust;
   };
 
   home.file.".XCompose".source = ./files/XCompose;
@@ -452,7 +452,7 @@
 
   programs.vscode = lib.mkIf (!small) {
     enable = true;
-    package = pkgs.callPackage ./vscode-fhs.nix {};
+    package = pkgs.leoPkgs.vscode-fhs;
     userSettings = {
       "omnisharp.path" = "${pkgs.omnisharp-roslyn}/bin/omnisharp";
       "workbench.colorTheme" = "Solarized Dark";
@@ -479,16 +479,6 @@
     text = builtins.toJSON {
       MsBuild.UseLegacySdkResolver = true;
     };
-  };
-
-  xdg.configFile."nvim/coc-settings.json" = lib.mkIf (!small) {
-    text =
-      let
-        jdt = pkgs.callPackage ./jdt-language-server {};
-      in
-        builtins.toJSON {
-          "diagnostic.displayByAle" = true;
-        };
   };
 
   home.file.".gradle/gradle.properties" = lib.mkIf (!small) {

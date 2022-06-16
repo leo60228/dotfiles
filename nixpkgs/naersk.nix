@@ -3,7 +3,7 @@ self: super:
 
 {
     naersk = self.callPackage naersk rec {
-        rustc = (self.callPackage ../rust.nix {}).rust;
+        rustc = self.leoPkgs.rust.rust;
         cargo = rustc;
     };
 }

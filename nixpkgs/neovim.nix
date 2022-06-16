@@ -1,8 +1,4 @@
-self: super: rec {
-  tree-sitter = self.callPackage ../tree-sitter {
-    inherit (self.darwin.apple_sdk.frameworks) Security;
-  };
-
+self: super: {
   neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
     version = "nightly";
     src = self.fetchFromGitHub {
@@ -12,6 +8,6 @@ self: super: rec {
       sha256 = "WNWHTIAK6LVimNwTZr6k7/BQ5MNjFmrVDBhM7/8v6Rw=";
       fetchSubmodules = true;
     };
-    buildInputs = oldAttrs.buildInputs ++ [ tree-sitter ];
+    buildInputs = oldAttrs.buildInputs ++ [ self.tree-sitter ];
   });
 }
