@@ -1,1 +1,0 @@
-import ./rawConfig.nix "aws"
