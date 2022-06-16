@@ -7,7 +7,6 @@
       ];
 
     environment.systemPackages = with pkgs; [
-      (callPackage ../joycond.nix {})
       vulkan-loader
       vulkan-tools
       #(writeShellScriptBin "switch-to-amd" ''
@@ -37,7 +36,6 @@
       #'')
     ];
 
-    services.udev.packages = [ (pkgs.callPackage ../joycond.nix {}) ];
     services.udev.extraRules = ''
     SUBSYSTEM!="sound", GOTO="pipewire_end"
     ACTION!="change", GOTO="pipewire_end"
@@ -47,12 +45,6 @@
 
     LABEL="pipewire_end"
     '';
-
-    systemd.services.joycond = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-      script = "${pkgs.callPackage ../joycond.nix {}}/bin/joycond";
-    };
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.includeDefaultModules = false;
