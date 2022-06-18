@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-"./update-$1" | tee "pkgs/$1/default.nix"
+"./scripts/update-$1" | tee "pkgs/$1/default.nix"
 sudo nixos-rebuild switch
 
 git add "pkgs/$1/default.nix"
