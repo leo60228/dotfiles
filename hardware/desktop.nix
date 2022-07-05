@@ -1,7 +1,6 @@
 {
   nixos = { config, lib, modulesPath, pkgs, ... }:
   {
-    disabledModules = [ "tasks/swraid.nix" ];
     imports =
       [ "${modulesPath}/installer/scan/not-detected.nix"
       ];
