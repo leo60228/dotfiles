@@ -6,6 +6,7 @@ lib.makeComponent "hass"
   config = {
     services.home-assistant = {
       enable = true;
+      config = null;
       package = pkgs.home-assistant.override {
 	extraComponents = [ "default_config" "met" "hue" "ipp" "cast" ];
       };

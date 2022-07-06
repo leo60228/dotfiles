@@ -7,6 +7,7 @@ lib.makeComponent "unifi"
     services.unifi = {
       enable = true;
       unifiPackage = pkgs.leoPkgs.unifi.unifi6;
+      openFirewall = true;
     };
   };
 })

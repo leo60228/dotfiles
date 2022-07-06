@@ -1,16 +1,11 @@
 {
   nixos = { pkgs, lib, modulesPath, ... }: {
-    imports = [ "${modulesPath}/installer/cd-dvd/sd-image-raspberrypi4.nix" ];
+    imports = [ "${modulesPath}/installer/sd-card/sd-image-aarch64-installer.nix" ];
     boot.kernelPackages = pkgs.linuxPackages_rpi4;
     boot.initrd.availableKernelModules = [ "usbhid" ];
     boot.initrd.kernelModules = [ ];
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
-
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-        fsType = "ext4";
-      };
 
     swapDevices = [ ];
 
@@ -20,7 +15,7 @@
     networking.hostName = "nixpi";
 
     boot.loader = {
-      grub.enable = false;
+      generic-extlinux-compatible.enable = lib.mkForce false;
       raspberryPi = {
         enable = true;
         version = 4;
