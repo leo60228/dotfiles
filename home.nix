@@ -161,7 +161,6 @@
     xclip
     xsel
     gimp
-    symbola
     kitty
     (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
     vlc
