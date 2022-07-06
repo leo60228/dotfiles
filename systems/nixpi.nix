@@ -6,4 +6,9 @@ with import ../components; rec {
   components = en_us est home { small = true; } router hass unifi apcupsd-server;
 
   services.openssh.passwordAuthentication = false;
+
+  virtualisation.lxd = {
+    enable = true;
+    package = pkgs.lxd.override { criu = null; };
+  };
 }

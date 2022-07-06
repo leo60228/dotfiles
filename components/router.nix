@@ -10,6 +10,38 @@ lib.makeComponent "router"
         internalIPs = [ "10.4.13.0/24" ];
         internalInterfaces = ["eth0"];
         externalInterface = "enp1s0u1";
+        forwardPorts = [
+          {
+            destination = "10.4.13.103:34567";
+            proto = "tcp";
+            sourcePort = 34567;
+          }
+          {
+            destination = "10.4.13.103:34567";
+            proto = "udp";
+            sourcePort = 34567;
+          }
+          {
+            destination = "10.4.13.155:25565";
+            proto = "tcp";
+            sourcePort = 25565;
+          }
+          {
+            destination = "10.4.13.155:25565";
+            proto = "udp";
+            sourcePort = 25565;
+          }
+          {
+            destination = "10.4.13.155:19132";
+            proto = "tcp";
+            sourcePort = 19132;
+          }
+          {
+            destination = "10.4.13.155:19132";
+            proto = "udp";
+            sourcePort = 19132;
+          }
+        ];
       };
       useDHCP = false;
       interfaces.eth0 = {
@@ -29,14 +61,14 @@ lib.makeComponent "router"
       };
       dhcpcd = {
         allowInterfaces = [ "enp1s0u1" ];
-        wait = "ipv4";
+        wait = "both";
         extraConfig = ''
         duid
         persistent
 
         interface enp1s0u1
           ia_na 1
-          ia_pd 2/::/56 eth0/0/56/1
+          ia_pd 2/::/64 eth0/0/64/1
         '';
       };
     };
@@ -61,8 +93,13 @@ lib.makeComponent "router"
         configFile = "/run/dhcpd6.conf";
       };
       radvd = {
-        #enable = true;
-        config = "";
+        enable = true;
+        config = ''
+        interface eth0 {
+          AdvSendAdvert on;
+          prefix ::/64 {};
+        };
+        '';
       };
     };
     #systemd.services.dhcpd6.wantedBy = lib.mkForce [];
