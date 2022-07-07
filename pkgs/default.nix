@@ -11,6 +11,5 @@
   rust = callPackage ./rust {};
   twemoji-colr = callPackage ./twemoji-colr {};
   twemoji-svg = callPackage ./twemoji-svg {};
-  unifi = callPackage ./unifi {};
   vscode-fhs = callPackage ./vscode-fhs {};
 }
