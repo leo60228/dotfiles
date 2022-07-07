@@ -4,11 +4,13 @@ lib.makeComponent "hass"
   opts = {};
 
   config = {
+    networking.firewall.allowedTCPPorts = [ 8123 ];
+
     services.home-assistant = {
       enable = true;
       config = null;
       package = pkgs.home-assistant.override {
-	extraComponents = [ "default_config" "met" "hue" "ipp" "cast" ];
+	extraComponents = [ "default_config" "met" "hue" "ipp" "cast" "serial" "mqtt" "unifi" ];
       };
     };
   };
