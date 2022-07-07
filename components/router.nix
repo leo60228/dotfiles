@@ -87,11 +87,6 @@ lib.makeComponent "router"
         }
         '';
       };
-      dhcpd6 = {
-        #enable = true;
-        interfaces = [ "eth0" ];
-        configFile = "/run/dhcpd6.conf";
-      };
       radvd = {
         enable = true;
         config = ''
@@ -102,33 +97,6 @@ lib.makeComponent "router"
         '';
       };
     };
-    #systemd.services.dhcpd6.wantedBy = lib.mkForce [];
-    #systemd.services.radvd.wantedBy = lib.mkForce [];
-    #systemd.services.radvd.serviceConfig.ExecStart = lib.mkForce "@${pkgs.radvd}/bin/radvd radvd -n -u radvd -C /run/radvd.conf";
     boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = true;
-
-    systemd.services.dhclient = {
-      wantedBy = [ "multi-user.target" "network-online.target" ];
-      wants = [ "network.target" "systemd-udev-settle.target" ];
-      before = [ "network-online.target" ];
-      after = [ "systemd-udev-settle.target" ];
-
-      stopIfChanged = false;
-
-      path = with pkgs; [ dhcp ];
-
-      restartTriggers = [ config.environment.etc."dhclient-exit-hooks".source ];
-
-      script = ''
-      mkdir -m 755 -p /var/lib/dhclient
-      dhclient -6 -P --prefix-len-hint 56 -d enp1s0u2 -e PATH="$PATH" -lf /var/lib/dhclient/leases -sf ${pkgs.dhcp}/sbin/dhclient-script
-      '';
-    };
-
-    environment.etc."dhclient-exit-hooks".source = pkgs.substituteAll {
-      src = ../files/dhclient-exit-hooks;
-      binPath = with pkgs; lib.makeBinPath [ dhcp systemd utillinux iproute gnugrep ];
-      inherit (pkgs) bash;
-    };
   };
 })
