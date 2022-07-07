@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = en_us est home { small = true; } router hass unifi apcupsd-server;
+  components = en_us est home { small = true; } router hass unifi apcupsd-server mqtt;
 
   services.openssh.passwordAuthentication = false;
 

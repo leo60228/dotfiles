@@ -7,6 +7,7 @@ lib.makeComponent "mqtt"
     services.mosquitto = {
       enable = true;
       listeners = [ {
+        address = "10.4.13.1";
         settings.allow_anonymous = true;
         omitPasswordAuth = true;
         acl = [
