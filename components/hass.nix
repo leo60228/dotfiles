@@ -22,6 +22,7 @@ lib.makeComponent "hass"
 	frontend.port = 8456;
 	advanced.network_key = "!secret network_key";
 	mqtt.server = "mqtt://10.4.13.1";
+	groups = "groups.yaml";
       };
     };
 
