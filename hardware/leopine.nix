@@ -33,10 +33,6 @@
     # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-    # high-resolution display
-    hardware.video.hidpi.enable = lib.mkDefault true;
-    console.packages = [ pkgs.terminus_font ];
-    console.font = "ter-128n";
   };
 
   nixops.deployment.targetHost = "leopine";
