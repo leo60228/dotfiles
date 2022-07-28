@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/nvim-treesitter/nvim-treesitter.git",
-  "rev": "de89019783d4de96da1f07d394604f1d93046a0a",
-  "date": "2022-03-15T10:01:45+01:00",
-  "path": "/nix/store/8sfq7g7jg06jyc8clzn7xd83rxxq4wxp-nvim-treesitter",
-  "sha256": "00s50rz0csls4n4sb8xplxdypwnz99434dn127sfas3mvii0aaky",
+  "rev": "6289410c7a4715d6e7743c4d81cf5d262e90951e",
+  "date": "2022-07-28T10:03:41+02:00",
+  "path": "/nix/store/41dmrlybxkv0zij14c8y16hplshpifpr-nvim-treesitter",
+  "sha256": "0lnpsxhr6vwfzs4x61r9mmi8zhwbjrplbx8z6kczyrls0sg0rbky",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

@@ -176,6 +176,7 @@ augroup vimrc
 
     autocmd FileType rust let b:auto_save = 1
 
+    autocmd BufRead,BufNewFile *.astro set filetype=astro
     autocmd BufRead,BufNewFile *.nix set filetype=nix
     autocmd BufRead,BufNewFile *.pio set filetype=pioasm
 

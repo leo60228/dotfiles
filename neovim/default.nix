@@ -1,4 +1,4 @@
-{ neovim, tree-sitter, python3, vimPlugins, omnisharp-roslyn, callPackage, lib }:
+{ neovim, tree-sitter, python3, vimPlugins, omnisharp-roslyn, callPackage, lib, fetchFromGitHub }:
 let ftPlugins = with vimPlugins; [
         { plug = callPackage ./graphql.nix {}; ft = "graphql"; ext = "graphql"; }
         { plug = callPackage ./omnisharp-vim.nix {}; ft = "cs"; ext = "cs"; }
@@ -36,7 +36,27 @@ in neovim.override {
                 (callPackage ./ale.nix {})
                 (callPackage ./nvim-treesitter.nix {
                     grammars = {
-                        inherit (tree-sitter.builtGrammars) tree-sitter-nix tree-sitter-javascript tree-sitter-html tree-sitter-regex tree-sitter-pioasm;
+                        inherit (tree-sitter.builtGrammars) tree-sitter-javascript tree-sitter-html tree-sitter-regex tree-sitter-pioasm;
+                        tree-sitter-astro = callPackage ./grammar.nix {} {
+                            language = "astro";
+                            inherit (tree-sitter) version;
+                            source = fetchFromGitHub {
+                                owner = "virchau13";
+                                repo = "tree-sitter-astro";
+                                rev = "ec0f9f945a08372952403f736a1f783d1679b0ac";
+                                sha256 = "brBbBmkHn0N9wu5Y6hatJhntZRVfBOwK4hIczPHVF6w=";
+                            };
+                        };
+                        tree-sitter-nix = callPackage ./grammar.nix {} {
+                            language = "nix";
+                            inherit (tree-sitter) version;
+                            source = fetchFromGitHub {
+                                owner = "cstrahan";
+                                repo = "tree-sitter-nix";
+                                rev = "6b71a810c0acd49b980c50fc79092561f7cee307";
+                                sha256 = "uTgSj4zz8WvzwIr7UO78F45nzVSjjitdtKY8GV4iL+w=";
+                            };
+                        };
                     };
                 })
                 (callPackage ./playground.nix {})
