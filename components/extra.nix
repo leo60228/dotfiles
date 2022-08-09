@@ -29,6 +29,7 @@ lib.makeComponent "extra"
     networking.networkmanager.enable = true; # Enable NetworkManager to manage Wi-Fi connections
 
     services.avahi.enable = true;
+    services.avahi.allowPointToPoint = true;
     services.avahi.nssmdns = true;
     services.avahi.publish.enable = true;
     services.avahi.publish.domain = true;
