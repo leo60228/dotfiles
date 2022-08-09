@@ -32,7 +32,6 @@
     networking.useDHCP = lib.mkDefault true;
     # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
 
-    nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   };
 
