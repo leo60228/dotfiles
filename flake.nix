@@ -27,10 +27,6 @@
     url = github:BlaseballCrabs/hauntbot;
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.nixos-m1 = {
-    url = github:tpwrules/nixos-m1;
-    flake = false;
-  };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

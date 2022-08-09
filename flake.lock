@@ -318,22 +318,6 @@
         "type": "github"
       }
     },
-    "nixos-m1": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1659755631,
-        "narHash": "sha256-Tl54LUkL+I1D7tHj0kanqtW+IeAX1poGOkBeT4Nzobw=",
-        "owner": "tpwrules",
-        "repo": "nixos-m1",
-        "rev": "5e80120ae3873009bd868358204751f0f0c20139",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tpwrules",
-        "repo": "nixos-m1",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1647360949,
@@ -510,7 +494,6 @@
         "home-manager": "home-manager",
         "mpdiscord": "mpdiscord",
         "naersk": "naersk_4",
-        "nixos-m1": "nixos-m1",
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nur": "nur",
