@@ -20,7 +20,7 @@
   '').outPath;
 
   linux_asahi_pkg = { stdenv, lib, fetchFromGitHub, fetchpatch, linuxKernel, ... } @ args:
-    linuxKernel.manualConfig rec {
+    (linuxKernel.manualConfig rec {
       inherit stdenv lib;
 
       version = "5.19.0-asahi";
@@ -54,7 +54,9 @@
       config = readConfig configfile;
 
       extraMeta.branch = "5.19";
-    } // (args.argsOverride or {});
+    } // (args.argsOverride or {})).overrideAttrs (oldAttrs: {
+      patches = builtins.map (x: if builtins.baseNameOf x == "randstruct-provide-seed.patch" then ./randstruct-provide-seed-5.19.patch else x) oldAttrs.patches;
+    });
 
   linux_asahi = (buildPkgs.callPackage linux_asahi_pkg { });
 in buildPkgs.recurseIntoAttrs (buildPkgs.linuxPackagesFor linux_asahi)
