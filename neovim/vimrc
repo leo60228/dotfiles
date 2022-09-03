@@ -25,6 +25,9 @@ set t_PS=[200~
 let &t_SI .= "\<Esc>[6 q"
 let &t_EI .= "\<Esc>[2 q"
 set undofile
+set shortmess-=F
+set updatetime=300
+set completeopt-=preview
 
 set background=dark
 colorscheme solarized8_flat
@@ -62,8 +65,8 @@ noremap _ ddkP
 inoremap <c-d> <esc>"_ddi
 inoremap <c-u> <esc>maviwU`aa
 nnoremap <c-u> maviwU`a
-nnoremap <leader>ev :vsplit $HOME/Dotfiles/neovim/vimrc<cr>
-nnoremap <leader>sv :source $HOME/Dotfiles/neovim/vimrc<cr>
+nnoremap <leader>ev <Cmd>vsplit $HOME/Dotfiles/neovim/vimrc<cr>
+nnoremap <leader>sv <Cmd>source $HOME/Dotfiles/neovim/vimrc<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
@@ -71,12 +74,13 @@ inoremap <esc> <nop>
 nnoremap <leader>w <c-w>
 onoremap p i(
 inoremap <silent><expr> <c-space> coc#refresh()
-nnoremap <leader>c :nohlsearch<cr>
-nnoremap <leader>cn :cnext<cr>
-nnoremap <leader>cN :cprevious<cr>
-nnoremap <leader>a :ALECodeAction<cr>
-nnoremap <leader>f :ALEFix<cr>
-nnoremap <leader>i :CocCommand java.action.organizeImports<cr>
+inoremap <c-space> <c-x><c-o>
+nnoremap <leader>c <Cmd>nohlsearch<cr>
+nnoremap <leader>cn <Cmd>cnext<cr>
+nnoremap <leader>cN <Cmd>cprevious<cr>
+nnoremap <leader>a <Cmd>ALECodeAction<cr>
+nnoremap <leader>f <Cmd>ALEFix<cr>
+nnoremap <leader>i <Cmd>CocCommand java.action.organizeImports<cr>
 " }}}
 
 " Plugin settings {{{
@@ -159,6 +163,16 @@ hi default link TSVariable Identifier
 " vim-auto-save
 let g:auto_save = 0
 
+" nvim-echo-diagnostics
+lua <<EOF
+vim.diagnostic.config({virtual_text = false})
+
+require("echo-diagnostics").setup {
+    show_diagnostic_number = false,
+    show_diagnostic_source = false,
+}
+EOF
+
 " }}}
 
 " Filetype commands {{{
@@ -175,11 +189,17 @@ augroup vimrc
     autocmd FileType rust iabbrev <buffer> return <nop>
 
     autocmd FileType rust let b:auto_save = 1
+    autocmd FileType scala let b:auto_save = 1
+
+    autocmd FileType scala nnoremap <buffer> <leader>a <Cmd>lua vim.lsp.buf.code_action()<cr>
+    autocmd FileType scala nnoremap <buffer> <leader>f <Cmd>lua vim.lsp.buf.formatting()<cr>
 
     autocmd BufRead,BufNewFile *.astro set filetype=astro
     autocmd BufRead,BufNewFile *.nix set filetype=nix
     autocmd BufRead,BufNewFile *.pio set filetype=pioasm
 
     autocmd FileType vim setlocal foldmethod=marker
+
+    autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
 augroup END
 " }}}

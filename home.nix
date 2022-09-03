@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    coursier
     alsaUtils
     gitAndTools.lab
     (leoPkgs.firefox.overrideAttrs (oldAttrs: {

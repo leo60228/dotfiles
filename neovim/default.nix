@@ -2,11 +2,12 @@
 let ftPlugins = with vimPlugins; [
         { plug = callPackage ./graphql.nix {}; ft = "graphql"; ext = "graphql"; }
         { plug = callPackage ./omnisharp-vim.nix {}; ft = "cs"; ext = "cs"; }
-        { plug = vim-qml; ft = "qml"; ext = "qml"; set = "smartindent"; }
+        { plug = vim-qml; ft = "qml"; ext = "qml"; init = "set smartindent"; }
         { plug = vim-toml; ft = "toml"; ext = "toml"; }
         { plug = vim-terraform; ft = "terraform"; ext = "tf"; }
         { plug = kotlin-vim; ft = "kotlin"; ext = "kts"; }
-        { plug = coc-nvim; ft = "java"; ext = "java"; "let" = "b:ale_disable_lsp = 1"; }
+        { plug = coc-nvim; ft = "java"; ext = "java"; init = "let b:ale_disable_lsp = 1"; }
+        { plug = nvim-metals; ft = "scala"; ext = "scala"; init = "lua require('metals').initialize_or_attach({})"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in neovim.override {
@@ -21,8 +22,7 @@ in neovim.override {
             + lib.concatMapStrings (x:
                 "autocmd BufRead,BufNewFile *.${x.ext} packadd ${x.plug.pname} | set filetype=${x.ft}\n" +
                 "autocmd FileType ${x.ft} packadd ${x.plug.pname}\n" +
-                (if x ? set then "autocmd FileType ${x.ft} set ${x.set}\n" else "") +
-                (if x ? "let" then "autocmd FileType ${x.ft} let ${x."let"}\n" else "")
+                (if x ? init then "autocmd FileType ${x.ft} ${x.init}\n" else "")
             ) ftPlugins
             + "\" }}}\n\n\" vimrc.d/ contents:\n\n" + lib.concatMapStrings (x:
                 "\" ${x}\n${(builtins.readFile (./vimrc.d + "/${x}"))}\n\n"
@@ -33,6 +33,7 @@ in neovim.override {
                 vim-hardtime
                 editorconfig-vim
                 vim-sleuth
+                plenary-nvim
                 (callPackage ./ale.nix {})
                 (callPackage ./nvim-treesitter.nix {
                     grammars = {
@@ -62,6 +63,7 @@ in neovim.override {
                 (callPackage ./playground.nix {})
                 (callPackage ./nvim-treesitter-refactor.nix {})
                 vim-auto-save
+                (callPackage ./nvim-echo-diagnostics.nix {})
             ];
 
             opt = [
