@@ -8,10 +8,10 @@ in {
     pname = "discord";
     binaryName = "Discord";
     desktopName = "Discord";
-    version = "0.0.19";
+    version = "0.0.20";
     src = fetchurl {
       url = "https://dl.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
-      sha256 = "1403vdc7p6a8mhr114brfp4dqvikaj5s71wrx20ca5y6srsv5x0r";
+      sha256 = "1355xiw0k0i6cbi1zcq7fphma6r8hz87lhm8ybg5s45032xz5znx";
     };
   };
   canary = callPackage base rec {
@@ -19,10 +19,10 @@ in {
     pname = "discord-canary";
     binaryName = "DiscordCanary";
     desktopName = "Discord Canary";
-    version = "0.0.139";
+    version = "0.0.140";
     src = fetchurl {
       url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
-      sha256 = "1llafigs2zd49m212d49zi4klx39kn4r2msxz75cmi4i6p8wxxzw";
+      sha256 = "1k88f7nychz5bz1c02mca29bm7a6z4ymc6sq8ly9wf0y0f8f6ih0";
     };
   };
 }.${branch}
