@@ -2,6 +2,7 @@
 
 {
   bin = callPackage ./bin {};
+  crabstodon = callPackage ./crabstodon {};
   discord = callPackage ./discord {};
   firefox = callPackage ./firefox {};
   graalvm-ee = callPackage ./graalvm-ee {};
