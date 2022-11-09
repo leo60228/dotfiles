@@ -37,6 +37,9 @@
       MAX_TOOT_CHARS = "10000";
       MAX_DISPLAY_NAME_CHARS = "100";
       MAX_POLL_OPTIONS = "15";
+
+      GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
+      SOURCE_TAG = config.services.mastodon.package.src.src.rev;
     };
   };
 
