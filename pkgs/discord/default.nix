@@ -19,10 +19,10 @@ in {
     pname = "discord-canary";
     binaryName = "DiscordCanary";
     desktopName = "Discord Canary";
-    version = "0.0.142";
+    version = "0.0.143";
     src = fetchurl {
       url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
-      sha256 = "1dfh0np74vzdqdpylqwqmahskc272rry4wxg3nq1l825g05qjigw";
+      sha256 = "0nhnsvkdz2xn1ykszkmjrjs7lkdbwqj402bygqhgh0lks61v5v1b";
     };
   };
 }.${branch}
