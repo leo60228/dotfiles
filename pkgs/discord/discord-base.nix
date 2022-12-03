@@ -1,11 +1,11 @@
-{ pname, version, src, binaryName, desktopName
+{ pname, version, src, callPackage, binaryName, desktopName
 , autoPatchelfHook, makeDesktopItem, lib, stdenv, wrapGAppsHook
 , alsaLib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig
 , freetype, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libnotify, libpulseaudio, libuuid
 , libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
 , libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence
 , mesa, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu
-, deviceScaleFactor ? 1
+, deviceScaleFactor ? 1, withOpenASAR ? false
 }:
 
 let
@@ -59,6 +59,12 @@ in stdenv.mkDerivation rec {
     ln -s $out/opt/${binaryName}/discord.png $out/share/pixmaps/${pname}.png
 
     ln -s "${desktopItem}/share/applications" $out/share/
+
+    runHook postInstall
+  '';
+
+  postInstall = lib.strings.optionalString withOpenASAR ''
+    cp -f ${callPackage ./openasar.nix {}} $out/opt/${binaryName}/resources/app.asar
   '';
 
   desktopItem = makeDesktopItem {
@@ -70,8 +76,6 @@ in stdenv.mkDerivation rec {
     categories = [ "Network" "InstantMessaging" ];
     mimeTypes = [ "x-scheme-handler/discord" ];
   };
-
-  passthru.updateScript = ./update-discord.sh;
 
   meta = with lib; {
     description = "All-in-one cross-platform voice and text chat for gamers";
