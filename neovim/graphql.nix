@@ -1,11 +1,11 @@
 { vimUtils, fetchgit, stdenv, lib }:
 vimUtils.buildVimPlugin {
   pname = "graphql";
-  version = "git-2022-02-07";
+  version = "git-2022-06-05";
   src = fetchgit {
     url = "https://github.com/jparise/vim-graphql.git";
-    rev = "15c5937688490af8dde09e90c9a5585c840ba81c";
-    sha256 = "092qzsg97qcd2qmv4fxfd8vjjwl11wrv0m2ag2w77354m6zkizwq";
+    rev = "4bf5d33bda83117537aa3c117dee5b9b14fc9333";
+    sha256 = "1pai8zdzn89yk6b4jcvw5yk074sw2qzf9dsw4gbsf69avjkbhx90";
   };
   postPatch = "rm Makefile";
   meta = {
