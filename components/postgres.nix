@@ -28,6 +28,7 @@ lib.makeComponent "postgres"
       ensureDatabases = [ "datablase" "fluthlu" ];
     };
 
+    containers.temp-pg.config.system.stateVersion = "22.11";
     containers.temp-pg.config.services.postgresql = {
       enable = true;
       package = cfg.newPackage;
