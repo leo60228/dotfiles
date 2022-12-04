@@ -67,7 +67,6 @@
     (hiPrio rustup)
     pciutils
     lftp
-    google-play-music-desktop-player
     dolphinEmuMaster
     #(callPackage ./kflash.py {})
     alsaLib
@@ -145,7 +144,6 @@
     xorg.libXrandr.dev
     xorg.libxcb
     xorg.libxcb.dev
-    xorg.xorgproto
     youtube-dl
     leoPkgs.rust.rust
     libreoffice

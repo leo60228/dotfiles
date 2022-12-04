@@ -32,7 +32,7 @@
             [ { device = "/dev/disk/by-uuid/8f13296f-1aac-4728-acdc-38550d52929c"; }
             ];
 
-        nix.maxJobs = lib.mkDefault 8;
+        nix.settings.max-jobs = lib.mkDefault 8;
         powerManagement.cpuFreqGovernor = "ondemand";
 
         systemd.services.gpu-fixup = {

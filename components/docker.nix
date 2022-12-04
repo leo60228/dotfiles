@@ -7,7 +7,6 @@ lib.makeComponent "docker"
     virtualisation.docker = {
       enable = true;
       enableOnBoot = false;
-      package = pkgs.docker-edge;
       extraOptions = "--experimental";
     };
 

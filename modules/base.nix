@@ -36,7 +36,7 @@
   nixpkgs.config = { allowUnfree = true; };
 
   # trusted users
-  nix.trustedUsers = [ "root" "@wheel" ];
+  nix.settings.trusted-users = [ "root" "@wheel" ];
 
   environment.systemPackages = with pkgs; [
     openssh git

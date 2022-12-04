@@ -11,14 +11,10 @@ stdenv.mkDerivation rec {
     hash = "sha256-Q+mkTY0gYRYS8GJtahRzpss8orZOkKjNE0T/ShjwTcY=";
   };
 
-  postPatch = let
-    unzip-fixed = unzip.overrideAttrs (oldAttrs: {
-      buildFlags = oldAttrs.buildFlags ++ [ "LOCAL_UNZIP=-DNO_LCHMOD" ]; # TODO: this is fixed upstream in 22.11, i should update already
-    });
-  in ''
+  postPatch = ''
     # Hardcode unzip path
     substituteInPlace ./src/updater/moduleUpdater.js \
-      --replace \'unzip\' \'${unzip-fixed}/bin/unzip\'
+      --replace \'unzip\' \'${unzip}/bin/unzip\'
     # Remove auto-update feature
     echo "module.exports = async () => log('AsarUpdate', 'Removed');" > ./src/asarUpdate.js
   '';

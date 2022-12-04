@@ -1,4 +1,4 @@
-# TODO: make this an override in 22.11
+# TODO: make this an override
 
 { lib, stdenv, nodejs-slim, mkYarnPackage, fetchFromGitHub, bundlerEnv, nixosTests
 , yarn, callPackage, imagemagick, ffmpeg, file, ruby_3_0, writeShellScript
