@@ -124,6 +124,7 @@
     #'' else "";
 
     #specialisation.amdgpu.configuration = { ... }: {
+    hardware.nvidia.modesetting.enable = true;
     services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
     services.xserver.screenSection = ''
     Option "metamodes" "nvidia-auto-select +0+0 {AllowGSYNCCompatible=On}"
