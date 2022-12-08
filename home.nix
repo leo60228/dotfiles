@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    kio-fuse
     coursier
     alsaUtils
     gitAndTools.lab
@@ -246,6 +247,19 @@
   #    WantedBy = [ "network-online.target" ];
   #  };
   #};
+
+  systemd.user.services.kio-fuse = lib.mkIf (!small) {
+    Unit = {
+      Description = "Fuse interface for KIO";
+      PartOf = "graphical-session.target";
+    };
+
+    Service = {
+      ExecStart = "${pkgs.kio-fuse}/libexec/kio-fuse -f";
+      BusName = "org.kde.KIOFuse";
+      Slice = "background.slice";
+    };
+  };
 
   xdg.configFile."systemd/user/app-discord-.scope.d/override.conf".text = ''
   [Unit]
