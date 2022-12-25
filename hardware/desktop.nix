@@ -164,17 +164,17 @@
     #};
 
     # hidpi
-    #services.xserver.displayManager.xserverArgs = [ "-dpi 185" ];
-    #console.earlySetup = true;
-    #console.packages = [ pkgs.terminus_font ];
-    #console.font = "ter-128n";
-    ##services.xserver.deviceSection = ''
-    ##Option "DRI" "3"
-    ##'';
-    ##services.xserver.serverFlagsSection = ''
-    ##Option "AutoAddGPU" "off"
-    ##'';
-    #services.xserver.exportConfiguration = true;
+    services.xserver.displayManager.xserverArgs = [ "-dpi 157" ];
+    console.earlySetup = true;
+    console.packages = [ pkgs.terminus_font ];
+    console.font = "ter-128n";
+    #services.xserver.deviceSection = ''
+    #Option "DRI" "3"
+    #'';
+    #services.xserver.serverFlagsSection = ''
+    #Option "AutoAddGPU" "off"
+    #'';
+    services.xserver.exportConfiguration = true;
 
     #hardware.pulseaudio.extraConfig = ''
     #load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
