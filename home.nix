@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    imagemagick
     kio-fuse
     coursier
     alsaUtils
