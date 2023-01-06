@@ -91,7 +91,6 @@
     #(callPackage ./amdgpu-utils {})
     bat
     nodejs_latest
-    jetbrains.rider
     (androidenv.composeAndroidPackages { includeNDK = true; ndkVersion = "22.1.7171670"; }).ndk-bundle
     openssl.out
     openssl.dev
