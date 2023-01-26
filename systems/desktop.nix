@@ -38,6 +38,9 @@ with import ../components; rec {
     eu.nixbuild.net aarch64-linux /var/lib/hydra/id_ed25519 100 1 big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSVBJUUNaYzU0cG9KOHZxYXdkOFRyYU5yeVFlSm52SDFlTHBJRGdiaXF5bU0K
     localhost i686-linux,x86_64-linux /var/lib/hydra/id_ed25519 24 2 kvm,nixos-test,big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpUbGhGMmpmMTRSMGo4SXNEK25sM3cxQ0JxRVZaNmozWlB0MC8vSUlFSlQK
     '') ];
+    extraConfig = ''
+    Include /var/lib/hydra/secrets.conf
+    '';
   };
 
   services.postgresql.settings.max_connections = 200;
