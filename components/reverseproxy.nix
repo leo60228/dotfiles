@@ -243,7 +243,7 @@ lib.makeComponent "reverseproxy"
             };
           };
           "60228.dev" = {
-            root = "${pkgs.mastodon}/public/";
+            root = "${pkgs.leoPkgs.crabstodon}/public/";
             #root = "/home/leo60228/mastodon-src-current/public";
             forceSSL = true;
             enableACME = true;

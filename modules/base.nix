@@ -39,7 +39,7 @@
   nix.settings.trusted-users = [ "root" "@wheel" ];
   nix.settings.allowed-uris = [ "https://github.com" "https://gitlab.com" ];
   nix.settings.trusted-public-keys = [ "desktop-1:jpWiJK7Ltbcf1b9xr9mx/4on1NqqmqTZG4bldBl41oQ=" ];
-  nix.settings.substituters = if config.networking.hostName == "desktop" then [] else [ "http://desktop:9999" ];
+  nix.settings.substituters = if config.networking.hostName == "desktop" then [] else [ "https://cache.nixos.org/" "http://desktop:9999" ];
   nix.settings.trusted-substituters = if config.networking.hostName == "desktop" then [ "https://cache.nixos.org/" ] else [ "https://cache.nixos.org/" "http://desktop:9999" ];
 
   environment.systemPackages = with pkgs; [
