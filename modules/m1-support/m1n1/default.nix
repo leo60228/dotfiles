@@ -4,10 +4,12 @@
 , pkgsCross
 , python3
 , dtc
+, imagemagick
 , isRelease ? false
 , withTools ? true
 , withChainloading ? false
 , rust-bin ? null
+, customLogo ? null
 }:
 
 assert withChainloading -> rust-bin != null;
@@ -23,14 +25,14 @@ let
   });
 in stdenv.mkDerivation rec {
   pname = "m1n1";
-  version = "1.1.3";
+  version = "1.2.3";
 
   src = fetchFromGitHub {
-    # tracking: https://github.com/AsahiLinux/PKGBUILDs/blob/main/m1n1/PKGBUILD
+    # tracking: https://github.com/AsahiLinux/PKGBUILDs/blob/stable/m1n1/PKGBUILD
     owner = "AsahiLinux";
     repo = "m1n1";
     rev = "v${version}";
-    hash = "sha256-S2HLBLmgER0ZZJ5Q4EX2f1KDxnol0yCDrloDMJaLwBE=";
+    hash = "sha256-HEhsg3/OkMvAHvu16VFun87SNBPin69CL6XllE7sb4g=";
     fetchSubmodules = true;
   };
 
@@ -41,7 +43,8 @@ in stdenv.mkDerivation rec {
   nativeBuildInputs = [
     dtc
     pkgsCross.aarch64-multiplatform.buildPackages.gcc
-  ] ++ lib.optional withChainloading rustenv;
+  ] ++ lib.optional withChainloading rustenv
+    ++ lib.optional (customLogo != null) imagemagick;
 
   postPatch = ''
     substituteInPlace proxyclient/m1n1/asm.py \
@@ -49,11 +52,24 @@ in stdenv.mkDerivation rec {
       --replace 'TOOLCHAIN = ""' 'TOOLCHAIN = "'$out'/toolchain-bin/"'
   '';
 
+  preConfigure = lib.optionalString (customLogo != null) ''
+    pushd data &>/dev/null
+    ln -fs ${customLogo} bootlogo_256.png
+    if [[ "$(magick identify bootlogo_256.png)" != 'bootlogo_256.png PNG 256x256'* ]]; then
+      echo "Custom logo is not a 256x256 PNG"
+      exit 1
+    fi
+
+    rm bootlogo_128.png
+    convert bootlogo_256.png -resize 128x128 bootlogo_128.png
+    ./makelogo.sh
+    popd &>/dev/null
+  '';
+
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/build
-    cp build/m1n1.macho $out/build
     cp build/m1n1.bin $out/build
   '' + (lib.optionalString withTools ''
     mkdir -p $out/{bin,script,toolchain-bin}
@@ -71,11 +87,12 @@ EOF
     done
 
     GCC=${pkgsCross.aarch64-multiplatform.buildPackages.gcc}
+    BINUTILS=${pkgsCross.aarch64-multiplatform.buildPackages.binutils-unwrapped}
 
     ln -s $GCC/bin/*-gcc $out/toolchain-bin/
     ln -s $GCC/bin/*-ld $out/toolchain-bin/
-    ln -s $GCC/bin/*-objcopy $out/toolchain-bin/
-    ln -s $GCC/bin/*-objdump $out/toolchain-bin/
+    ln -s $BINUTILS/bin/*-objcopy $out/toolchain-bin/
+    ln -s $BINUTILS/bin/*-objdump $out/toolchain-bin/
     ln -s $GCC/bin/*-nm $out/toolchain-bin/
   '') + ''
     runHook postInstall
