@@ -36,13 +36,6 @@
     };
   };
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.leoxpra = {
-    enable = true;
-    bindTcp = "0.0.0.0:14500";
-    extraOptions = [ "--tcp-auth=none" ":0" ];
-  };
-
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_14;
   services.redis.enable = true;
