@@ -156,7 +156,6 @@
 
   security.acme.certs."60228.dev".group = "acme";
   users.users.nginx.extraGroups = [ "acme" ];
-  users.users.ejabberd.extraGroups = [ "acme" ];
 
   #systemd.services.nginx.serviceConfig.ProtectHome = false;
 }

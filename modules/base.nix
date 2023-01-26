@@ -37,6 +37,7 @@
 
   # trusted users
   nix.settings.trusted-users = [ "root" "@wheel" ];
+  nix.settings.allowed-uris = [ "https://github.com" "https://gitlab.com" ];
 
   environment.systemPackages = with pkgs; [
     openssh git

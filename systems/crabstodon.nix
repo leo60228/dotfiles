@@ -18,6 +18,7 @@
       host = "smtp.mailgun.org";
       port = 587;
       user = "postmaster@social.crabs.life";
+      passwordFile = "/var/lib/mastodon/secrets/smtp-password";
       authenticate = true;
     };
 

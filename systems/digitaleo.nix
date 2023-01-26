@@ -75,13 +75,13 @@
   };
 
   services.grafana = {
-    addr = "0.0.0.0";
-    domain = "grafana.leo60228.space";
     enable = true;
-    protocol = "http";
-    security.adminUser = "leo60228";
-    security.adminPasswordFile = "/var/lib/grafana/grafana-password.txt";
-    auth.anonymous.enable = true;
+    settings.server.http_addr = "0.0.0.0";
+    settings.server.domain = "grafana.leo60228.space";
+    settings.server.protocol = "http";
+    settings.security.admin_user = "leo60228";
+    settings.security.admin_password = "$__file{/var/lib/grafana/grafana-password.txt}";
+    settings."auth.anonymous".enabled = true;
   };
 
   systemd.services.grafana.serviceConfig.AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
