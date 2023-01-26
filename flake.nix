@@ -36,6 +36,9 @@
         inherit flakes;
       };
     }) (import ./. null).systems;
+    hydraJobs = nixpkgs.lib.mapAttrs (n: x: {
+      ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
+    }) nixosConfigurations;
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
