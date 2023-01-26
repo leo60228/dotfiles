@@ -5,7 +5,7 @@
 with import ../components; rec {
   components = efi en_us est extra { graalvm = true; } gui kde steam docker home { deviceScaleFactor = 2; } kvm glances flatpak prometheus ibus apcupsd { timeout = 300; minutes = 15; batteryLevel = 50; prometheus = "100.70.195.127"; } tailscale postgres mosh usbmuxd nixbuild firefox kdeconnect fwupd lxd;
 
-  networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [ 34567 34568 22000 8010 6600 ];
+  networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [ 34567 34568 22000 8010 6600 9999 ];
   networking.firewall.allowedUDPPorts = [ 4010 34567 34568 21027 6600 ];
 
   networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
@@ -25,4 +25,15 @@ with import ../components; rec {
   boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
 
   services.mongodb.enable = true;
+
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://desktop:9999";
+    port = 9999;
+    notificationSender = "hydra@60228.dev";
+    minimumDiskFree = 30;
+    minimumDiskFreeEvaluator = 2;
+    useSubstitutes = true;
+    buildMachinesFiles = [ "/etc/nix/machines" (pkgs.writeText "machines" "ssh://localhost x86_64-linux /home/leo60228/.ssh/id_ed25519") ];
+  };
 }
