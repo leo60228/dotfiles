@@ -34,6 +34,9 @@ with import ../components; rec {
     minimumDiskFree = 30;
     minimumDiskFreeEvaluator = 2;
     useSubstitutes = true;
-    buildMachinesFiles = [ "/etc/nix/machines" (pkgs.writeText "machines" "ssh://localhost i686-linux,x86_64-linux /home/leo60228/.ssh/id_ed25519 24 2 kvm,nixos-test,big-parallel,benchmark") ];
+    buildMachinesFiles = [ (pkgs.writeText "machines" ''
+    ssh://eu.nixbuild.net aarch64-linux /var/lib/hydra/id_ed25519 100 1 big-parallel,benchmark - -
+    ssh://localhost i686-linux,x86_64-linux /var/lib/hydra/id_ed25519 24 2 kvm,nixos-test,big-parallel,benchmark
+    '') ];
   };
 }
