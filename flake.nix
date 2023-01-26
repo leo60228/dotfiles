@@ -28,9 +28,18 @@
         inherit flakes;
       };
     }) (import ./. null).systems;
-    hydraJobs = nixpkgs.lib.mapAttrs (n: x: {
-      ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
-    }) nixosConfigurations;
+    hydraJobs =
+      let
+        jobs = nixpkgs.lib.mapAttrs (n: x: {
+          ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
+        }) nixosConfigurations;
+      in
+        jobs // {
+          deploy_gate = nixpkgs.legacyPackages.x86_64-linux.runCommand "deploy-gate" {
+            _hydraAggregate = true;
+            constituents = nixpkgs.lib.mapAttrsToList (n: x: "${n}.${builtins.head (builtins.attrNames x)}") jobs;
+          } "touch $out";
+        };
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
