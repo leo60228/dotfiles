@@ -33,6 +33,8 @@
     # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+
+    hardware.asahi.extractPeripheralFirmware = false;
   };
 
   nixops = {
