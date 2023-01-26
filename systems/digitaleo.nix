@@ -89,7 +89,7 @@
   systemd.services.ping_exporter = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-    script = "${pkgs.callPackage ../ping_exporter {}}/bin/ping_exporter mc.vsix.dev";
+    script = "${pkgs.leoPkgs.ping_exporter}/bin/ping_exporter mc.vsix.dev";
   };
 
   security.acme.email = "leo@60228.dev";
