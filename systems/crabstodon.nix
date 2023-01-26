@@ -54,8 +54,6 @@
 
   systemd.services.mastodon-init-dirs.postStart = ''
   cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
-  mkdir -p /run/mastodon-web /run/mastodon-streaming
-  chmod a+rx /run/mastodon-web /run/mastodon-streaming
   '';
 
   services.nginx = {
@@ -143,4 +141,6 @@
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "leo-acme@60228.dev";
+
+  users.groups.mastodon.members = [ "nginx" ];
 }

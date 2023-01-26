@@ -152,4 +152,6 @@
   users.users.nginx.extraGroups = [ "acme" ];
 
   #systemd.services.nginx.serviceConfig.ProtectHome = false;
+
+  users.groups.mastodon.members = [ "nginx" ];
 }
