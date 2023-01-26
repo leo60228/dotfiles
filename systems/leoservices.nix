@@ -45,7 +45,7 @@
   services.mastodon = {
     enable = true;
     enableUnixSocket = false;
-    #package = "/home/leo60228/mastodon-src-current/";
+    package = pkgs.leoPkgs.crabstodon;
     localDomain = "60228.dev";
     smtp = {
       createLocally = false;
