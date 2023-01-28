@@ -38,7 +38,7 @@
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_14;
-  services.redis.enable = true;
+  services.redis.servers."".enable = true;
 
   boot.cleanTmpDir = true;
 

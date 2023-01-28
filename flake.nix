@@ -19,8 +19,9 @@
     url = github:leo60228/mpdiscord;
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.deploy-rs.url = "github:serokell/deploy-rs";
 
-  outputs = { self, nixpkgs, flake-utils, ... } @ flakes: (rec {
+  outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {
       system = (import (./hardware + "/${n}.nix")).system;
       modules = [ x ];
@@ -40,6 +41,14 @@
             constituents = nixpkgs.lib.mapAttrsToList (n: x: "${n}.${builtins.head (builtins.attrNames x)}") jobs;
           } "touch $out";
         };
+    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" ] (x: {
+      hostname = x;
+
+      profiles.system = {
+        user = "root";
+        path = deploy-rs.lib.${nixosConfigurations.${x}.config.nixpkgs.system}.activate.nixos nixosConfigurations.${x};
+      };
+    });
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
