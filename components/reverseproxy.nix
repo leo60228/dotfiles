@@ -49,7 +49,6 @@ lib.makeComponent "reverseproxy"
             onlySSL = true;
             enableACME = true;
             acmeRoot = "/var/lib/acme/acme-challenge";
-            serverAliases = [ "net-ref.com.leo60228.space" ];
             # breaks websockets
             #http2 = true;
             locations = {
