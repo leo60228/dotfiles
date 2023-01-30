@@ -28,8 +28,8 @@ with import ../components; rec {
       StartLimitIntervalSec = 60;
       StartLimitBurst = 3;
       WorkingDirectory = "/var/lib/minecraft";
-      MemoryHigh = "4.6G";
-      MemoryMax = "5G";
+      MemoryHigh = "8.5G";
+      MemoryMax = "9G";
       CPUQuota = "300%";
       CapabilityBoundingSet = "";
       RestrictAddressFamilies = "AF_INET AF_INET6 AF_UNIX";
