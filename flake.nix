@@ -41,7 +41,7 @@
             constituents = nixpkgs.lib.mapAttrsToList (n: x: "${n}.${builtins.head (builtins.attrNames x)}") jobs;
           } "touch $out";
         };
-    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" ] (x: {
+    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" "digitaleo" "nucserv" ] (x: {
       hostname = x;
 
       profiles.system = {
