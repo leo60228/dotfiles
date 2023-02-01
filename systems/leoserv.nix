@@ -24,6 +24,8 @@ with import ../components; {
     serviceConfig = {
       User = "minecraft";
       WorkingDirectory = "/var/lib/minecraft";
+      Restart = "always";
+      RestartSec = 5;
     };
   };
 
