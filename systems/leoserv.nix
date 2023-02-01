@@ -13,6 +13,7 @@ with import ../components; {
     group = "nogroup";
     createHome = true;
     isSystemUser = true;
+    useDefaultShell = true;
   };
 
   systemd.services.minecraft-server = {
