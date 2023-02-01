@@ -10,6 +10,8 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPBGeYEbAh7SLuTQCQ7i+W2ssiONuGkPMtZmQ7z986lKhR0uTTBblsuhAyQ3wN9Zn94cVLNlzTkseMo9ZZtCzpyqZ7FrQxnEQUX3Q3gKMkBhgpj06Gh9sqODoqRhstEWLdvwYHA+yYEFSxrbww5pZQrSmN1o/adscN9nYRIJGB6Oe4sUj/nkAcrdeTCbAV7SwKTNQSkks1ZDzFvMEO7kfLUm9X6gaINWPOiyEGVlVFVSG8o8ZE1uNUC/2ZtITYHaWgX5TIGHHJPXYQrt9A4cDgX2AMjWqvYKhmrsSfVtSZyrQC9S0ZSe7GDRdUuaYBjYFds5w3AbCATjtG7NncmK1B leo60228@DESKTOP-NBAEBEJ"
     ];
 
+    systemd.services.NetworkManager-wait-online.enable = false;
+
     swapDevices = [ {
       device = "/var/swapfile";
       size = 4096;
