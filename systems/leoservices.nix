@@ -1,5 +1,5 @@
 # includes = ../rawConfig.nix:../hardware/aws.nix:../components/{mailserver,en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
-{ pkgs, ... }: with import ../components; rec {
+{ config, pkgs, ... }: with import ../components; rec {
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   components = en_us est docker extra server gui { audio = false; } reverseproxy { host = "aws"; } home { small = true; } tailscale;
@@ -59,6 +59,9 @@
       MAX_DISPLAY_NAME_CHARS = "100";
       MAX_POLL_OPTIONS = "15";
       MAX_PROFILE_FIELDS = "15";
+
+      GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
+      SOURCE_TAG = config.services.mastodon.package.src.src.rev;
     };
   };
 
