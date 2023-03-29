@@ -4,7 +4,6 @@
 
 with import ../components; rec {
   components = efi en_us est home { small = true; } prometheus tailscale;
-  services.openssh.forwardX11 = true;
 
   users.extraUsers.minecraft = {
     isSystemUser = true;
@@ -71,7 +70,7 @@ with import ../components; rec {
     configFile = "/root/ddclient.conf";
   };
 
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 
   security.polkit.enable = true;
   security.polkit.extraConfig = ''

@@ -5,5 +5,5 @@
 with import ../components; rec {
   components = en_us est home { small = true; } router hass unifi apcupsd-server mqtt tailscale;
 
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 }

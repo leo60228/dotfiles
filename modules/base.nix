@@ -74,7 +74,7 @@
   # tmpfs
   boot.tmpOnTmpfs = true;
 
-  services.openssh.forwardX11 = true;
+  services.openssh.settings.X11Forwarding = true;
 
   security.sudo.wheelNeedsPassword = false;
 }

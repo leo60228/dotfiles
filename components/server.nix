@@ -4,6 +4,6 @@ lib.makeComponent "server"
   opts = {};
 
   config = {
-    services.openssh.gatewayPorts = "yes";
+    services.openssh.settings.GatewayPorts = "yes";
   };
 })
