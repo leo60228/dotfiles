@@ -94,7 +94,6 @@
     (androidenv.composeAndroidPackages { includeNDK = true; ndkVersion = "22.1.7171670"; }).ndk-bundle
     openssl.out
     openssl.dev
-    carnix
     nix-prefetch-git
     pandoc
     (leoPkgs.discord.override { inherit deviceScaleFactor; })
