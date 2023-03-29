@@ -1,6 +1,4 @@
-# TODO: make this an override
-
-{ lib, mastodon, callPackage }:
+{ lib, mastodon, callPackage, fetchYarnDeps }:
 
 let src = callPackage ./source.nix {};
 in (mastodon.override {
