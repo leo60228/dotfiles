@@ -71,7 +71,16 @@
         '';
       };
     };
-    legacyPackages = flakes.nixpkgs.legacyPackages.${system}.callPackages ./pkgs {};
+    legacyPackages = (import flakes.nixpkgs {
+      inherit system;
+      overlays = map (e:
+        let
+          rawOverlay = import (./nixpkgs + ("/" + e));
+          hasArgs = builtins.functionArgs rawOverlay != {};
+          overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+        in overlay
+      ) (builtins.attrNames (builtins.readDir ./nixpkgs));
+    }).callPackages ./pkgs {};
     apps = nixpkgs.lib.mapAttrs (n: x: {
       type = "app";
       program = "${x}/bin/${n}";
