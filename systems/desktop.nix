@@ -26,8 +26,6 @@ with import ../components; rec {
 
   boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
 
-  services.mongodb.enable = true;
-
   services.hydra = {
     enable = true;
     hydraURL = "http://desktop:9999";
