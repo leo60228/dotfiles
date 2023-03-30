@@ -25,6 +25,7 @@ for branch in "${BRANCHES[@]}"; do
         ptb) suffix="PTB" ;;
         canary) suffix="Canary" ;;
     esac
+    echo "    branch = \"${branch:-stable}\";"
     echo "    binaryName = \"Discord${suffix}\";"
     echo "    desktopName = \"Discord${suffix:+ }${suffix}\";"
     echo "    version = \"${version}\";"
@@ -32,6 +33,8 @@ for branch in "${BRANCHES[@]}"; do
     echo "      url = \"${url//${version}/\$\{version\}}\";"
     echo "      sha256 = \"$(nix-prefetch-url "$url")\";"
     echo "    };"
+    echo "    meta = pkgs.discord.meta;"
+    echo "    openasar = callPackage ./openasar.nix {};"
     echo "  };"
 done
 

@@ -120,6 +120,8 @@
     libopus
     lua5_2
     maim
+    grim
+    slurp
     mpv
     pango
     pango.dev
@@ -152,6 +154,7 @@
     steam-run
     xclip
     xsel
+    wl-clipboard
     gimp
     kitty
     (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))

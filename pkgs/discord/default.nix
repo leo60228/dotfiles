@@ -6,23 +6,29 @@ in {
   stable = callPackage base rec {
     inherit deviceScaleFactor withOpenASAR;
     pname = "discord";
+    branch = "stable";
     binaryName = "Discord";
     desktopName = "Discord";
-    version = "0.0.22";
+    version = "0.0.25";
     src = fetchurl {
       url = "https://dl.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
-      sha256 = "19xbmrd782m4lp2l0ww5v3ip227g0z8pplxigxga96q43rvp6p0p";
+      sha256 = "0b04b3af844y594974blyxds5cs71r9fwzndasvzl67hsz5jc5sq";
     };
+    meta = pkgs.discord.meta;
+    openasar = callPackage ./openasar.nix {};
   };
   canary = callPackage base rec {
     inherit deviceScaleFactor withOpenASAR;
     pname = "discord-canary";
+    branch = "canary";
     binaryName = "DiscordCanary";
     desktopName = "Discord Canary";
-    version = "0.0.145";
+    version = "0.0.150";
     src = fetchurl {
       url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
-      sha256 = "05flh4dm0dcmqa077r6w7njd4lhmhi2107n0cxzbicckf15bnpsc";
+      sha256 = "1yj1l16kf5c556rqrb1sfkw3qk21xaryv0dpcpjdzdxlbfkq66zj";
     };
+    meta = pkgs.discord.meta;
+    openasar = callPackage ./openasar.nix {};
   };
 }.${branch}

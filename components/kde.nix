@@ -17,6 +17,8 @@ lib.makeComponent "kde"
     services.xserver.displayManager.sddm.enable = true;
     services.xserver.displayManager.sddm.enableHidpi = true;
     services.xserver.desktopManager.plasma5.enable = true;
+
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
   } (mkIf cfg.bluetooth {
     hardware.bluetooth.enable = true;
 

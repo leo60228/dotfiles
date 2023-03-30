@@ -1,20 +1,33 @@
-{ pname, version, src, callPackage, binaryName, desktopName
-, autoPatchelfHook, makeDesktopItem, lib, stdenv, wrapGAppsHook
-, alsaLib, at-spi2-atk, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig
-, freetype, gdk-pixbuf, glib, gtk3, libcxx, libdrm, libnotify, libpulseaudio, libuuid
-, libX11, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext
-, libXfixes, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence
-, mesa, nspr, nss, pango, systemd, libappindicator-gtk3, libdbusmenu
-, deviceScaleFactor ? 1, withOpenASAR ? false
-}:
+{ pname, version, src, openasar, meta, binaryName, desktopName, autoPatchelfHook
+, makeDesktopItem, lib, stdenv, wrapGAppsHook, makeShellWrapper, alsa-lib, at-spi2-atk
+, at-spi2-core, atk, cairo, cups, dbus, expat, fontconfig, freetype, gdk-pixbuf
+, glib, gtk3, libcxx, libdrm, libglvnd, libnotify, libpulseaudio, libuuid, libX11
+, libXScrnSaver, libXcomposite, libXcursor, libXdamage, libXext, libXfixes
+, libXi, libXrandr, libXrender, libXtst, libxcb, libxshmfence, mesa, nspr, nss
+, pango, systemd, libappindicator-gtk3, libdbusmenu, writeScript, python3, runCommand
+, libunity
+, wayland
+, branch
+, common-updater-scripts, withOpenASAR ? false, deviceScaleFactor ? 1 }:
 
 let
-  inherit binaryName;
-in stdenv.mkDerivation rec {
-  inherit pname version src;
+  disableBreakingUpdates = runCommand "disable-breaking-updates.py"
+    {
+      pythonInterpreter = "${python3.interpreter}";
+      configDirName = lib.toLower binaryName;
+    } ''
+    mkdir -p $out/bin
+    cp ${./disable-breaking-updates.py} $out/bin/disable-breaking-updates.py
+    substituteAllInPlace $out/bin/disable-breaking-updates.py
+    chmod +x $out/bin/disable-breaking-updates.py
+  '';
+in
+
+stdenv.mkDerivation rec {
+  inherit pname version src meta;
 
   nativeBuildInputs = [
-    alsaLib
+    alsa-lib
     autoPatchelfHook
     cups
     libdrm
@@ -28,35 +41,79 @@ in stdenv.mkDerivation rec {
     mesa
     nss
     wrapGAppsHook
+    makeShellWrapper
   ];
 
   dontWrapGApps = true;
 
   libPath = lib.makeLibraryPath [
-    libcxx systemd libpulseaudio libdrm mesa
-    stdenv.cc.cc alsaLib atk at-spi2-atk at-spi2-core cairo cups dbus expat fontconfig freetype
-    gdk-pixbuf glib gtk3 libnotify libX11 libXcomposite libuuid
-    libXcursor libXdamage libXext libXfixes libXi libXrandr libXrender
-    libXtst nspr nss libxcb libxshmfence pango systemd libXScrnSaver
-    libappindicator-gtk3 libdbusmenu
-   ];
+    libcxx
+    systemd
+    libpulseaudio
+    libdrm
+    mesa
+    stdenv.cc.cc
+    alsa-lib
+    atk
+    at-spi2-atk
+    at-spi2-core
+    cairo
+    cups
+    dbus
+    expat
+    fontconfig
+    freetype
+    gdk-pixbuf
+    glib
+    gtk3
+    libglvnd
+    libnotify
+    libX11
+    libXcomposite
+    libunity
+    libuuid
+    libXcursor
+    libXdamage
+    libXext
+    libXfixes
+    libXi
+    libXrandr
+    libXrender
+    libXtst
+    nspr
+    libxcb
+    pango
+    libXScrnSaver
+    libappindicator-gtk3
+    libdbusmenu
+    wayland
+  ];
 
   installPhase = ''
-    mkdir -p $out/{bin,opt/${binaryName},share/pixmaps}
+    runHook preInstall
+
+    mkdir -p $out/{bin,opt/${binaryName},share/pixmaps,share/icons/hicolor/256x256/apps}
     mv * $out/opt/${binaryName}
 
     chmod +x $out/opt/${binaryName}/${binaryName}
     patchelf --set-interpreter ${stdenv.cc.bintools.dynamicLinker} \
         $out/opt/${binaryName}/${binaryName}
 
-    wrapProgram $out/opt/${binaryName}/${binaryName} \
+    wrapProgramShell $out/opt/${binaryName}/${binaryName} \
         "''${gappsWrapperArgs[@]}" \
         --add-flags --force-device-scale-factor=${builtins.toString deviceScaleFactor} \
+        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform=wayland --enable-features=WaylandWindowDecorations --disable-gpu-sandbox --disable-gpu-memory-buffer-video-frames}}" \
         --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
         --prefix LD_LIBRARY_PATH : ${libPath}:$out/opt/${binaryName}
 
     ln -s $out/opt/${binaryName}/${binaryName} $out/bin/
+    # Without || true the install would fail on case-insensitive filesystems
+    ln -s $out/opt/${binaryName}/${binaryName} $out/bin/${
+      lib.strings.toLower binaryName
+    } || true
+
     ln -s $out/opt/${binaryName}/discord.png $out/share/pixmaps/${pname}.png
+    ln -s $out/opt/${binaryName}/discord.png $out/share/icons/hicolor/256x256/apps/${pname}.png
 
     ln -s "${desktopItem}/share/applications" $out/share/
 
@@ -64,7 +121,7 @@ in stdenv.mkDerivation rec {
   '';
 
   postInstall = lib.strings.optionalString withOpenASAR ''
-    cp -f ${callPackage ./openasar.nix {}} $out/opt/${binaryName}/resources/app.asar
+    cp -f ${openasar} $out/opt/${binaryName}/resources/app.asar
   '';
 
   desktopItem = makeDesktopItem {
@@ -77,12 +134,19 @@ in stdenv.mkDerivation rec {
     mimeTypes = [ "x-scheme-handler/discord" ];
   };
 
-  meta = with lib; {
-    description = "All-in-one cross-platform voice and text chat for gamers";
-    homepage = "https://discordapp.com/";
-    downloadPage = "https://discordapp.com/download";
-    license = licenses.unfree;
-    maintainers = with maintainers; [ ldesgoui MP2E ];
-    platforms = [ "x86_64-linux" ];
+  passthru = {
+    # make it possible to run disableBreakingUpdates standalone
+    inherit disableBreakingUpdates;
+    updateScript = writeScript "discord-update-script" ''
+      #!/usr/bin/env nix-shell
+      #!nix-shell -i bash -p curl gnugrep common-updater-scripts
+      set -eou pipefail;
+      url=$(curl -sI "https://discordapp.com/api/download/${
+        builtins.replaceStrings [ "discord-" "discord" ] [ "" "stable" ] pname
+      }?platform=linux&format=tar.gz" | grep -oP 'location: \K\S+')
+      version=''${url##https://dl*.discordapp.net/apps/linux/}
+      version=''${version%%/*.tar.gz}
+      update-source-version ${pname} "$version" --file=./pkgs/applications/networking/instant-messengers/discord/default.nix --version-key=${branch}
+    '';
   };
 }

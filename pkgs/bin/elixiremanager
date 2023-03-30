@@ -9,6 +9,9 @@ readonly apiurl="https://elixi.re/api"
 readonly apikey="$(cat ~/.config/elixire-apikey)"
 mode=area
 wayland=false
+if ! [ -z "$WAYLAND_DISPLAY" ]; then
+    wayland=true
+fi
 is_admin=""
 readonly filename_format="/tmp/elixire-$(date +%Y-%m-%dT%H:%M:%S).png"
 readonly webp_filename_format="/tmp/elixire-$(date +%Y-%m-%dT%H:%M:%S).webp"
@@ -41,7 +44,7 @@ function check_deps() {
     done
 
     if [[ $wayland == "true" ]]; then
-        for i in grim slurp; do
+        for i in spectacle; do
             (which $i &>/dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
         done
         (which wl-copy &>/dev/null) && echo "OK: found wl-clipboard" || echo "ERROR: wl-clipboard not found"
@@ -55,13 +58,13 @@ function check_deps() {
 function take_screenshot() {
     if [[ $1 == "area" ]]; then
         if [[ $wayland == "true" ]]; then
-            grim -g "$(slurp)" "${2}"
+            spectacle -brno "${2}"
         else
             maim --geometry $(slop) "${2}"
         fi
     else
         if [[ $wayland == "true" ]]; then
-            grim "${2}"
+            spectacle -bfno "${2}"
         else
             maim --geometry $(slop) "${2}"
         fi
@@ -72,12 +75,12 @@ function upload_file_and_notify() {
     response=$(curl --compressed --connect-timeout ${upload_connect_timeout} -m ${upload_timeout} --retry ${upload_retries} -H "Authorization: ${apikey}" -F upload=@"${1}" ${apiurl}/upload${is_admin} | jq .url -r | tr -d '\n')
 
     if [[ ! -z "${response}" ]]; then
+        notify-send -t 5000 "Success!" "${response}" -i "${1}" --hint=int:transient:1
         if [[ $wayland == "true" ]]; then
-            echo -en "${response}" | wl-copy
+            echo -en "${response}" | wl-copy -f
         else
             echo -en "${response}" | xclip -selection clipboard
         fi
-        notify-send -t 5000 "Success!" "${response}" -i "${1}" --hint=int:transient:1
     else
         notify-send -t 5000 "Error!" --hint=int:transient:1
     fi
