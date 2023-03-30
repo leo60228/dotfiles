@@ -124,23 +124,6 @@
     #'' else "";
 
     #specialisation.amdgpu.configuration = { ... }: {
-    hardware.nvidia.package =
-      let
-        args = {
-          version = "525.60.11";
-          sha256_64bit = "sha256-gW7mwuCBPMw9SnlY9x/EmjfGDv4dUdYUbBznJAOYPV0=";
-          openSha256 = "sha256-33ATZuYu+SOOxM6UKXp6J+f1+zbmHvaK4v13X3UZTTM=";
-          settingsSha256 = "sha256-gA1x6oEpnkr/OPP4eR1L5gC5srvEKtDrSpnv2QEaEpE=";
-          persistencedSha256 = "sha256-AFMy3agoJ6yVsGgUvTfOzHlz30iApBpAReckq9iS7AA=";
-        };
-        imported = import (pkgs.path + "/pkgs/os-specific/linux/nvidia-x11/generic.nix") args;
-      in
-        config.boot.kernelPackages.callPackage imported {
-          lib32 = (pkgs.pkgsi686Linux.callPackage imported {
-            libsOnly = true;
-            kernel = null;
-          }).out;
-        };
     hardware.nvidia.modesetting.enable = true;
     services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
     services.xserver.screenSection = ''
