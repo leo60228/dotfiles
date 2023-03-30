@@ -49,14 +49,7 @@
     element-desktop
     libnotify
     escrotum
-    (let rust = leoPkgs.rust.rust; in (ripgrep.override {
-      rustPlatform = makeRustPlatform {
-        cargo = rust;
-        rustc = rust;
-      };
-    }).overrideAttrs (oldAttrs: {
-      #buildPhase = builtins.replaceStrings ["pcre2"] ["'pcre2 simd-accel'"] oldAttrs.buildPhase;
-    }))
+    ripgrep
     linuxPackages.perf
     zip
     glxinfo
