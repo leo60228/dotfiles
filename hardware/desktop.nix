@@ -95,7 +95,7 @@
     hardware.opengl = {
       enable = true;
       extraPackages = with pkgs; [
-        vaapiVdpau
+        nvidia-vaapi-driver
         libvdpau-va-gl
       ];
     };

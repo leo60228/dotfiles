@@ -19,6 +19,7 @@ lib.makeComponent "kde"
     services.xserver.desktopManager.plasma5.enable = true;
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables.MOZ_DISABLE_RDD_SANDBOX = "1";
   } (mkIf cfg.bluetooth {
     hardware.bluetooth.enable = true;
 
