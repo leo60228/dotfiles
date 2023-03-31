@@ -132,6 +132,7 @@ stdenv.mkDerivation rec {
     genericName = meta.description;
     categories = [ "Network" "InstantMessaging" ];
     mimeTypes = [ "x-scheme-handler/discord" ];
+    startupWMClass = "discord";
   };
 
   passthru = {
