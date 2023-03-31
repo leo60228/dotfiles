@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    r128gain
     imagemagick
     kio-fuse
     coursier
@@ -391,6 +392,8 @@
             name    "My Pulse Output"
         }
         playlist_directory "~/Playlists"
+        replaygain "album"
+        replaygain_preamp "5"
     '';
     network.listenAddress = "0.0.0.0";
   };
