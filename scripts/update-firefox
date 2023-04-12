@@ -1,7 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -p bash jq curl -i bash
 # vim: set ft=bash:
-latest_version="$(curl https://product-details.mozilla.org/1.0/firefox_versions.json | jq -r .LATEST_FIREFOX_DEVEL_VERSION)"
+latest_version="$(curl https://product-details.mozilla.org/1.0/firefox_versions.json | jq -r .LATEST_FIREFOX_VERSION)"
 version_dir="https://download.cdn.mozilla.net/pub/firefox/releases/$latest_version"
 checksums_url="$version_dir/SHA512SUMS"
 file="linux-x86_64/en-US/firefox-$latest_version.tar.bz2"
@@ -12,8 +12,8 @@ sig_url="$version_dir/$sig_file"
 sig_sha512="$(curl "$sig_url" | sha512sum | cut -d " " -f 1)"
 cat <<EOF
 { lib }: lib.firefoxOverlay.firefoxVersion {
-  name = "Firefox Beta";
-  wmClass = "firefox-beta";
+  name = "Firefox";
+  wmClass = "firefox";
   version = "$latest_version";
   release = true;
   info = {
