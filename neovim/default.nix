@@ -7,6 +7,7 @@ let ftPlugins = with vimPlugins; [
         { plug = vim-terraform; ft = "terraform"; ext = "tf"; }
         { plug = kotlin-vim; ft = "kotlin"; ext = "kts"; }
         { plug = coc-nvim; ft = "java"; ext = "java"; init = "let b:ale_disable_lsp = 1"; }
+        { plug = coc-nvim; ft = "slint"; ext = "slint"; }
         { plug = nvim-metals; ft = "scala"; ext = "scala"; init = "lua require('metals').initialize_or_attach({})"; }
     ];
     plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
