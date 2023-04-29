@@ -86,7 +86,7 @@ buildFHSUserEnv {
   name = "multimc";
   targetPkgs = pkgs: with pkgs; with xorg; [
     # MultiMC and direct dependencies.
-    multimc qt5.qtbase zlib
+    multimc qt5.qtbase qt5.qtwayland zlib
     # Tools used by the start scripts.
     wget gnused gnutar gnome.zenity
     # Base libraries the game needs.
