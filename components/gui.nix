@@ -20,7 +20,7 @@ lib.makeComponent "gui"
       alsa.enable = true;
       pulse.enable = true;
     };
-    systemd.user.services.pipewire-media-session.environment.ACP_PROFILES_DIR = lib.mkIf cfg.audio ../files/profile-sets;
+    systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR = lib.mkIf cfg.audio ../files/profile-sets;
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
