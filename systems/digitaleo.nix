@@ -1,8 +1,6 @@
 { pkgs, ... }: with import ../components; rec {
   components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
 
-  boot.cleanTmpDir = true;
-
   networking.firewall = {
     allowedTCPPorts = [ 25565 9090 80 443 ];
     allowedUDPPorts = [ 51820 443 ];

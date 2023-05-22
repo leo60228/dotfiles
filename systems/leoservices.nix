@@ -40,8 +40,6 @@
   services.postgresql.package = pkgs.postgresql_14;
   services.redis.servers."".enable = true;
 
-  boot.cleanTmpDir = true;
-
   services.mastodon = {
     enable = true;
     enableUnixSocket = false;

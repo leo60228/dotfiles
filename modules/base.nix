@@ -33,7 +33,13 @@
       overlay = if hasArgs then rawOverlay flakes else rawOverlay;
     in overlay
   ) (builtins.attrNames (builtins.readDir ../nixpkgs));
-  nixpkgs.config = { allowUnfree = true; };
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "nodejs-16.20.0" # FIXME: unneeded after https://github.com/NixOS/nixpkgs/commit/b38795a22e1028127a9e2f2be1c8d9b11d31bd26
+      "openssl-1.1.1t" # FIXME: unneeded after https://github.com/NixOS/nixpkgs/commit/8229ab2435dd53eef8c5eb076c15ccdafd25fec7
+    ];
+  };
 
   # trusted users
   nix.settings.trusted-users = [ "root" "@wheel" ];
@@ -72,7 +78,7 @@
   '';
 
   # tmpfs
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
 
   services.openssh.settings.X11Forwarding = true;
 

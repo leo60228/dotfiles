@@ -1,8 +1,6 @@
 { config, pkgs, ... }: with import ../components; rec {
   components = en_us efi est server tailscale;
 
-  boot.cleanTmpDir = true;
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.mastodon = {
