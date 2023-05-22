@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    jetbrains-toolbox
     r128gain
     imagemagick
     kio-fuse
