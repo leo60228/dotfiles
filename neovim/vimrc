@@ -76,11 +76,20 @@ onoremap p i(
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <c-space> <c-x><c-o>
 nnoremap <leader>c :nohlsearch<cr>
-nnoremap <leader>cn :cnext<cr>
-nnoremap <leader>cN :cprevious<cr>
-nnoremap <leader>a :ALECodeAction<cr>
-nnoremap <leader>f :ALEFix<cr>
-nnoremap <leader>i :CocCommand java.action.organizeImports<cr>
+
+if has('ide')
+  nmap <leader>cn <Action>(GotoNextError)
+  nmap <leader>cN <Action>(GotoPreviousError)
+  nmap <leader>a <Action>(ShowIntentionActions)
+  nmap <leader>f <Action>(ReformatCode)
+  nmap <leader>i <Action>(OptimizeImports)
+else
+  nnoremap <leader>cn :cnext<cr>
+  nnoremap <leader>cN :cprevious<cr>
+  nnoremap <leader>a :ALECodeAction<cr>
+  nnoremap <leader>f :ALEFix<cr>
+  nnoremap <leader>i :CocCommand java.action.organizeImports<cr>
+endif
 " }}}
 
 " Plugin settings {{{
@@ -191,15 +200,17 @@ augroup vimrc
     autocmd FileType rust let b:auto_save = 1
     autocmd FileType scala let b:auto_save = 1
 
-    autocmd FileType scala nnoremap <buffer> <leader>a :lua vim.lsp.buf.code_action()<cr>
-    autocmd FileType scala nnoremap <buffer> <leader>f :lua vim.lsp.buf.formatting()<cr>
-
     autocmd BufRead,BufNewFile *.astro set filetype=astro
     autocmd BufRead,BufNewFile *.nix set filetype=nix
     autocmd BufRead,BufNewFile *.pio set filetype=pioasm
 
     autocmd FileType vim setlocal foldmethod=marker
 
-    autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
+    if !has('ide')
+      autocmd FileType scala nnoremap <buffer> <leader>a :lua vim.lsp.buf.code_action()<cr>
+      autocmd FileType scala nnoremap <buffer> <leader>f :lua vim.lsp.buf.formatting()<cr>
+
+      autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
+    endif
 augroup END
 " }}}
