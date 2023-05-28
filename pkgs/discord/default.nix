@@ -9,10 +9,10 @@ in {
     branch = "stable";
     binaryName = "Discord";
     desktopName = "Discord";
-    version = "0.0.25";
+    version = "0.0.27";
     src = fetchurl {
       url = "https://dl.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
-      sha256 = "0b04b3af844y594974blyxds5cs71r9fwzndasvzl67hsz5jc5sq";
+      sha256 = "1da72ic2i5q5zna2k7760cppyxk10k96m4qzav8b9gswy24dmwg9";
     };
     meta = pkgs.discord.meta;
     openasar = callPackage ./openasar.nix {};
@@ -23,10 +23,10 @@ in {
     branch = "canary";
     binaryName = "DiscordCanary";
     desktopName = "Discord Canary";
-    version = "0.0.150";
+    version = "0.0.154";
     src = fetchurl {
       url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
-      sha256 = "1yj1l16kf5c556rqrb1sfkw3qk21xaryv0dpcpjdzdxlbfkq66zj";
+      sha256 = "1ds7bbf0x3920bybkdk621f9qarnslp9hcvqp73ik6vbj10qznmf";
     };
     meta = pkgs.discord.meta;
     openasar = callPackage ./openasar.nix {};
