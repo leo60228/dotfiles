@@ -20,6 +20,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
+  inputs.fizz-strat = {
+    url = "github:BlaseballCrabs/fizz-strat";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

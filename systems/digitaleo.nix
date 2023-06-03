@@ -90,7 +90,7 @@
     script = "${pkgs.leoPkgs.ping_exporter}/bin/ping_exporter mc.vsix.dev";
   };
 
-  security.acme.email = "leo@60228.dev";
+  security.acme.defaults.email = "leo@60228.dev";
   security.acme.acceptTerms = true;
 
   systemd.services.minecraft-server-forwarder = {
@@ -100,5 +100,15 @@
       Restart = "on-failure";
     };
     script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:100.115.35.128:25565";
+  };
+
+  systemd.services.fizz-strat = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/fizz-strat";
+    };
+    script = "${pkgs.fizz-strat}/bin/fizz-strat";
   };
 }
