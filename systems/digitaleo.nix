@@ -9,7 +9,7 @@
 
   services.prometheus = {
     enable = true;
-    listenAddress = "100.84.68.17";
+    listenAddress = "127.0.0.1";
     port = 9090;
     scrapeConfigs = [
       {
