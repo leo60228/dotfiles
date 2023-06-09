@@ -163,6 +163,30 @@ lib.makeComponent "reverseproxy"
 	      proxyPass = "http://localhost:3000";
 	    };
 	  };
+          "coal.l3.pm" = {
+            root = "${config.services.mediawiki.finalPackage}/share/mediawiki";
+            forceSSL = true;
+            enableACME = true;
+
+            locations = {
+              "/" = {
+                tryFiles = "$uri @rewrite";
+              };
+
+              "@rewrite" = {
+                extraConfig = "rewrite ^/(.*)$ /index.php?title=$1&$args;";
+              };
+
+              "~ \\.php$" = {
+                extraConfig = ''
+                include ${pkgs.nginx}/conf/fastcgi_params;
+                include ${pkgs.nginx}/conf/fastcgi.conf;
+                fastcgi_param SCRIPT_FILENAME $request_filename;
+                fastcgi_pass unix:${config.services.phpfpm.pools.mediawiki.socket};
+                '';
+              };
+            };
+          };
         };
       }))
     ];

@@ -1,4 +1,4 @@
-{ pkgs, ... }: with import ../components; rec {
+{ pkgs, lib, ... }: with import ../components; rec {
   components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
 
   networking.firewall = {
@@ -111,4 +111,66 @@
     };
     script = "${pkgs.fizz-strat}/bin/fizz-strat";
   };
+
+  services.mediawiki = {
+    enable = true;
+    name = "COAL Wiki";
+    url = "https://coal.l3.pm";
+    passwordFile = "/var/lib/mediawiki/mw-password";
+    passwordSender = "coal-wiki@60228.dev";
+    webserver = "none";
+
+    skins.MinervaNeue = "${pkgs.mediawiki}/share/mediawiki/skins/MinervaNeue";
+
+    extensions = {
+      WikiEditor = null;
+      VisualEditor = null;
+      Cite = null;
+      OpenGraphMeta = pkgs.fetchzip {
+        url = "https://extdist.wmflabs.org/dist/extensions/OpenGraphMeta-REL1_39-097f601.tar.gz";
+        sha256 = "0kfxrcckvq5h8n3pfapy6nxzm36axwf57cw50g2j835rrb1q3kwj";
+      };
+      TimedMediaHandler = pkgs.fetchzip {
+        url = "https://extdist.wmflabs.org/dist/extensions/TimedMediaHandler-REL1_39-fedcb2d.tar.gz";
+        sha256 = "1c4k0xzfyy1r4jpk981393z4f7gg7ri5h7dj9f0qk2ai3l7czrlq";
+      };
+      AbuseFilter = null;
+      PageImages = null;
+      Description2 = pkgs.fetchzip {
+        url = "https://extdist.wmflabs.org/dist/extensions/Description2-REL1_39-6fd7aff.tar.gz";
+        sha256 = "1796vds3s9ll2qasldd59biqgypxkpq9d80dnp8pp4g89llyg03j";
+      };
+      MobileFrontend = pkgs.fetchzip {
+        url = "https://extdist.wmflabs.org/dist/extensions/MobileFrontend-REL1_39-f766e58.tar.gz";
+        sha256 = "18alf9ax09qw5rgb8icmr80lg2h39lg77x9afji8g2iwv5rhn75m";
+      };
+      ConfirmEdit = null;
+    };
+
+    extraConfig = ''
+    wfLoadExtension("ConfirmEdit/QuestyCaptcha");
+    $wgCaptchaQuestions = [
+      "Who is the main protagonist of COAL?" => ["Ash", "Ash Ketchum"],
+      "Who wrote the cribsheet?" => "Mew",
+      "What's the first region in COAL?" => "Kanto",
+      "What's the second (sub)region in COAL?" => "Orange Islands"
+    ];
+
+    $wgUsePathInfo = true;
+    $wgArticlePath = "/$1";
+
+    $wgSMTP = [
+      "host" => "smtp-relay.gmail.com",
+      "IDHost" => "60228.dev",
+      "localhost" => "60228.dev",
+      "port" => 587,
+      "auth" => false
+    ];
+
+    $wgFFmpegLocation = "${pkgs.ffmpeg}/bin/ffmepg";
+    $wgEnableMetaDescriptionFunctions = true;
+    $wgDefaultMobileSkin = "minerva";
+    '';
+  };
+  users.users.nginx.extraGroups = [ "mediawiki" ];
 }
