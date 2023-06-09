@@ -156,6 +156,8 @@
       "What's the second (sub)region in COAL?" => "Orange Islands"
     ];
 
+    $wgLogo = "https://cdn.discordapp.com/icons/904408350475825225/e8d9b1f74955497368c5105257c7a2c6.png?size=256";
+
     $wgUsePathInfo = true;
     $wgArticlePath = "/$1";
 
