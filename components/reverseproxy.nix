@@ -118,6 +118,48 @@ lib.makeComponent "reverseproxy"
               });
             };
           };
+          "l.60228.dev" = {
+            forceSSL = true;
+            enableACME = true;
+
+            locations."/" = {
+              proxyWebsockets = true;
+              extraConfig = ''
+              set $proxpass "http://0.0.0.0:1234";
+              if ($http_accept ~ "^application/.*$") {
+                set $proxpass "http://0.0.0.0:8536";
+              }
+              if ($request_method = POST) {
+                set $proxpass "http://0.0.0.0:8536";
+              }
+              proxy_pass $proxpass;
+
+              rewrite ^(.+)/+$ $1 permanent;
+
+              # Send actual client IP upstream
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header Host $host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              '';
+            };
+
+            locations."~ ^/(api|pictrs|feeds|nodeinfo|.well-known)" = {
+              proxyPass = "http://0.0.0.0:8536";
+              proxyWebsockets = true;
+              extraConfig = ''
+              # Add IP forwarding headers
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header Host $host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              '';
+            };
+
+            locations."~ /pictshare/([\s]*)$" = {
+              extraConfig = ''
+              return 301 /pictrs/image/$1;
+              '';
+            };
+          };
           "localhost" = {
             default = true;
             locations = {
