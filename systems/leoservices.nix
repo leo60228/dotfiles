@@ -79,6 +79,7 @@
       };
       setup = {
         admin_username = "vriska";
+        admin_password = "TeWoK25tBod2*kRz&Hq^";
         site_name = "l.60228.dev";
         admin_email = "leo@60228.dev";
       };
