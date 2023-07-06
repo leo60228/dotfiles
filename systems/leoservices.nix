@@ -65,6 +65,8 @@
 
   services.lemmy = {
     enable = true;
+    ui.package = pkgs.leoPkgs.lemmy-ui;
+    server.package = pkgs.leoPkgs.lemmy-server;
     database = {
       createLocally = true;
       uri = "postgres:///lemmy?host=/run/postgresql&user=lemmy";
@@ -77,7 +79,6 @@
       };
       setup = {
         admin_username = "vriska";
-        admin_password = "jooH7bz4w3PeM9%&xV4m";
         site_name = "l.60228.dev";
         admin_email = "leo@60228.dev";
       };
