@@ -39,12 +39,7 @@
           ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
         }) nixosConfigurations;
       in
-        jobs // {
-          deploy_gate = nixpkgs.legacyPackages.x86_64-linux.runCommand "deploy-gate" {
-            _hydraAggregate = true;
-            constituents = nixpkgs.lib.mapAttrsToList (n: x: "${n}.${builtins.head (builtins.attrNames x)}") jobs;
-          } "touch $out";
-        };
+        jobs;
     deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" "digitaleo" "nucserv" "leoserv" ] (x: {
       hostname = x;
 
