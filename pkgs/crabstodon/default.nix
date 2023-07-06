@@ -10,7 +10,7 @@ in (mastodon.override {
   mastodonModules = oldAttrs.mastodonModules.overrideAttrs (oldAttrs: {
     yarnOfflineCache = fetchYarnDeps {
       yarnLock = "${src}/yarn.lock";
-      sha256 = "sha256-YvMG1KgeD3wru/un5RFSgC5DFWozebQCStwPqnRkYtQ=";
+      sha256 = "sha256-8fUJ1RBQZ16R3IpA/JEcn+PO04ApQ9TkHuYKycvV8BY=";
     };
   });
 })
