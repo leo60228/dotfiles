@@ -65,11 +65,6 @@ with import ../components; rec {
   networking.firewall.allowedTCPPorts = [ 41300 9516 9225 8096 8920 80 443 4001 ];
   networking.firewall.allowedUDPPorts = [ 41300 19132 1900 7359 4001 ];
 
-  services.ddclient = {
-    enable = true;
-    configFile = "/root/ddclient.conf";
-  };
-
   services.openssh.settings.PasswordAuthentication = false;
 
   security.polkit.enable = true;

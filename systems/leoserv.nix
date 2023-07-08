@@ -42,9 +42,10 @@ with import ../components; {
   #  };
   #};
 
-  services.ddclient = {
-    enable = true;
-    configFile = "/root/ddclient.conf";
+  systemd.services.inadyn = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    script = "${pkgs.inadyn}/bin/inadyn --foreground --syslog -f /root/inadyn.conf";
   };
 
   networking.dhcpcd.extraConfig = ''
