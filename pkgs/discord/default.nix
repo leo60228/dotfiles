@@ -23,10 +23,10 @@ in {
     branch = "canary";
     binaryName = "DiscordCanary";
     desktopName = "Discord Canary";
-    version = "0.0.154";
+    version = "0.0.162";
     src = fetchurl {
       url = "https://dl-canary.discordapp.net/apps/linux/${version}/discord-canary-${version}.tar.gz";
-      sha256 = "1ds7bbf0x3920bybkdk621f9qarnslp9hcvqp73ik6vbj10qznmf";
+      sha256 = "0frn711d07l6avdp8hmnhjn0m6054pd1xw9jk24i5siq5k0rq9br";
     };
     meta = pkgs.discord.meta;
     openasar = callPackage ./openasar.nix {};
