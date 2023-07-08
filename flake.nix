@@ -40,7 +40,7 @@
         }) nixosConfigurations;
       in
         jobs;
-    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" "digitaleo" "nucserv" "leoserv" "crabstodon" ] (x: {
+    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" "digitaleo" "nucserv" "leoserv" ] (x: {
       hostname = x;
 
       profiles.system = {
