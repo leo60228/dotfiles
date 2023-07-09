@@ -28,6 +28,9 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    konversation
+    pokefinder
+    leoPkgs.eontimer
     jetbrains-toolbox
     r128gain
     imagemagick
