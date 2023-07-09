@@ -1,5 +1,7 @@
 { lib
 , stdenv
+, copyDesktopItems
+, makeDesktopItem
 , fetchFromGitHub
 , fetchpatch
 , cmake
@@ -26,6 +28,7 @@ stdenv.mkDerivation rec {
       url = "https://github.com/DasAmpharos/EonTimer/pull/95/commits/70685414d8f052394badd0f45daff4083018c788.patch";
       sha256 = "AcExUornaHtvEgg3TzAkf9TCXAJ0kdgcV++yUTxX3NI=";
     })
+    ./set-desktop-file-name.patch
   ];
 
   preConfigure = ''
@@ -33,10 +36,24 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
+    runHook preInstall
     install -D EonTimer $out/bin/EonTimer
+    install -Dm 644 $src/docs/icon.svg $out/share/pixmaps/EonTimer.svg
+    runHook postInstall
   '';
 
-  nativeBuildInputs = [ cmake qtsass wrapQtAppsHook ];
+  nativeBuildInputs = [ cmake qtsass wrapQtAppsHook copyDesktopItems ];
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = "eontimer";
+      exec = "EonTimer";
+      icon = "EonTimer";
+      comment = "Timer designed for Pokémon RNG";
+      desktopName = "EonTimer";
+      categories = [ "Utility" ];
+    })
+  ];
 
   buildInputs = [ qtbase qttools sfml ];
 
