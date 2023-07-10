@@ -24,6 +24,10 @@
     url = "github:BlaseballCrabs/fizz-strat";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.nixos-apple-silicon = {
+    url = "github:tpwrules/nixos-apple-silicon";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

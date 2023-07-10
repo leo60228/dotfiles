@@ -1,9 +1,9 @@
 {
-  nixos = { config, lib, modulesPath, pkgs, ... }:
+  nixos = { config, lib, modulesPath, pkgs, flakes, ... }:
   {
     imports =
       [ "${modulesPath}/installer/scan/not-detected.nix"
-        ../modules/m1-support/default.nix
+        flakes.nixos-apple-silicon.nixosModules.apple-silicon-support
       ];
 
     boot.initrd.availableKernelModules = [ "usb_storage" ];
