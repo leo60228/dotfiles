@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    neochat
     konversation
     pokefinder
     leoPkgs.eontimer
