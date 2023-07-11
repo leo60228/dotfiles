@@ -48,5 +48,28 @@ lib.makeComponent "extra"
 
     # ntfs
     boot.supportedFilesystems = [ "ntfs" ];
+
+    # capture card
+    services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="video4linux", ENV{ID_VENDOR}="VXIS_Inc", ENV{ID_V4L_CAPABILITIES}=="*:capture:*", RUN+="${pkgs.writeScript "setup-capture" ''
+    #!/bin/sh
+    export PATH=${pkgs.leoPkgs.vxis-capture-fw-mod}/bin:${pkgs.v4l-utils}/bin:$PATH
+
+    # Disable black point adjustment
+    i2c_vs9989 -w 0x38 0 "$DEVNAME"
+
+    # disable sharpness/contrast/color processing
+    xdata -w 0x2170 0x80 "$DEVNAME"
+
+    # Set good ramps
+    v4l2-ctl -d "$DEVNAME" -c brightness=143
+    v4l2-ctl -d "$DEVNAME" -c contrast=110
+    v4l2-ctl -d "$DEVNAME" -c saturation=148
+
+    # Fix chroma siting
+    i2c_vs9989 -w 0x35 0x28 "$DEVNAME"
+    i2c_vs9989 -w 0x8d 0x48 "$DEVNAME"
+    ''}"
+    '';
   };
 })

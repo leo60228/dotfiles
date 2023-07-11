@@ -20,4 +20,5 @@ rec {
   twemoji-colr = callPackage ./twemoji-colr {};
   twemoji-svg = callPackage ./twemoji-svg {};
   vscode-fhs = callPackage ./vscode-fhs {};
+  vxis-capture-fw-mod = callPackage ./vxis-capture-fw-mod {};
 }
