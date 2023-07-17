@@ -44,7 +44,7 @@ lib.makeComponent "extra"
 
     environment.systemPackages = with pkgs; [
       wget vim androidenv.androidPkgs_9_0.platform-tools
-    ];
+    ] ++ lib.optionals config.services.xserver.enable [ linux-wifi-hotspot ];
 
     # ntfs
     boot.supportedFilesystems = [ "ntfs" ];
