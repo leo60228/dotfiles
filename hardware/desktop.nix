@@ -125,6 +125,7 @@
 
     #specialisation.amdgpu.configuration = { ... }: {
     hardware.nvidia.modesetting.enable = true;
+    hardware.nvidia.open = true;
     services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
     services.xserver.screenSection = ''
     Option "metamodes" "nvidia-auto-select +0+0 {AllowGSYNCCompatible=On}"
@@ -175,14 +176,6 @@
     systemd.services.rngd.before = [ "sysinit.target" "shutdown.target" ];
     boot.loader.timeout = null;
     boot.loader.systemd-boot.memtest86.enable = true;
-
-    systemd.shutdown.reset-gpu = pkgs.writeScript "reset-gpu" ''
-    #!${pkgs.bash}/bin/bash
-    [[ "$1" == "kexec" ]] || exit
-    echo 0000:43:00.0 > /sys/bus/pci/devices/0000\:43\:00.0/driver/unbind || true
-    echo 0000:43:00.1 > /sys/bus/pci/devices/0000\:43\:00.1/driver/unbind || true
-    echo 1 > /sys/bus/pci/devices/0000\:43\:00.0/reset
-    '';
 
     virtualisation.docker.enableNvidia = true;
   };
