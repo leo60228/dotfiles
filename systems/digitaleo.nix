@@ -112,6 +112,16 @@
     script = "${pkgs.fizz-strat}/bin/fizz-strat";
   };
 
+  systemd.services.searchdown = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/searchdown";
+    };
+    script = "${pkgs.nodejs_20}/bin/node dist/discord.js";
+  };
+
   services.mediawiki = {
     enable = true;
     name = "COAL Wiki";
