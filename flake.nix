@@ -54,12 +54,9 @@
     });
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
-      nix = flakes.nixpkgs.legacyPackages.${system}.nixUnstable;
-      nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild.override {
-        inherit nix;
-      };
+      nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild;
       bootstrap = let
-        inherit (nixpkgs.legacyPackages.${system}) makeWrapper stdenvNoCC lib;
+        inherit (nixpkgs.legacyPackages.${system}) makeWrapper stdenvNoCC lib nix;
       in stdenvNoCC.mkDerivation {
         name = "bootstrap";
         nativeBuildInputs = [ makeWrapper ];
