@@ -67,10 +67,13 @@
       "rtc_cmos"
     ];
     boot.initrd.kernelModules = [ "dm_mod" ];
-    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "edac_mce_amd" ];
+    boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "edac_mce_amd" "rgb133" ];
     boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     '';
+
+    boot.extraModulePackages = [ (pkgs.leoPkgs.datapath-vision config.boot.kernelPackages) ];
+    hardware.firmware = [ pkgs.leoPkgs.datapath-vision-firmware ];
 
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
