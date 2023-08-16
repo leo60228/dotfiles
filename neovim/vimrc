@@ -104,7 +104,7 @@ let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
 let g:OmniSharp_highlighting = 3
 
 " ALE
-let g:ale_linters = { 'cs': ['OmniSharp'], 'cpp': ['clangd'], 'c': ['clangd'], 'rust': ['analyzer'], 'java': [] }
+let g:ale_linters = { 'cs': ['OmniSharp'], 'c': [], 'cpp': [], 'rust': ['analyzer'], 'java': [] }
 let g:ale_fixers = { 'javascript': ['eslint'], 'rust': ['rustfmt'], 'terraform': ['terraform'] }
 let g:ale_lint_on_text_changed = 'always'
 
