@@ -166,7 +166,7 @@
     wl-clipboard
     gimp
     kitty
-    (python38.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
+    (python311.withPackages (ps: with ps; [ pyusb neovim pillow cryptography pip setuptools ]))
     vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
     #(libsForQt514.callPackage ./vlc.nix {})
