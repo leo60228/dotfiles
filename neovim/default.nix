@@ -31,6 +31,7 @@ in neovim.override {
 
         packages.leovim = with vimPlugins; {
             start = [
+                vim-abolish
                 vim-hardtime
                 editorconfig-vim
                 vim-sleuth
