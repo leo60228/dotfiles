@@ -19,6 +19,7 @@ lib.makeComponent "gui"
       enable = true;
       alsa.enable = true;
       pulse.enable = true;
+      jack.enable = true;
     };
     systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR = lib.mkIf cfg.audio ../files/profile-sets;
 
