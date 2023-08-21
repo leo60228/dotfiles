@@ -6,11 +6,13 @@ lib.makeComponent "hass"
   config = {
     networking.firewall.allowedTCPPorts = [ 8123 ];
 
-    services.home-assistant = {
-      enable = true;
-      config = null;
-      package = pkgs.home-assistant.override {
-	extraComponents = [ "default_config" "met" "hue" "ipp" "cast" "serial" "mqtt" "unifi" "nut" "backup" ];
+    virtualisation.oci-containers = {
+      backend = "podman";
+      containers.homeassistant = {
+	volumes = [ "home-assistant:/config" ];
+	environment.TZ = "America/New_York";
+	image = "ghcr.io/home-assistant/home-assistant:2023.8.3";
+	extraOptions = [ "--network=host" ];
       };
     };
 
