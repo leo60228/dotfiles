@@ -13,7 +13,6 @@ lib.makeComponent "apcupsd-server"
       UPSCLASS standalone
       UPSMODE disable
       NETSERVER on
-      NISIP 10.4.13.1
       '';
     };
     networking.firewall.allowedTCPPorts = [ 3551 ];

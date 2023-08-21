@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 with import ../components; {
-  components = efi en_us est home { small = true; } tailscale znc;
+  components = efi en_us est home { small = true; } tailscale znc hass unifi apcupsd-server mqtt;
 
   networking.firewall.allowedTCPPorts = [ 25565 25575 19132 ];
   networking.firewall.allowedUDPPorts = [ 25565 25575 19132 ];
