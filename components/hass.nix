@@ -12,7 +12,11 @@ lib.makeComponent "hass"
 	volumes = [ "home-assistant:/config" ];
 	environment.TZ = "America/New_York";
 	image = "ghcr.io/home-assistant/home-assistant:2023.8.3";
-	extraOptions = [ "--network=host" ];
+	extraOptions = [
+	  "--privileged"
+	  "--network=host"
+	  "--device=/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF60BCA0039F2939-if02:/dev/ttyACM0"
+	];
       };
     };
 
@@ -23,7 +27,7 @@ lib.makeComponent "hass"
 	serial.port = "/dev/serial/by-id/usb-Texas_Instruments_TI_CC2531_USB_CDC___0X00124B001949B2CD-if00";
 	frontend.port = 8456;
 	advanced.network_key = "!secret network_key";
-	mqtt.server = "mqtt://leoserv";
+	mqtt.server = "mqtt://127.0.0.1";
 	groups = "groups.yaml";
       };
     };
