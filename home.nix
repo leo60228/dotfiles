@@ -28,6 +28,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    isoimagewriter
     qpwgraph
     htop
     krdc
