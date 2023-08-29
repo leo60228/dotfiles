@@ -6,6 +6,7 @@
   home.stateVersion = "21.05";
 
   home.packages = with pkgs; if small then [
+    hyfetch
     libwebp
     ripgrep
     (callPackage ./neovim {})
@@ -28,6 +29,8 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    hyfetch
+    libsForQt5.kdelibs4support
     isoimagewriter
     qpwgraph
     htop
@@ -321,7 +324,7 @@
     eval $(hub alias -s)
 
     if [ -z "$NEOFETCH_RAN" ]; then
-        neofetch --config ${./files/neofetch.conf}
+        neowofetch --config ${./files/neofetch.conf}
         export NEOFETCH_RAN=1
     fi
   '';
