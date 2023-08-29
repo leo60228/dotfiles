@@ -10,7 +10,7 @@ lib.makeComponent "kde"
 
   config = mkMerge [ {
     environment.systemPackages = with pkgs; [
-      plasma-nm plasma-pa plasma5Packages.kde-gtk-config
+      plasma-nm plasma-pa plasma5Packages.kde-gtk-config leoPkgs.plasma6Packages.breeze-qt6
     ];
 
     # Enable the KDE Desktop Environment.
@@ -20,6 +20,11 @@ lib.makeComponent "kde"
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     environment.sessionVariables.MOZ_DISABLE_RDD_SANDBOX = "1";
+
+    qt = {
+      enable = true;
+      platformTheme = "kde";
+    };
   } (mkIf cfg.bluetooth {
     hardware.bluetooth.enable = true;
 

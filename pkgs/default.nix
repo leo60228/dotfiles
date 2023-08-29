@@ -17,6 +17,7 @@ rec {
   mastodon = callPackage ./mastodon {};
   multimc = callPackage ./multimc {};
   ping_exporter = callPackage ./ping_exporter {};
+  plasma6Packages = callPackage ./plasma-6 {};
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass {});
   rust = callPackage ./rust {};
   twemoji-colr = callPackage ./twemoji-colr {};
