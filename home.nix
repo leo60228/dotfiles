@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    pdm
     hyfetch
     libsForQt5.kdelibs4support
     isoimagewriter
