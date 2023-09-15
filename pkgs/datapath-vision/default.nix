@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
   substituteInPlace scripts/rgb133config.sh --replace '/boot/config-$KVER' "${kernel.configfile}"
   spatch --sp-file "${./vm_flags.cocci}" --dir src --in-place
   spatch --sp-file "${./snd_card_free.cocci}" --dir src --in-place
+  spatch --sp-file "${./get_user_pages.cocci}" --dir src --in-place
   # patch from https://marc.info/?l=kernel-janitors&m=159285076616726&w=4
   # (coccinelle used at build time to avoid redistribution)
   spatch --sp-file "${./dma-changes.cocci}" --dir src --in-place
