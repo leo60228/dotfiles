@@ -7,11 +7,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1695029081,
-        "narHash": "sha256-1jpJoeDbxYXWViVRkiSyDxsT4SqqsxgYu5Cg7xisKrA=",
+        "lastModified": 1695052866,
+        "narHash": "sha256-agn7F9Oww4oU6nPiw+YiYI9Xb4vOOE73w8PAoBRP4AA=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "57d5071e60c1318ec27eb987f96504ce3d58cb34",
+        "rev": "e3f41832680801d0ee9e2ed33eb63af398b090e9",
         "type": "github"
       },
       "original": {
@@ -30,11 +30,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1685762183,
-        "narHash": "sha256-43oM6MP6B45nG2ibSmQ/ch/4L31295xTrG/3AIDpoe8=",
+        "lastModified": 1695064238,
+        "narHash": "sha256-4I4IwBfLQ745htrcpM4SXMYBiTnL/gqS7H6uShAaJdE=",
         "owner": "BlaseballCrabs",
         "repo": "fizz-strat",
-        "rev": "1c9a60e3dde0bd561bb0a6933a8800e1cd95a403",
+        "rev": "1e45eb8e9d23da9c96811efaa2811381e2ffaa2e",
         "type": "github"
       },
       "original": {
@@ -212,11 +212,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1684789244,
-        "narHash": "sha256-fCbLEtcMKWDomgm8J/wmsP4Tg0C/k4l27VN8CmG1EoY=",
+        "lastModified": 1695064219,
+        "narHash": "sha256-otROtk60VJ7PDErc6hZ9LEjRPMJM/qzvs6YaOonlq1M=",
         "owner": "leo60228",
         "repo": "mpdiscord",
-        "rev": "f47508feeed24cbb5ffb3ef5a57f5b719c43f79a",
+        "rev": "9cba0d31728e6b5045e0256567dee366e5cda25d",
         "type": "github"
       },
       "original": {
