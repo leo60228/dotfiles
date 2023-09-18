@@ -18,7 +18,7 @@
     nix-prefetch-git
     ffmpeg
     gnupg
-    pkgconfig
+    pkg-config
     gist
     gitAndTools.hub
     p7zip
@@ -140,7 +140,7 @@
     pango
     pango.dev
     pango.out
-    pkgconfig
+    pkg-config
     portaudio
     xorg.libX11
     xorg.libX11.dev
