@@ -2,7 +2,7 @@
 { config, pkgs, ... }: with import ../components; rec {
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
-  components = en_us est docker extra server reverseproxy { host = "aws"; } tailscale;
+  components = en_us est docker server reverseproxy { host = "aws"; } tailscale;
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 5222 5269 5280 5443 ];
   networking.firewall.allowedUDPPorts = [ 2782 25565 ];
