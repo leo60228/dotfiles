@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: with import ../components; rec {
   components = en_us efi est server tailscale;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 9200 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9200 5601 ];
 
   services.mastodon = {
     enable = true;
@@ -66,6 +66,27 @@
       sleep 1
     done
   '';
+
+  services.kibana = {
+    enable = true;
+    listenAddress = "crabstodon.capybara-pirate.ts.net";
+    elasticsearch = {
+      username = "kibana_system";
+      password = "\${ES_PASS}";
+      certificateAuthorities = [];
+    };
+    extraConf = {
+      xpack.encryptedSavedObjects.encryptionKey = "\${ESO_KEY}";
+      xpack.reporting.encryptionKey = "\${REPORTING_KEY}";
+      xpack.security.encryptionKey = "\${SECURITY_KEY}";
+    };
+  };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "nodejs-16.20.2"
+  ];
+
+  systemd.services.kibana.serviceConfig.EnvironmentFile = "/var/lib/kibana/.secrets_env";
 
   systemd.services.mastodon-init-dirs.postStart = ''
   cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
