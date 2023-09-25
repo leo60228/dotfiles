@@ -44,6 +44,7 @@
     enable = true;
     enableUnixSocket = false;
     package = pkgs.leoPkgs.crabstodon;
+    extraEnvFiles = [ "/var/lib/mastodon/.extra_secrets_env" ];
     localDomain = "60228.dev";
     smtp = {
       createLocally = false;
@@ -104,15 +105,6 @@
   #  '';
   #  serviceConfig.Restart = "always";
   #};
-
-  users.extraUsers.thefox = {
-    isNormalUser = true;
-    shell = pkgs.shadow;
-    openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFN9j+mJvYm9IVkcpgN2exgeryB6TOOazG9EKSKbd5djIUk4Kgy8hQzJWW+zD3OIR4WCezeYTC7Cckpz3MpBlJxaF+clUQNTzz/Xs6ROonnnp8A/YUy1eqfuKLVbM+67WOLIwiNZdklTuVVD79sUsDwyxdpUfQfNbLUZxyyG6itw/g/lDWGzd28D4YY1IJTCyTF/53bwFhlWDiOr+1lklw4oCvgWa3rYQEtHfXWMKtY93wZNUUaI4RxJ2PO/cgCZGgkwiLJTZ6mgWBrxjmYg6Pi8VLy5aWiTIyc+X9z28ycT6cULd/xEpXBFiEvANsme+ChxTNOhiXGosIDFPhndAV thefox@foxs-pc"
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9YgtqLs76ZQHml8rzwRzJgR1xWmeBAZ+NTXCX3UQ63vmKOYCzQn5WbDiKxs5dIPq1cFYHMnx2QstGYmRyAS8DCyhGYciu8BIXG/4lswWmheOhuQDM2sEgqZSOUekf5W+f9fxvkZwem7oZfTJk/WGs0junbCpvTl/lFZts8qX7osyhHQ4AtbUKzj9vwsAukwgzzGXAUhT9+Fqs9j4lWmRJGRH4lN0wvsAXpufLR5GAjS0IWazo/xleMVSz8AOYY0kA8yn5TzQq5RAuN6zUE8LiIFBrO0QKiTIwpXGj7FF7+ULFXYTHy8AwsagN5Fn6HWMKqAWaLwh7RtKGzhQAmx1n leo60228@digitaleo"
-    ];
-  };
 
   networking.wireguard.enable = true;
   networking.wireguard.interfaces.wg0 = {

@@ -1,7 +1,7 @@
-{ config, pkgs, ... }: with import ../components; rec {
+{ config, pkgs, lib, ... }: with import ../components; rec {
   components = en_us efi est server tailscale;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9200 ];
 
   services.mastodon = {
     enable = true;
@@ -47,8 +47,25 @@
   services.elasticsearch = {
     enable = true;
     package = pkgs.elasticsearch7;
-    extraConf = "xpack.security.enabled: false"; # not allowed in firewall anyway
+    extraConf = ''
+    xpack.security.enabled: true
+    xpack.security.transport.ssl.enabled: true
+    xpack.security.transport.ssl.verification_mode: certificate
+    xpack.security.transport.ssl.client_authentication: required
+    xpack.security.transport.ssl.keystore.path: elastic-certificates.p12
+    xpack.security.transport.ssl.truststore.path: elastic-certificates.p12
+    http.bind_host: ["_local_", "_tailscale0_"]
+    http.publish_host: "_tailscale0_"
+    '';
   };
+
+  systemd.services.elasticsearch.postStart = lib.mkForce ''
+    # Make sure elasticsearch is up and running before dependents
+    # are started
+    while ! ${pkgs.curl}/bin/curl -sS http://localhost:9200 2>/dev/null; do
+      sleep 1
+    done
+  '';
 
   systemd.services.mastodon-init-dirs.postStart = ''
   cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
