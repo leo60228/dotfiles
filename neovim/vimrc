@@ -182,6 +182,11 @@ require("echo-diagnostics").setup {
 }
 EOF
 
+" nvim-textmate
+lua <<EOF
+require('nvim-textmate').setup {}
+EOF
+
 " }}}
 
 " Filetype commands {{{

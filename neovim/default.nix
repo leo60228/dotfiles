@@ -66,6 +66,7 @@ in neovim.override {
                 (callPackage ./nvim-treesitter-refactor.nix {})
                 vim-auto-save
                 (callPackage ./nvim-echo-diagnostics.nix {})
+                (callPackage ./nvim-textmate.nix {})
             ];
 
             opt = [
