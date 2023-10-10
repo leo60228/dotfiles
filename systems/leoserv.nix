@@ -30,6 +30,50 @@ with import ../components; {
     };
   };
 
+  users.users.showdown = {
+    home = "/var/lib/pokemon-showdown";
+    group = "nogroup";
+    createHome = true;
+    isSystemUser = true;
+    useDefaultShell = true;
+  };
+
+  systemd.services.pokemon-showdown = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    script = "./pokemon-showdown";
+    path = with pkgs; [ nodejs ];
+    serviceConfig = {
+      User = "showdown";
+      WorkingDirectory = "/var/lib/pokemon-showdown";
+      Restart = "always";
+      RestartSec = 5;
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+    };
+  };
+
+  services.cloudflared = {
+    enable = true;
+    tunnels = {
+      "e6eaa4f6-af36-4acf-be20-17c48c209744" = {
+        credentialsFile = "/var/lib/cloudflared/e6eaa4f6-af36-4acf-be20-17c48c209744.json";
+        default = "http_status:404";
+        ingress."showdown.l3.pm" = "http://127.0.0.1:80";
+      };
+    };
+  };
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_14;
+    ensureDatabases = [ "showdown" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
+  };
+
   #systemd.services.serversync = {
   #  after = [ "network-online.target" ];
   #  wants = [ "network-online.target" ];

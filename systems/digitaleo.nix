@@ -122,6 +122,16 @@
     script = "${pkgs.nodejs_20}/bin/node dist/discord.js";
   };
 
+  systemd.services.upd8r = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/upd8r";
+    };
+    script = "${pkgs.upd8r}/bin/upd8r";
+  };
+
   services.mediawiki = {
     enable = true;
     name = "COAL Wiki";

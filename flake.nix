@@ -28,6 +28,10 @@
     url = "github:tpwrules/nixos-apple-silicon";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.upd8r = {
+    url = "github:leo60228/upd8r";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

@@ -1,13 +1,13 @@
 { lib }: lib.firefoxOverlay.firefoxVersion {
   name = "Firefox";
   wmClass = "firefox";
-  version = "118.0.1";
+  version = "118.0.2";
   release = true;
   info = {
-    url = "https://download.cdn.mozilla.net/pub/firefox/releases/118.0.1/linux-x86_64/en-US/firefox-118.0.1.tar.bz2";
-    sha512 = "e6ea959927d352987386178f2141e6342b2d789545f0d92058e042ec66df144de9b1826e0079857b5a546c98cc9d41f391c9e11bbe86a219b5a25ed2fa14c6d0";
+    url = "https://download.cdn.mozilla.net/pub/firefox/releases/118.0.2/linux-x86_64/en-US/firefox-118.0.2.tar.bz2";
+    sha512 = "561ba9aae59cdde3ff5d0b37fcf4f13a7f07e2257af63e290a64b84c207b5481b03b266d8c00ff14c136fa20392949d5532a713fdab8b151307400092c811c93";
     chksumSig = null;
-    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/118.0.1/linux-x86_64/en-US/firefox-118.0.1.tar.bz2.asc";
-    sigSha512 = "a716432b21a8798c550068487ee239b3bf6c42eeeca0757bbdfcefd11f5a95a68d49e69d34aea81f18f096f6af949a38d43386879702da7f6267e133ccb1cd05";
+    sig = "https://download.cdn.mozilla.net/pub/firefox/releases/118.0.2/linux-x86_64/en-US/firefox-118.0.2.tar.bz2.asc";
+    sigSha512 = "c09472ab31f2268e675892b2b64015d071bd9e393549f7eb8db53f5ccad005886c61b7f66d7c8d291bbfe95f4d0c74a5da5f1870f261b0e7854dd09a111b5f4c";
   };
 }
