@@ -29,6 +29,12 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    ares
+    citra
+    ryujinx
+    ctrtool
+    hactool
+    skanpage
     pdm
     hyfetch
     libsForQt5.kdelibs4support

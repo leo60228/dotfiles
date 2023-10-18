@@ -23,6 +23,9 @@ lib.makeComponent "extra"
     # printer
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.hplip pkgs.gutenprint pkgs.gutenprintBin ];
+    hardware.sane.enable = true;
+    hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+    users.extraUsers.leo60228.extraGroups = [ "scanner" ];
 
     programs.bash.enableCompletion = true;
 
