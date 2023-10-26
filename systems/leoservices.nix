@@ -36,6 +36,28 @@
     };
   };
 
+  systemd.services.pds = {
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      WorkingDirectory = "/var/lib/pds";
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file /var/lib/pds/compose.yaml up --detach";
+      ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file /var/lib/pds/compose.yaml down";
+    };
+
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  security.acme.certs."pds.vriska.dev" = {
+    domain = "*.pds.vriska.dev";
+    extraDomainNames = [ "pds.vriska.dev" ];
+    dnsProvider = "cloudflare";
+    credentialsFile = "/var/lib/pds/cloudflare-token";
+  };
+
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_14;
   services.redis.servers."".enable = true;

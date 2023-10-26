@@ -11,7 +11,6 @@ lib.makeComponent "reverseproxy"
   config = {
     security.acme.defaults.email = "leo@60228.dev";
     security.acme.acceptTerms = true;
-
     services.phpfpm = lib.mkIf (cfg.host == "aws") (lib.mkForce {
       pools."php" = {
         user = "nginx";
@@ -160,6 +159,22 @@ lib.makeComponent "reverseproxy"
               '';
             };
           };
+	  "*.pds.vriska.dev" = {
+	    forceSSL = true;
+	    useACMEHost = "pds.vriska.dev";
+	    locations."/" = {
+              proxyWebsockets = true;
+	      proxyPass = "http://localhost:3000";
+	    };
+	  };
+	  "pds.vriska.dev" = {
+	    forceSSL = true;
+	    useACMEHost = "pds.vriska.dev";
+	    locations."/" = {
+              proxyWebsockets = true;
+	      proxyPass = "http://localhost:3000";
+	    };
+	  };
           "localhost" = {
             default = true;
             locations = {

@@ -62,7 +62,7 @@ with import ../components; rec {
     script = "bash ./run.sh";
   };
 
-  networking.firewall.allowedTCPPorts = [ 41300 9516 9225 8096 8920 80 443 4001 ];
+  networking.firewall.allowedTCPPorts = [ 41300 9516 9225 8096 8920 80 443 4001 25567 ];
   networking.firewall.allowedUDPPorts = [ 41300 19132 1900 7359 4001 ];
 
   services.openssh.settings.PasswordAuthentication = false;
