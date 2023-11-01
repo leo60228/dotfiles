@@ -5,9 +5,6 @@ lib.makeComponent "firefox"
 
   config = {
     environment.etc."firefox/policies/policies.json".text = let
-      firefox-unwrapped = (import ./firefox.nix pkgs.lib).unwrapped.overrideAttrs (oldAttrs: {
-        passthru.applicationName = "firefox";
-      });
       prefs = {
         "dom.allow_scripts_to_close_windows" = true;
         "dom.webgpu.enabled" = true;

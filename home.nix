@@ -53,7 +53,7 @@
     coursier
     alsaUtils
     gitAndTools.lab
-    (leoPkgs.firefox.overrideAttrs (oldAttrs: {
+    (firefox.overrideAttrs (oldAttrs: {
       passthru.applicationName = "firefox";
     }))
     clang-tools
