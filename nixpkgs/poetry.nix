@@ -1,2 +1,2 @@
 { poetry2nix-src, ... }:
-poetry2nix-src.overlay
+poetry2nix-src.overlays.default
