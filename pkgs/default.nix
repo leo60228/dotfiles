@@ -9,10 +9,6 @@ rec {
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision {};
   datapath-vision-firmware = callPackage ./datapath-vision-firmware {};
   discord = callPackage ./discord {};
-  lemmy-server = callPackage ./lemmy/server.nix {};
-  lemmy-ui = callPackage ./lemmy/ui.nix {
-    nodejs = nodejs_18;
-  };
   mastodon = callPackage ./mastodon {};
   multimc = callPackage ./multimc {};
   ping_exporter = callPackage ./ping_exporter {};

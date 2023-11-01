@@ -1,7 +1,0 @@
-{
-  "version": "0.18.0-rc.6",
-  "serverSha256": "sha256-HX+oz8UNreHv0RgCseFqvEv44vGSaRbYquk11aTlveA=",
-  "serverCargoSha256": "sha256-Rl4abwO0qQruGVcdbcJLxl1/8MeetNvBnbpNHz9ZBPE=",
-  "uiSha256": "sha256-shiiZ0uMHhzjBegJQaAene3M+cKYxhbVQkliLD5u+Nk=",
-  "uiYarnDepsSha256": "sha256-NtluS6Cr39L9nGwNA17c7xsM5xoJraS02a7sp7r9KPI="
-}

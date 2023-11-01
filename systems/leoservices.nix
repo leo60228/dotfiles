@@ -88,8 +88,6 @@
 
   services.lemmy = {
     enable = true;
-    ui.package = pkgs.leoPkgs.lemmy-ui;
-    server.package = pkgs.leoPkgs.lemmy-server;
     database = {
       createLocally = true;
       uri = "postgres:///lemmy?host=/run/postgresql&user=lemmy";
