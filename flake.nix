@@ -14,7 +14,10 @@
     url = github:nmattia/naersk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.poetry2nix-src.url = github:nix-community/poetry2nix;
+  inputs.poetry2nix-src = {
+    url = github:nix-community/poetry2nix;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.mpdiscord = {
     url = github:leo60228/mpdiscord;
     inputs.nixpkgs.follows = "nixpkgs";
