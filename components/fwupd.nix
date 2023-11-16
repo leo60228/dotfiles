@@ -6,6 +6,7 @@ lib.makeComponent "fwupd"
   config = {
     services.fwupd.enable = true;
     services.packagekit.enable = true;
+    services.packagekit.settings.Daemon.DefaultBackend = "test_succeed";
     environment.systemPackages = with pkgs; [ plasma5Packages.discover ];
     environment.etc."fwupd/remotes.d/lvfs-testing.conf" = lib.mkForce {
       text = ''
