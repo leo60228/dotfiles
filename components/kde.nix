@@ -10,7 +10,7 @@ lib.makeComponent "kde"
 
   config = mkMerge [ {
     environment.systemPackages = with pkgs; [
-      plasma-nm plasma-pa plasma5Packages.kde-gtk-config kde2nix.plasma.breeze
+      plasma-nm plasma-pa plasma5Packages.kde-gtk-config plasma5Packages.sddm-kcm kde2nix.plasma.breeze
     ];
 
     # Enable the KDE Desktop Environment.
