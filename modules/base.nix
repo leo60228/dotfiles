@@ -74,6 +74,7 @@
     SUBSYSTEM=="usb", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="0109", TAG+="uaccess", MODE="0666"
     ATTRS{id/vendor}=="057e", ATTRS{id/product}=="2009", TAG+="uaccess", MODE="0666"
     ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2175", TAG+="uaccess", MODE="0666"
+    ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2145", TAG+="uaccess", MODE="0666"
     ${builtins.readFile ../files/99-jlink.rules}
   '';
 
