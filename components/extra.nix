@@ -74,5 +74,8 @@ lib.makeComponent "extra"
     i2c_vs9989 -w 0x8d 0x48 "$DEVNAME"
     ''}"
     '';
+
+    # nix-ld
+    programs.nix-ld.enable = true;
   };
 })
