@@ -1,7 +1,8 @@
-{ callPackage, nodejs_18, python3, libsForQt5 }:
+{ callPackage, nodejs_18, python3, libsForQt5, qt6 }:
 
 rec {
   bin = callPackage ./bin {};
+  bloom = qt6.callPackage ./bloom {};
   crabstodon = callPackage ./crabstodon {};
   eontimer = libsForQt5.callPackage ./eontimer {
     inherit qtsass;
