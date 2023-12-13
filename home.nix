@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    platformio
     ares
     citra
     ryujinx

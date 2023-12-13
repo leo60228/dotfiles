@@ -43,7 +43,7 @@ lib.makeComponent "extra"
     '';
 
     # adb
-    services.udev.packages = [ pkgs.android-udev-rules ];
+    services.udev.packages = [ pkgs.android-udev-rules pkgs.platformio-core pkgs.openocd ];
 
     environment.systemPackages = with pkgs; [
       wget vim androidenv.androidPkgs_9_0.platform-tools
