@@ -24,7 +24,7 @@ lib.makeComponent "hass"
       enable = true;
       settings = {
 	homeassistant = true;
-	serial.port = "/dev/serial/by-id/usb-Texas_Instruments_TI_CC2531_USB_CDC___0X00124B001949B2CD-if00";
+	serial.port = "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_a0b342a38245ed119082c68f0a86e0b4-if00-port0";
 	frontend.port = 8456;
 	advanced.network_key = "!secret network_key";
 	mqtt.server = "mqtt://127.0.0.1";
