@@ -29,6 +29,8 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    pkgsCross.avr.stdenv.cc
+    avrdude
     bloom
     platformio
     ares
