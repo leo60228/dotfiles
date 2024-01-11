@@ -51,6 +51,7 @@
       # SATA
       "ahci"
       "sd_mod"
+      "nvme"
 
       # USB
       "xhci_hcd"
@@ -66,7 +67,7 @@
       # RTC
       "rtc_cmos"
     ];
-    boot.initrd.kernelModules = [ "dm_mod" ];
+    boot.initrd.kernelModules = [ "dm_mod" "dm-snapshot" ];
     boot.kernelModules = [ "kvm-amd" "i2c-piix4" "i2c-dev" "edac_mce_amd" "rgb133" ];
     boot.extraModprobeConfig = ''
     options kvm-amd nested=1
