@@ -114,6 +114,7 @@
     nix-prefetch-git
     pandoc
     (leoPkgs.discord.override { inherit deviceScaleFactor; })
+    vesktop
     (hiPrio gtk2)
     (lowPrio llvmPackages.clang-unwrapped)
     SDL

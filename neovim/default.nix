@@ -40,7 +40,7 @@ in neovim.override {
                 (callPackage ./ale.nix {})
                 (callPackage ./nvim-treesitter.nix {
                     grammars = {
-                        inherit (tree-sitter.builtGrammars) tree-sitter-javascript tree-sitter-html tree-sitter-regex tree-sitter-pioasm;
+                        inherit (tree-sitter.builtGrammars) tree-sitter-html tree-sitter-regex tree-sitter-pioasm;
                         tree-sitter-astro = callPackage ./grammar.nix {} {
                             language = "astro";
                             inherit (tree-sitter) version;
