@@ -21,12 +21,12 @@ with lib;
 
     components._lastComponent = mkOption {
       default = "";
-      type = types.string;
+      type = types.str;
     };
 
     components._name = mkOption {
       default = "";
-      type = types.string;
+      type = types.str;
     };
   };
 

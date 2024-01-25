@@ -19,13 +19,9 @@ lib.makeComponent "postgres"
       enable = true;
       ensureUsers = [ {
         name = "leo60228";
-        ensurePermissions = {
-          "DATABASE datablase" = "ALL PRIVILEGES";
-          "DATABASE fluthlu" = "ALL PRIVILEGES";
-          "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
       } ];
-      ensureDatabases = [ "datablase" "fluthlu" ];
+      ensureDatabases = [ "leo60228" ];
     };
 
     containers.temp-pg.config.system.stateVersion = "22.11";

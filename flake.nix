@@ -36,7 +36,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.kde2nix = {
-    url = "gitlab:K900/kde2nix";
+    url = "github:nix-community/kde2nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 

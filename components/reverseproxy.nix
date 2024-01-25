@@ -3,7 +3,7 @@ lib.makeComponent "reverseproxy"
 ({cfg, config, pkgs, lib, ...}: with lib; {
   opts = {
     host = mkOption {
-      type = types.nullOr types.string;
+      type = types.nullOr types.str;
       default = null;
     };
   };
@@ -99,7 +99,7 @@ lib.makeComponent "reverseproxy"
             };
 
             locations."/api/v1/streaming/" = {
-              proxyPass = "http://127.0.0.1:55000/";
+              proxyPass = "http://unix:/run/mastodon-streaming/streaming-1.socket";
               proxyWebsockets = true;
             };
 

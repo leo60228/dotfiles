@@ -66,6 +66,7 @@
     enable = true;
     enableUnixSocket = false;
     package = pkgs.leoPkgs.crabstodon;
+    streamingProcesses = 1;
     extraEnvFiles = [ "/var/lib/mastodon/.extra_secrets_env" ];
     localDomain = "60228.dev";
     smtp = {
@@ -82,7 +83,7 @@
       MAX_PROFILE_FIELDS = "15";
 
       GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
-      SOURCE_TAG = config.services.mastodon.package.src.src.rev;
+      SOURCE_TAG = config.services.mastodon.package.src.rev;
     };
   };
 

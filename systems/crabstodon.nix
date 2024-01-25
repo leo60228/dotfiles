@@ -7,6 +7,8 @@
     enable = true;
     package = pkgs.leoPkgs.crabstodon;
 
+    streamingProcesses = 3;
+
     localDomain = "crabs.life";
 
     smtp = {
@@ -38,7 +40,7 @@
       MAX_POLL_OPTIONS = "15";
 
       GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
-      SOURCE_TAG = config.services.mastodon.package.src.src.rev;
+      SOURCE_TAG = config.services.mastodon.package.src.rev;
     };
   };
 
@@ -67,20 +69,20 @@
     done
   '';
 
-  services.kibana = {
-    enable = true;
-    listenAddress = "crabstodon.capybara-pirate.ts.net";
-    elasticsearch = {
-      username = "kibana_system";
-      password = "\${ES_PASS}";
-      certificateAuthorities = [];
-    };
-    extraConf = {
-      xpack.encryptedSavedObjects.encryptionKey = "\${ESO_KEY}";
-      xpack.reporting.encryptionKey = "\${REPORTING_KEY}";
-      xpack.security.encryptionKey = "\${SECURITY_KEY}";
-    };
-  };
+  #services.kibana = {
+  #  enable = true;
+  #  listenAddress = "crabstodon.capybara-pirate.ts.net";
+  #  elasticsearch = {
+  #    username = "kibana_system";
+  #    password = "\${ES_PASS}";
+  #    certificateAuthorities = [];
+  #  };
+  #  extraConf = {
+  #    xpack.encryptedSavedObjects.encryptionKey = "\${ESO_KEY}";
+  #    xpack.reporting.encryptionKey = "\${REPORTING_KEY}";
+  #    xpack.security.encryptionKey = "\${SECURITY_KEY}";
+  #  };
+  #};
 
   nixpkgs.config.permittedInsecurePackages = [
     "nodejs-16.20.2"
@@ -118,7 +120,7 @@
         };
 
         locations."/api/v1/streaming/" = {
-          proxyPass = "http://unix:/run/mastodon-streaming/streaming.socket";
+          proxyPass = "http://mastodon-streaming";
           proxyWebsockets = true;
         };
       };
@@ -172,6 +174,16 @@
           proxyPass = "https://idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com/crabstodon-user-content/";
         };
       };
+    };
+    upstreams.mastodon-streaming = {
+      extraConfig = ''
+        least_conn;
+      '';
+      servers = builtins.listToAttrs
+        (map (i: {
+          name = "unix:/run/mastodon-streaming/streaming-${toString i}.socket";
+          value = { };
+        }) (lib.range 1 config.services.mastodon.streamingProcesses));
     };
   };
 

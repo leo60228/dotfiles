@@ -39,6 +39,10 @@ lib.makeComponent "hass"
 	driver = "apcupsd-ups";
 	port = "leoserv";
       };
+      upsd.listen = [ {
+	address = "0.0.0.0";
+      } ];
+      upsmon.settings.MINSUPPLIES = 0;
     };
   };
 })
