@@ -29,6 +29,8 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    gamescope
+    lutris
     pkgsCross.avr.stdenv.cc
     avrdude
     bloom
