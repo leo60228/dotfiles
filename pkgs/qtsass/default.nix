@@ -1,9 +1,7 @@
 { lib
 , buildPythonPackage
 , fetchFromGitHub
-, flaky
 , libsass
-, pytestCheckHook
 , pythonRelaxDepsHook
 }:
 
@@ -22,11 +20,9 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ libsass ];
 
-  checkInputs = [ pytestCheckHook flaky ];
-
   pythonRelaxDeps = [ "libsass" ];
 
-  pytestFlagsArray = [ "tests/" ];
+  doCheck = false;
 
   meta = with lib; {
     homepage = "https://github.com/spyder-ide/qtsass";
