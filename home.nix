@@ -244,6 +244,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     grabKeyboardAndMouse = false;
+    pinentryFlavor = "qt";
   };
 
   programs.home-manager.enable = true;
