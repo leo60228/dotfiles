@@ -9,7 +9,10 @@ vimUtils.buildVimPlugin {
   };
   nativeBuildInputs = [ python3 autoconf automake libtool cmake lua ];
   dontConfigure = true;
-  postPatch = "patchShebangs .";
+  postPatch = ''
+  patchShebangs .
+  sed -i '5s;^;#include <stdint.h>\n;' libs/tm-parser/textmate/extensions/utf8.h
+  '';
   buildPhase = ''
   runHook preBuild
   make prebuild
