@@ -3,8 +3,8 @@
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "041164f7f0fdd9fa18663093c9662256ad5ad80d";
-    hash = "sha256-mAUAfirnpX0CwchPxpWps5qIi/m9RZ/IZAYTUTkzA/s=";
+    rev = "43f703745e27e125aa1c792d629ddd145815ef98";
+    hash = "sha256-5sY6Grq6aHO2Ge7gDLnYvE9NyWSo2Z54WMaC38KydxQ=";
   };
 in applyPatches {
   inherit src;
