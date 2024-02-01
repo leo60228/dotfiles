@@ -90,7 +90,7 @@
     "nodejs-16.20.2"
   ];
 
-  systemd.services.kibana.serviceConfig.EnvironmentFile = "/var/lib/kibana/.secrets_env";
+  #systemd.services.kibana.serviceConfig.EnvironmentFile = "/var/lib/kibana/.secrets_env";
 
   systemd.services.mastodon-init-dirs.postStart = ''
   cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
