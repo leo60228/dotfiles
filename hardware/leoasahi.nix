@@ -35,6 +35,7 @@
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
     hardware.asahi.extractPeripheralFirmware = false;
+    hardware.asahi.withRust = true;
   };
 
   nixops = {
