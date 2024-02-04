@@ -93,8 +93,6 @@
     alsaLib
     alsaLib.dev
     gdb
-    (lib.setPrio (-100) llvmPackages_8.clang)
-    llvmPackages_8.llvm
     #(callPackage ./unityenv.nix {})
     easytag
     cantata
@@ -118,7 +116,6 @@
     (leoPkgs.discord.override { inherit deviceScaleFactor; })
     vesktop
     (hiPrio gtk2)
-    (lowPrio llvmPackages.clang-unwrapped)
     SDL
     SDL2
     atk
@@ -353,7 +350,6 @@
     BAT_THEME = "Solarized";
   } // (if small then {} else {
     CPATH = "/home/leo60228/.nix-profile/include:${pkgs.gtk3.dev}/include/gtk-3.0:${pkgs.glib.out}/lib/glib-2.0/include:${pkgs.glib.dev}/include/glib-2.0:${pkgs.pango.dev}/include/pango-1.0:${pkgs.cairo.dev}/include/cairo:${pkgs.gdk-pixbuf.dev}/include/gdk-pixbuf-2.0:${pkgs.atk.dev}/include/atk-1.0";
-    LIBCLANG_PATH = "${pkgs.llvmPackages.clang-unwrapped.lib}/lib";
     OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
     OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
   });
