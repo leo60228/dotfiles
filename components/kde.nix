@@ -27,16 +27,17 @@ lib.makeComponent "kde"
     };
   } (mkIf (!cfg.plasma6) {
     environment.systemPackages = with pkgs; [
-      plasma-nm plasma-pa plasma5Packages.kde-gtk-config plasma5Packages.sddm-kcm kdePackages.breeze skanpage isoimagewriter krdc neochat konversation
+      plasma-nm plasma-pa plasma5Packages.kde-gtk-config plasma5Packages.sddm-kcm kdePackages.breeze skanpage isoimagewriter krdc neochat konversation discover
     ];
 
     services.xserver.desktopManager.plasma5.enable = true;
   }) (mkIf cfg.plasma6 {
     environment.systemPackages = with pkgs.kdePackages; [
-      sddm-kcm audiocd-kio skanpage isoimagewriter krdc neochat konversation
+      sddm-kcm audiocd-kio skanpage isoimagewriter krdc neochat konversation breeze-icons discover
     ];
 
     services.xserver.desktopManager.plasma6.enable = true;
+    xdg.icons.enable = true;
   }) (mkIf cfg.bluetooth {
     hardware.bluetooth.enable = true;
 
