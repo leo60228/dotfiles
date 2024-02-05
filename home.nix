@@ -40,16 +40,11 @@
     ryujinx
     ctrtool
     hactool
-    skanpage
     pdm
     hyfetch
     libsForQt5.kdelibs4support
-    isoimagewriter
     qpwgraph
     htop
-    krdc
-    neochat
-    konversation
     pokefinder
     leoPkgs.eontimer
     jetbrains-toolbox

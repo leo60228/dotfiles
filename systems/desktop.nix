@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 
 with import ../components; rec {
-  components = efi en_us est extra { graalvm = true; } gui kde steam docker home { deviceScaleFactor = 2; } kvm glances flatpak prometheus ibus apcupsd { timeout = 300; minutes = 15; batteryLevel = 50; } tailscale postgres mosh usbmuxd nixbuild firefox kdeconnect fwupd lxd;
+  components = efi en_us est extra { graalvm = true; } gui kde { plasma6 = true; } steam docker home { deviceScaleFactor = 2; } kvm glances flatpak prometheus ibus apcupsd { timeout = 300; minutes = 15; batteryLevel = 50; } tailscale postgres mosh usbmuxd nixbuild firefox kdeconnect fwupd lxd;
 
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [ 34567 34568 22000 8010 6600 9999 ];
   networking.firewall.allowedUDPPorts = [ 4010 8000 8001 34567 34568 21027 6600 ];
