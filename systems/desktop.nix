@@ -43,5 +43,7 @@ with import ../components; rec {
     '';
   };
 
+  nix.settings.allowed-uris = [ "github:" "https://github.com" "git+https://github.com" "gitlab:" "https://gitlab.com" "git+https://gitlab.com" ];
+
   services.postgresql.settings.max_connections = 200;
 }
