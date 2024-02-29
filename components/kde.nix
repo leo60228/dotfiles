@@ -20,6 +20,7 @@ lib.makeComponent "kde"
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     environment.sessionVariables.MOZ_DISABLE_RDD_SANDBOX = "1";
+    environment.sessionVariables.QT_LOGGING_RULES = "*.debug=false";
 
     qt = {
       enable = true;
