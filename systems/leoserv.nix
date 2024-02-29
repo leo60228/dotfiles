@@ -57,7 +57,6 @@ with import ../components; {
 
   services.cloudflared = {
     enable = true;
-    package = pkgs.cloudflared.override { buildGoModule = pkgs.buildGo120Module; }; # TODO: remove
     tunnels = {
       "e6eaa4f6-af36-4acf-be20-17c48c209744" = {
         credentialsFile = "/var/lib/cloudflared/e6eaa4f6-af36-4acf-be20-17c48c209744.json";
