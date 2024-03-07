@@ -2,8 +2,8 @@
   components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
 
   networking.firewall = {
-    allowedTCPPorts = [ 25565 9090 80 443 ];
-    allowedUDPPorts = [ 51820 443 ];
+    allowedTCPPorts = [ 24872 25565 9090 80 443 ];
+    allowedUDPPorts = [ 24872 51820 443 ];
     allowPing = true;
   };
 
@@ -130,6 +130,17 @@
       WorkingDirectory = "/var/lib/upd8r";
     };
     script = "${pkgs.upd8r}/bin/upd8r";
+  };
+
+  systemd.services.citra-room = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+    };
+    script = ''
+    ${pkgs.citra}/bin/citra-room --room-name 'USA East - Pokémon Ultra Sun and Ultra Moon - vriska' --preferred-game 'Pokémon Ultra Sun' --preferred-game-id '00040000001B5000' --ban-list-file /var/lib/citra-banlist
+    '';
   };
 
   services.mediawiki = {
