@@ -33,6 +33,7 @@ in neovim.override {
         packages.leovim = with vimPlugins; {
             start = [
                 vim-abolish
+                vim-unimpaired
                 vim-hardtime
                 editorconfig-vim
                 vim-sleuth
