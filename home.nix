@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    thunderbird
     gamescope
     lutris
     pkgsCross.avr.stdenv.cc
