@@ -43,6 +43,6 @@ lib.makeComponent "kde"
     hardware.bluetooth.enable = true;
 
     # software support
-    environment.systemPackages = with pkgs; [ bluedevil ];
+    environment.systemPackages = if cfg.plasma6 then [ pkgs.kdePackages.bluedevil ] else [ pkgs.bluedevil ];
   }) ];
 })
