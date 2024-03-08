@@ -139,7 +139,7 @@
       Restart = "on-failure";
     };
     script = ''
-    ${pkgs.citra}/bin/citra-room --room-name 'USA East - Pokémon Ultra Sun and Ultra Moon - vriska' --preferred-game 'Pokémon Ultra Sun' --preferred-game-id '00040000001B5000' --ban-list-file /var/lib/citra-banlist
+    ${pkgs.leoPkgs.citra}/bin/citra-room --room-name 'USA East - Pokémon Ultra Sun and Ultra Moon - vriska' --preferred-game 'Pokémon Ultra Sun' --preferred-game-id '00040000001B5000' --ban-list-file /var/lib/citra-banlist
     '';
   };
 
