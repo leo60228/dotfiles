@@ -5,8 +5,8 @@ with import ../components; {
 
   boot.enableContainers = false;
 
-  networking.firewall.allowedTCPPorts = [ 25565 25575 19132 8443 ];
-  networking.firewall.allowedUDPPorts = [ 25565 25575 19132 ];
+  networking.firewall.allowedTCPPorts = [ 25565 25575 19132 8443 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 25565 25575 19132 80 443 ];
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
@@ -40,31 +40,54 @@ with import ../components; {
     useDefaultShell = true;
   };
 
-  systemd.services.pokemon-showdown = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    script = "./pokemon-showdown";
-    path = with pkgs; [ nodejs ];
-    serviceConfig = {
-      User = "showdown";
-      WorkingDirectory = "/var/lib/pokemon-showdown";
-      Restart = "always";
-      RestartSec = 5;
-      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-    };
-  };
+  #systemd.services.pokemon-showdown = {
+  #  after = [ "network-online.target" ];
+  #  wants = [ "network-online.target" ];
+  #  wantedBy = [ "multi-user.target" ];
+  #  script = "./pokemon-showdown";
+  #  path = with pkgs; [ nodejs ];
+  #  serviceConfig = {
+  #    User = "showdown";
+  #    WorkingDirectory = "/var/lib/pokemon-showdown";
+  #    Restart = "always";
+  #    RestartSec = 5;
+  #    AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+  #  };
+  #};
 
-  services.cloudflared = {
+  #services.cloudflared = {
+  #  enable = true;
+  #  tunnels = {
+  #    "e6eaa4f6-af36-4acf-be20-17c48c209744" = {
+  #      credentialsFile = "/var/lib/cloudflared/e6eaa4f6-af36-4acf-be20-17c48c209744.json";
+  #      default = "http_status:404";
+  #      ingress."showdown.l3.pm" = "http://127.0.0.1:80";
+  #    };
+  #    "9c84d720-4fcf-46d5-a8b9-204a2e843f02" = {
+  #      credentialsFile = "/var/lib/cloudflared/9c84d720-4fcf-46d5-a8b9-204a2e843f02.json";
+  #      default = "unix:/var/run/nginx.sock";
+  #    };
+  #  };
+  #};
+
+  services.nginx = {
     enable = true;
-    tunnels = {
-      "e6eaa4f6-af36-4acf-be20-17c48c209744" = {
-        credentialsFile = "/var/lib/cloudflared/e6eaa4f6-af36-4acf-be20-17c48c209744.json";
-        default = "http_status:404";
-        ingress."showdown.l3.pm" = "http://127.0.0.1:80";
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
+    virtualHosts = {
+      "utdr.hsmusic.wiki" = {
+        default = true;
+        enableACME = true;
+        forceSSL = true;
+        root = "/var/www/utdrmusic";
       };
     };
   };
+
+  security.acme.defaults.email = "leo@60228.dev";
+  security.acme.acceptTerms = true;
 
   services.postgresql = {
     enable = true;
