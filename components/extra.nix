@@ -49,22 +49,6 @@ lib.makeComponent "extra"
       wget vim androidenv.androidPkgs_9_0.platform-tools
     ] ++ lib.optionals config.services.xserver.enable [ linux-wifi-hotspot ];
 
-    # oqs-provider
-    environment.sessionVariables.OPENSSL_CONF = pkgs.writeText "openssl.cnf" ''
-    .include ${pkgs.openssl.out}/etc/ssl/openssl.cnf
-
-    [provider_sect]
-    default = default_sect
-    oqsprovider = oqsprovider_sect
-
-    [default_sect]
-    activate = 1
-
-    [oqsprovider_sect]
-    activate = 1
-    module = ${pkgs.leoPkgs.oqsprovider}/lib/ossl-modules/oqsprovider.so
-    '';
-
     # ntfs
     boot.supportedFilesystems = [ "ntfs" ];
 
