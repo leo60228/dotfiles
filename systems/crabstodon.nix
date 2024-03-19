@@ -99,8 +99,9 @@
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
+
     commonHttpConfig = ''
-    ssl_ecdh_curve x25519_kyber768:X25519:secp256r1:X448:secp521r1:secp384r1:ffdhe2048:ffdhe3072:ffdhe4096:ffdhe6144:ffdhe8192;
+    ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
     '';
 
     appendHttpConfig = ''
