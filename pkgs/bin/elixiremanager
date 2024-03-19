@@ -57,17 +57,9 @@ function check_deps() {
 
 function take_screenshot() {
     if [[ $1 == "area" ]]; then
-        if [[ $wayland == "true" ]]; then
-            spectacle -brno "${2}"
-        else
-            maim --geometry $(slop) "${2}"
-        fi
+        spectacle -brno "${2}"
     else
-        if [[ $wayland == "true" ]]; then
-            spectacle -bfno "${2}"
-        else
-            maim --geometry $(slop) "${2}"
-        fi
+        spectacle -bfno "${2}"
     fi
 }
 

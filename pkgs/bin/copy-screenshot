@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ -z "$WAYLAND_DISPLAY" ]; then
-    maim -Bs | xclip -i -selection clipboard -target image/png
+    spectacle -brno /dev/stdout | xclip -i -selection clipboard -target image/png
 else
     spectacle -brno /dev/stdout | wl-copy -f -t image/png
 fi
