@@ -41,22 +41,6 @@
     ];
   };
 
-  # oqs-provider
-  systemd.extraConfig = "DefaultEnvironment=\"OPENSSL_CONF=${pkgs.writeText "openssl.cnf" ''
-  .include ${pkgs.openssl.out}/etc/ssl/openssl.cnf
-
-  [provider_sect]
-  default = default_sect
-  oqsprovider = oqsprovider_sect
-
-  [default_sect]
-  activate = 1
-
-  [oqsprovider_sect]
-  activate = 1
-  module = ${pkgs.leoPkgs.oqsprovider}/lib/ossl-modules/oqsprovider.so
-  ''}\"";
-
   # trusted users
   nix.settings.trusted-users = [ "root" "@wheel" ];
   nix.settings.allowed-uris = [ "https://github.com" "https://gitlab.com" "https://git.sr.ht" ];

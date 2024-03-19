@@ -13,7 +13,6 @@ rec {
   discord = callPackage ./discord {};
   mastodon = callPackage ./mastodon {};
   multimc = callPackage ./multimc {};
-  oqsprovider = callPackage ./oqsprovider {};
   ping_exporter = callPackage ./ping_exporter {};
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass {});
   rust = callPackage ./rust {};
