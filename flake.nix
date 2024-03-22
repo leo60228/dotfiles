@@ -47,7 +47,7 @@
     hydraJobs =
       let
         jobs = nixpkgs.lib.mapAttrs (n: x: {
-          ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
+          ${x.config.nixpkgs.system} = if builtins.hasAttr n deploy.nodes then deploy.nodes.${n}.profiles.system.path else x.config.system.build.toplevel;
         }) nixosConfigurations;
       in
         jobs;
