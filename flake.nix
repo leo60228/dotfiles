@@ -51,14 +51,16 @@
         }) nixosConfigurations;
       in
         jobs;
-    deploy.nodes = nixpkgs.lib.genAttrs [ "leoservices" "digitaleo" "nucserv" "leoserv" ] (x: {
+    deploy.nodes = nixpkgs.lib.mapAttrs (x: y: {
       hostname = x;
+
+      fastConnection = y;
 
       profiles.system = {
         user = "root";
         path = deploy-rs.lib.${nixosConfigurations.${x}.config.nixpkgs.system}.activate.nixos nixosConfigurations.${x};
       };
-    });
+    }) { leoservices = false; digitaleo = false; nucserv = false; leoserv = true; };
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild;
