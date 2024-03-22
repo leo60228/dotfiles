@@ -60,7 +60,7 @@
         user = "root";
         path = deploy-rs.lib.${nixosConfigurations.${x}.config.nixpkgs.system}.activate.nixos nixosConfigurations.${x};
       };
-    }) { leoservices = false; digitaleo = false; nucserv = false; leoserv = true; };
+    }) { leoservices = false; digitaleo = false; nucserv = false; crabstodon = false; leoserv = true; };
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild;
