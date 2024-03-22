@@ -244,7 +244,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     grabKeyboardAndMouse = false;
-    pinentryFlavor = "qt";
+    pinentryPackage = pkgs.pinentry-qt;
   };
 
   programs.home-manager.enable = true;
