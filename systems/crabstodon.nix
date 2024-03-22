@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: with import ../components; rec {
-  components = en_us efi est server tailscale;
+  components = en_us est server tailscale;
 
   networking.firewall.allowedTCPPorts = [ 80 443 9200 5601 ];
 

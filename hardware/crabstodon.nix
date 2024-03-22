@@ -3,7 +3,18 @@
     imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
     fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
-    fileSystems."/boot" = { device = "/dev/disk/by-uuid/A44D-C446"; fsType = "vfat"; };
+    fileSystems."/boot/efi" = { device = "/dev/disk/by-uuid/A44D-C446"; fsType = "vfat"; };
+
+    boot.loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+      };
+    };
 
     zramSwap.enable = true;
 
