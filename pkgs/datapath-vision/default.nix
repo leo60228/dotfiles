@@ -15,7 +15,22 @@ stdenv.mkDerivation rec {
   sourceRoot = ".";
 
   postPatch = ''
-  substituteInPlace scripts/rgb133config.sh --replace '/boot/config-$KVER' "${kernel.configfile}"
+  substituteInPlace scripts/rgb133config.sh --replace-fail '/boot/config-$KVER' "${kernel.configfile}"
+  substituteInPlace src/rgb133ioctl.c --replace-fail 'strlcpy' 'strscpy'
+  substituteInPlace src/rgb133sndcard.c --replace-fail 'strlcpy' 'strscpy'
+  cat >> src/rgb133kernel.c << EOF
+  size_t strlcpy(char *dest, const char *src, size_t size)
+  {
+    size_t ret = strlen(src);
+
+    if (size) {
+      size_t len = (ret >= size) ? size - 1 : ret;
+      memcpy(dest, src, len);
+      dest[len] = '\0';
+    }
+    return ret;
+  }
+  EOF
   spatch --sp-file "${./vm_flags.cocci}" --dir src --in-place
   spatch --sp-file "${./snd_card_free.cocci}" --dir src --in-place
   spatch --sp-file "${./get_user_pages.cocci}" --dir src --in-place
