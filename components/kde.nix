@@ -32,6 +32,6 @@ lib.makeComponent "kde"
     hardware.bluetooth.enable = true;
 
     # software support
-    environment.systemPackages = pkgs.kdePackages.bluedevil;
+    environment.systemPackages = [ pkgs.kdePackages.bluedevil ];
   }) ];
 })
