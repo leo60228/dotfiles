@@ -6,7 +6,7 @@
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "dialout" "video" "render" ];
+    extraGroups = [ "wheel" "dialout" "video" "render" "cdrom" ];
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
