@@ -1,8 +1,7 @@
 #!/bin/sh
 set -e
-shopt -s extglob
-UPSTREAM_SHA="$(git ls-remote origin heads/master | cut -f1)"
 REF="$(git symbolic-ref HEAD)"
+UPSTREAM_SHA="$(git ls-remote origin "${REF}" | cut -f1)"
 URL="$(git config remote.leo60228.url)"
 REPO="${URL#*leo60228/}"
 REPO="${REPO%.git}"
