@@ -32,7 +32,7 @@ lib.makeComponent "gui"
 
     # Fonts
     fonts.enableDefaultPackages = false;
-    fonts.packages = with pkgs; [ dejavu_fonts freefont_ttf gyre-fonts liberation_ttf unifont unifont_upper noto-fonts corefonts ];
+    fonts.packages = with pkgs; [ dejavu_fonts freefont_ttf gyre-fonts liberation_ttf unifont unifont_upper noto-fonts noto-fonts-cjk-sans corefonts ];
     fonts.fontconfig.cache32Bit = true;
 
     # dconf
