@@ -6,7 +6,7 @@ with import ../components; {
   boot.enableContainers = false;
 
   networking.firewall.allowedTCPPorts = [ 25565 25575 19132 8443 80 443 ];
-  networking.firewall.allowedUDPPorts = [ 25565 25575 19132 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 25565 25575 19132 80 443 24454 ];
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
