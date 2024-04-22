@@ -10,8 +10,8 @@ lib.makeComponent "kde"
 
   config = mkMerge [ {
     # Enable the KDE Desktop Environment.
-    services.xserver.displayManager.sddm.enable = true;
-    services.xserver.displayManager.sddm.enableHidpi = true;
+    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.enableHidpi = true;
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     environment.sessionVariables.MOZ_DISABLE_RDD_SANDBOX = "1";

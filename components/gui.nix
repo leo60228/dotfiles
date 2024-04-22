@@ -39,7 +39,7 @@ lib.makeComponent "gui"
     programs.dconf.enable = true;
 
     # auto-login
-    services.xserver.displayManager.autoLogin = lib.mkIf cfg.autoLogin {
+    services.displayManager.autoLogin = lib.mkIf cfg.autoLogin {
       enable = true;
       user = "leo60228";
     };

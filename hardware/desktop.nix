@@ -134,7 +134,7 @@
     services.xserver.screenSection = ''
     Option "metamodes" "nvidia-auto-select +0+0 {AllowGSYNCCompatible=On}"
     '';
-    services.xserver.displayManager.job.environment.KWIN_TRIPLE_BUFFER = "1";
+    #services.displayManager.job.environment.KWIN_TRIPLE_BUFFER = "1";
     #services.xserver.deviceSection = ''
     #BusID "PCI:67:0:0"
     #Option "DRI" "3"
