@@ -282,7 +282,7 @@
     };
   };
 
-  xdg.configFile."systemd/user/app-discord-.scope.d/override.conf".text = ''
+  xdg.configFile."systemd/user/app-vesktop-.scope.d/override.conf".text = ''
   [Unit]
   Wants=mpdiscord.service
   '';
@@ -290,8 +290,6 @@
   systemd.user.services.mpdiscord = lib.mkIf (!small) {
     Unit = {
       Description = "mpdiscord";
-      BindsTo = [ "mpd.service" ];
-      After = [ "mpd.service" ];
     };
 
     Service = {
@@ -407,20 +405,6 @@
   };
 
   home.file.".XCompose".source = ./files/XCompose;
-
-  services.mpd = {
-    enable = !small;
-    extraConfig = ''
-        audio_output {
-            type    "pulse"
-            name    "My Pulse Output"
-        }
-        playlist_directory "~/Playlists"
-        replaygain "track"
-        replaygain_preamp "5"
-    '';
-    network.listenAddress = "0.0.0.0";
-  };
 
   xdg.configFile."nixpkgs/config.nix".source = ./files/nixpkgs-config.nix;
 
