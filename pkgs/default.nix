@@ -12,7 +12,6 @@ rec {
   datapath-vision-firmware = callPackage ./datapath-vision-firmware {};
   discord = callPackage ./discord {};
   mastodon = callPackage ./mastodon {};
-  multimc = callPackage ./multimc {};
   ping_exporter = callPackage ./ping_exporter {};
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass {});
   rust = callPackage ./rust {};

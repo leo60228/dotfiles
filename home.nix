@@ -186,7 +186,7 @@
     vlc
     #(libsForQt514.callPackage ./vlc-4.nix {})
     #(libsForQt514.callPackage ./vlc.nix {})
-    leoPkgs.multimc
+    prismlauncher
     (callPackage ./neovim {})
     openscad
     dpkg
