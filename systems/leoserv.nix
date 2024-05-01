@@ -124,4 +124,42 @@ with import ../components; {
   static domain_name_servers=100.100.100.100 79.110.170.43 1.1.1.1 1.0.0.1
   static domain_search=60228.dev.beta.tailscale.net
   '';
+
+  services.borgbackup.jobs."leoserv-modfest" = {
+    paths = [ "/var/lib/minecraft" ];
+    repo = "de3482s2@de3482.rsync.net:leoserv-modfest";
+    encryption = {
+      mode = "repokey-blake2";
+      passCommand = "cat /root/borgbackup/passphrase";
+    };
+    environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
+    compression = "auto,lzma";
+    startAt = "hourly";
+    prune.keep = {
+      within = "1d";
+      daily = 7;
+      weekly = 4;
+      monthly = -1;
+    };
+  };
+
+  security.polkit.enable = true;
+  security.polkit.extraConfig = ''
+  polkit.addRule(function(action, subject) {
+    if (subject.user == "minecraft" &&
+        action.id == "org.freedesktop.systemd1.manage-units") {
+      var unit = action.lookup("unit");
+      if (unit == "minecraft.service" || unit == "borgbackup-job-leoserv-modfest.service")
+        return polkit.Result.YES;
+    }
+  });
+  '';
+
+  services.openssh = {
+    ports = [ 22 5022 ];
+    settings = {
+      KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
+    };
+  };
 }
