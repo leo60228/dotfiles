@@ -11,7 +11,7 @@ lib.makeComponent "hass"
       containers.homeassistant = {
 	volumes = [ "home-assistant:/config" ];
 	environment.TZ = "America/New_York";
-	image = "ghcr.io/home-assistant/home-assistant:2023.8.3";
+	image = "ghcr.io/home-assistant/home-assistant:stable";
 	extraOptions = [
 	  "--privileged"
 	  "--network=host"
