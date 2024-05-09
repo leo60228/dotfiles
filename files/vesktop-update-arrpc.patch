@@ -1,42 +1,39 @@
 diff --git a/package.json b/package.json
-index 1de1c68..f694010 100644
+index 51495b7..06c4b11 100644
 --- a/package.json
 +++ b/package.json
 @@ -24,7 +24,7 @@
          "updateMeta": "tsx scripts/utils/updateMeta.mts"
      },
      "dependencies": {
--        "arrpc": "github:OpenAsar/arrpc#98879cae0565e6fce34e4cb6f544bf42c6a7e7c8"
-+        "arrpc": "github:leo60228/arrpc#687f48c3be5015d95a928f2723406066822993c8"
+-        "arrpc": "github:OpenAsar/arrpc#6960a8fd4d65d566da93dbdb8a7ca474aa0a3c9c"
++        "arrpc": "github:OpenAsar/arrpc#32eacace704df86d78d64e432bca361c66fd796b"
      },
      "optionalDependencies": {
-         "@vencord/venmic": "^3.2.3"
+         "@vencord/venmic": "^3.4.2"
 diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
-index cf83791..cac445d 100644
+index feab853..eef40d1 100644
 --- a/pnpm-lock.yaml
 +++ b/pnpm-lock.yaml
 @@ -6,8 +6,8 @@ settings:
  
  dependencies:
    arrpc:
--    specifier: github:OpenAsar/arrpc#98879cae0565e6fce34e4cb6f544bf42c6a7e7c8
--    version: github.com/OpenAsar/arrpc/98879cae0565e6fce34e4cb6f544bf42c6a7e7c8
-+    specifier: github:leo60228/arrpc#687f48c3be5015d95a928f2723406066822993c8
-+    version: github.com/leo60228/arrpc/687f48c3be5015d95a928f2723406066822993c8
+-    specifier: github:OpenAsar/arrpc#6960a8fd4d65d566da93dbdb8a7ca474aa0a3c9c
+-    version: github.com/OpenAsar/arrpc/6960a8fd4d65d566da93dbdb8a7ca474aa0a3c9c
++    specifier: github:OpenAsar/arrpc#32eacace704df86d78d64e432bca361c66fd796b
++    version: github.com/OpenAsar/arrpc/32eacace704df86d78d64e432bca361c66fd796b
  
  optionalDependencies:
    '@vencord/venmic':
-@@ -4306,10 +4306,10 @@ packages:
-     engines: {node: '>=10'}
+@@ -4783,8 +4783,8 @@ packages:
+       readable-stream: 3.6.2
      dev: true
  
--  github.com/OpenAsar/arrpc/98879cae0565e6fce34e4cb6f544bf42c6a7e7c8:
--    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/98879cae0565e6fce34e4cb6f544bf42c6a7e7c8}
-+  github.com/leo60228/arrpc/687f48c3be5015d95a928f2723406066822993c8:
-+    resolution: {tarball: https://codeload.github.com/leo60228/arrpc/tar.gz/687f48c3be5015d95a928f2723406066822993c8}
+-  github.com/OpenAsar/arrpc/6960a8fd4d65d566da93dbdb8a7ca474aa0a3c9c:
+-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/6960a8fd4d65d566da93dbdb8a7ca474aa0a3c9c}
++  github.com/OpenAsar/arrpc/32eacace704df86d78d64e432bca361c66fd796b:
++    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/32eacace704df86d78d64e432bca361c66fd796b}
      name: arrpc
--    version: 3.2.0
-+    version: 3.3.1
+     version: 3.3.1
      hasBin: true
-     dependencies:
-       ws: 8.13.0

@@ -113,7 +113,7 @@
     (vesktop.overrideAttrs (oldAttrs: {
       patches = [ ./files/vesktop-update-arrpc.patch ];
       pnpmDeps = oldAttrs.pnpmDeps.overrideAttrs (oldAttrs2: {
-        outputHash = "sha256-ZHkbNaCpQbvNHlhn7tDbiGCrvQihc1viYaVHzxpsv4g=";
+        outputHash = "sha256-sB+CtIRTIawnf8q2Ae1TtQjdJzmkCnsZ3XbbEAwDUGE=";
       });
     }))
     (hiPrio gtk2)
