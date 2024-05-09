@@ -46,7 +46,7 @@
     libsForQt5.kdelibs4support
     qpwgraph
     htop
-    pokefinder
+    #pokefinder
     leoPkgs.eontimer
     jetbrains-toolbox
     r128gain
