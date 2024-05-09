@@ -35,6 +35,11 @@
     url = "github:leo60228/upd8r";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.hydra = {
+    url = "github:NixOS/hydra/hydra.nixos.org";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.nixpkgs-for-fileset.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {

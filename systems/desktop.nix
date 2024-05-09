@@ -26,7 +26,7 @@ with import ../components; rec {
 
   boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
 
-  services.hydra = {
+  services.hydra-dev = {
     enable = true;
     hydraURL = "http://desktop:9999";
     port = 9999;
