@@ -36,9 +36,18 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.hydra = {
-    url = "github:NixOS/hydra/hydra.nixos.org";
+    url = "github:leo60228/hydra/lix";
     inputs.nixpkgs.follows = "nixpkgs";
-    inputs.nixpkgs-for-fileset.follows = "nixpkgs";
+    inputs.nix.follows = "lix";
+  };
+  inputs.lix = {
+    url = "git+https://git@git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
+    flake = false;
+  };
+  inputs.lix-module = {
+    url = "git+https://git.lix.systems/lix-project/nixos-module";
+    inputs.lix.follows = "lix";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
