@@ -28,7 +28,7 @@ lib.makeComponent "gui"
     services.xserver.xkb.layout = "us";
 
     # Enable touchpad support.
-    services.xserver.libinput.enable = true;
+    services.libinput.enable = true;
 
     # Fonts
     fonts.enableDefaultPackages = false;

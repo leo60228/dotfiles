@@ -42,6 +42,7 @@ with import ../components; rec {
     Include /var/lib/hydra/secrets.conf
     '';
   };
+  systemd.services.hydra-queue-runner.wants = [ "network-online.target" ];
 
   nix.settings.allowed-uris = [ "github:" "https://github.com" "git+https://github.com" "gitlab:" "https://gitlab.com" "git+https://gitlab.com" ];
 
