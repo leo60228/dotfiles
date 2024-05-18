@@ -149,7 +149,7 @@ with import ../components; {
     if (subject.user == "minecraft" &&
         action.id == "org.freedesktop.systemd1.manage-units") {
       var unit = action.lookup("unit");
-      if (unit == "minecraft.service" || unit == "borgbackup-job-leoserv-modfest.service")
+      if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
         return polkit.Result.YES;
     }
   });
