@@ -85,6 +85,7 @@
   boot.tmp.useTmpfs = true;
 
   services.openssh.settings.X11Forwarding = true;
+  services.openssh.settings.StreamLocalBindUnlink = true;
 
   security.sudo.wheelNeedsPassword = false;
 }
