@@ -18,7 +18,7 @@ lib.makeComponent "extra"
 
     # java
     programs.java.enable = true;
-    programs.java.package = if cfg.graalvm then pkgs.graalvm-ce else pkgs.adoptopenjdk-hotspot-bin-8;
+    programs.java.package = if cfg.graalvm then pkgs.graalvm-ce else pkgs.jdk;
 
     # printer
     services.printing.enable = true;
