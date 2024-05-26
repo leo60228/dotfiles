@@ -96,6 +96,9 @@ lib.makeComponent "extra"
       '';
       network.listenAddress = "any";
     };
-    systemd.services.mpd.environment.XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.leo60228.uid}";
+    systemd.services.mpd.environment = {
+      XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.leo60228.uid}";
+      PIPEWIRE_CONFIG_NAME = "client-rt.conf";
+    };
   };
 })
