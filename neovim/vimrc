@@ -30,7 +30,7 @@ set updatetime=300
 set completeopt-=preview
 
 set background=dark
-colorscheme solarized8_flat
+colorscheme solarized-flat
 
 filetype plugin indent on
 " }}}
@@ -167,7 +167,7 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-hi default link TSVariable Identifier
+hi! link @variable Identifier
 
 " vim-auto-save
 let g:auto_save = 0
