@@ -44,8 +44,8 @@ in neovim.override {
                 nvim-treesitter-refactor
                 vim-auto-save
                 (callPackage ./nvim-echo-diagnostics.nix {})
-                (callPackage ./nvim-textmate.nix {})
                 nvim-solarized-lua
+                (callPackage ./vim-poryscript.nix {})
             ];
 
             opt = [
