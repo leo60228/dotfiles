@@ -133,6 +133,7 @@ with import ../components; {
       passCommand = "cat /root/borgbackup/passphrase";
     };
     environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
+    environment.BORG_REMOTE_PATH = "borg1";
     compression = "auto,lzma";
     startAt = "hourly";
     prune.keep = {
