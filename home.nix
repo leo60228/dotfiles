@@ -49,7 +49,7 @@
     #pokefinder
     leoPkgs.eontimer
     jetbrains-toolbox
-    r128gain
+    rsgain
     imagemagick
     kio-fuse
     coursier
