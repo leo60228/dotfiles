@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    obs-studio
     thunderbird
     gamescope
     lutris
