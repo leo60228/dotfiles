@@ -347,11 +347,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1717722319,
-        "narHash": "sha256-KrcFT2kUnlcL9RtTQ+6htZ64JUY02ZXYxNAAzVVOKro=",
+        "lastModified": 1717897167,
+        "narHash": "sha256-Q/uOf5RLHYBaScMGZGtvIFmtrg7N3lhcHIJtXJOq4sc=",
         "owner": "leo60228",
         "repo": "mpdiscord",
-        "rev": "3636309c460c6f5512ef5b0eacac837950335445",
+        "rev": "2a567740ad8bff4e9d70b8a67c748a5fb7f4f90e",
         "type": "github"
       },
       "original": {
