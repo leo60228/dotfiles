@@ -24,6 +24,7 @@ with import ../components; {
     wantedBy = [ "multi-user.target" ];
     script = "./ServerStart.sh";
     path = with pkgs; [ jre ];
+    restartIfChanged = false;
     serviceConfig = {
       User = "minecraft";
       WorkingDirectory = "/var/lib/minecraft";

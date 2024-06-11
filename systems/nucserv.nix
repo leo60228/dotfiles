@@ -60,6 +60,7 @@ with import ../components; rec {
     };
     path = [ pkgs.bash pkgs.jdk17 ];
     script = "bash ./run.sh";
+    restartIfChanged = false;
   };
 
   networking.firewall.allowedTCPPorts = [ 41300 9516 9225 8096 8920 80 443 4001 25567 ];
