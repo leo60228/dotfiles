@@ -28,6 +28,7 @@ with import ../components; rec {
 
   services.hydra-dev = {
     enable = true;
+    package = pkgs.hydra;
     hydraURL = "http://desktop:9999";
     port = 9999;
     notificationSender = "hydra@60228.dev";

@@ -36,12 +36,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.hydra = {
-    url = "github:leo60228/hydra/lix";
+    url = "git+https://git@git.lix.systems/lix-project/hydra";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.nix.follows = "lix";
   };
   inputs.lix = {
-    url = "git+https://git@git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
+    url = "git+https://git@git.lix.systems/lix-project/lix";
     flake = false;
   };
   inputs.lix-module = {
