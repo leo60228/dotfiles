@@ -27,7 +27,7 @@ lib.makeComponent "extra"
     hardware.sane.extraBackends = [ pkgs.sane-airscan ];
     users.extraUsers.leo60228.extraGroups = [ "scanner" ];
 
-    programs.bash.enableCompletion = true;
+    programs.bash.completion.enable = true;
 
     networking.networkmanager.enable = true; # Enable NetworkManager to manage Wi-Fi connections
 
