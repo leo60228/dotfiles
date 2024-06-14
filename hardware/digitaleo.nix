@@ -2,7 +2,7 @@
   nixos = { config, lib, modulesPath, pkgs, ... }: {
     imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
     boot.loader.grub.device = "/dev/vda";
-    fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
+    fileSystems."/" = { device = "/dev/disk/by-label/cloudimg-rootfs"; fsType = "ext4"; };
 
     # This file was populated at runtime with the networking
     # details gathered from the active system.
