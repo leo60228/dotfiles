@@ -14,6 +14,7 @@ rec {
   mastodon = callPackage ./mastodon {};
   ping_exporter = callPackage ./ping_exporter {};
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass {});
+  reposilite = callPackage ./reposilite {};
   rust = callPackage ./rust {};
   twemoji-colr = callPackage ./twemoji-colr {};
   twemoji-svg = callPackage ./twemoji-svg {};

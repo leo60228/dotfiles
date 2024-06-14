@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: with import ../components; rec {
-  components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
+  components = en_us est server tailscale reverseproxy { host = "digitaleo"; } reposilite;
 
   networking.firewall = {
     allowedTCPPorts = [ 24872 25565 9090 80 443 ];

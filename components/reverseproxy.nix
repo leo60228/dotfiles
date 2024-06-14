@@ -198,6 +198,7 @@ lib.makeComponent "reverseproxy"
         recommendedOptimisation = true;
         recommendedGzipSettings = true;
         recommendedProxySettings = true;
+        clientMaxBodySize = "50m";
         commonHttpConfig = ''
         ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
         log_format full '$remote_addr - $remote_user [$time_local] '
@@ -244,6 +245,14 @@ lib.makeComponent "reverseproxy"
                 fastcgi_pass unix:${config.services.phpfpm.pools.mediawiki.socket};
                 '';
               };
+            };
+          };
+          "maven.vriska.dev" = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://localhost:8080";
+              proxyWebsockets = true;
             };
           };
         };
