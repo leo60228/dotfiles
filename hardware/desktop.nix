@@ -96,7 +96,7 @@
     hardware.enableRedistributableFirmware = true;
     hardware.cpu.amd.updateMicrocode = true;
 
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
