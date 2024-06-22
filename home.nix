@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    fusee-nano
     obs-studio
     thunderbird
     gamescope
