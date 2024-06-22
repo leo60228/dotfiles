@@ -6,7 +6,6 @@ lib.makeComponent "steam"
   config = {
     # Steam
     hardware.opengl.driSupport32Bit = true;
-    hardware.opengl.setLdLibraryPath = true;
     services.pipewire.alsa.support32Bit = true;
     environment.systemPackages = with pkgs; [ steam ];
 
