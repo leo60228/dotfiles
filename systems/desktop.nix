@@ -41,6 +41,8 @@ with import ../components; rec {
     '') ];
     extraConfig = ''
     Include /var/lib/hydra/secrets.conf
+
+    evaluator_workers = 8
     '';
   };
   systemd.services.hydra-queue-runner.wants = [ "network-online.target" ];
