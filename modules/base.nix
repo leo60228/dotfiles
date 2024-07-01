@@ -19,6 +19,7 @@
   services.openssh.extraConfig = ''
   TrustedUserCAKeys ${../files/ssh-ca.pub}
   '';
+  services.openssh.settings.LoginGraceTime = 0;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
