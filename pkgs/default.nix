@@ -2,7 +2,6 @@
 
 rec {
   bin = callPackage ./bin {};
-  bloom = qt6.callPackage ./bloom {};
   citra = callPackage ./citra {};
   crabstodon = callPackage ./crabstodon {};
   eontimer = libsForQt5.callPackage ./eontimer {
