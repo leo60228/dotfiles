@@ -84,8 +84,6 @@
 
       GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
       SOURCE_TAG = config.services.mastodon.package.src.rev;
-
-      UPDATE_CHECK_URL = ""; # FIXME: remove
     };
   };
 
