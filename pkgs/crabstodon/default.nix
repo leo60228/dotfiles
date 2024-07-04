@@ -1,10 +1,11 @@
 # stolen from https://git.catgirl.cloud/999eagle/dotfiles-nix
 {
   callPackage,
-  patches ? [],
+  patches ? [ ],
   srcPostPatch ? "",
   mastodon,
-}: let
+}:
+let
   src = callPackage ./source.nix {
     inherit patches;
     postPatch = srcPostPatch;
@@ -25,12 +26,10 @@
     gemset = ./. + "/gemset.nix";
   };
 
-  modules = callPackage ./modules.nix {
-    inherit glitch-1 yarn-deps;
-  };
+  modules = callPackage ./modules.nix { inherit glitch-1 yarn-deps; };
 
   glitch-2 = glitch-1.overrideAttrs (old: {
     mastodonModules = modules;
   });
 in
-  glitch-2
+glitch-2

@@ -1,8 +1,9 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, libsass
-, pythonRelaxDepsHook
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  libsass,
+  pythonRelaxDepsHook,
 }:
 
 buildPythonPackage rec {

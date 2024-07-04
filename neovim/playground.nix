@@ -1,4 +1,9 @@
-{ vimUtils, fetchgit, stdenv, lib }:
+{
+  vimUtils,
+  fetchgit,
+  stdenv,
+  lib,
+}:
 vimUtils.buildVimPlugin {
   pname = "playground";
   version = "git-2022-11-17";
@@ -8,7 +13,7 @@ vimUtils.buildVimPlugin {
     sha256 = "1yznmc5a32b4bw0c9q0jfkbd77xmi7rmihfr0f44bcgqdxlp8151";
   };
   meta = {
-    homepage = https://github.com/nvim-treesitter/playground;
+    homepage = "https://github.com/nvim-treesitter/playground";
     maintainers = [ lib.maintainers.leo60228 ];
   };
 }

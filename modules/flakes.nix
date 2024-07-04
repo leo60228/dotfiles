@@ -1,5 +1,13 @@
-{ pkgs, lib, flakes, ... }:
+{
+  pkgs,
+  lib,
+  flakes,
+  ...
+}:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

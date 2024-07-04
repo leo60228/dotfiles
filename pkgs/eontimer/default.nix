@@ -1,15 +1,16 @@
-{ lib
-, stdenv
-, copyDesktopItems
-, makeDesktopItem
-, fetchFromGitHub
-, fetchpatch
-, cmake
-, sfml
-, qtbase
-, qttools
-, qtsass
-, wrapQtAppsHook
+{
+  lib,
+  stdenv,
+  copyDesktopItems,
+  makeDesktopItem,
+  fetchFromGitHub,
+  fetchpatch,
+  cmake,
+  sfml,
+  qtbase,
+  qttools,
+  qtsass,
+  wrapQtAppsHook,
 }:
 
 stdenv.mkDerivation rec {
@@ -42,7 +43,12 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  nativeBuildInputs = [ cmake qtsass wrapQtAppsHook copyDesktopItems ];
+  nativeBuildInputs = [
+    cmake
+    qtsass
+    wrapQtAppsHook
+    copyDesktopItems
+  ];
 
   desktopItems = [
     (makeDesktopItem {
@@ -55,7 +61,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  buildInputs = [ qtbase qttools sfml ];
+  buildInputs = [
+    qtbase
+    qttools
+    sfml
+  ];
 
   meta = with lib; {
     homepage = "https://github.com/DasAmpharos/EonTimer";

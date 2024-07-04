@@ -1,4 +1,9 @@
-{ stdenv, fetchMavenArtifact, jdk, makeWrapper }:
+{
+  stdenv,
+  fetchMavenArtifact,
+  jdk,
+  makeWrapper,
+}:
 stdenv.mkDerivation rec {
   pname = "reposilite-bin";
   version = "3.5.13";

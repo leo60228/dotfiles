@@ -1,4 +1,9 @@
-{ vimUtils, fetchgit, stdenv, lib }:
+{
+  vimUtils,
+  fetchgit,
+  stdenv,
+  lib,
+}:
 vimUtils.buildVimPlugin {
   pname = "poryscript";
   version = "git-2024-06-02";
@@ -8,7 +13,7 @@ vimUtils.buildVimPlugin {
     sha256 = "0fmzk6il9rpz1ncwnizll996j5zdx4dgccl0s70i7fvyxq6w413b";
   };
   meta = {
-    homepage = https://gitlab.com/vriska/vim-poryscript;
+    homepage = "https://gitlab.com/vriska/vim-poryscript";
     maintainers = [ lib.maintainers.leo60228 ];
   };
 }

@@ -14,8 +14,8 @@ stdenv.mkDerivation {
   sourceRoot = "source/flasher";
 
   installPhase = ''
-  runHook preInstall
-  install -Dt $out/bin i2c_vs9989 flasher xdata
-  runHook postInstall
+    runHook preInstall
+    install -Dt $out/bin i2c_vs9989 flasher xdata
+    runHook postInstall
   '';
 }

@@ -1,13 +1,33 @@
 # includes = ../rawConfig.nix:../hardware/aws.nix:../components/{mailserver,en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
-{ config, pkgs, ... }: with import ../components; rec {
+{ config, pkgs, ... }:
+with import ../components;
+rec {
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   components = en_us est docker server reverseproxy { host = "aws"; } tailscale;
 
-  networking.firewall.allowedTCPPorts = [ 22 80 443 21 2782 5222 5269 5280 5443 ];
-  networking.firewall.allowedUDPPorts = [ 2782 25565 ];
+  networking.firewall.allowedTCPPorts = [
+    22
+    80
+    443
+    21
+    2782
+    5222
+    5269
+    5280
+    5443
+  ];
+  networking.firewall.allowedUDPPorts = [
+    2782
+    25565
+  ];
 
-  environment.systemPackages = with pkgs; [ conspy wget vim stress ];
+  environment.systemPackages = with pkgs; [
+    conspy
+    wget
+    vim
+    stress
+  ];
 
   #systemd.services.codeserver = {
   #  wantedBy = [ "multi-user.target" ];
@@ -67,7 +87,10 @@
     enableUnixSocket = false;
     package = pkgs.leoPkgs.crabstodon;
     streamingProcesses = 1;
-    extraEnvFiles = [ "/var/lib/mastodon/.extra_secrets_env" "/var/lib/mastodon/secrets/db-keys" ];
+    extraEnvFiles = [
+      "/var/lib/mastodon/.extra_secrets_env"
+      "/var/lib/mastodon/secrets/db-keys"
+    ];
     localDomain = "60228.dev";
     smtp = {
       createLocally = false;
@@ -141,21 +164,21 @@
     ];
   };
 
-#  networking.firewall.extraCommands = ''
-#iptables -A FORWARD -i ens5 -o wg0 -p tcp --syn --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
-#iptables -A FORWARD -i ens5 -o wg0 -p udp --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
-#iptables -A FORWARD -i ens5 -o wg0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-#iptables -A FORWARD -i wg0 -o ens5 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-#iptables -t nat -A PREROUTING -i ens5 -p tcp --dport 25565 -j DNAT --to-destination 192.168.1.140
-#iptables -t nat -A POSTROUTING -o wg0 -p tcp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
-#iptables -t nat -A PREROUTING -i ens5 -p udp --dport 25565 -j DNAT --to-destination 192.168.1.140
-#iptables -t nat -A POSTROUTING -o wg0 -p udp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
-#
-#  '';
-#  boot.kernel.sysctl = {
-#    "net.ipv4.conf.all.forwarding" = true;
-#    "net.ipv4.conf.default.forwarding" = true;
-#  };
+  #  networking.firewall.extraCommands = ''
+  #iptables -A FORWARD -i ens5 -o wg0 -p tcp --syn --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
+  #iptables -A FORWARD -i ens5 -o wg0 -p udp --dport 25565 -m conntrack --ctstate NEW -j ACCEPT
+  #iptables -A FORWARD -i ens5 -o wg0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  #iptables -A FORWARD -i wg0 -o ens5 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  #iptables -t nat -A PREROUTING -i ens5 -p tcp --dport 25565 -j DNAT --to-destination 192.168.1.140
+  #iptables -t nat -A POSTROUTING -o wg0 -p tcp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
+  #iptables -t nat -A PREROUTING -i ens5 -p udp --dport 25565 -j DNAT --to-destination 192.168.1.140
+  #iptables -t nat -A POSTROUTING -o wg0 -p udp --dport 25565 -d 192.168.1.140 -j SNAT --to-source 10.9.0.2
+  #
+  #  '';
+  #  boot.kernel.sysctl = {
+  #    "net.ipv4.conf.all.forwarding" = true;
+  #    "net.ipv4.conf.default.forwarding" = true;
+  #  };
 
   #services.matrix-synapse = {
   #  enable = true;

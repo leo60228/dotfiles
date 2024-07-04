@@ -1,23 +1,41 @@
-{ pkgs, lib, config, flakes, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  flakes,
+  ...
+}:
 
 {
-  imports = [ ./flakes.nix ./nix-daemon.nix ./cachix.nix ];
+  imports = [
+    ./flakes.nix
+    ./nix-daemon.nix
+    ./cachix.nix
+  ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "dialout" "video" "render" "cdrom" ];
+    extraGroups = [
+      "wheel"
+      "dialout"
+      "video"
+      "render"
+      "cdrom"
+    ];
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
-  users.users.root.openssh.authorizedKeys.keys = let
-    text = builtins.readFile ../files/authorized_keys;
-    split = lib.splitString "\n" text;
-    keys = builtins.filter (x: x != "") split;
-  in keys;
+  users.users.root.openssh.authorizedKeys.keys =
+    let
+      text = builtins.readFile ../files/authorized_keys;
+      split = lib.splitString "\n" text;
+      keys = builtins.filter (x: x != "") split;
+    in
+    keys;
 
   services.openssh.extraConfig = ''
-  TrustedUserCAKeys ${../files/ssh-ca.pub}
+    TrustedUserCAKeys ${../files/ssh-ca.pub}
   '';
 
   # This value determines the NixOS release with which your system is to be
@@ -26,12 +44,14 @@
   # should.
   system.stateVersion = "18.03"; # Did you read the comment?
 
-  nixpkgs.overlays = map (e:
+  nixpkgs.overlays = map (
+    e:
     let
       rawOverlay = import (../nixpkgs + ("/" + e));
-      hasArgs = builtins.functionArgs rawOverlay != {};
+      hasArgs = builtins.functionArgs rawOverlay != { };
       overlay = if hasArgs then rawOverlay flakes else rawOverlay;
-    in overlay
+    in
+    overlay
   ) (builtins.attrNames (builtins.readDir ../nixpkgs));
   nixpkgs.config = {
     allowUnfree = true;
@@ -42,14 +62,38 @@
   };
 
   # trusted users
-  nix.settings.trusted-users = [ "root" "@wheel" ];
-  nix.settings.allowed-uris = [ "https://github.com" "https://gitlab.com" "https://git.sr.ht" "https://git.lix.systems" "https://git@git.lix.systems" ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+  nix.settings.allowed-uris = [
+    "https://github.com"
+    "https://gitlab.com"
+    "https://git.sr.ht"
+    "https://git.lix.systems"
+    "https://git@git.lix.systems"
+  ];
   nix.settings.trusted-public-keys = [ "desktop-1:jpWiJK7Ltbcf1b9xr9mx/4on1NqqmqTZG4bldBl41oQ=" ];
-  nix.settings.substituters = if config.networking.hostName == "desktop" then [] else [ "https://cache.nixos.org/" "http://desktop:9999" ];
-  nix.settings.trusted-substituters = if config.networking.hostName == "desktop" then [ "https://cache.nixos.org/" ] else [ "https://cache.nixos.org/" "http://desktop:9999" ];
+  nix.settings.substituters =
+    if config.networking.hostName == "desktop" then
+      [ ]
+    else
+      [
+        "https://cache.nixos.org/"
+        "http://desktop:9999"
+      ];
+  nix.settings.trusted-substituters =
+    if config.networking.hostName == "desktop" then
+      [ "https://cache.nixos.org/" ]
+    else
+      [
+        "https://cache.nixos.org/"
+        "http://desktop:9999"
+      ];
 
   environment.systemPackages = with pkgs; [
-    openssh git
+    openssh
+    git
   ];
 
   services.openssh.enable = true;

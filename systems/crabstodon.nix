@@ -1,7 +1,19 @@
-{ config, pkgs, lib, ... }: with import ../components; rec {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with import ../components;
+rec {
   components = en_us est server tailscale;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 9200 5601 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    9200
+    5601
+  ];
 
   services.mastodon = {
     enable = true;
@@ -52,14 +64,14 @@
     enable = true;
     package = pkgs.elasticsearch7;
     extraConf = ''
-    xpack.security.enabled: true
-    xpack.security.transport.ssl.enabled: true
-    xpack.security.transport.ssl.verification_mode: certificate
-    xpack.security.transport.ssl.client_authentication: required
-    xpack.security.transport.ssl.keystore.path: elastic-certificates.p12
-    xpack.security.transport.ssl.truststore.path: elastic-certificates.p12
-    http.bind_host: ["_local_", "_tailscale0_"]
-    http.publish_host: "_tailscale0_"
+      xpack.security.enabled: true
+      xpack.security.transport.ssl.enabled: true
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.client_authentication: required
+      xpack.security.transport.ssl.keystore.path: elastic-certificates.p12
+      xpack.security.transport.ssl.truststore.path: elastic-certificates.p12
+      http.bind_host: ["_local_", "_tailscale0_"]
+      http.publish_host: "_tailscale0_"
     '';
   };
 
@@ -86,14 +98,12 @@
   #  };
   #};
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "nodejs-16.20.2"
-  ];
+  nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ];
 
   #systemd.services.kibana.serviceConfig.EnvironmentFile = "/var/lib/kibana/.secrets_env";
 
   systemd.services.mastodon-init-dirs.postStart = ''
-  cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
+    cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
   '';
 
   services.nginx = {
@@ -101,11 +111,11 @@
     recommendedProxySettings = true;
 
     commonHttpConfig = ''
-    ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
+      ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
     '';
 
     appendHttpConfig = ''
-    proxy_cache_path /var/cache/nginx keys_zone=CACHE:10m;
+      proxy_cache_path /var/cache/nginx keys_zone=CACHE:10m;
     '';
 
     virtualHosts = {
@@ -137,7 +147,7 @@
         enableACME = true;
 
         extraConfig = ''
-        add_header 'Access-Control-Allow-Origin' '*';
+          add_header 'Access-Control-Allow-Origin' '*';
         '';
       };
 
@@ -147,35 +157,35 @@
 
         locations."/" = {
           extraConfig = ''
-          limit_except GET {
-            deny all;
-          }
+            limit_except GET {
+              deny all;
+            }
 
-          proxy_set_header Host idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com;
-          proxy_set_header Connection "";
-          proxy_set_header Authorization "";
-          proxy_hide_header Set-Cookie;
-          proxy_hide_header 'Access-Control-Allow-Origin';
-          proxy_hide_header 'Access-Control-Allow-Methods';
-          proxy_hide_header 'Access-Control-Allow-Headers';
-          proxy_hide_header x-amz-id-2;
-          proxy_hide_header x-amz-request-id;
-          proxy_hide_header x-amz-meta-server-side-encryption;
-          proxy_hide_header x-amz-server-side-encryption;
-          proxy_hide_header x-amz-bucket-region;
-          proxy_hide_header x-amzn-requestid;
-          proxy_ignore_headers Set-Cookie;
-          proxy_intercept_errors off;
+            proxy_set_header Host idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com;
+            proxy_set_header Connection "";
+            proxy_set_header Authorization "";
+            proxy_hide_header Set-Cookie;
+            proxy_hide_header 'Access-Control-Allow-Origin';
+            proxy_hide_header 'Access-Control-Allow-Methods';
+            proxy_hide_header 'Access-Control-Allow-Headers';
+            proxy_hide_header x-amz-id-2;
+            proxy_hide_header x-amz-request-id;
+            proxy_hide_header x-amz-meta-server-side-encryption;
+            proxy_hide_header x-amz-server-side-encryption;
+            proxy_hide_header x-amz-bucket-region;
+            proxy_hide_header x-amzn-requestid;
+            proxy_ignore_headers Set-Cookie;
+            proxy_intercept_errors off;
 
-          proxy_cache CACHE;
-          proxy_cache_valid 200 48h;
-          proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-          proxy_cache_lock on;
+            proxy_cache CACHE;
+            proxy_cache_valid 200 48h;
+            proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+            proxy_cache_lock on;
 
-          expires 1y;
-          add_header Cache-Control public;
-          add_header 'Access-Control-Allow-Origin' '*';
-          add_header X-Cache-Status $upstream_cache_status;
+            expires 1y;
+            add_header Cache-Control public;
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header X-Cache-Status $upstream_cache_status;
           '';
           proxyPass = "https://idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com/crabstodon-user-content/";
         };
@@ -185,11 +195,12 @@
       extraConfig = ''
         least_conn;
       '';
-      servers = builtins.listToAttrs
-        (map (i: {
+      servers = builtins.listToAttrs (
+        map (i: {
           name = "unix:/run/mastodon-streaming/streaming-${toString i}.socket";
           value = { };
-        }) (lib.range 1 config.services.mastodon.streamingProcesses));
+        }) (lib.range 1 config.services.mastodon.streamingProcesses)
+      );
     };
   };
 

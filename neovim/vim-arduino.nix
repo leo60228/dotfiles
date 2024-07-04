@@ -1,4 +1,9 @@
-{ vimUtils, fetchgit, stdenv, lib }:
+{
+  vimUtils,
+  fetchgit,
+  stdenv,
+  lib,
+}:
 vimUtils.buildVimPlugin {
   pname = "arduino";
   version = "git-2023-10-28";
@@ -8,7 +13,7 @@ vimUtils.buildVimPlugin {
     sha256 = "10drm1dfh48wiwlnpycn277haagpm66mxaa2alx3svayln1hi8pr";
   };
   meta = {
-    homepage = https://github.com/stevearc/vim-arduino;
+    homepage = "https://github.com/stevearc/vim-arduino";
     maintainers = [ lib.maintainers.leo60228 ];
   };
 }

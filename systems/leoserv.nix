@@ -1,12 +1,27 @@
 { config, pkgs, ... }:
 
-with import ../components; {
+with import ../components;
+{
   components = efi en_us est home { small = true; } tailscale znc hass unifi apcupsd-server mqtt;
 
   boot.enableContainers = false;
 
-  networking.firewall.allowedTCPPorts = [ 25565 25575 19132 8443 80 443 ];
-  networking.firewall.allowedUDPPorts = [ 25565 25575 19132 80 443 24454 ];
+  networking.firewall.allowedTCPPorts = [
+    25565
+    25575
+    19132
+    8443
+    80
+    443
+  ];
+  networking.firewall.allowedUDPPorts = [
+    25565
+    25575
+    19132
+    80
+    443
+    24454
+  ];
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
 
@@ -78,7 +93,7 @@ with import ../components; {
     recommendedGzipSettings = true;
     recommendedProxySettings = true;
     commonHttpConfig = ''
-    ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
+      ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
     '';
     virtualHosts = {
       "utdr.hsmusic.wiki" = {
@@ -122,8 +137,8 @@ with import ../components; {
   };
 
   networking.dhcpcd.extraConfig = ''
-  static domain_name_servers=100.100.100.100 79.110.170.43 1.1.1.1 1.0.0.1
-  static domain_search=60228.dev.beta.tailscale.net
+    static domain_name_servers=100.100.100.100 79.110.170.43 1.1.1.1 1.0.0.1
+    static domain_search=60228.dev.beta.tailscale.net
   '';
 
   services.borgbackup.jobs."leoserv-modfest" = {
@@ -147,18 +162,21 @@ with import ../components; {
 
   security.polkit.enable = true;
   security.polkit.extraConfig = ''
-  polkit.addRule(function(action, subject) {
-    if (subject.user == "minecraft" &&
-        action.id == "org.freedesktop.systemd1.manage-units") {
-      var unit = action.lookup("unit");
-      if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
-        return polkit.Result.YES;
-    }
-  });
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "minecraft" &&
+          action.id == "org.freedesktop.systemd1.manage-units") {
+        var unit = action.lookup("unit");
+        if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
+          return polkit.Result.YES;
+      }
+    });
   '';
 
   services.openssh = {
-    ports = [ 22 5022 ];
+    ports = [
+      22
+      5022
+    ];
     settings = {
       KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;

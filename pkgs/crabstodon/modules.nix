@@ -14,7 +14,16 @@ stdenv.mkDerivation {
 
   yarnOfflineCache = yarn-deps;
 
-  nativeBuildInputs = [glitch-1.mastodonGems glitch-1.mastodonGems.wrappedRuby] ++ [nodejs-slim yarn-berry brotli];
+  nativeBuildInputs =
+    [
+      glitch-1.mastodonGems
+      glitch-1.mastodonGems.wrappedRuby
+    ]
+    ++ [
+      nodejs-slim
+      yarn-berry
+      brotli
+    ];
 
   RAILS_ENV = "production";
   NODE_ENV = "production";

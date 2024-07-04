@@ -1,4 +1,9 @@
-{ vimUtils, fetchgit, stdenv, lib }:
+{
+  vimUtils,
+  fetchgit,
+  stdenv,
+  lib,
+}:
 vimUtils.buildVimPlugin {
   pname = "nvim-echo-diagnostics";
   version = "git-2022-03-08";
@@ -8,7 +13,7 @@ vimUtils.buildVimPlugin {
     sha256 = "16vr1i12kv9n07533faacm05sikx4wkj1xwj8xg23r22n4an7xd6";
   };
   meta = {
-    homepage = https://github.com/seblj/nvim-echo-diagnostics;
+    homepage = "https://github.com/seblj/nvim-echo-diagnostics";
     maintainers = [ lib.maintainers.leo60228 ];
   };
 }

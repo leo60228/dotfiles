@@ -1,15 +1,25 @@
-let lib = import ../lib; in
-lib.makeComponent "steam"
-({cfg, pkgs, lib, ...}: with lib; {
-  opts = {};
+let
+  lib = import ../lib;
+in
+lib.makeComponent "steam" (
+  {
+    cfg,
+    pkgs,
+    lib,
+    ...
+  }:
+  with lib;
+  {
+    opts = { };
 
-  config = {
-    # Steam
-    hardware.graphics.enable32Bit = true;
-    services.pipewire.alsa.support32Bit = true;
-    environment.systemPackages = with pkgs; [ steam ];
+    config = {
+      # Steam
+      hardware.graphics.enable32Bit = true;
+      services.pipewire.alsa.support32Bit = true;
+      environment.systemPackages = with pkgs; [ steam ];
 
-    hardware.steam-hardware.enable = true;
-    boot.blacklistedKernelModules = [ "hid-steam" ];
-  };
-})
+      hardware.steam-hardware.enable = true;
+      boot.blacklistedKernelModules = [ "hid-steam" ];
+    };
+  }
+)

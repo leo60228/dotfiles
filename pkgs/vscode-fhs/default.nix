@@ -1,31 +1,48 @@
-{ stdenv, lib, makeDesktopItem
-, unzip, libsecret, libXScrnSaver, wrapGAppsHook
-, gtk2, atomEnv, at-spi2-atk, autoPatchelfHook
-, systemd, fontconfig, libdbusmenu, buildFHSUserEnv, vscode
+{
+  stdenv,
+  lib,
+  makeDesktopItem,
+  unzip,
+  libsecret,
+  libXScrnSaver,
+  wrapGAppsHook,
+  gtk2,
+  atomEnv,
+  at-spi2-atk,
+  autoPatchelfHook,
+  systemd,
+  fontconfig,
+  libdbusmenu,
+  buildFHSUserEnv,
+  vscode,
 
-# Attributes inherit from specific versions
-, version ? vscode.version, meta ? vscode.meta
-, executableName ? vscode.executableName, pname ? vscode.pname
+  # Attributes inherit from specific versions
+  version ? vscode.version,
+  meta ? vscode.meta,
+  executableName ? vscode.executableName,
+  pname ? vscode.pname,
 }:
 buildFHSUserEnv {
   name = executableName;
 
   # additional libraries which are commonly needed for extensions
-  targetPkgs = pkgs: (with pkgs; [
-    # dotnet
-    curl
-    icu
-    libunwind
-    libuuid
-    openssl
-    zlib
+  targetPkgs =
+    pkgs:
+    (with pkgs; [
+      # dotnet
+      curl
+      icu
+      libunwind
+      libuuid
+      openssl
+      zlib
 
-    # mono
-    krb5
+      # mono
+      krb5
 
-    # git
-    git
-  ]);
+      # git
+      git
+    ]);
 
   # restore desktop item icons
   extraInstallCommands = ''

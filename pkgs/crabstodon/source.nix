@@ -2,7 +2,7 @@
   lib,
   applyPatches,
   fetchFromGitHub,
-  patches ? [],
+  patches ? [ ],
   postPatch ? "",
   yarn-berry,
   gawk,
@@ -16,7 +16,10 @@
     hash = "sha256-yy/U40/Cbc9KC/EVnTRvQqGWrifEiqmx6L737AqfOqk=";
   };
   inherit patches;
-  nativeBuildInputs = [ gawk gnused ];
+  nativeBuildInputs = [
+    gawk
+    gnused
+  ];
   postPatch =
     postPatch
     + lib.optionalString (!(lib.versionAtLeast yarn-berry.version "4.1.0")) ''

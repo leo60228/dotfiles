@@ -1,21 +1,34 @@
-{ nodejs-slim, mkYarnPackage, fetchFromGitHub, bundlerEnv,
-  stdenv, lib, yarn, callPackage, imagemagick, ffmpeg, file, ruby_2_7,
+{
+  nodejs-slim,
+  mkYarnPackage,
+  fetchFromGitHub,
+  bundlerEnv,
+  stdenv,
+  lib,
+  yarn,
+  callPackage,
+  imagemagick,
+  ffmpeg,
+  file,
+  ruby_2_7,
 
   # Allow building a fork or custom version of Mastodon:
   pname ? "mastodon",
   version ? import ./version.nix,
   srcOverride ? null,
-  dependenciesDir ? ./.,  # Should contain gemset.nix, yarn.nix and package.json.
+  dependenciesDir ? ./., # Should contain gemset.nix, yarn.nix and package.json.
 
-  ... }:
+  ...
+}:
 
 let
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   inherit pname version;
 
   # Using overrideAttrs on src does not build the gems and modules with the overridden src.
   # Putting the callPackage up in the arguments list also does not work.
-  src = if srcOverride != null then srcOverride else callPackage ./source.nix {};
+  src = if srcOverride != null then srcOverride else callPackage ./source.nix { };
 
   mastodon-gems = bundlerEnv {
     name = "${pname}-gems-${version}";
@@ -23,7 +36,7 @@ in stdenv.mkDerivation rec {
     ruby = ruby_2_7;
     gemdir = src;
     gemset = dependenciesDir + "/gemset.nix";
-    gemConfig = callPackage ./gem-config.nix {};
+    gemConfig = callPackage ./gem-config.nix { };
     # This fix (copied from https://github.com/NixOS/nixpkgs/pull/76765) replaces the gem
     # symlinks with directories, resolving this error when running rake:
     #   /nix/store/451rhxkggw53h7253izpbq55nrhs7iv0-mastodon-gems-3.0.1/lib/ruby/gems/2.6.0/gems/bundler-1.17.3/lib/bundler/settings.rb:6:in `<module:Bundler>': uninitialized constant Bundler::Settings (NameError)
@@ -50,7 +63,9 @@ in stdenv.mkDerivation rec {
     inherit src version;
 
     buildInputs = [
-      mastodon-gems nodejs-slim yarn
+      mastodon-gems
+      nodejs-slim
+      yarn
     ];
 
     # FIXME: "production" would require OTP_SECRET to be set, so we use
@@ -76,7 +91,7 @@ in stdenv.mkDerivation rec {
     '';
   };
 
-  passthru.updateScript = callPackage ./update.nix {};
+  passthru.updateScript = callPackage ./update.nix { };
 
   buildPhase = ''
     if [ "$(ls ${mastodon-js-modules}/libexec/* | grep node_modules)" ]; then
@@ -99,7 +114,12 @@ in stdenv.mkDerivation rec {
     ln -s /var/log/mastodon log
     ln -s /tmp tmp
   '';
-  propagatedBuildInputs = [ imagemagick ffmpeg file mastodon-gems.wrappedRuby ];
+  propagatedBuildInputs = [
+    imagemagick
+    ffmpeg
+    file
+    mastodon-gems.wrappedRuby
+  ];
   installPhase = ''
     mkdir -p $out
     cp -r * $out/
@@ -109,7 +129,13 @@ in stdenv.mkDerivation rec {
     description = "Self-hosted, globally interconnected microblogging software based on ActivityPub";
     homepage = "https://joinmastodon.org";
     license = licenses.agpl3;
-    platforms = [ "x86_64-linux" "i686-linux" ];
-    maintainers = with maintainers; [ petabyteboy happy-river ];
+    platforms = [
+      "x86_64-linux"
+      "i686-linux"
+    ];
+    maintainers = with maintainers; [
+      petabyteboy
+      happy-river
+    ];
   };
 }

@@ -1,5 +1,16 @@
-{ pkgs, stdenv, lib, makeWrapper, yarn2nix, bundix, coreutils,
-  diffutils, nix-prefetch-github, gnused, jq }:
+{
+  pkgs,
+  stdenv,
+  lib,
+  makeWrapper,
+  yarn2nix,
+  bundix,
+  coreutils,
+  diffutils,
+  nix-prefetch-github,
+  gnused,
+  jq,
+}:
 stdenv.mkDerivation rec {
   name = "mastodon-update-script";
   installPhase = ''
@@ -11,7 +22,15 @@ stdenv.mkDerivation rec {
   phases = [ "installPhase" ];
 
   nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ yarn2nix bundix coreutils diffutils nix-prefetch-github gnused jq ];
+  buildInputs = [
+    yarn2nix
+    bundix
+    coreutils
+    diffutils
+    nix-prefetch-github
+    gnused
+    jq
+  ];
 
   meta = {
     maintainers = with lib.maintainers; [ happy-river ];

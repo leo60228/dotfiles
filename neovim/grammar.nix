@@ -1,18 +1,19 @@
-{ stdenv
-, tree-sitter
-, lib
+{
+  stdenv,
+  tree-sitter,
+  lib,
 }:
 
 # Build a parser grammar and put the resulting shared object in `$out/parser`
 
 {
   # language name
-  language
+  language,
   # version of tree-sitter
-, version
+  version,
   # source for the language grammar
-, source
-, location ? null
+  source,
+  location ? null,
 }:
 
 stdenv.mkDerivation rec {
@@ -27,8 +28,14 @@ stdenv.mkDerivation rec {
   dontUnpack = true;
   dontConfigure = true;
 
-  CFLAGS = [ "-I${src}/src" "-O2" ];
-  CXXFLAGS = [ "-I${src}/src" "-O2" ];
+  CFLAGS = [
+    "-I${src}/src"
+    "-O2"
+  ];
+  CXXFLAGS = [
+    "-I${src}/src"
+    "-O2"
+  ];
 
   # When both scanner.{c,cc} exist, we should not link both since they may be the same but in
   # different languages. Just randomly prefer C++ if that happens.

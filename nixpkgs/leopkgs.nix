@@ -1,6 +1,3 @@
-self:
-super:
+self: super:
 
-{
-    leoPkgs = self.callPackage ../pkgs {};
-}
+{ leoPkgs = self.callPackage ../pkgs { }; }

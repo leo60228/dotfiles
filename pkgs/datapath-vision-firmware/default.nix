@@ -1,4 +1,8 @@
-{ stdenvNoCC, lib, fetchurl }:
+{
+  stdenvNoCC,
+  lib,
+  fetchurl,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "datapath-vision-firmware";
@@ -15,7 +19,7 @@ stdenvNoCC.mkDerivation rec {
   sourceRoot = "firmware";
 
   installPhase = ''
-  install -Dm644 DGC*FW*.BIN -t $out/lib/firmware/
+    install -Dm644 DGC*FW*.BIN -t $out/lib/firmware/
   '';
 
   meta = with lib; {

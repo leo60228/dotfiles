@@ -1,2 +1,1 @@
-{ nur, ... }:
-nur.overlay
+{ nur, ... }: nur.overlay

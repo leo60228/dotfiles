@@ -2,7 +2,7 @@
 {
   config = {
     nix.extraOptions = ''
-    warn-dirty = false
+      warn-dirty = false
     '';
   };
 }
