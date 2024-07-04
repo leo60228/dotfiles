@@ -67,7 +67,7 @@
     enableUnixSocket = false;
     package = pkgs.leoPkgs.crabstodon;
     streamingProcesses = 1;
-    extraEnvFiles = [ "/var/lib/mastodon/.extra_secrets_env" ];
+    extraEnvFiles = [ "/var/lib/mastodon/.extra_secrets_env" "/var/lib/mastodon/secrets/db-keys" ];
     localDomain = "60228.dev";
     smtp = {
       createLocally = false;

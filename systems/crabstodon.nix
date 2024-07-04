@@ -9,6 +9,8 @@
 
     streamingProcesses = 3;
 
+    extraEnvFiles = [ "/var/lib/mastodon/secrets/db-keys" ];
+
     localDomain = "crabs.life";
 
     smtp = {
