@@ -36,6 +36,8 @@
 
     hardware.asahi.extractPeripheralFirmware = false;
     hardware.asahi.withRust = true;
+
+    deployment.tags = [ "servers" ];
   };
 
   nixops = {

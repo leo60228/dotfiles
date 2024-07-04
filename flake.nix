@@ -22,7 +22,6 @@
     url = github:leo60228/mpdiscord;
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.deploy-rs.url = "github:serokell/deploy-rs";
   inputs.fizz-strat = {
     url = "github:BlaseballCrabs/fizz-strat";
     inputs.nixpkgs.follows = "nixpkgs";
@@ -49,32 +48,46 @@
     inputs.lix.follows = "lix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.colmena = {
+    url = "github:zhaofengli/colmena";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-  outputs = { self, nixpkgs, flake-utils, deploy-rs, ... } @ flakes: (rec {
+  outputs = { self, nixpkgs, colmena, flake-utils, ... } @ flakes: ({
+    colmena =
+      let
+        dotfiles = import ./. null;
+        inherit (dotfiles) systems;
+        meta = {
+          nixpkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+          nodeNixpkgs = nixpkgs.lib.mapAttrs (n: x:
+            let
+              hardware = import (./hardware + "/${n}.nix");
+              inherit (hardware) system;
+            in
+              nixpkgs.legacyPackages.${system}) systems;
+
+          specialArgs.flakes = flakes;
+
+          allowApplyAll = false;
+        };
+      in
+        systems // { inherit meta; };
+
     nixosConfigurations = nixpkgs.lib.mapAttrs (n: x: nixpkgs.lib.nixosSystem {
-      system = (import (./hardware + "/${n}.nix")).system;
-      modules = [ x ];
-      specialArgs = {
-        inherit flakes;
-      };
-    }) (import ./. null).systems;
+      system = self.outputs.colmena.meta.nodeNixpkgs.${n}.system;
+      modules = [ x colmena.nixosModules.deploymentOptions ];
+      inherit (self.outputs.colmena.meta) specialArgs;
+    }) (builtins.removeAttrs self.outputs.colmena ["meta" "defaults"]);
+
     hydraJobs =
       let
         jobs = nixpkgs.lib.mapAttrs (n: x: {
-          ${x.config.nixpkgs.system} = if builtins.hasAttr n deploy.nodes then deploy.nodes.${n}.profiles.system.path else x.config.system.build.toplevel;
-        }) nixosConfigurations;
+          ${x.config.nixpkgs.system} = x.config.system.build.toplevel;
+        }) self.outputs.nixosConfigurations;
       in
         jobs;
-    deploy.nodes = nixpkgs.lib.mapAttrs (x: y: {
-      hostname = x;
-
-      fastConnection = y;
-
-      profiles.system = {
-        user = "root";
-        path = deploy-rs.lib.${nixosConfigurations.${x}.config.nixpkgs.system}.activate.nixos nixosConfigurations.${x};
-      };
-    }) { leoservices = false; digitaleo = false; nucserv = false; crabstodon = false; leoserv = true; };
   } // (flake-utils.lib.eachDefaultSystem (system: rec {
     packages = rec {
       nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild;

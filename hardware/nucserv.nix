@@ -34,6 +34,8 @@
         libvdpau-va-gl
       ];
     };
+
+    deployment.tags = [ "servers" ];
   };
 
   system = "x86_64-linux";

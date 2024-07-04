@@ -43,6 +43,8 @@
       device = "/var/swapfile";
       size = 4096;
     } ];
+
+    deployment.tags = [ "servers" ];
   };
 
   nixops = {

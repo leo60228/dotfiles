@@ -24,6 +24,8 @@
 
     nix.settings.max-jobs = lib.mkDefault 12;
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+
+    deployment.tags = [ "servers" ];
   };
 
   nixops = {};

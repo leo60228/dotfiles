@@ -29,6 +29,7 @@
     (hiPrio gcc)
     leoPkgs.bin
   ] else [
+    colmena
     fusee-nano
     obs-studio
     thunderbird

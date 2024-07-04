@@ -18,6 +18,8 @@
     } ];
 
     boot.loader.grub.device = lib.mkForce "/dev/nvme0n1";
+
+    deployment.tags = [ "servers" ];
   };
 
   nixops = {

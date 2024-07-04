@@ -182,6 +182,9 @@
     boot.loader.systemd-boot.memtest86.enable = true;
 
     virtualisation.docker.enableNvidia = true;
+
+    deployment.tags = [ "workstation" ];
+    deployment.allowLocalDeployment = true;
   };
 
   nixops = {
