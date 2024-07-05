@@ -7,6 +7,7 @@ lib.makeComponent "extra" (
     cfg,
     pkgs,
     lib,
+    flakes,
     ...
   }:
   with lib;
@@ -124,6 +125,8 @@ lib.makeComponent "extra" (
         XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.leo60228.uid}";
         PIPEWIRE_CONFIG_NAME = "client-rt.conf";
       };
+
+      programs.command-not-found.dbPath = flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
     };
   }
 )

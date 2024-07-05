@@ -52,6 +52,10 @@
     url = "github:zhaofengli/colmena";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.flake-programs-sqlite = {
+    url = "github:wamserma/flake-programs-sqlite";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {

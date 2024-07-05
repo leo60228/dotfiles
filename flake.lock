@@ -77,6 +77,27 @@
         "type": "github"
       }
     },
+    "flake-programs-sqlite": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1720186464,
+        "narHash": "sha256-U4KGZtpU7c5OThNn7yUNAeme/cai0/ld0zxn7BnREuw=",
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "rev": "bdb334f833cd26524851b9f1bfab177d4116cbdd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -577,6 +598,7 @@
       "inputs": {
         "colmena": "colmena",
         "fizz-strat": "fizz-strat",
+        "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_4",
         "home-manager": "home-manager",
         "hydra": "hydra",
@@ -880,6 +902,21 @@
       "original": {
         "owner": "leo60228",
         "repo": "upd8r",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     }
