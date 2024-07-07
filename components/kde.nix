@@ -42,6 +42,7 @@ lib.makeComponent "kde" (
           konversation
           breeze-icons
           discover
+          partitionmanager
         ];
 
         services.desktopManager.plasma6.enable = true;
