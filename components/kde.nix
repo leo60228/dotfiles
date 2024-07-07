@@ -42,7 +42,7 @@ lib.makeComponent "kde" (
           konversation
           breeze-icons
           discover
-          partitionmanager
+          partitionmanager pkgs.exfatprogs
         ];
 
         services.desktopManager.plasma6.enable = true;
