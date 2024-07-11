@@ -42,6 +42,7 @@
       ]
     else
       [
+        signal-desktop
         colmena
         fusee-nano
         obs-studio
