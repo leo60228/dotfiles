@@ -60,6 +60,10 @@
     url = "github:numtide/treefmt-nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.pre-commit-hooks = {
+    url = "github:cachix/git-hooks.nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {
@@ -68,6 +72,7 @@
       colmena,
       flake-utils,
       treefmt-nix,
+      pre-commit-hooks,
       ...
     }@flakes:
     (
@@ -165,6 +170,13 @@
             inherit bootstrap;
           };
           treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks.treefmt = {
+              enable = true;
+              package = treefmtEval.config.build.wrapper;
+            };
+          };
         in
         {
           inherit packages;
@@ -189,7 +201,12 @@
           }) packages;
           formatter = treefmtEval.config.build.wrapper;
           checks = {
+            inherit pre-commit-check;
             formatting = treefmtEval.config.build.check self;
+          };
+          devShells.default = pkgs.mkShell {
+            inherit (pre-commit-check) shellHook;
+            buildInputs = pre-commit-check.enabledPackages;
           };
         }
       ))
