@@ -65,6 +65,10 @@ rec {
       node = {
         enable = true;
       };
+      ping = {
+        enable = true;
+        settings.targets = [ "mc.vsix.dev" ];
+      };
     };
   };
 
@@ -79,12 +83,6 @@ rec {
   };
 
   systemd.services.grafana.serviceConfig.AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
-
-  systemd.services.ping_exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    script = "${pkgs.leoPkgs.ping_exporter}/bin/ping_exporter mc.vsix.dev";
-  };
 
   security.acme.defaults.email = "leo@60228.dev";
   security.acme.acceptTerms = true;
