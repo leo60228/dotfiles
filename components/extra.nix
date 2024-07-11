@@ -126,7 +126,8 @@ lib.makeComponent "extra" (
         PIPEWIRE_CONFIG_NAME = "client-rt.conf";
       };
 
-      programs.command-not-found.dbPath = flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
+      programs.command-not-found.dbPath =
+        flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
     };
   }
 )
