@@ -611,6 +611,7 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nur": "nur",
         "poetry2nix-src": "poetry2nix-src",
+        "treefmt-nix": "treefmt-nix_2",
         "upd8r": "upd8r"
       }
     },
@@ -874,6 +875,26 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "rev": "8df5ff62195d4e67e2264df0b7f5e8c9995fd0bd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1720645794,
+        "narHash": "sha256-vAeYp+WH7i/DlBM5xNt9QeWiOiqzzf5abO8DYGkbUxg=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "750dfb555b5abdab4d3266b3f9a05dec6d205c04",
         "type": "github"
       },
       "original": {

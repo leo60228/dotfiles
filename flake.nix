@@ -56,6 +56,10 @@
     url = "github:wamserma/flake-programs-sqlite";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.treefmt-nix = {
+    url = "github:numtide/treefmt-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {
@@ -63,6 +67,7 @@
       nixpkgs,
       colmena,
       flake-utils,
+      treefmt-nix,
       ...
     }@flakes:
     (
@@ -123,16 +128,18 @@
           in
           jobs;
       }
-      // (flake-utils.lib.eachDefaultSystem (system: rec {
-        packages = rec {
-          nixos-rebuild = flakes.nixpkgs.legacyPackages.${system}.nixos-rebuild;
+      // (flake-utils.lib.eachDefaultSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
           bootstrap =
             let
-              inherit (nixpkgs.legacyPackages.${system})
+              inherit (pkgs)
                 makeWrapper
                 stdenvNoCC
                 lib
-                nix
+                lix
+                nixos-rebuild
                 ;
             in
             stdenvNoCC.mkDerivation {
@@ -147,33 +154,44 @@
               fixupPhase = ''
                 wrapProgram $out/bin/bootstrap --prefix PATH : ${
                   lib.makeBinPath [
-                    nix
+                    lix
                     nixos-rebuild
                   ]
                 }
               '';
             };
-        };
-        legacyPackages =
-          (import flakes.nixpkgs {
-            inherit system;
-            overlays = map (
-              e:
-              let
-                rawOverlay = import (./nixpkgs + ("/" + e));
-                hasArgs = builtins.functionArgs rawOverlay != { };
-                overlay = if hasArgs then rawOverlay flakes else rawOverlay;
-              in
-              overlay
-            ) (builtins.attrNames (builtins.readDir ./nixpkgs));
-          }).callPackages
-            ./pkgs
-            { };
-        apps = nixpkgs.lib.mapAttrs (n: x: {
-          type = "app";
-          program = "${x}/bin/${n}";
-        }) packages;
-        formatter = flakes.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-      }))
+          packages = {
+            inherit (pkgs) nixos-rebuild;
+            inherit bootstrap;
+          };
+          treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+        in
+        {
+          inherit packages;
+          legacyPackages =
+            (import flakes.nixpkgs {
+              inherit system;
+              overlays = map (
+                e:
+                let
+                  rawOverlay = import (./nixpkgs + ("/" + e));
+                  hasArgs = builtins.functionArgs rawOverlay != { };
+                  overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+                in
+                overlay
+              ) (builtins.attrNames (builtins.readDir ./nixpkgs));
+            }).callPackages
+              ./pkgs
+              { };
+          apps = nixpkgs.lib.mapAttrs (n: x: {
+            type = "app";
+            program = "${x}/bin/${n}";
+          }) packages;
+          formatter = treefmtEval.config.build.wrapper;
+          checks = {
+            formatting = treefmtEval.config.build.check self;
+          };
+        }
+      ))
     );
 }
