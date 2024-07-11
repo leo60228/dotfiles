@@ -87,8 +87,13 @@
 
               allowApplyAll = false;
             };
+            defaults =
+              { ... }:
+              {
+                config.nixpkgs.flake.source = nixpkgs.outPath;
+              };
           in
-          systems // { inherit meta; };
+          systems // { inherit meta defaults; };
 
         nixosConfigurations =
           nixpkgs.lib.mapAttrs
