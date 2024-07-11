@@ -6,8 +6,8 @@ set -e
 cd "$(dirname "$0")"
 
 commit="$(curl -SsL 'https://api.github.com/repos/BlaseballCrabs/mastodon/branches/crabstodon')"
-rev="$(jq -r '.commit.sha' <<<"$commit")"
-date="$(jq -r '.commit.commit.committer.date' <<<"$commit")"
+rev="$(jq -r '.commit.sha' <<< "$commit")"
+date="$(jq -r '.commit.commit.committer.date' <<< "$commit")"
 date="$(date --date="$date" --iso-8601=date)"
 echo "current commit is $rev, prefetching..."
 

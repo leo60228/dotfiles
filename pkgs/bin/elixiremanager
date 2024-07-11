@@ -40,18 +40,18 @@ function version() {
 
 function check_deps() {
     for i in date jq notify-send curl cwebp; do
-        (which $i &>/dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
+        (which $i &> /dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
     done
 
     if [[ $wayland == "true" ]]; then
         for i in spectacle; do
-            (which $i &>/dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
+            (which $i &> /dev/null) && echo "OK: found $i" || echo "ERROR: $i not found"
         done
-        (which wl-copy &>/dev/null) && echo "OK: found wl-clipboard" || echo "ERROR: wl-clipboard not found"
+        (which wl-copy &> /dev/null) && echo "OK: found wl-clipboard" || echo "ERROR: wl-clipboard not found"
     else
-        (which maim &>/dev/null) && echo "OK: maim found" || echo "ERROR: maim not found"
-        (which slop &>/dev/null) && echo "OK: slop found" || echo "ERROR: slop not found"
-        (which xclip &>/dev/null) && echo "OK: found xclip" || echo "ERROR: xclip not found"
+        (which maim &> /dev/null) && echo "OK: maim found" || echo "ERROR: maim not found"
+        (which slop &> /dev/null) && echo "OK: slop found" || echo "ERROR: slop not found"
+        (which xclip &> /dev/null) && echo "OK: found xclip" || echo "ERROR: xclip not found"
     fi
 }
 
@@ -66,7 +66,7 @@ function take_screenshot() {
 function upload_file_and_notify() {
     response=$(curl --compressed --connect-timeout ${upload_connect_timeout} -m ${upload_timeout} --retry ${upload_retries} -H "Authorization: ${apikey}" -F upload=@"${1}" ${apiurl}/upload${is_admin} | jq .url -r | tr -d '\n')
 
-    if [[ ! -z "${response}" ]]; then
+    if [[ -n ${response} ]]; then
         notify-send -t 5000 "Success!" "${response}" -i "${1}" --hint=int:transient:1
         if [[ $wayland == "true" ]]; then
             echo -en "${response}" | wl-copy -f
@@ -82,38 +82,49 @@ while [[ $# != 0 ]]; do
     case "${1}" in
         --help | -h)
             usage ${0}
-            exit 0 ;;
+            exit 0
+            ;;
         --version | -v)
             version ${0}
-            exit 0 ;;
+            exit 0
+            ;;
         --check)
             check_deps
-            exit 0 ;;
+            exit 0
+            ;;
         --area | -a)
             mode=area
-            shift ;;
+            shift
+            ;;
         --full | -f)
             mode=full
-            shift ;;
+            shift
+            ;;
         --keep | -k)
             keep=true
-            shift ;;
+            shift
+            ;;
         --wayland | -w)
             wayland=true
-            shift ;;
+            shift
+            ;;
         --xorg | -x)
             wayland=false
-            shift ;;
+            shift
+            ;;
         --admin)
             is_admin="?admin=true"
-            shift ;;
+            shift
+            ;;
         --noadmin)
             is_admin=""
-            shift ;;
+            shift
+            ;;
         *)
             file_provided=true
             file="${1}"
-            shift ;;
+            shift
+            ;;
     esac
 done
 
@@ -124,7 +135,7 @@ fi
 if [[ -z $file_provided ]]; then
     take_screenshot $mode "${file}"
     size="$(stat -c%s "${file}")"
-    if (( "${size}" > 1024 * 1024 )); then
+    if (("${size}" > 1024 * 1024)); then
         orig_file="${file}"
         file="${webp_filename_format}"
         type="image/webp"
@@ -136,7 +147,7 @@ upload_file_and_notify "${file}${type:+;type=${type}}"
 
 if [[ -z $file_provided && -z $keep ]]; then
     rm -f "${file}"
-    if [[ ! -z $orig_file ]]; then
+    if [[ -n $orig_file ]]; then
         rm -f "${orig_file}"
     fi
 fi

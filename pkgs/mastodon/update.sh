@@ -10,33 +10,33 @@ while [[ $# -gt 0 ]]; do
 
     case $key in
         --url)
-        URL="$2"
-        shift # past argument
-        shift # past value
-        ;;
+            URL="$2"
+            shift # past argument
+            shift # past value
+            ;;
         --ver)
-        VERSION="$2"
-        shift # past argument
-        shift # past value
-        ;;
-	--rev)
-	REVISION="$2"
-        shift # past argument
-        shift # past value
-        ;;
-	--patches)
-	PATCHES="$2"
-        shift # past argument
-        shift # past value
-        ;;
-        *)    # unknown option
-        POSITIONAL+=("$1")
-        shift # past argument
-        ;;
+            VERSION="$2"
+            shift # past argument
+            shift # past value
+            ;;
+        --rev)
+            REVISION="$2"
+            shift # past argument
+            shift # past value
+            ;;
+        --patches)
+            PATCHES="$2"
+            shift # past argument
+            shift # past value
+            ;;
+        *) # unknown option
+            POSITIONAL+=("$1")
+            shift # past argument
+            ;;
     esac
 done
 
-if [[ -z "$VERSION" || -n "$POSITIONAL" ]]; then
+if [[ -z $VERSION || -n $POSITIONAL ]]; then
     echo "Usage: update.sh [--url URL] --ver VERSION [--rev REVISION] [--patches PATCHES]"
     echo "URL may be any path acceptable to 'git clone' and VERSION the"
     echo "semantic version number.  If VERSION is not a revision acceptable to"
@@ -47,18 +47,17 @@ if [[ -z "$VERSION" || -n "$POSITIONAL" ]]; then
     exit 1
 fi
 
-if [[ -z "$REVISION" ]]; then
+if [[ -z $REVISION ]]; then
     REVISION="$VERSION"
 fi
 
 rm -f gemset.nix yarn.nix version.nix version.patch source.nix package.json
 TARGET_DIR="$PWD"
 
-
 WORK_DIR=$(mktemp -d)
 
 # Check that working directory was created.
-if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+if [[ ! $WORK_DIR || ! -d $WORK_DIR ]]; then
     echo "Could not create temporary directory"
     exit 1
 fi
@@ -66,13 +65,13 @@ fi
 # Delete the working directory on exit.
 function cleanup {
     # Report errors, if any, from nix-prefetch-git
-    grep "fatal" $WORK_DIR/nix-prefetch-git.out >/dev/stderr || true
+    grep "fatal" $WORK_DIR/nix-prefetch-git.out > /dev/stderr || true
     rm -rf "$WORK_DIR"
 }
 trap cleanup EXIT
 
 echo "Fetching source code $REVISION from $URL"
-JSON=$(nix-prefetch-git --url "$URL" --rev "$REVISION"  2> $WORK_DIR/nix-prefetch-git.out)
+JSON=$(nix-prefetch-git --url "$URL" --rev "$REVISION" 2> $WORK_DIR/nix-prefetch-git.out)
 SHA=$(echo $JSON | jq -r .sha256)
 FETCHED_SOURCE_DIR=$(grep '^path is' $WORK_DIR/nix-prefetch-git.out | sed 's/^path is //')
 

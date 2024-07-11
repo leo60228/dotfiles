@@ -6,14 +6,14 @@ i=0
 sleep 3
 
 for e in "${codes[@]}"; do
-	((i++))
-	echo $i $e
-	sleep 1.25
-	xdotool type $e
-	xdotool key Return
-	if [[ "$i" == "10" ]]; then
-		i=0
-		read -s
-		sleep 3
-	fi
+    ((i++))
+    echo $i $e
+    sleep 1.25
+    xdotool type $e
+    xdotool key Return
+    if [[ $i == "10" ]]; then
+        i=0
+        read -s
+        sleep 3
+    fi
 done

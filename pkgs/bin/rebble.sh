@@ -3,21 +3,20 @@
 VERSION=latest
 
 while getopts ":v:" opt; do
-  case ${opt} in
-    v )
-      VERSION=$OPTARG
-      ;;
-    : )
-      echo "Invalid option: $OPTARG requires an argument" 1>&2
-      ;;
-  esac
+    case ${opt} in
+        v)
+            VERSION=$OPTARG
+            ;;
+        :)
+            echo "Invalid option: $OPTARG requires an argument" 1>&2
+            ;;
+    esac
 done
-shift $((OPTIND -1))
+shift $((OPTIND - 1))
 
 docker run \
-           --rm -it \
-           -v $(pwd):/work \
-           -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -e DISPLAY=$DISPLAY \
-           dmorgan81/rebble:$VERSION $@
-
+    --rm -it \
+    -v $(pwd):/work \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY=$DISPLAY \
+    dmorgan81/rebble:$VERSION $@

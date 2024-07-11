@@ -16,30 +16,24 @@
 
 hosts:
   - 60228.dev
-
 loglevel: info
-
 ## If you already have certificates, list them here
 certfiles:
- - /var/lib/acme/60228.dev/fullchain.pem
- - /var/lib/acme/60228.dev/key.pem
-
+  - /var/lib/acme/60228.dev/fullchain.pem
+  - /var/lib/acme/60228.dev/key.pem
 listen:
-  -
-    port: 5222
+  - port: 5222
     ip: "::"
     module: ejabberd_c2s
     max_stanza_size: 262144
     shaper: c2s_shaper
     access: c2s
     starttls_required: true
-  -
-    port: 5269
+  - port: 5269
     ip: "::"
     module: ejabberd_s2s_in
     max_stanza_size: 524288
-  -
-    port: 5443
+  - port: 5443
     ip: "::"
     module: ejabberd_http
     tls: true
@@ -50,20 +44,16 @@ listen:
       /captcha: ejabberd_captcha
       /upload: mod_http_upload
       /ws: ejabberd_http_ws
-  -
-    port: 5280
+  - port: 5280
     ip: "::"
     module: ejabberd_http
     request_handlers:
       /admin: ejabberd_web_admin
-  -
-    port: 1883
+  - port: 1883
     ip: "::"
     module: mod_mqtt
     backlog: 1000
-
 s2s_use_starttls: optional
-
 acl:
   local:
     user_regexp: ""
@@ -71,7 +61,6 @@ acl:
     ip:
       - 127.0.0.0/8
       - ::1/128
-
 access_rules:
   local:
     allow: local
@@ -88,7 +77,6 @@ access_rules:
     allow: local
   trusted_network:
     allow: loopback
-
 api_permissions:
   "console commands":
     from:
@@ -117,11 +105,9 @@ api_permissions:
     what:
       - status
       - connected_users_number
-
 shaper:
   normal: 1000
   fast: 50000
-
 shaper_rules:
   max_user_sessions: 10
   max_user_offline_messages:
@@ -131,7 +117,6 @@ shaper_rules:
     none: admin
     normal: all
   s2s_shaper: fast
-
 modules:
   mod_adhoc: {}
   mod_admin_extra: {}

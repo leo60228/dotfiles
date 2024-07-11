@@ -6,10 +6,10 @@ SCLK='/sys/class/drm/card0/device/pp_dpm_sclk'
 echo "Waiting for AMDGPU device to initialize..."
 
 while true; do
-	if [ -w "$PERF" ]; then
-		break
-	fi
-	sleep 1
+    if [ -w "$PERF" ]; then
+        break
+    fi
+    sleep 1
 done
 
 echo "Device Online. Enabling GPU Powersave Workaround."

@@ -2,5 +2,5 @@
 WRAPPED_BIN="gcc"
 ARGS=("$@")
 ARGS=("${ARGS[@]/#-all-static/-static}")
-ARGS=("${ARGS[@]/-V}")
+ARGS=("${ARGS[@]/-V/}")
 "$WRAPPED_BIN" "${ARGS[@]}"

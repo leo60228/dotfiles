@@ -10,7 +10,7 @@ readonly apikey="$(cat ~/.config/elixire-apikey)"
 
 url="${1}"
 if [ -z $url ]; then
-	url="$(xclip -o -selection clipboard)"
+    url="$(xclip -o -selection clipboard)"
 fi
 
 shortened="$(jq -nc --arg url "${url}" '{ url: $url }' | curl -X POST --data-binary @- -H "Authorization: ${apikey}" "${apiurl}/shorten" | jq -re .url)"
