@@ -42,6 +42,7 @@
       ]
     else
       [
+        license-cli
         signal-desktop
         colmena
         fusee-nano
