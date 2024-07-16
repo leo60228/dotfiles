@@ -90,6 +90,7 @@
         "https://cache.nixos.org/"
         "http://desktop:9999"
       ];
+  nix.extraOptions = "!include /etc/nix/secrets.conf";
 
   environment.systemPackages = with pkgs; [
     openssh
