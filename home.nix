@@ -42,6 +42,7 @@
       ]
     else
       [
+        gh
         license-cli
         signal-desktop
         colmena
