@@ -42,6 +42,7 @@
       ]
     else
       [
+        leoPkgs.hactoolnet
         gh
         license-cli
         signal-desktop

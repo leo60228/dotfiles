@@ -14,6 +14,7 @@ rec {
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
   datapath-vision-firmware = callPackage ./datapath-vision-firmware { };
   discord = callPackage ./discord { };
+  hactoolnet = callPackage ./hactoolnet { };
   mastodon = callPackage ./mastodon { };
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
   reposilite = callPackage ./reposilite { };
