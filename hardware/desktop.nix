@@ -175,6 +175,25 @@
       #Option "AutoAddGPU" "off"
       #'';
       services.xserver.exportConfiguration = true;
+      services.displayManager.sddm.settings = {
+        General = {
+          Numlock = "none";
+          GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=2,QT_FONT_DPI=192";
+        };
+
+        Theme = {
+          CursorSize = 48;
+          CursorTheme = "breeze_cursors";
+          Font = "Sans Serif,10,-1,5,50,0,0,0,0,0";
+        };
+
+        X11 = {
+          ServerArguments = "-dpi 192";
+        };
+      };
+      services.xserver.displayManager.setupCommands = ''
+        echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
+      '';
 
       #hardware.pulseaudio.extraConfig = ''
       #load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
