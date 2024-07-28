@@ -119,7 +119,7 @@
         dbus
         dbus.lib
         dbus.dev
-        gnome3.zenity
+        zenity
         gnuplot
         #(callPackage ./amdgpu-utils {})
         bat
