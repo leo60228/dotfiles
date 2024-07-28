@@ -133,12 +133,7 @@
         nix-prefetch-git
         pandoc
         (leoPkgs.discord.override { inherit deviceScaleFactor; })
-        (vesktop.overrideAttrs (oldAttrs: {
-          patches = [ ./files/vesktop-update-arrpc.patch ];
-          pnpmDeps = oldAttrs.pnpmDeps.overrideAttrs (oldAttrs2: {
-            outputHash = "sha256-LLOAbUjGvkhTFuSpsNEKzK8cO3ITb108RXjWFIEsXps=";
-          });
-        }))
+        vesktop
         (hiPrio gtk2)
         SDL
         SDL2
