@@ -37,11 +37,11 @@
   inputs.hydra = {
     url = "git+https://git@git.lix.systems/lix-project/hydra";
     inputs.nixpkgs.follows = "nixpkgs";
-    inputs.nix.follows = "lix";
+    inputs.lix.follows = "lix";
   };
   inputs.lix = {
     url = "git+https://git@git.lix.systems/lix-project/lix";
-    flake = false;
+    inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.lix-module = {
     url = "git+https://git.lix.systems/lix-project/nixos-module";
