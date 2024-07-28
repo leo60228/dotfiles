@@ -315,7 +315,7 @@
     };
   };
 
-  xdg.configFile."systemd/user/app-vesktop-.scope.d/override.conf".text = ''
+  xdg.configFile."systemd/user/app-vesktop@.service.d/override.conf".text = ''
     [Unit]
     Wants=mpdiscord.service
   '';
