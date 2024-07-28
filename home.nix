@@ -187,7 +187,7 @@
         xorg.libXrandr.dev
         xorg.libxcb
         xorg.libxcb.dev
-        youtube-dl
+        yt-dlp
         leoPkgs.rust.rust
         libreoffice
         tmux
