@@ -42,6 +42,7 @@
       ]
     else
       [
+        wiimms-iso-tools
         leoPkgs.hactoolnet
         gh
         license-cli
