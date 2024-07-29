@@ -14,7 +14,7 @@ rec {
       glances
       flatpak
       prometheus
-      ibus
+      fcitx5
       apcupsd
       {
         timeout = 300;

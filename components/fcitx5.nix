@@ -1,7 +1,7 @@
 let
   lib = import ../lib;
 in
-lib.makeComponent "ibus" (
+lib.makeComponent "fcitx5" (
   {
     cfg,
     pkgs,
@@ -15,8 +15,7 @@ lib.makeComponent "ibus" (
     config = {
       i18n.inputMethod = {
         enable = true;
-        type = "ibus";
-        ibus.engines = with pkgs.ibus-engines; [ ];
+        type = "fcitx5";
       };
     };
   }
