@@ -257,9 +257,8 @@
         #(import ./julia-oldpkgs.nix {version = "06";})
         #(import ./julia-oldpkgs.nix {version = "07";})
         #(import ./julia-oldpkgs.nix {version = "11";})
-        leoPkgs.twemoji-svg
-        leoPkgs.twemoji-colr
         syncthingtray
+        leoPkgs.twemoji-ttf
       ];
 
   programs.git = {

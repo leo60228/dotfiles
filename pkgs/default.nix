@@ -19,8 +19,7 @@ rec {
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };
-  twemoji-colr = callPackage ./twemoji-colr { };
-  twemoji-svg = callPackage ./twemoji-svg { };
+  twemoji-ttf = callPackage ./twemoji-ttf { };
   vscode-fhs = callPackage ./vscode-fhs { };
   vxis-capture-fw-mod = callPackage ./vxis-capture-fw-mod { };
 }
