@@ -102,6 +102,7 @@ neovim.override {
         (callPackage ./nvim-echo-diagnostics.nix { })
         nvim-solarized-lua
         (callPackage ./vim-poryscript.nix { })
+        vim-fetch
       ];
 
       opt = [ vimspector ] ++ map (x: x.plug) ftPlugins;
