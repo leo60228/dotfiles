@@ -234,6 +234,10 @@ ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", MODE="666"
 ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", MODE="666"
 #
 # Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0x1366 (SEGGER)
+#     PID 0x1008-100f, 0x1018-101f, 0x1028-102f, 0x1058-105f, 0x1068-106f (SEGGER J-Link)
+#     We cover all of them via idProduct=10* and idVendor=1366
+#
 #   VID 0xC251 (Keil)
 #     PID 0xF001: (LPC-Link-II CMSIS_DAP)
 #     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
@@ -241,6 +245,7 @@ ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", MODE="666"
 #   VID 0x0D28 (mbed)
 #     PID 0x0204: MBED CMSIS-DAP
 #
+KERNEL=="hidraw*", ATTRS{idProduct}=="10*",  ATTRS{idVendor}=="1366", MODE="666"
 KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="c251", MODE="666"
 KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="c251", MODE="666"
 KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="c251", MODE="666"

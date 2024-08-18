@@ -16,6 +16,7 @@
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
+    autoSubUidGidRange = true;
     extraGroups = [
       "wheel"
       "dialout"
@@ -121,10 +122,13 @@
     ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2175", TAG+="uaccess", MODE="0666"
     ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2145", TAG+="uaccess", MODE="0666"
     ATTRS{idVendor}=="1781", ATTRS{idProduct}=="0c9f", TAG+="uaccess", MODE="0666"
-    ${builtins.readFile ../files/51-ftd3xx.rules}
-    ${builtins.readFile ../files/80-m1n1.rules}
-    ${builtins.readFile ../files/99-jlink.rules}
   '';
+  services.udev.packages = [
+    (pkgs.runCommand "udev-rules" { } ''
+      mkdir -vp $out/etc/udev/rules.d
+      cp -vt $out/etc/udev/rules.d ${../files/51-ftd3xx.rules} ${../files/80-m1n1.rules} ${../files/mchp-udev}/*
+    '')
+  ];
 
   # tmpfs
   boot.tmp.useTmpfs = true;
