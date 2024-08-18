@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchurl,
-  fetchFromSourcehut
+  fetchFromSourcehut,
 }:
 
 stdenv.mkDerivation rec {
