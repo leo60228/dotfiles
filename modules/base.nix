@@ -137,4 +137,9 @@
   services.openssh.settings.StreamLocalBindUnlink = true;
 
   security.sudo.wheelNeedsPassword = false;
+
+  # increase inotify limits (per upstream recommendation, see kernel commits
+  # 92890123749bafc317bbfacbe0a62ce08d78efb7 and ac7b79fd190b02e7151bc7d2b9da692f537657f3)
+  boot.kernel.sysctl."fs.inotify.max_user_instances" = 2147483647;
+  boot.kernel.sysctl."fs.inotify.max_user_watches" = 1048576;
 }
