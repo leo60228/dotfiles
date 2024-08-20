@@ -4,8 +4,7 @@
 # 2014.05.01 Change ENV and label names changed.
 
 ACTION!="add", GOTO="seg_rules_end"
-SUBSYSTEM=="usb_device", GOTO="seg_check_add"
-SUBSYSTEM!="usb", GOTO="seg_rules_end"
+SUBSYSTEM!="usb|tty|hidraw", GOTO="seg_rules_end"
 
 LABEL="seg_check_add"
 
