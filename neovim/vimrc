@@ -77,6 +77,25 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <c-space> <c-x><c-o>
 nnoremap <leader>c :nohlsearch<cr>
 
+function! s:EnableRelativeAutocomplete() abort
+  let b:relative_autocomplete_cleanup_pending = 1
+  lcd %:p:h
+endfunction
+
+function! s:DisableRelativeAutocomplete() abort
+  if exists('b:relative_autocomplete_cleanup_pending') && b:relative_autocomplete_cleanup_pending
+    lcd -
+    let b:relative_autocomplete_cleanup_pending = 0
+  endif
+endfunction
+
+inoremap <C-x><C-f> <C-o>:call <SID>EnableRelativeAutocomplete()<CR><C-x><C-f>
+
+augroup relative_file_autocomplete
+  autocmd!
+  autocmd InsertLeave * call s:DisableRelativeAutocomplete()
+augroup END
+
 if has('ide')
   nmap <leader>cn <Action>(GotoNextError)
   nmap <leader>cN <Action>(GotoPreviousError)
