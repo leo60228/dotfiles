@@ -1,0 +1,13 @@
+diff --git a/src/libromdata/img/TCreateThumbnail.cpp b/src/libromdata/img/TCreateThumbnail.cpp
+index dfa61ba..a120dad 100644
+--- a/src/libromdata/img/TCreateThumbnail.cpp
++++ b/src/libromdata/img/TCreateThumbnail.cpp
+@@ -289,7 +289,7 @@ int TCreateThumbnail<ImgClass>::getThumbnail(const RomDataPtr &romData, int reqS
+ 			return RPCT_ERROR_CANNOT_OPEN_SOURCE_FILE;
+ 	}
+ 
+-	if (config->getBoolConfigOption_default(Config::BoolConfig::Downloads_UseIntIconForSmallSizes) && reqSize <= 48) {
++	if (config->getBoolConfigOption_default(Config::BoolConfig::Downloads_UseIntIconForSmallSizes) && reqSize <= 256) {
+ 		// Check for an icon first.
+ 		// TODO: Define "small sizes" somewhere. (DPI independence?)
+ 		if (imgbf & RomData::IMGBF_INT_ICON) {

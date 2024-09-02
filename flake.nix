@@ -64,6 +64,10 @@
     url = "github:cachix/git-hooks.nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.rom-properties = {
+    url = "github:Whovian9369/rom-properties-nix-flake";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {

@@ -6,6 +6,7 @@ lib.makeComponent "kde" (
     cfg,
     pkgs,
     lib,
+    flakes,
     ...
   }:
   with lib;
@@ -44,6 +45,9 @@ lib.makeComponent "kde" (
           discover
           partitionmanager
           pkgs.exfatprogs
+          (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
+            patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
+          }))
         ];
 
         services.desktopManager.plasma6.enable = true;

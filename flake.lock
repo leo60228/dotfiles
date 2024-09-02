@@ -815,6 +815,26 @@
         "type": "github"
       }
     },
+    "rom-properties": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1725235415,
+        "narHash": "sha256-ANLRV1DbPnEIry0ZJ4wAvwCw4PpIEI3cfDcJy6nB6Nk=",
+        "owner": "Whovian9369",
+        "repo": "rom-properties-nix-flake",
+        "rev": "be690a2ccbe2964a20fb9aae586a8f5ac34829d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Whovian9369",
+        "repo": "rom-properties-nix-flake",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "colmena": "colmena",
@@ -833,6 +853,7 @@
         "nur": "nur",
         "poetry2nix-src": "poetry2nix-src",
         "pre-commit-hooks": "pre-commit-hooks_2",
+        "rom-properties": "rom-properties",
         "treefmt-nix": "treefmt-nix_3",
         "upd8r": "upd8r"
       }
