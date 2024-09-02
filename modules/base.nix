@@ -11,7 +11,10 @@
     ./flakes.nix
     ./nix-daemon.nix
     ./cachix.nix
+
+    ./fcitx5.nix # FIXME: remove after https://github.com/NixOS/nixpkgs/commit/38cabf32f86b756a9c682f2e20fbeca392661dd0
   ];
+  disabledModules = [ "i18n/input-method/fcitx5.nix" ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
@@ -57,8 +60,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "nodejs-16.20.0" # FIXME: unneeded after https://github.com/NixOS/nixpkgs/commit/b38795a22e1028127a9e2f2be1c8d9b11d31bd26
-      "openssl-1.1.1t" # FIXME: unneeded after https://github.com/NixOS/nixpkgs/commit/8229ab2435dd53eef8c5eb076c15ccdafd25fec7
+      "olm-3.2.16" # these vulnerabilities aren't real.
     ];
   };
 

@@ -514,7 +514,7 @@
 
   home.file.".gradle/gradle.properties" = lib.mkIf (!small) {
     text = ''
-      org.gradle.java.installations.paths=${pkgs.adoptopenjdk-hotspot-bin-8}
+      org.gradle.java.installations.paths=${pkgs.temurin-bin-8}
       org.gradle.java.installations.auto-download=false
     '';
   };

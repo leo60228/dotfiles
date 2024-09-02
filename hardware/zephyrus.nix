@@ -42,6 +42,7 @@
       services.power-profiles-daemon.enable = true;
 
       services.xserver.videoDrivers = [ "nvidia" ];
+      hardware.nvidia.open = true;
       hardware.nvidia.modesetting.enable = true;
       hardware.nvidia.prime = {
         offload.enable = true;

@@ -110,27 +110,27 @@ rec {
     };
   };
 
-  services.lemmy = {
-    enable = true;
-    database = {
-      createLocally = true;
-      uri = "postgres:///lemmy?host=/run/postgresql&user=lemmy";
-    };
-    settings = {
-      email = {
-        smtp_server = "smtp-relay.gmail.com:587";
-        smtp_from_address = "Administrator <admin@60228.dev>";
-        tls_type = "tls";
-      };
-      setup = {
-        admin_username = "vriska";
-        admin_password = "TeWoK25tBod2*kRz&Hq^";
-        site_name = "l.60228.dev";
-        admin_email = "leo@60228.dev";
-      };
-      hostname = "l.60228.dev";
-    };
-  };
+  #services.lemmy = {
+  #  enable = true;
+  #  database = {
+  #    createLocally = true;
+  #    uri = "postgres:///lemmy?host=/run/postgresql&user=lemmy";
+  #  };
+  #  settings = {
+  #    email = {
+  #      smtp_server = "smtp-relay.gmail.com:587";
+  #      smtp_from_address = "Administrator <admin@60228.dev>";
+  #      tls_type = "tls";
+  #    };
+  #    setup = {
+  #      admin_username = "vriska";
+  #      admin_password = "TeWoK25tBod2*kRz&Hq^";
+  #      site_name = "l.60228.dev";
+  #      admin_email = "leo@60228.dev";
+  #    };
+  #    hostname = "l.60228.dev";
+  #  };
+  #};
 
   #systemd.services.ghastly = {
   #  description = "ghastly";

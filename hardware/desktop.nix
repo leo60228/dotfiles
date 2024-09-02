@@ -140,7 +140,7 @@
       #'' else "";
 
       #specialisation.amdgpu.configuration = { ... }: {
-      hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+      hardware.nvidia.open = true;
       hardware.nvidia.modesetting.enable = true;
       services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
       services.xserver.screenSection = ''
@@ -215,7 +215,7 @@
       boot.loader.timeout = null;
       boot.loader.systemd-boot.memtest86.enable = true;
 
-      virtualisation.docker.enableNvidia = true;
+      hardware.nvidia-container-toolkit.enable = true;
 
       deployment.tags = [ "workstation" ];
       deployment.allowLocalDeployment = true;
