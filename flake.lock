@@ -139,11 +139,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1725205933,
-        "narHash": "sha256-/XPFiUBRVL64674GuWEqZzsHTD1CiEgGPaItMeMZBFo=",
+        "lastModified": 1725282413,
+        "narHash": "sha256-Hr8yCeZNjS45FC0N2u8I2mjcIiXhKjPCOoenkC6S4Eo=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "9bb79114c2c668fb01f8f4bc0c8fe8843e516f45",
+        "rev": "eb220ff903b196a1763f435778f06c4a8612f8da",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1724720257,
-        "narHash": "sha256-3o2A1OgYhXrcQckbpeGDjjLzOa/3mYgwvUE9RONSnoc=",
+        "lastModified": 1725317763,
+        "narHash": "sha256-NofyYPdyo1kKoaOKAI2RE5YmO4XgejuB7nEXKKTi8FQ=",
         "ref": "refs/heads/main",
-        "rev": "8d5d4942e11ce20ecb9b11727a8ccf54f05382e1",
-        "revCount": 4211,
+        "rev": "ac37e44982802bc6a5558a1de381f7106b25449f",
+        "revCount": 4213,
         "type": "git",
         "url": "https://git@git.lix.systems/lix-project/hydra"
       },
@@ -739,11 +739,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1725242471,
-        "narHash": "sha256-eEL68+FxHHf/g6+t4DVcG2XTZzeprmrgfiyi3g/nn28=",
+        "lastModified": 1725313533,
+        "narHash": "sha256-7Dm9p/pPFKDKwr519YabifsQ2f6B0eaM8PzEnVoR9VI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "2db8e9542680714e86d5088637def5558f6b46b4",
+        "rev": "0f4ecfed9a92690c0cd45f30d25a638eb9bd346b",
         "type": "github"
       },
       "original": {
@@ -763,11 +763,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1724417163,
-        "narHash": "sha256-gD0N0pnKxWJcKtbetlkKOIumS0Zovgxx/nMfOIJIzoI=",
+        "lastModified": 1725253878,
+        "narHash": "sha256-HwXut4WbOUAjmybhui2eNSE6+Wb0nigYgDzBBOZaPG4=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "7619e43c2b48c29e24b88a415256f09df96ec276",
+        "rev": "0d3fad5740d892487805cd2d60d8e4ed828486e9",
         "type": "github"
       },
       "original": {
@@ -1155,11 +1155,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1724833132,
-        "narHash": "sha256-F4djBvyNRAXGusJiNYInqR6zIMI3rvlp6WiKwsRISos=",
+        "lastModified": 1725271838,
+        "narHash": "sha256-VcqxWT0O/gMaeWTTjf1r4MOyG49NaNxW4GHTO3xuThE=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "3ffd842a5f50f435d3e603312eefa4790db46af5",
+        "rev": "9fb342d14b69aefdf46187f6bb80a4a0d97007cd",
         "type": "github"
       },
       "original": {
