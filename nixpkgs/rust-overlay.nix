@@ -1,1 +1,1 @@
-{ nixpkgs-mozilla, ... }: import "${nixpkgs-mozilla}/rust-overlay.nix"
+{ rust-overlay, ... }: rust-overlay.overlays.default

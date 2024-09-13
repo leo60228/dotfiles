@@ -4,9 +4,9 @@
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.nixpkgs-mozilla = {
-    url = "github:mozilla/nixpkgs-mozilla";
-    flake = false;
+  inputs.rust-overlay = {
+    url = "github:oxalica/rust-overlay";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nur.url = "github:nix-community/NUR";
   inputs.flake-utils.url = "github:numtide/flake-utils";
