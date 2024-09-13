@@ -12,6 +12,7 @@
       imports = [
         "${modulesPath}/installer/scan/not-detected.nix"
         flakes.nixos-hardware.nixosModules.framework-13-7040-amd
+        flakes.lanzaboote.nixosModules.lanzaboote
       ];
 
       boot.initrd.availableKernelModules = [
@@ -68,6 +69,15 @@
       services.xserver.displayManager.setupCommands = ''
         echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
       '';
+
+      boot.loader.systemd-boot.enable = lib.mkForce false;
+
+      boot.lanzaboote = {
+        enable = true;
+        pkiBundle = "/etc/secureboot";
+      };
+
+      environment.systemPackages = [ pkgs.sbctl ];
 
       deployment.tags = [ "workstation" ];
       deployment.allowLocalDeployment = true;

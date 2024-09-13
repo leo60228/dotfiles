@@ -69,6 +69,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
+  inputs.lanzaboote = {
+    url = "github:nix-community/lanzaboote/v0.4.1";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {
