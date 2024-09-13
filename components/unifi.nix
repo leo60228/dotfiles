@@ -15,7 +15,7 @@ lib.makeComponent "unifi" (
     config = {
       services.unifi = {
         enable = true;
-        unifiPackage = pkgs.unifi;
+        unifiPackage = pkgs.unifi8;
         openFirewall = true;
       };
     };
