@@ -68,6 +68,7 @@
     url = "github:Whovian9369/rom-properties-nix-flake";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
   outputs =
     {
