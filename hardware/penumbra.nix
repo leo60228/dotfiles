@@ -39,13 +39,35 @@
         ];
       };
 
-      swapDevices = [
-        { device = "/dev/disk/by-uuid/f735a083-e7e4-46ca-a0b0-73f280f3d8ad"; }
-      ];
+      swapDevices = [ { device = "/dev/disk/by-uuid/f735a083-e7e4-46ca-a0b0-73f280f3d8ad"; } ];
 
       boot.initrd.luks.devices."lvm".device = "/dev/disk/by-uuid/32bfc36e-2640-4110-bc58-b93564acaafa";
 
       services.power-profiles-daemon.enable = true;
+
+      console.earlySetup = true;
+      console.packages = [ pkgs.terminus_font ];
+      console.font = "ter-128n";
+
+      services.displayManager.sddm.settings = {
+        General = {
+          Numlock = "none";
+          GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=2,QT_FONT_DPI=192";
+        };
+
+        Theme = {
+          CursorSize = 48;
+          CursorTheme = "breeze_cursors";
+          Font = "Sans Serif,10,-1,5,50,0,0,0,0,0";
+        };
+
+        X11 = {
+          ServerArguments = "-dpi 192";
+        };
+      };
+      services.xserver.displayManager.setupCommands = ''
+        echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
+      '';
 
       deployment.tags = [ "workstation" ];
       deployment.allowLocalDeployment = true;
