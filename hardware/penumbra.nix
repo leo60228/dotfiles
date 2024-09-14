@@ -15,6 +15,7 @@
         flakes.lanzaboote.nixosModules.lanzaboote
       ];
 
+      boot.kernelPackages = pkgs.linuxPackages_latest;
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"
@@ -25,6 +26,10 @@
       boot.initrd.kernelModules = [ "dm-snapshot" ];
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
+
+      boot.extraModprobeConfig = ''
+        options cfg80211 ieee80211_regdom="US"
+      '';
 
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/41691e95-8ec6-45a9-8f0e-6a3c72fd6c70";
