@@ -1,5 +1,6 @@
 {
   callPackage,
+  callPackages,
   nodejs_18,
   python3,
   libsForQt5,
@@ -10,6 +11,7 @@ rec {
   bin = callPackage ./bin { };
   citra = callPackage ./citra { };
   crabstodon = callPackage ./crabstodon { };
+  inherit (callPackages ./electron/binary { }) electron_31-bin;
   eontimer = libsForQt5.callPackage ./eontimer { inherit qtsass; };
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
   datapath-vision-firmware = callPackage ./datapath-vision-firmware { };
