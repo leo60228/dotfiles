@@ -17,7 +17,7 @@
     with pkgs;
     if small then
       [
-        hyfetch
+        leoPkgs.hyfetch
         libwebp
         ripgrep
         (callPackage ./neovim { })
@@ -63,7 +63,7 @@
         ctrtool
         hactool
         pdm
-        hyfetch
+        leoPkgs.hyfetch
         libsForQt5.kdelibs4support
         qpwgraph
         htop

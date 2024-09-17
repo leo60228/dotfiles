@@ -17,6 +17,7 @@ rec {
   datapath-vision-firmware = callPackage ./datapath-vision-firmware { };
   discord = callPackage ./discord { };
   hactoolnet = callPackage ./hactoolnet { };
+  hyfetch = callPackage ./hyfetch { };
   mastodon = callPackage ./mastodon { };
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
   reposilite = callPackage ./reposilite { };
