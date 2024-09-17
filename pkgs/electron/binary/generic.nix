@@ -27,6 +27,7 @@
   pango,
   systemd,
   pciutils,
+  libnotify,
 }:
 
 version: hashes:
@@ -117,6 +118,7 @@ let
       pciutils
       stdenv.cc.cc.lib
       systemd
+      libnotify
     ]
     ++ lib.optionals (lib.versionAtLeast version "9.0.0") [
       libdrm
