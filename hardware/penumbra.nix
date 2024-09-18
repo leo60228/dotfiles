@@ -84,6 +84,8 @@
 
       environment.systemPackages = [ pkgs.sbctl ];
 
+      networking.networkmanager.wifi.backend = "iwd";
+
       deployment.tags = [ "workstation" ];
       deployment.allowLocalDeployment = true;
     };
