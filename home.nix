@@ -42,6 +42,7 @@
       ]
     else
       [
+        leoPkgs.redumper
         wiimms-iso-tools
         leoPkgs.hactoolnet
         gh

@@ -20,6 +20,7 @@ rec {
   hyfetch = callPackage ./hyfetch { };
   mastodon = callPackage ./mastodon { };
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
+  redumper = callPackage ./redumper { };
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };
   twemoji-ttf = callPackage ./twemoji-ttf { };
