@@ -72,7 +72,10 @@ lib.makeComponent "extra" (
           vim
           androidenv.androidPkgs.platform-tools
         ]
-        ++ lib.optionals config.services.xserver.enable [ linux-wifi-hotspot ];
+        ++ lib.optionals config.services.xserver.enable [
+          linux-wifi-hotspot
+          waypipe
+        ];
 
       # ntfs
       boot.supportedFilesystems = [ "ntfs" ];
