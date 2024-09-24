@@ -1,0 +1,21 @@
+diff --git a/source/75-twemoji.conf b/source/75-twemoji.conf
+index 9ef221f..0d68766 100644
+--- a/source/75-twemoji.conf
++++ b/source/75-twemoji.conf
+@@ -106,16 +106,6 @@
+         <edit name="family" mode="assign" binding="same"><string>Twemoji</string></edit>
+     </match>
+ 
+-    <match target="pattern">
+-        <test qual="any" name="family"><string>Segoe UI Emoji</string></test>
+-        <edit name="family" mode="assign" binding="same"><string>Twemoji</string></edit>
+-    </match>
+-
+-    <match target="pattern">
+-        <test qual="any" name="family"><string>Segoe UI Symbol</string></test>
+-        <edit name="family" mode="assign" binding="same"><string>Twemoji</string></edit>
+-    </match>
+-
+     <match target="pattern">
+         <test qual="any" name="family"><string>Noto Color Emoji</string></test>
+         <edit name="family" mode="assign" binding="same"><string>Twemoji</string></edit>

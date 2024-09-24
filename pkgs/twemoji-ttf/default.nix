@@ -22,6 +22,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  patches = [ ./no-segoe-ui.diff ];
+
   preUnpack = "unpackCmdHooks+=('cp $curSrc .')";
   sourceRoot = ".";
 
