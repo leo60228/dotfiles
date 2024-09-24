@@ -1,12 +1,4 @@
 " Misc settings {{{
-if $TERM ==# 'tmux-256color' && $TMUX_FORCE_NO_TRUECOLOR !=# '1'
-    set termguicolors
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-else
-    let g:solarized_use16 = 1
-endif
-
 set nocp
 set history=50                  " keep 50 lines of command line history
 set ruler                       " show the cursor position all the time
@@ -29,6 +21,7 @@ set shortmess-=F
 set updatetime=300
 set completeopt-=preview
 
+set termguicolors
 set background=dark
 colorscheme solarized-flat
 
