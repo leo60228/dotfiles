@@ -18,23 +18,13 @@ stdenvNoCC.mkDerivation {
   NODE_EXTRA_CA_CERTS = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
   buildPhase = ''
-    mkdir -p $out
-
     export HOME=$(mktemp -d)
-    echo $HOME
-
     export YARN_ENABLE_TELEMETRY=0
-    export YARN_COMPRESSION_LEVEL=0
 
     cache="$(yarn config get cacheFolder)"
-    if ! yarn install --immutable --mode skip-build; then
-      cp yarn.lock yarn.lock.bak
-      yarn install --mode skip-build
-      diff -u yarn.lock.bak yarn.lock > yarn.lock.diff
-      echo "yarn build failed! diff generated as yarn.lock.diff"
-      exit 1
-    fi
+    yarn install --immutable --mode skip-build
 
+    mkdir -p $out
     cp -r $cache/* $out/
   '';
 
