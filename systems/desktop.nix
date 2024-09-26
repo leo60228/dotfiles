@@ -38,6 +38,13 @@ rec {
     8010
     6600
     9999
+    111
+    2049
+    4000
+    4001
+    4002
+    20048
+    3306
   ];
   networking.firewall.allowedUDPPorts = [
     4010
@@ -47,6 +54,12 @@ rec {
     34568
     21027
     6600
+    111
+    2049
+    4000
+    4001
+    4002
+    20048
   ];
 
   networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
@@ -102,4 +115,34 @@ rec {
   services.postgresql.settings.max_connections = 200;
 
   services.tailscale.useRoutingFeatures = "both";
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /srv/nfs *(ro,sync,all_squash,crossmnt,anonuid=1000,anongid=100,insecure)
+    '';
+    statdPort = 4000;
+    lockdPort = 4001;
+    mountdPort = 4002;
+  };
+
+  fileSystems."/srv/nfs/Music" = {
+    device = "/home/leo60228/Music";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/srv/nfs/Videos" = {
+    device = "/home/leo60228/Videos";
+    options = [ "bind" ];
+  };
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    initialScript = pkgs.writeText "mysql_init" ''
+      CREATE USER 'kodi' IDENTIFIED BY 'kodi';
+      GRANT ALL ON *.* TO 'kodi';
+    '';
+    settings.mysqld.bind-address = "0.0.0.0";
+  };
 }
