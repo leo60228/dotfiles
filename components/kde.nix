@@ -52,6 +52,15 @@ lib.makeComponent "kde" (
 
         services.desktopManager.plasma6.enable = true;
         xdg.icons.enable = true;
+
+        xdg.portal = {
+          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+          xdgOpenUsePortal = true;
+        };
+        environment.sessionVariables = {
+          GTK_USE_PORTAL = 1;
+          GDK_DEBUG = "portals";
+        };
       }
       (mkIf cfg.bluetooth {
         hardware.bluetooth.enable = true;
