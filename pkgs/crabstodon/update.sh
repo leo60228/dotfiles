@@ -16,7 +16,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 WORK_DIR=$(mktemp -d)
 
 # Check that working directory was created.
-if [[ -z "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+if [[ -z $WORK_DIR || ! -d $WORK_DIR ]]; then
     echo "Could not create temporary directory"
     exit 1
 fi
@@ -24,7 +24,7 @@ fi
 # Delete the working directory on exit.
 function cleanup {
     # Report errors, if any, from nix-prefetch-git
-    grep "fatal" $WORK_DIR/nix-prefetch-git.out >/dev/stderr || true
+    grep "fatal" $WORK_DIR/nix-prefetch-git.out > /dev/stderr || true
     rm -rf "$WORK_DIR"
 }
 trap cleanup EXIT
@@ -57,7 +57,7 @@ SOURCE_DIR="$(nix-build --no-out-link -E '(import <nixpkgs> {}).callPackage ./so
 
 echo "Creating gemset.nix"
 bundix --lockfile="$SOURCE_DIR/Gemfile.lock" --gemfile="$SOURCE_DIR/Gemfile"
-echo "" >> gemset.nix  # Create trailing newline to please EditorConfig checks
+echo "" >> gemset.nix # Create trailing newline to please EditorConfig checks
 
 #echo "Creating yarn-hash.nix"
 #YARN_HASH="$(prefetch-yarn-deps "$SOURCE_DIR/yarn.lock")"
