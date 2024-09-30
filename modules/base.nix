@@ -12,9 +12,9 @@
     ./nix-daemon.nix
     ./cachix.nix
 
-    ./fcitx5.nix # FIXME: remove after https://github.com/NixOS/nixpkgs/commit/38cabf32f86b756a9c682f2e20fbeca392661dd0
+    ./mastodon.nix # FIXME: remove after https://github.com/NixOS/nixpkgs/pull/337545
   ];
-  disabledModules = [ "i18n/input-method/fcitx5.nix" ];
+  disabledModules = [ "services/web-apps/mastodon.nix" ];
 
   users.extraUsers.leo60228 = {
     isNormalUser = true;
