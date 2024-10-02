@@ -383,7 +383,7 @@
       CFLAGS_armv7_linux_androideabi = "-I/home/leo60228/NDK/arm/sysroot/usr/include/ -L/home/leo60228/NDK/arm/sysroot/usr/lib -L/home/leo60228/NDK/arm/arm-linux-androideabi/lib/armv7-a/ -D__ANDROID_API__=26";
       LIBRARY_PATH = "/home/leo60228/.nix-profile/lib";
       PKG_CONFIG_PATH = "/home/leo60228/.nix-profile/lib/pkgconfig:/home/leo60228/.nix-profile/share/pkgconfig";
-      BAT_THEME = "Solarized";
+      BAT_THEME = "Solarized (dark)";
     }
     // (
       if small then
