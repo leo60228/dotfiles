@@ -41,7 +41,7 @@ lib.makeComponent "kvm" (
       #  '';
       #});
       environment.systemPackages = with pkgs; [
-        OVMF
+        OVMFFull
         config.virtualisation.libvirtd.qemu.package
         virt-manager
       ];
@@ -54,7 +54,9 @@ lib.makeComponent "kvm" (
         killall
         libvirt
         kmod
+        swtpm
       ];
+      virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
     };
   }
 )
