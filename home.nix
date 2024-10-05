@@ -42,6 +42,7 @@
       ]
     else
       [
+        parsec-bin
         leoPkgs.redumper
         wiimms-iso-tools
         leoPkgs.hactoolnet
