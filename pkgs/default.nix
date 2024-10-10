@@ -16,6 +16,7 @@ rec {
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
   datapath-vision-firmware = callPackage ./datapath-vision-firmware { };
   discord = callPackage ./discord { };
+  firefox-bin = callPackage ./firefox-bin { };
   hactoolnet = callPackage ./hactoolnet { };
   hyfetch = callPackage ./hyfetch { };
   mastodon = callPackage ./mastodon { };
