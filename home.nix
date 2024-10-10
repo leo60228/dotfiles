@@ -136,7 +136,7 @@
         nix-prefetch-git
         pandoc
         (leoPkgs.discord.override { inherit deviceScaleFactor; })
-        (vesktop.override { electron = leoPkgs.electron_31-bin; })
+        vesktop
         (hiPrio gtk2)
         SDL
         SDL2
