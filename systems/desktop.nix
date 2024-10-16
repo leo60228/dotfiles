@@ -26,7 +26,6 @@ rec {
       mosh
       usbmuxd
       nixbuild
-      firefox
       kdeconnect
       fwupd
       lxd;
