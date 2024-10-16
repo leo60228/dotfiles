@@ -217,6 +217,16 @@
 
       hardware.nvidia-container-toolkit.enable = true;
 
+      systemd.services.prepare-kexec-modules = {
+        description = "Preparation for kexec";
+        wantedBy = [ "kexec.target" ];
+        before = [ "systemd-kexec.service" ];
+        unitConfig.DefaultDependencies = false;
+        serviceConfig.Type = "oneshot";
+        path = [ pkgs.kmod ];
+        script = "modprobe -r nvidia_drm";
+      };
+
       deployment.tags = [ "workstation" ];
       deployment.allowLocalDeployment = true;
     };
