@@ -11,13 +11,13 @@
 
 llvmPackages_18.libcxxStdenv.mkDerivation rec {
   pname = "redumper";
-  version = "build_403";
+  version = "build_426";
 
   src = fetchFromGitHub {
     owner = "superg";
     repo = "redumper";
     rev = version;
-    hash = "sha256-Zq7Fyuz0jm/djUlDsKJG879utpHNceSJg1LVo0mLliM=";
+    hash = "sha256-YAhxkltnun17Ky8L7PS05ZL4UTUY6nId+dVucYTdllo=";
   };
 
   nativeBuildInputs = [
