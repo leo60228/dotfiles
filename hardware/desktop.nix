@@ -212,7 +212,6 @@
         "sysinit.target"
         "shutdown.target"
       ];
-      boot.loader.timeout = null;
       boot.loader.systemd-boot.memtest86.enable = true;
 
       hardware.nvidia-container-toolkit.enable = true;
