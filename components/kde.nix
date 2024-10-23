@@ -44,6 +44,7 @@ lib.makeComponent "kde" (
           breeze-icons
           discover
           partitionmanager
+          kclock
           pkgs.exfatprogs
           (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
             patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
