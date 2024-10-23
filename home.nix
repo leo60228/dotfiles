@@ -258,6 +258,7 @@
         #(import ./julia-oldpkgs.nix {version = "11";})
         syncthingtray
         leoPkgs.twemoji-ttf
+        leoPkgs.determination-fonts
       ];
 
   programs.git = {
