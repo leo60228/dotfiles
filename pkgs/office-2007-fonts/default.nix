@@ -51,7 +51,7 @@ stdenvNoCC.mkDerivation rec {
     runHook preInstall
 
     shopt -s extglob
-    install -Dm644 !(SEGOE*).TTF -t $out/share/fonts/truetype
+    install -Dm644 !(SEGOE*|CONSOLA*).TTF -t $out/share/fonts/truetype
 
     runHook postInstall
   '';
