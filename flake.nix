@@ -73,6 +73,7 @@
     url = "github:nix-community/lanzaboote/v0.4.1";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
 
   outputs =
     {

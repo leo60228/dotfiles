@@ -18,6 +18,7 @@ rec {
   hactoolnet = callPackage ./hactoolnet { };
   hyfetch = callPackage ./hyfetch { };
   mastodon = callPackage ./mastodon { };
+  office-2007-fonts = callPackage ./office-2007-fonts { };
   qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
   redumper = callPackage ./redumper { };
   reposilite = callPackage ./reposilite { };

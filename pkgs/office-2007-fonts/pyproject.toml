@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "dl"
+version = "0.1.0"
+description = ""
+authors = ["leo60228 <leo@60228.dev>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+libarchive-c = "^5.1"
+httpio = "^0.3.0"
+pycdlib = "^1.14.0"
+requests = "^2.32.3"
+
+[tool.poetry.scripts]
+dl = 'dl:dl'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

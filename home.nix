@@ -259,6 +259,7 @@
         syncthingtray
         leoPkgs.twemoji-ttf
         leoPkgs.determination-fonts
+        leoPkgs.office-2007-fonts
       ];
 
   programs.git = {
