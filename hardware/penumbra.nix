@@ -29,6 +29,7 @@
 
       boot.extraModprobeConfig = ''
         options cfg80211 ieee80211_regdom="US"
+        options amdgpu dcdebugmask=0x10
       '';
 
       fileSystems."/" = {
