@@ -35,7 +35,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.hydra = {
-    url = "git+https://git@git.lix.systems/lix-project/hydra";
+    url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.lix.follows = "lix";
   };

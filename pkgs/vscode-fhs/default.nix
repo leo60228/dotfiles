@@ -7,7 +7,6 @@
   libXScrnSaver,
   wrapGAppsHook,
   gtk2,
-  atomEnv,
   at-spi2-atk,
   autoPatchelfHook,
   systemd,

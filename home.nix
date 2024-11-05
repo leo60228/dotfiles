@@ -76,7 +76,7 @@
         imagemagick
         kio-fuse
         coursier
-        alsaUtils
+        alsa-utils
         gitAndTools.lab
         clang-tools
         prusa-slicer
@@ -104,10 +104,10 @@
         (hiPrio rustup)
         pciutils
         lftp
-        dolphinEmuMaster
+        dolphin-emu-beta
         #(callPackage ./kflash.py {})
-        alsaLib
-        alsaLib.dev
+        alsa-lib
+        alsa-lib.dev
         gdb
         #(callPackage ./unityenv.nix {})
         easytag
