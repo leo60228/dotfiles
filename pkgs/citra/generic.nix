@@ -88,6 +88,7 @@ stdenv.mkDerivation {
   cmakeFlags =
     [
       "-DUSE_SYSTEM_LIBS=ON"
+      "-DCITRA_WARNINGS_AS_ERRORS=OFF"
 
       "-DDISABLE_SYSTEM_DYNARMIC=ON"
       "-DDISABLE_SYSTEM_GLSLANG=ON" # The following imported targets are referenced, but are missing: SPIRV-Tools-opt
