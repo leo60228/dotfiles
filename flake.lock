@@ -586,17 +586,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1727752861,
-        "narHash": "sha256-jowmo2aEzrEpPSM96IWtajuogdJm7DjAWxFTEb7Ct0s=",
-        "ref": "refs/heads/main",
-        "rev": "fd186f535a4ac7ae35d98c1dd5d79f0a81b7976d",
-        "revCount": 116,
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/nixos-module"
+        "lastModified": 1730866456,
+        "narHash": "sha256-3lhi9YcTUtln58eTwB+bnZbYtylAaGRnVQI3alhskcY=",
+        "rev": "7846f8394e5881468fb80f33615bf382805ff89b",
+        "type": "tarball",
+        "url": "https://git.lix.systems/api/v1/repos/vriska/nixos-module/archive/7846f8394e5881468fb80f33615bf382805ff89b.tar.gz?rev=7846f8394e5881468fb80f33615bf382805ff89b"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/nixos-module"
+        "type": "tarball",
+        "url": "https://git.lix.systems/vriska/nixos-module/archive/nix-eval-jobs-pr.tar.gz"
       }
     },
     "mpdiscord": {
