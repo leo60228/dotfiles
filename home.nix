@@ -57,7 +57,7 @@
         lutris
         pkgsCross.avr.stdenv.cc
         avrdude
-        bloom
+        #bloom
         platformio
         ares
         leoPkgs.citra

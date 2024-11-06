@@ -62,7 +62,7 @@ lib.makeComponent "extra" (
         pkgs.android-udev-rules
         pkgs.platformio-core
         pkgs.openocd
-        pkgs.bloom
+        #pkgs.bloom
       ];
 
       environment.systemPackages =

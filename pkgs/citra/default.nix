@@ -3,6 +3,7 @@
   qt6Packages,
   fetchFromGitHub,
   fetchurl,
+  ffmpeg_6,
 }:
 
 let
@@ -26,6 +27,8 @@ in
       sha256 = "LsRBddduEehqZTwBbEkZaTqWPDywoAOAA5zGtV7Va+U=";
       fetchSubmodules = true;
     };
+
+    ffmpeg = ffmpeg_6;
 
     inherit branch compat-list;
   };
