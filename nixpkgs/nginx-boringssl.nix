@@ -1,7 +1,14 @@
 self: super:
 
+let
+  override =
+    nginx:
+    (nginx.override { openssl = self.boringssl; }).overrideAttrs (oldAttrs: {
+      NIX_LDFLAGS = [ "-lstdc++" ]; # i hate it here
+    });
+in
 {
-  nginx = super.nginx.override { openssl = self.boringssl; };
-  nginxStable = super.nginxStable.override { openssl = self.boringssl; };
-  nginxMainline = super.nginxMainline.override { openssl = self.boringssl; };
+  nginx = override super.nginx;
+  nginxStable = override super.nginxStable;
+  nginxMainline = override super.nginxMainline;
 }
