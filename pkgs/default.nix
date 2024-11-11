@@ -4,6 +4,7 @@
   python3,
   libsForQt5,
   qt6,
+  kdePackages,
 }:
 
 rec {
@@ -23,6 +24,7 @@ rec {
   redumper = callPackage ./redumper { };
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };
+  sddm-theme-breeze-user = kdePackages.callPackage ./sddm-theme-breeze-user { };
   twemoji-ttf = callPackage ./twemoji-ttf { };
   vscode-fhs = callPackage ./vscode-fhs { };
   vxis-capture-fw-mod = callPackage ./vxis-capture-fw-mod { };

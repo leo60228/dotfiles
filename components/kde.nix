@@ -23,6 +23,7 @@ lib.makeComponent "kde" (
         # Enable the KDE Desktop Environment.
         services.displayManager.sddm.enable = true;
         services.displayManager.sddm.enableHidpi = true;
+        services.displayManager.sddm.theme = "breeze-user";
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
         environment.sessionVariables.MOZ_DISABLE_RDD_SANDBOX = "1";
@@ -49,6 +50,7 @@ lib.makeComponent "kde" (
           (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
             patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
           }))
+          pkgs.leoPkgs.sddm-theme-breeze-user
         ];
 
         services.desktopManager.plasma6.enable = true;
