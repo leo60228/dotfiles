@@ -42,6 +42,7 @@
       ]
     else
       [
+        obsidian
         parsec-bin
         leoPkgs.redumper
         wiimms-iso-tools
