@@ -27,11 +27,9 @@ rec {
       createLocally = false;
       fromAddress = "no-reply@social.crabs.life";
 
-      host = "smtp.mailgun.org";
+      host = "smtp-relay.gmail.com";
       port = 587;
-      user = "postmaster@social.crabs.life";
-      passwordFile = "/var/lib/mastodon/secrets/smtp-password";
-      authenticate = true;
+      authenticate = false;
     };
 
     elasticsearch.host = "localhost";
@@ -46,6 +44,8 @@ rec {
       S3_REGION = "us-east-1";
       S3_ENDPOINT = "https://idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com";
       S3_HOSTNAME = "idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com";
+
+      SMTP_AUTH_METHOD = "none";
 
       MAX_TOOT_CHARS = "10000";
       MAX_DISPLAY_NAME_CHARS = "100";
@@ -117,25 +117,42 @@ rec {
     '';
 
     virtualHosts = {
-      "social.crabs.life" = {
+      ".social.crabs.life" = {
         root = "${config.services.mastodon.package}/public/";
         forceSSL = true;
-        enableACME = true;
+        useACMEHost = "social.crabs.life";
 
         locations."/system/".alias = "/var/lib/mastodon/public-system/";
 
         locations."/" = {
           tryFiles = "$uri @proxy";
+          recommendedProxySettings = false;
         };
 
         locations."@proxy" = {
           proxyPass = "http://unix:/run/mastodon-web/web.socket";
           proxyWebsockets = true;
+          recommendedProxySettings = false;
+
+          extraConfig = ''
+            proxy_set_header Host social.crabs.life;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
         };
 
         locations."/api/v1/streaming/" = {
           proxyPass = "http://mastodon-streaming";
           proxyWebsockets = true;
+          recommendedProxySettings = false;
+
+          extraConfig = ''
+            proxy_set_header Host social.crabs.life;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
         };
       };
 
@@ -204,6 +221,13 @@ rec {
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "leo-acme@60228.dev";
+  security.acme.certs."social.crabs.life" = {
+    domain = "*.social.crabs.life";
+    extraDomainNames = [ "social.crabs.life" ];
+    dnsProvider = "cloudflare";
+    credentialsFile = "/var/lib/mastodon/cloudflare-token";
+    group = "nginx";
+  };
 
   users.groups.mastodon.members = [ "nginx" ];
 }
