@@ -717,15 +717,15 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1729888197,
-        "narHash": "sha256-ohOVXfkGhapd4vaFLUq8TeMGWPYe6zb5ZdSbQcR/pmI=",
-        "rev": "43aaa943bfdbc56277e86ff430a761d38d194ad0",
+        "lastModified": 1731185443,
+        "narHash": "sha256-9qkRZFTgbMonlBaLqL+OW6iiHLWXuBJlThISMhwQuGg=",
+        "rev": "57ddb99e781d19704f8a84036f9890e6ca554c41",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/nix-eval-jobs/archive/43aaa943bfdbc56277e86ff430a761d38d194ad0.tar.gz?rev=43aaa943bfdbc56277e86ff430a761d38d194ad0"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nix-eval-jobs/archive/57ddb99e781d19704f8a84036f9890e6ca554c41.tar.gz?rev=57ddb99e781d19704f8a84036f9890e6ca554c41"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/nix-eval-jobs/archive/fixes/build-settings-opeq.tar.gz"
+        "url": "https://git.lix.systems/lix-project/nix-eval-jobs/archive/main.tar.gz"
       }
     },
     "nix-github-actions": {
