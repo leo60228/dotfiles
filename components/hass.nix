@@ -20,6 +20,7 @@ lib.makeComponent "hass" (
         containers.homeassistant = {
           volumes = [ "home-assistant:/config" ];
           environment.TZ = "America/New_York";
+          environment.PYTHONPATH = "/config/deps"; # https://github.com/home-assistant/core/issues/127966
           image = "ghcr.io/home-assistant/home-assistant:stable";
           extraOptions = [
             "--privileged"
