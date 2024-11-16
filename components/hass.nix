@@ -25,6 +25,7 @@ lib.makeComponent "hass" (
             "--privileged"
             "--network=host"
             "--device=/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF60BCA0039F2939-if02:/dev/ttyACM0"
+            "--pull=newer"
           ];
         };
       };
