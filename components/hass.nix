@@ -13,7 +13,11 @@ lib.makeComponent "hass" (
     opts = { };
 
     config = {
-      networking.firewall.allowedTCPPorts = [ 8123 ];
+      networking.firewall.allowedTCPPorts = [
+        8123
+        21063
+      ];
+      networking.firewall.allowedUDPPorts = [ 5353 ];
 
       virtualisation.oci-containers = {
         backend = "podman";
