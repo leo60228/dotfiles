@@ -56,25 +56,7 @@
       console.packages = [ pkgs.terminus_font ];
       console.font = "ter-128n";
 
-      services.displayManager.sddm.settings = {
-        General = {
-          Numlock = "none";
-          GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=2,QT_FONT_DPI=192";
-        };
-
-        Theme = {
-          CursorSize = 48;
-          CursorTheme = "breeze_cursors";
-          Font = "Sans Serif,10,-1,5,50,0,0,0,0,0";
-        };
-
-        X11 = {
-          ServerArguments = "-dpi 192";
-        };
-      };
-      services.xserver.displayManager.setupCommands = ''
-        echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
-      '';
+      services.displayManager.sddm.wayland.enable = true;
 
       boot.loader.systemd-boot.enable = lib.mkForce false;
 
