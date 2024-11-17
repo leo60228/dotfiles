@@ -22,6 +22,7 @@ rec {
         batteryLevel = 50;
       }
       tailscale
+      postgres
       mosh
       usbmuxd
       nixbuild
@@ -109,6 +110,8 @@ rec {
     "https://gitlab.com"
     "git+https://gitlab.com"
   ];
+
+  services.postgresql.settings.max_connections = 200;
 
   services.tailscale.useRoutingFeatures = "both";
 
