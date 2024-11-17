@@ -1174,16 +1174,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1731820184,
+        "lastModified": 1731820690,
         "narHash": "sha256-/hHFMTD+FGURXZ4JtfXoIgpy87zL505pVi6AL76Wc+U=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "66f1bd94b7f6b59af6473a81d65d0aa3fff4d966",
+        "rev": "bbab2ab9e1932133b1996baa1dc00fefe924ca81",
         "type": "github"
       },
       "original": {
         "owner": "oxalica",
-        "ref": "fix/missing-darwin-sdk-setup",
         "repo": "rust-overlay",
         "type": "github"
       }

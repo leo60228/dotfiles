@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.rust-overlay = {
-    url = "github:oxalica/rust-overlay/fix/missing-darwin-sdk-setup";
+    url = "github:oxalica/rust-overlay";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nur.url = "github:nix-community/NUR";
