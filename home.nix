@@ -12,6 +12,7 @@
 #let gmusicproxy = pkgs.callPackage ./gmusicproxy.nix {};
 {
   home.stateVersion = "21.05";
+  home.enableNixpkgsReleaseCheck = false; # FIXME: temporary, until home-manager update
 
   home.packages =
     with pkgs;
