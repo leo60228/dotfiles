@@ -114,7 +114,7 @@
         #(callPackage ./unityenv.nix {})
         easytag
         cantata
-        calibre
+        #calibre
         #(import <unstable> {}).xpra
         go-bindata
         xdotool
