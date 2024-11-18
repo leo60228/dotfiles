@@ -16,22 +16,38 @@ lib.makeComponent "hass" (
       networking.firewall.allowedTCPPorts = [
         8123
         21063
+        8482
+        5540
       ];
-      networking.firewall.allowedUDPPorts = [ 5353 ];
+      networking.firewall.allowedUDPPorts = [
+        5353
+        5540
+      ];
 
       virtualisation.oci-containers = {
         backend = "podman";
-        containers.homeassistant = {
-          volumes = [ "home-assistant:/config" ];
-          environment.TZ = "America/New_York";
-          environment.PYTHONPATH = "/config/deps"; # https://github.com/home-assistant/core/issues/127966
-          image = "ghcr.io/home-assistant/home-assistant:stable";
-          extraOptions = [
-            "--privileged"
-            "--network=host"
-            "--device=/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF60BCA0039F2939-if02:/dev/ttyACM0"
-            "--pull=newer"
-          ];
+        containers = {
+          homeassistant = {
+            volumes = [ "home-assistant:/config" ];
+            environment.TZ = "America/New_York";
+            environment.PYTHONPATH = "/config/deps"; # https://github.com/home-assistant/core/issues/127966
+            image = "ghcr.io/home-assistant/home-assistant:stable";
+            extraOptions = [
+              "--privileged"
+              "--network=host"
+              "--pull=newer"
+            ];
+          };
+          hamh = {
+            volumes = [ "home-assistant-matter-hub:/data" ];
+            environment.TZ = "America/New_York";
+            environmentFiles = [ "/var/lib/hamh-secrets" ];
+            image = "ghcr.io/t0bst4r/home-assistant-matter-hub:latest";
+            extraOptions = [
+              "--network=host"
+              "--pull=newer"
+            ];
+          };
         };
       };
 
