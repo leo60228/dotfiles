@@ -72,6 +72,8 @@
 
         networking.networkmanager.wifi.backend = "iwd";
 
+        hardware.framework.laptop13.audioEnhancement.enable = true;
+
         deployment.tags = [ "workstation" ];
         deployment.allowLocalDeployment = true;
       };
