@@ -1,0 +1,26 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    {"type": "command", "key": "Host", "text": "fastfetch --pipe -l none --key-type none -s host --host-format '{name}' | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'"},
+    "kernel",
+    "uptime",
+    "shell",
+    {"type": "display", "compactType": "original-with-refresh-rate"},
+    {"type": "command", "key": "DE", "text": "[ -z \"$XDG_SESSION_TYPE\" ] && exit; echo \"Plasma $(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//') [KF $(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')] ($XDG_SESSION_TYPE)\""}, /// lol lmao
+    {"type": "command", "key": "CPU", "text": "fastfetch --pipe -l none --key-type none -s cpu --host-format '{name}' | sed 's;w/ Radeon.*Graphics ;;'"},
+    {"type": "gpu", "driverSpecific": true, "format": "{name} ({core-count}) @ {frequency} ({driver})"},
+    "memory",
+    "disk",
+    {"type": "battery", "key": "Battery"},
+    {"type": "localip", "compact": true, "showPrefixLen": false}
+  ],
+  "logo": {
+    "color": {
+      "1": "38;2;74;107;175",
+      "2": "38;2;126;177;221"
+    }
+  }
+}

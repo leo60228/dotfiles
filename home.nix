@@ -18,7 +18,7 @@
     with pkgs;
     if small then
       [
-        leoPkgs.hyfetch
+        fastfetch
         libwebp
         ripgrep
         (callPackage ./neovim { })
@@ -67,7 +67,7 @@
         ctrtool
         hactool
         pdm
-        leoPkgs.hyfetch
+        fastfetch
         libsForQt5.kdelibs4support
         qpwgraph
         htop
@@ -373,7 +373,7 @@
     eval $(hub alias -s)
 
     if [ -z "$NEOFETCH_RAN" ]; then
-        neowofetch --config ${./files/neofetch.conf}
+        fastfetch --config ${./files/fastfetch.jsonc}
         export NEOFETCH_RAN=1
     fi
   '';
