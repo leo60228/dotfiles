@@ -31,7 +31,6 @@
         boot.extraModprobeConfig = ''
           options cfg80211 ieee80211_regdom="US"
           options amdgpu dcdebugmask=0x10
-          options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
         '';
 
         fileSystems."/" = {
@@ -73,30 +72,7 @@
 
         networking.networkmanager.wifi.backend = "iwd";
 
-        hardware.framework.laptop13.audioEnhancement = {
-          enable = true;
-          rawDeviceName = "alsa_output.pci-0000_c1_00.6.analog-stereo-speaker";
-        };
-
-        environment.etc."alsa-card-profile/mixer/paths/analog-output-speaker-split.conf".source = ../files/analog-output-speaker-split.conf;
-        services.udev.extraRules = ''
-          SUBSYSTEM!="sound", GOTO="pipewire_end"
-          ACTION!="change", GOTO="pipewire_end"
-          KERNEL!="card*", GOTO="pipewire_end"
-
-          SUBSYSTEMS=="pci", ATTRS{vendor}=="0x1022", ATTRS{device}=="0x15e3", ENV{ACP_PROFILE_SET}="${../files/split-ports-profile.conf}"
-
-          LABEL="pipewire_end"
-        '';
-
-        hardware.firmware = [
-          (pkgs.runCommand "hda-jack-retask-fw" { } ''
-            mkdir -p $out/lib/firmware
-            cp ${../files/hda-jack-retask.fw} $out/lib/firmware/hda-jack-retask.fw
-          '')
-        ];
-        hardware.alsa.enablePersistence = true;
-        systemd.services.alsa-store.serviceConfig.ExecStart = lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
+        hardware.framework.laptop13.audioEnhancement.enable = true;
 
         deployment.tags = [ "workstation" ];
         deployment.allowLocalDeployment = true;
