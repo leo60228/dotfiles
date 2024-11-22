@@ -72,7 +72,21 @@
 
         networking.networkmanager.wifi.backend = "iwd";
 
-        hardware.framework.laptop13.audioEnhancement.enable = true;
+        hardware.framework.laptop13.audioEnhancement = {
+          enable = true;
+          rawDeviceName = "alsa_output.pci-0000_c1_00.6.HiFi__Speaker__sink";
+        };
+
+        environment.sessionVariables.ALSA_CONFIG_UCM2 =
+          let
+            alsa-ucm-conf = pkgs.fetchFromGitHub {
+              owner = "leo60228";
+              repo = "alsa-ucm-conf";
+              rev = "616f1eb856149047e642d58ea2a03bbdc92631f0";
+              sha256 = "sha256-Vg52YjL9lvWWTrahA2+r/BtrTX0F6s2XNqzBl3xWtw0=";
+            };
+          in
+          "${alsa-ucm-conf}/ucm2";
 
         deployment.tags = [ "workstation" ];
         deployment.allowLocalDeployment = true;
