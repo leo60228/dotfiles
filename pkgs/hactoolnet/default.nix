@@ -7,13 +7,13 @@
 
 buildDotnetModule rec {
   pname = "hactoolnet";
-  version = "unstable-2024-06-16";
+  version = "unstable-2024-08-27";
 
   src = fetchFromGitHub {
     owner = "Thealexbarney";
     repo = "LibHac";
-    rev = "559b8c89f9ba2913f5e8e6630ecb2c21c13dcd31";
-    sha256 = "m8NNsfnQNFLuPHunKMw2k0avbkH5/p/+Ucx/nwU7JPQ=";
+    rev = "fefa38ff2204de978efdf9df1ff193d85d4d83e5";
+    sha256 = "m+aHMNz0C77dJpukvkNTlTYBlUAkmJxGSB27UuNTGVc=";
   };
 
   projectFile = "LibHac.sln";
@@ -21,6 +21,8 @@ buildDotnetModule rec {
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
+
+  enableParallelBuilding = false; # https://github.com/dotnet/sdk/issues/2902
 
   executables = [ "hactoolnet" ];
 
