@@ -42,7 +42,7 @@
     inputs.nix-eval-jobs.follows = "nix-eval-jobs";
   };
   inputs.nix-eval-jobs = {
-    url = "https://git.lix.systems/lix-project/nix-eval-jobs/archive/main.tar.gz";
+    url = "https://git.lix.systems/vriska/nix-eval-jobs/archive/update-lix.tar.gz";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.lix.follows = "lix";
   };
