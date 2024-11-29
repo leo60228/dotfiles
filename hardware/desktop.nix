@@ -50,7 +50,7 @@
         LABEL="pipewire_end"
       '';
 
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      boot.kernelPackages = pkgs.linuxPackages_6_11;
       boot.initrd.includeDefaultModules = false;
       boot.initrd.availableKernelModules = [
         # SATA
