@@ -10,7 +10,7 @@
     "shell",
     {"type": "display", "compactType": "original-with-refresh-rate"},
     {"type": "command", "key": "DE", "text": "[ -z \"$XDG_SESSION_TYPE\" ] && exit; echo \"Plasma $(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//') [Frameworks $(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')] ($XDG_SESSION_TYPE)\""}, /// lol lmao
-    {"type": "command", "key": "CPU", "text": "fastfetch --pipe -l none --key-type none -s cpu --host-format '{name}' | sed 's;w/ Radeon.*Graphics ;;'"},
+    {"type": "command", "key": "CPU", "text": "fastfetch --pipe -l none --key-type none -s cpu --cpu-format '{name} ({cores-online}) @ {freq-base}' | sed 's;w/ Radeon.*Graphics ;;'"},
     {"type": "gpu", "driverSpecific": true, "format": "{name} ({core-count}) @ {frequency} ({driver})"},
     "memory",
     "disk",
