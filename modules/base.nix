@@ -61,6 +61,9 @@
     allowUnfree = true;
     permittedInsecurePackages = [
       "olm-3.2.16" # these vulnerabilities aren't real.
+      "dotnet-core-combined"
+      "dotnet-sdk-6.0.428"
+      "dotnet-sdk-wrapped-6.0.428"
     ];
   };
 
