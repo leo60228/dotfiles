@@ -333,21 +333,6 @@
     };
   };
 
-  systemd.user.services.scream-receiver = {
-    Unit = {
-      BindsTo = [ "pipewire-pulse.socket" ];
-      After = [ "pipewire-pulse.socket" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.scream}/bin/scream -i virbr0";
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
-
   programs.bash.enable = true;
   programs.bash.bashrcExtra =
     ''
