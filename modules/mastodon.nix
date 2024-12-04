@@ -1122,10 +1122,13 @@ in
               inherit (cfg) group;
             };
           })
-          (lib.attrsets.setAttrByPath [
-            cfg.user
-            "packages"
-          ] [ cfg.package ])
+          (lib.attrsets.setAttrByPath
+            [
+              cfg.user
+              "packages"
+            ]
+            [ cfg.package ]
+          )
           (lib.mkIf (cfg.redis.createLocally && cfg.redis.enableUnixSocket) {
             ${config.services.mastodon.user}.extraGroups = [ "redis-mastodon" ];
           })
