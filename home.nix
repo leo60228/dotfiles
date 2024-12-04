@@ -327,6 +327,10 @@
     };
   };
 
+  services.listenbrainz-mpd.enable = true;
+  systemd.user.services."listenbrainz-mpd".Unit.After = lib.mkForce [ ];
+  systemd.user.services."listenbrainz-mpd".Unit.Requires = lib.mkForce [ ];
+
   programs.bash.enable = true;
   programs.bash.bashrcExtra =
     ''
