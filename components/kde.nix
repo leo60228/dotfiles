@@ -63,6 +63,7 @@ lib.makeComponent "kde" (
         environment.sessionVariables = {
           GTK_USE_PORTAL = 1;
           GDK_DEBUG = "portals";
+          PLASMA_INTEGRATION_USE_PORTAL = 1;
         };
       }
       (mkIf cfg.bluetooth {
