@@ -61,6 +61,7 @@
         services.displayManager.sddm.wayland.enable = true;
 
         security.pam.services.polkit-1.fprintAuth = true;
+        security.pam.services.polkit-1.rules.auth.fprintd.modulePath = lib.mkForce "${pkgs.leoPkgs.pam-fprint-grosshack}/lib/security/pam_fprintd_grosshack.so";
 
         boot.loader.systemd-boot.enable = lib.mkForce false;
 
