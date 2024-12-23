@@ -1,1 +1,1 @@
-{ nur, ... }: nur.overlay
+{ nur, ... }: nur.overlays.default

@@ -12,7 +12,7 @@
   systemd,
   fontconfig,
   libdbusmenu,
-  buildFHSUserEnv,
+  buildFHSEnv,
   vscode,
 
   # Attributes inherit from specific versions
@@ -21,7 +21,7 @@
   executableName ? vscode.executableName,
   pname ? vscode.pname,
 }:
-buildFHSUserEnv {
+buildFHSEnv {
   name = executableName;
 
   # additional libraries which are commonly needed for extensions
