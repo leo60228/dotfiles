@@ -591,15 +591,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1732937499,
-        "narHash": "sha256-l7LncIGPI79rQz/V5LhuUG1zdrR9SGOPXojpJQInol0=",
-        "rev": "f4146840322439ffceeae184e4524b7c4bc1db40",
+        "lastModified": 1733522213,
+        "narHash": "sha256-H+Pk19MzvI/TAbXWimUPZAoKkD56OSyxJBm8lVIA5n0=",
+        "rev": "c374ebf5548c7b6d4bf884369a5b6879cfc916ea",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/vriska/nixos-module/archive/f4146840322439ffceeae184e4524b7c4bc1db40.tar.gz?rev=f4146840322439ffceeae184e4524b7c4bc1db40"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/c374ebf5548c7b6d4bf884369a5b6879cfc916ea.tar.gz?rev=c374ebf5548c7b6d4bf884369a5b6879cfc916ea"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/vriska/nixos-module/archive/update-lix.tar.gz"
+        "url": "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz"
       }
     },
     "mpdiscord": {
@@ -723,15 +723,15 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1732917157,
-        "narHash": "sha256-z6KncKmUzOXX1+7sTlszSKRFJiDQJGBI2N3N+K5d32U=",
-        "rev": "316f6a7ff90303d032155229c30c0bef69159a2c",
+        "lastModified": 1733522041,
+        "narHash": "sha256-KpKmFgcUGQlAWhLUHyBn3AnTJLp7Kt82q2Cxfp3Yf44=",
+        "rev": "df3edf37301cdc77ca5bd5f3f6fcccd6d0befee5",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/vriska/nix-eval-jobs/archive/316f6a7ff90303d032155229c30c0bef69159a2c.tar.gz?rev=316f6a7ff90303d032155229c30c0bef69159a2c"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nix-eval-jobs/archive/df3edf37301cdc77ca5bd5f3f6fcccd6d0befee5.tar.gz?rev=df3edf37301cdc77ca5bd5f3f6fcccd6d0befee5"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/vriska/nix-eval-jobs/archive/update-lix.tar.gz"
+        "url": "https://git.lix.systems/lix-project/nix-eval-jobs/archive/main.tar.gz"
       }
     },
     "nix-github-actions": {
