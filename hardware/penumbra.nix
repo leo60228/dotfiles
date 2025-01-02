@@ -71,7 +71,13 @@
           pkiBundle = "/etc/secureboot";
         };
 
-        environment.systemPackages = [ pkgs.sbctl ];
+        environment.systemPackages = [
+          pkgs.sbctl
+          pkgs.kdePackages.plasma-thunderbolt
+        ];
+
+        services.hardware.bolt.enable = true;
+        services.udisks2.package = pkgs.leoPkgs.udisks2;
 
         networking.networkmanager.wifi.backend = "iwd";
 

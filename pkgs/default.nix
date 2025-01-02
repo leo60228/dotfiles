@@ -27,6 +27,7 @@ rec {
   rust = callPackage ./rust { };
   sddm-theme-breeze-user = kdePackages.callPackage ./sddm-theme-breeze-user { };
   twemoji-ttf = callPackage ./twemoji-ttf { };
+  udisks2 = callPackage ./udisks/2-default.nix { };
   vscode-fhs = callPackage ./vscode-fhs { };
   vxis-capture-fw-mod = callPackage ./vxis-capture-fw-mod { };
 }
