@@ -30,7 +30,8 @@ lib.makeComponent "gui" (
         pulse.enable = true;
         jack.enable = true;
       };
-      systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR = lib.mkIf cfg.audio ../files/profile-sets;
+      systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR =
+        lib.mkIf cfg.audio ../files/profile-sets;
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;

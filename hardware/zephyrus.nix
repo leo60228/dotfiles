@@ -35,7 +35,8 @@
 
       swapDevices = [ { device = "/dev/disk/by-uuid/2ebfa1d0-e726-4227-9365-53b66e7d5a21"; } ];
 
-      boot.initrd.luks.devices."encrypted".device = "/dev/disk/by-uuid/26c8fcc6-0823-472d-afdb-61d823af227c";
+      boot.initrd.luks.devices."encrypted".device =
+        "/dev/disk/by-uuid/26c8fcc6-0823-472d-afdb-61d823af227c";
 
       hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

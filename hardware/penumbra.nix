@@ -61,7 +61,8 @@
         services.displayManager.sddm.wayland.enable = true;
 
         security.pam.services.polkit-1.fprintAuth = true;
-        security.pam.services.polkit-1.rules.auth.fprintd.modulePath = lib.mkForce "${pkgs.leoPkgs.pam-fprint-grosshack}/lib/security/pam_fprintd_grosshack.so";
+        security.pam.services.polkit-1.rules.auth.fprintd.modulePath =
+          lib.mkForce "${pkgs.leoPkgs.pam-fprint-grosshack}/lib/security/pam_fprintd_grosshack.so";
 
         boot.loader.systemd-boot.enable = lib.mkForce false;
 
@@ -79,7 +80,8 @@
           rawDeviceName = "alsa_output.pci-0000_c1_00.6.analog-stereo-speaker";
         };
 
-        environment.etc."alsa-card-profile/mixer/paths/analog-output-speaker-split.conf".source = ../files/analog-output-speaker-split.conf;
+        environment.etc."alsa-card-profile/mixer/paths/analog-output-speaker-split.conf".source =
+          ../files/analog-output-speaker-split.conf;
         services.udev.extraRules = ''
           SUBSYSTEM!="sound", GOTO="pipewire_end"
           ACTION!="change", GOTO="pipewire_end"
@@ -97,7 +99,8 @@
           '')
         ];
         hardware.alsa.enablePersistence = true;
-        systemd.services.alsa-store.serviceConfig.ExecStart = lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
+        systemd.services.alsa-store.serviceConfig.ExecStart =
+          lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
 
         deployment.tags = [ "workstation" ];
         deployment.allowLocalDeployment = true;
