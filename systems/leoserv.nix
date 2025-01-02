@@ -141,24 +141,24 @@ with import ../components;
     static domain_search=60228.dev.beta.tailscale.net
   '';
 
-  services.borgbackup.jobs."leoserv-modfest" = {
-    paths = [ "/var/lib/minecraft" ];
-    repo = "de3482s2@de3482.rsync.net:leoserv-modfest";
-    encryption = {
-      mode = "repokey-blake2";
-      passCommand = "cat /root/borgbackup/passphrase";
-    };
-    environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
-    environment.BORG_REMOTE_PATH = "borg1";
-    compression = "auto,lzma";
-    startAt = "hourly";
-    prune.keep = {
-      within = "1d";
-      daily = 7;
-      weekly = 4;
-      monthly = -1;
-    };
-  };
+  #services.borgbackup.jobs."leoserv-modfest" = {
+  #  paths = [ "/var/lib/minecraft" ];
+  #  repo = "de3482s2@de3482.rsync.net:leoserv-modfest";
+  #  encryption = {
+  #    mode = "repokey-blake2";
+  #    passCommand = "cat /root/borgbackup/passphrase";
+  #  };
+  #  environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
+  #  environment.BORG_REMOTE_PATH = "borg1";
+  #  compression = "auto,lzma";
+  #  startAt = "hourly";
+  #  prune.keep = {
+  #    within = "1d";
+  #    daily = 7;
+  #    weekly = 4;
+  #    monthly = -1;
+  #  };
+  #};
 
   security.polkit.enable = true;
   security.polkit.extraConfig = ''
