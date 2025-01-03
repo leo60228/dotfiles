@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
   ];
   nativeBuildInputs = [ coccinelle ] ++ kernel.moduleBuildDependencies;
 
-  env.NIX_CFLAGS_COMPILE = "-Wno-error=attributes";
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=attributes -Wno-error=incompatible-pointer-types";
 
   makeFlags = kernel.makeFlags ++ [
     "KERNELDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}"
