@@ -65,7 +65,6 @@
         ryujinx
         ctrtool
         hactool
-        pdm
         fastfetch
         libsForQt5.kdelibs4support
         qpwgraph
