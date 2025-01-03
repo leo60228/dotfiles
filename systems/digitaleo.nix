@@ -126,17 +126,6 @@ rec {
     script = "${pkgs.upd8r}/bin/upd8r";
   };
 
-  systemd.services.citra-room = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    script = ''
-      ${pkgs.leoPkgs.citra}/bin/citra-room --room-name 'USA East - Pokémon Ultra Sun and Ultra Moon - vriska' --preferred-game 'Pokémon Ultra Sun' --preferred-game-id '00040000001B5000' --ban-list-file /var/lib/citra-banlist
-    '';
-  };
-
   services.mediawiki = {
     enable = true;
     name = "COAL Wiki";

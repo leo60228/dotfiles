@@ -42,11 +42,6 @@ let
       ext = "kts";
     }
     {
-      plug = callPackage ./vim-arduino.nix { };
-      ft = "arduino";
-      ext = "ino";
-    }
-    {
       plug = coc-nvim;
       ft = "java";
       ext = "java";

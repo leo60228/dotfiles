@@ -9,7 +9,6 @@
 
 rec {
   bin = callPackage ./bin { };
-  citra = callPackage ./citra { };
   crabstodon = callPackage ./crabstodon { };
   eontimer = libsForQt5.callPackage ./eontimer { inherit qtsass; };
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };

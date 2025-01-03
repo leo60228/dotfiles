@@ -62,7 +62,6 @@
         #bloom
         platformio
         ares
-        leoPkgs.citra
         ryujinx
         ctrtool
         hactool
