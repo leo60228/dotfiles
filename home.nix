@@ -244,7 +244,7 @@
         virtualbox
         dotnet-sdk
         #gmusicproxy
-        mono5
+        mono
         #julia_06
         leoPkgs.bin
         #(import ./julia-oldpkgs.nix {version = "06";})
