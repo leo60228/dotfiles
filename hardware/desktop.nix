@@ -199,10 +199,10 @@
       #load-module module-remap-sink sink_name=reverse-stereo master=alsa_output.pci-0000_0a_00.3.analog-stereo channels=2 master_channel_map=front-right,front-left channel_map=front-left,front-right
       #set-default-sink reverse-stereo
       #'';
-      hardware.pulseaudio.daemon.config = {
-        default-sample-format = "s32le";
-        #default-sample-rate = 192000;
-      };
+      #hardware.pulseaudio.daemon.config = {
+      #  default-sample-format = "s32le";
+      #  #default-sample-rate = 192000;
+      #};
 
       systemd.sleep.extraConfig = "HibernateMode=reboot";
 
