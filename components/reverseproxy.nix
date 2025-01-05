@@ -204,73 +204,51 @@ lib.makeComponent "reverseproxy" (
             };
           }
         ))
-        (lib.mkIf (cfg.host == "digitaleo") (
-          lib.mkForce {
-            enable = true;
-            recommendedTlsSettings = true;
-            recommendedOptimisation = true;
-            recommendedGzipSettings = true;
-            recommendedProxySettings = true;
-            clientMaxBodySize = "50m";
-            commonHttpConfig = ''
-              ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
-              log_format full '$remote_addr - $remote_user [$time_local] '
-                              '"$request" $status $bytes_sent '
-                              '"$http_referer" "$http_user_agent"';
-            '';
-            virtualHosts = {
-              "idoleyes.leo60228.space" = {
-                forceSSL = true;
-                enableACME = true;
-                locations."/" = {
-                  proxyPass = "http://10.100.0.3:4130";
-                  extraConfig = ''
-                    proxy_http_version 1.1;
-                  '';
-                };
-              };
-              "grafana.leo60228.space" = {
-                forceSSL = true;
-                enableACME = true;
-                locations."/" = {
-                  proxyPass = "http://localhost:3000";
-                };
-              };
-              "coal.l3.pm" = {
-                root = "${config.services.mediawiki.finalPackage}/share/mediawiki";
-                forceSSL = true;
-                enableACME = true;
-
-                locations = {
-                  "/" = {
-                    tryFiles = "$uri @rewrite";
-                  };
-
-                  "@rewrite" = {
-                    extraConfig = "rewrite ^/(.*)$ /index.php?title=$1&$args;";
-                  };
-
-                  "~ \\.php$" = {
-                    extraConfig = ''
-                      include ${pkgs.nginx}/conf/fastcgi_params;
-                      include ${pkgs.nginx}/conf/fastcgi.conf;
-                      fastcgi_param SCRIPT_FILENAME $request_filename;
-                      fastcgi_pass unix:${config.services.phpfpm.pools.mediawiki.socket};
-                    '';
-                  };
-                };
-              };
-              "maven.vriska.dev" = {
-                forceSSL = true;
-                enableACME = true;
-                locations."/" = {
-                  proxyPass = "http://localhost:8080";
-                  proxyWebsockets = true;
-                };
+        (lib.mkIf (cfg.host == "digitaleo") ({
+          enable = true;
+          recommendedTlsSettings = true;
+          recommendedOptimisation = true;
+          recommendedGzipSettings = true;
+          recommendedProxySettings = true;
+          clientMaxBodySize = "50m";
+          commonHttpConfig = ''
+            ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
+            log_format full '$remote_addr - $remote_user [$time_local] '
+                            '"$request" $status $bytes_sent '
+                            '"$http_referer" "$http_user_agent"';
+          '';
+          virtualHosts = {
+            "idoleyes.leo60228.space" = {
+              forceSSL = true;
+              enableACME = true;
+              locations."/" = {
+                proxyPass = "http://10.100.0.3:4130";
+                extraConfig = ''
+                  proxy_http_version 1.1;
+                '';
               };
             };
-          }
-        ))
+            "grafana.leo60228.space" = {
+              forceSSL = true;
+              enableACME = true;
+              locations."/" = {
+                proxyPass = "http://localhost:3000";
+              };
+            };
+            "chordiwiki.l3.pm" = {
+              forceSSL = true;
+              enableACME = true;
+            };
+            "maven.vriska.dev" = {
+              forceSSL = true;
+              enableACME = true;
+              locations."/" = {
+                proxyPass = "http://localhost:8080";
+                proxyWebsockets = true;
+              };
+            };
+          };
+        }))
       ];
     };
   }

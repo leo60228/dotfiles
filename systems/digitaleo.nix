@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with import ../components;
 rec {
   components = en_us est server tailscale reverseproxy { host = "digitaleo"; } reposilite;
@@ -128,35 +133,37 @@ rec {
 
   services.mediawiki = {
     enable = true;
-    name = "COAL Wiki";
-    url = "https://coal.l3.pm";
+    package = pkgs.nur.repos.ihaveamac.mediawiki_1_43;
+    name = "Chordioid Wiki";
+    url = "https://chordiwiki.l3.pm";
     passwordFile = "/var/lib/mediawiki/mw-password";
-    passwordSender = "coal-wiki@60228.dev";
-    webserver = "none";
+    passwordSender = "chordiwiki@60228.dev";
+    webserver = "nginx";
+    nginx.hostName = "chordiwiki.l3.pm";
 
-    skins.MinervaNeue = "${pkgs.mediawiki}/share/mediawiki/skins/MinervaNeue";
+    skins.MinervaNeue = "${config.services.mediawiki.package}/share/mediawiki/skins/MinervaNeue";
 
     extensions = {
       WikiEditor = null;
       VisualEditor = null;
       Cite = null;
       OpenGraphMeta = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/OpenGraphMeta-REL1_39-097f601.tar.gz";
-        sha256 = "0kfxrcckvq5h8n3pfapy6nxzm36axwf57cw50g2j835rrb1q3kwj";
+        url = "https://extdist.wmflabs.org/dist/extensions/OpenGraphMeta-REL1_43-cb990fc.tar.gz";
+        hash = "sha256-oWZV2qbChUT51rpxc3p8XZ29tcHpcV7nlNK3QYgJST4=";
       };
       TimedMediaHandler = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/TimedMediaHandler-REL1_39-fedcb2d.tar.gz";
-        sha256 = "1c4k0xzfyy1r4jpk981393z4f7gg7ri5h7dj9f0qk2ai3l7czrlq";
+        url = "https://extdist.wmflabs.org/dist/extensions/TimedMediaHandler-REL1_43-e157bd2.tar.gz";
+        hash = "sha256-sAcE71ddEAwf1W8Tksr1nsebX52kXbcy41J3CnrJfw4=";
       };
       AbuseFilter = null;
       PageImages = null;
       Description2 = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/Description2-REL1_39-6fd7aff.tar.gz";
-        sha256 = "1796vds3s9ll2qasldd59biqgypxkpq9d80dnp8pp4g89llyg03j";
+        url = "https://extdist.wmflabs.org/dist/extensions/Description2-REL1_43-50e2aef.tar.gz";
+        hash = "sha256-ciUEUcg4tsgpvohuLYztFaGNBowR7p1dIKnNp4ooKtA=";
       };
       MobileFrontend = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/MobileFrontend-REL1_39-f766e58.tar.gz";
-        sha256 = "18alf9ax09qw5rgb8icmr80lg2h39lg77x9afji8g2iwv5rhn75m";
+        url = "https://extdist.wmflabs.org/dist/extensions/MobileFrontend-REL1_43-222361c.tar.gz";
+        hash = "sha256-xawcz0sLpC1xDQuOmFRUKmiGHqmscIQauWOROVxDN0w=";
       };
       ConfirmEdit = null;
     };
@@ -164,16 +171,14 @@ rec {
     extraConfig = ''
       wfLoadExtension("ConfirmEdit/QuestyCaptcha");
       $wgCaptchaQuestions = [
-        "Who is the main protagonist of COAL?" => ["Ash", "Ash Ketchum"],
-        "Who wrote the cribsheet?" => "Mew",
-        "What's the first region in COAL?" => "Kanto",
-        "What's the second (sub)region in COAL?" => "Orange Islands"
+        "Who is the main protagonist of Chordioid?" => ["Sam", "Sam Mardot"],
+        "What genre is Chordioid?" => ["Rhythm", "RPG", "Rhythm RPG"],
+        "Where does Chordioid take place?" => ["Concordia", "Capital", "the Capital"]
       ];
 
-      $wgLogo = "https://cdn.discordapp.com/icons/904408350475825225/e8d9b1f74955497368c5105257c7a2c6.png?size=256";
+      $wgLogo = "https://chordioid.com/public/cd.png";
 
       $wgUsePathInfo = true;
-      $wgArticlePath = "/$1";
 
       $wgSMTP = [
         "host" => "smtp-relay.gmail.com",
@@ -183,10 +188,31 @@ rec {
         "auth" => false
       ];
 
+      $wgMainCacheType = CACHE_ACCEL;
+      $wgSessionCacheType = CACHE_DB;
+
       $wgFFmpegLocation = "${pkgs.ffmpeg}/bin/ffmepg";
       $wgEnableMetaDescriptionFunctions = true;
       $wgDefaultMobileSkin = "minerva";
+      $wgMinervaNightMode['base'] = true;
+      $wgVectorNightMode['logged_in'] = true;
+      $wgVectorNightMode['logged_out'] = true;
+      $wgDefaultUserOptions['vector-theme'] = 'os';
+      $wgDefaultUserOptions['minerva-theme'] = 'os';
+      $wgUseCdn = true;
     '';
   };
+  services.phpfpm.pools.mediawiki.phpPackage = lib.mkForce (
+    pkgs.php82.buildEnv {
+      extensions =
+        { enabled, all }:
+        enabled
+        ++ [
+          all.opcache
+          all.apcu
+          all.igbinary
+        ];
+    }
+  );
   users.users.nginx.extraGroups = [ "mediawiki" ];
 }
