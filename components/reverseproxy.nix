@@ -238,6 +238,10 @@ lib.makeComponent "reverseproxy" (
             "chordiwiki.l3.pm" = {
               forceSSL = true;
               enableACME = true;
+              locations."=/chordiwiki-icon.png".alias = ../files/chordiwiki-icon.png;
+              locations."=/chordiwiki-1x.png".alias = ../files/chordiwiki-1x.png;
+              locations."=/chordiwiki-1.5x.png".alias = ../files/chordiwiki-1.5x.png;
+              locations."=/chordiwiki-2x.png".alias = ../files/chordiwiki-2x.png;
             };
             "maven.vriska.dev" = {
               forceSSL = true;

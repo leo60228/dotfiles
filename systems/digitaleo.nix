@@ -176,7 +176,12 @@ rec {
         "Where does Chordioid take place?" => ["Concordia", "Capital", "the Capital"]
       ];
 
-      $wgLogo = "https://chordioid.com/public/cd.png";
+      $wgLogos = [
+        '1x' => "https://chordiwiki.l3.pm/chordiwiki-1x.png",
+        '1.5x' => "https://chordiwiki.l3.pm/chordiwiki-1.5x.png",
+        '2x' => "https://chordiwiki.l3.pm/chordiwiki-2x.png",
+        'icon' => "https://chordiwiki.l3.pm/chordiwiki-icon.png"
+      ];
 
       $wgUsePathInfo = true;
 
