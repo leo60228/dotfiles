@@ -166,6 +166,10 @@ rec {
         hash = "sha256-xawcz0sLpC1xDQuOmFRUKmiGHqmscIQauWOROVxDN0w=";
       };
       ConfirmEdit = null;
+      CodeMirror = pkgs.fetchzip {
+        url = "https://extdist.wmflabs.org/dist/extensions/CodeMirror-REL1_43-4b58193.tar.gz";
+        hash = "sha256-n7/4kqt7heZV7x3nSGgUkgwPV+jspmsxiSpGEPEIp9w=";
+      };
     };
 
     extraConfig = ''
@@ -209,6 +213,10 @@ rec {
       $wgDefaultUserOptions['minerva-theme'] = 'os';
 
       $wgUseCdn = true;
+
+      $wgCodeMirrorV6 = true;
+      $wgDefaultUserOptions['usecodemirror'] = 1;
+      $wgVisualEditorEnableWikitext = true;
     '';
   };
   services.phpfpm.pools.mediawiki.phpPackage = lib.mkForce (
