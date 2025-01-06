@@ -197,13 +197,17 @@ rec {
       $wgSessionCacheType = CACHE_DB;
 
       $wgFFmpegLocation = "${pkgs.ffmpeg}/bin/ffmepg";
+
       $wgEnableMetaDescriptionFunctions = true;
+
       $wgDefaultMobileSkin = "minerva";
+
       $wgMinervaNightMode['base'] = true;
       $wgVectorNightMode['logged_in'] = true;
       $wgVectorNightMode['logged_out'] = true;
       $wgDefaultUserOptions['vector-theme'] = 'os';
       $wgDefaultUserOptions['minerva-theme'] = 'os';
+
       $wgUseCdn = true;
     '';
   };
