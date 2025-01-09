@@ -134,7 +134,7 @@ rec {
   services.mediawiki = {
     enable = true;
     package = pkgs.nur.repos.ihaveamac.mediawiki_1_43;
-    name = "Chordioid Wiki";
+    name = "CHORDIOID Wiki";
     url = "https://chordiwiki.l3.pm";
     passwordFile = "/var/lib/mediawiki/mw-password";
     passwordSender = "chordiwiki@60228.dev";
@@ -171,9 +171,9 @@ rec {
     extraConfig = ''
       wfLoadExtension("ConfirmEdit/QuestyCaptcha");
       $wgCaptchaQuestions = [
-        "Who is the main protagonist of Chordioid?" => ["Sam", "Sam Mardot"],
-        "What genre is Chordioid?" => ["Rhythm", "RPG", "Rhythm RPG"],
-        "Where does Chordioid take place?" => ["Concordia", "Capital", "the Capital"]
+        "Who is the main protagonist of CHORDIOID?" => ["Sam", "Sam Mardot"],
+        "What genre is CHORDIOID?" => ["Rhythm", "RPG", "Rhythm RPG"],
+        "Where does CHORDIOID take place?" => ["Concordia", "Capital", "the Capital"]
       ];
 
       $wgLogos = [
