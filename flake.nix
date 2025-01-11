@@ -81,6 +81,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
+  inputs.moonlight = {
+    url = "github:moonlight-mod/moonlight";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.pnpm2nix.url = "github:leo60228/pnpm2nix-nzbr";
+    inputs.pnpm2nix.inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {

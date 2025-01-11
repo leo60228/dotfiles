@@ -132,7 +132,7 @@
         openssl.dev
         nix-prefetch-git
         pandoc
-        (leoPkgs.discord.override { inherit deviceScaleFactor; })
+        discord-canary
         vesktop
         (hiPrio gtk2)
         SDL
