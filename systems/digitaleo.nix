@@ -170,6 +170,12 @@ rec {
         url = "https://extdist.wmflabs.org/dist/extensions/CodeMirror-REL1_43-4b58193.tar.gz";
         hash = "sha256-n7/4kqt7heZV7x3nSGgUkgwPV+jspmsxiSpGEPEIp9w=";
       };
+      PortableInfobox = pkgs.fetchFromGitHub {
+        owner = "Universal-Omega";
+        repo = "PortableInfobox";
+        rev = "f5780412fcb25d3981cdc7f2af8f75518d9ee3cb";
+        hash = "sha256-Hm1+jzhq+PIx699ICgJM92xt6UW8jko+kxT2icdCDFc=";
+      };
     };
 
     extraConfig = ''
