@@ -187,6 +187,10 @@ rec {
         'icon' => "https://chordiwiki.l3.pm/chordiwiki-icon.png"
       ];
 
+      $wgRightsText = "Creative Commons Attribution-ShareAlike";
+      $wgRightsUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
+      $wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by-sa.png";
+
       $wgUsePathInfo = true;
 
       $wgSMTP = [
