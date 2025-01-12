@@ -176,6 +176,9 @@ rec {
         rev = "f5780412fcb25d3981cdc7f2af8f75518d9ee3cb";
         hash = "sha256-Hm1+jzhq+PIx699ICgJM92xt6UW8jko+kxT2icdCDFc=";
       };
+      Interwiki = null;
+      TemplateData = null;
+      CodeEditor = null;
     };
 
     extraConfig = ''
@@ -227,6 +230,8 @@ rec {
       $wgCodeMirrorV6 = true;
       $wgDefaultUserOptions['usecodemirror'] = 1;
       $wgVisualEditorEnableWikitext = true;
+
+      $wgGroupPermissions['sysop']['interwiki'] = true;
     '';
   };
   services.phpfpm.pools.mediawiki.phpPackage = lib.mkForce (
