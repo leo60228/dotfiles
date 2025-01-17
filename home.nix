@@ -111,7 +111,7 @@
         gdb
         #(callPackage ./unityenv.nix {})
         easytag
-        cantata
+        leoPkgs.cantata
         #calibre
         #(import <unstable> {}).xpra
         go-bindata
@@ -311,6 +311,11 @@
   };
 
   xdg.configFile."systemd/user/app-vesktop@.service.d/override.conf".text = ''
+    [Unit]
+    Wants=mpdiscord.service
+  '';
+
+  xdg.configFile."systemd/user/app-discord\\x2dcanary@.service.d/override.conf".text = ''
     [Unit]
     Wants=mpdiscord.service
   '';
