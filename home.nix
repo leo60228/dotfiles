@@ -348,7 +348,8 @@
     '';
   programs.bash.initExtra = ''
     PROMPT_COLOR="1;2;37m"
-    PS1="\n\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\\$\[\033[0m\] "
+    PS1='\n\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]$([ -z "$IN_NIX_SHELL" ] && echo "\u@\h" || echo nix-shell):\w]\\$\[\033[0m\] '
+    export NIX_SHELL_PRESERVE_PROMPT=1
 
     [[ $- != *i* ]] && return
 
@@ -520,6 +521,19 @@
     nix-direnv = {
       enable = true;
     };
+    stdlib = ''
+      eval _orig_"$(declare -f use_nix)"
+      use_nix() {
+        _orig_use_nix "$@"
+        unset IN_NIX_SHELL
+      }
+
+      eval _orig_"$(declare -f use_flake)"
+      use_flake() {
+        _orig_use_flake "$@"
+        unset IN_NIX_SHELL
+      }
+    '';
   };
 
   xdg.configFile."hm_kglobalshortcutsrc".source = ./files/hm_kglobalshortcutsrc;
