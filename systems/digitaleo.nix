@@ -144,38 +144,21 @@ rec {
     skins.MinervaNeue = "${config.services.mediawiki.package}/share/mediawiki/skins/MinervaNeue";
 
     extensions = {
+      inherit (pkgs.leoPkgs.mediawiki-extensions)
+        CodeMirror
+        MobileFrontend
+        OpenGraphMeta
+        TimedMediaHandler
+        Description2
+        PortableInfobox
+        ;
+
       WikiEditor = null;
       VisualEditor = null;
       Cite = null;
-      OpenGraphMeta = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/OpenGraphMeta-REL1_43-cb990fc.tar.gz";
-        hash = "sha256-oWZV2qbChUT51rpxc3p8XZ29tcHpcV7nlNK3QYgJST4=";
-      };
-      TimedMediaHandler = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/TimedMediaHandler-REL1_43-e157bd2.tar.gz";
-        hash = "sha256-sAcE71ddEAwf1W8Tksr1nsebX52kXbcy41J3CnrJfw4=";
-      };
       AbuseFilter = null;
       PageImages = null;
-      Description2 = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/Description2-REL1_43-50e2aef.tar.gz";
-        hash = "sha256-ciUEUcg4tsgpvohuLYztFaGNBowR7p1dIKnNp4ooKtA=";
-      };
-      MobileFrontend = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/MobileFrontend-REL1_43-222361c.tar.gz";
-        hash = "sha256-xawcz0sLpC1xDQuOmFRUKmiGHqmscIQauWOROVxDN0w=";
-      };
       ConfirmEdit = null;
-      CodeMirror = pkgs.fetchzip {
-        url = "https://extdist.wmflabs.org/dist/extensions/CodeMirror-REL1_43-4b58193.tar.gz";
-        hash = "sha256-n7/4kqt7heZV7x3nSGgUkgwPV+jspmsxiSpGEPEIp9w=";
-      };
-      PortableInfobox = pkgs.fetchFromGitHub {
-        owner = "Universal-Omega";
-        repo = "PortableInfobox";
-        rev = "f5780412fcb25d3981cdc7f2af8f75518d9ee3cb";
-        hash = "sha256-Hm1+jzhq+PIx699ICgJM92xt6UW8jko+kxT2icdCDFc=";
-      };
       Interwiki = null;
       TemplateData = null;
       CodeEditor = null;
