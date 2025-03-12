@@ -43,6 +43,7 @@
       ]
     else
       [
+        calibre
         obsidian
         parsec-bin
         leoPkgs.redumper
