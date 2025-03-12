@@ -43,6 +43,7 @@
       ]
     else
       [
+        docker-credential-helpers
         libsecret
         calibre
         obsidian
