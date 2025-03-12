@@ -18,4 +18,6 @@ with import ../components;
 
   networking.firewall.allowedTCPPorts = lib.range 3000 3010;
   networking.firewall.allowedUDPPorts = lib.range 3000 3010;
+
+  virtualisation.waydroid.enable = true;
 }
