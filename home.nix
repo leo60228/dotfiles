@@ -237,7 +237,7 @@
         tigervnc
         usbutils
         #dotnetPackages.Nuget
-        wineWowPackages.unstable
+        wineWowPackages.staging
         gnumake
         (hiPrio gcc)
         meteor
