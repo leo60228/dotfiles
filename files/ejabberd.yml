@@ -13,7 +13,6 @@
 ### *******************************************************
 ### Refer to http://en.wikipedia.org/wiki/YAML for the brief description.
 ###
-
 hosts:
   - 60228.dev
 loglevel: info

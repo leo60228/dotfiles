@@ -480,24 +480,26 @@
   programs.vscode = lib.mkIf (!small) {
     enable = true;
     package = pkgs.leoPkgs.vscode-fhs;
-    userSettings = {
-      "omnisharp.path" = "${pkgs.omnisharp-roslyn}/bin/omnisharp";
-      "workbench.colorTheme" = "Solarized Dark";
-      "telemetry.enableTelemetry" = false;
+    profiles.default = {
+      userSettings = {
+        "omnisharp.path" = "${pkgs.omnisharp-roslyn}/bin/omnisharp";
+        "workbench.colorTheme" = "Solarized Dark";
+        "telemetry.enableTelemetry" = false;
+      };
+      extensions =
+        (with pkgs.vscode-extensions; [
+          bbenoist.nix
+          vscodevim.vim
+        ])
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "csharp";
+            publisher = "ms-dotnettools";
+            version = "1.23.6";
+            sha256 = "0dc0krp5z8ayk59jhm1n91lldwgr7a8f6al8h5m75kl7q4ib7rlk";
+          }
+        ];
     };
-    extensions =
-      (with pkgs.vscode-extensions; [
-        bbenoist.nix
-        vscodevim.vim
-      ])
-      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "csharp";
-          publisher = "ms-dotnettools";
-          version = "1.23.6";
-          sha256 = "0dc0krp5z8ayk59jhm1n91lldwgr7a8f6al8h5m75kl7q4ib7rlk";
-        }
-      ];
   };
 
   home.file.".vscode/extensions/ms-dotnettools.csharp" = lib.mkIf (!small) { recursive = true; };
@@ -554,7 +556,7 @@
       PasswordManagerEnabled = false;
     };
     profiles.default = {
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         darkreader
         old-reddit-redirect
         reddit-enhancement-suite
