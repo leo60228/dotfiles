@@ -413,11 +413,11 @@
         "systems": "systems_6"
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "lastModified": 1701680307,
+        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
         "type": "github"
       },
       "original": {
@@ -647,11 +647,11 @@
         "pnpm2nix": "pnpm2nix"
       },
       "locked": {
-        "lastModified": 1736287893,
-        "narHash": "sha256-plhjgZdCSsvp5jxfrz4yX4vuza3e7Fw3kOE+N3BLbP4=",
+        "lastModified": 1738192033,
+        "narHash": "sha256-x/t6EcKB/fNO59v2fchxbXQVRcoHuXdlUNCtDlciep8=",
         "owner": "moonlight-mod",
         "repo": "moonlight",
-        "rev": "86fe1bcf47dd5146eb5ae29d3c2ebc60f3fc9b2f",
+        "rev": "915188436715faa355ca55ea9b0d9f5b2f9ce3e5",
         "type": "github"
       },
       "original": {
