@@ -130,8 +130,18 @@ lib.makeComponent "extra" (
       };
 
       security.pam.loginLimits = [
-        { domain = "@wheel"; type = "-"; item = "rtprio"; value = "95"; }
-        { domain = "@wheel"; type = "-"; item = "memlock"; value = "unlimited"; }
+        {
+          domain = "@wheel";
+          type = "-";
+          item = "rtprio";
+          value = "95";
+        }
+        {
+          domain = "@wheel";
+          type = "-";
+          item = "memlock";
+          value = "unlimited";
+        }
       ];
 
       programs.command-not-found.dbPath =
