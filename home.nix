@@ -43,6 +43,7 @@
       ]
     else
       [
+        libsecret
         calibre
         obsidian
         parsec-bin
@@ -623,5 +624,20 @@
         }
       '';
     };
+  };
+
+  programs.msmtp = {
+    enable = true;
+  };
+
+  accounts.email.accounts."leo@60228.dev" = {
+    primary = true;
+    flavor = "gmail.com";
+    address = "leo@60228.dev";
+    realName = "leo60228";
+    userName = "leo@60228.dev";
+    msmtp.enable = true;
+    msmtp.extraConfig.auth = "oauthbearer";
+    passwordCommand = "${pkgs.oama}/bin/oama access leo@60228.dev";
   };
 }
