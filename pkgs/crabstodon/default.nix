@@ -53,6 +53,8 @@ stdenv.mkDerivation rec {
     RAILS_ENV = "production";
     NODE_ENV = "production";
 
+    dontCheckForBrokenSymlinks = true;
+
     buildPhase = ''
       runHook preBuild
 
