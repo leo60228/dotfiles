@@ -237,14 +237,19 @@ rec {
       searchdown = {
         image = "registry.gitlab.com/vriska/searchdown:latest";
         environmentFiles = [ "/var/lib/searchdown/.env" ];
-      };
-      watchtower = {
-        image = "ghcr.io/containrrr/watchtower:latest";
-        volumes = [
-          "/var/run/docker.sock:/var/run/docker.sock"
-          "/root/.docker/config.json:/config.json"
+        extraOptions = [
+          "--label=io.containers.autoupdate=registry"
+          "--pull=newer"
         ];
       };
+    };
+  };
+
+  systemd.timers.podman-auto-update = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnUnitActiveSet = "10m";
+      Unit = "podman-auto-update.service";
     };
   };
 }
