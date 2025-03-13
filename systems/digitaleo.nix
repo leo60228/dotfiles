@@ -230,4 +230,20 @@ rec {
     }
   );
   users.users.nginx.extraGroups = [ "mediawiki" ];
+
+  virtualisation.oci-containers = {
+    backend = "podman";
+    containers = {
+      searchdown = {
+        image = "registry.gitlab.com/vriska/searchdown:latest";
+      };
+      watchtower = {
+        image = "containrrr/watchtower";
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock"
+          "/root/.docker/config.json:/config.json"
+        ];
+      };
+    };
+  };
 }
