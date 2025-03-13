@@ -236,6 +236,7 @@ rec {
     containers = {
       searchdown = {
         image = "registry.gitlab.com/vriska/searchdown:latest";
+        environmentFiles = [ "/var/lib/searchdown/.env" ];
       };
       watchtower = {
         image = "containrrr/watchtower";
