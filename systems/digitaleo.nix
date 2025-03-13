@@ -15,6 +15,7 @@ rec {
       9090
       80
       443
+      6443
     ];
     allowedUDPPorts = [
       24872
@@ -230,4 +231,9 @@ rec {
     }
   );
   users.users.nginx.extraGroups = [ "mediawiki" ];
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+  };
 }
