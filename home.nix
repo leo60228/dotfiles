@@ -253,7 +253,6 @@
         #(import ./julia-oldpkgs.nix {version = "06";})
         #(import ./julia-oldpkgs.nix {version = "07";})
         #(import ./julia-oldpkgs.nix {version = "11";})
-        syncthingtray
         leoPkgs.twemoji-ttf
         leoPkgs.determination-fonts
         leoPkgs.office-2007-fonts
