@@ -239,7 +239,7 @@ rec {
         environmentFiles = [ "/var/lib/searchdown/.env" ];
       };
       watchtower = {
-        image = "containrrr/watchtower";
+        image = "ghcr.io/containrrr/watchtower:latest";
         volumes = [
           "/var/run/docker.sock:/var/run/docker.sock"
           "/root/.docker/config.json:/config.json"
