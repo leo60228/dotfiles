@@ -242,7 +242,6 @@
         wineWowPackages.staging
         gnumake
         (hiPrio gcc)
-        meteor
         hplip
         virtualbox
         dotnet-sdk
