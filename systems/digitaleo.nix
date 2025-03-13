@@ -196,7 +196,7 @@ rec {
       $wgMainCacheType = CACHE_ACCEL;
       $wgSessionCacheType = CACHE_DB;
 
-      $wgFFmpegLocation = "${pkgs.ffmpeg}/bin/ffmepg";
+      $wgFFmpegLocation = "${pkgs.ffmpeg-headless}/bin/ffmepg";
 
       $wgEnableMetaDescriptionFunctions = true;
 
