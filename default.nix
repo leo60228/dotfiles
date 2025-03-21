@@ -13,4 +13,11 @@ with (import (
 ) { src = ./.; }).defaultNix;
 {
   leoPkgs = outputs.legacyPackages.${system};
+  overlays =
+    (builtins.attrValues (inputs.nixpkgs.lib.removeAttrs outputs.overlays [ "default" ]))
+    ++ [
+      (self: super: {
+        leoPkgs = self.callPackages ./pkgs { };
+      })
+    ];
 }
