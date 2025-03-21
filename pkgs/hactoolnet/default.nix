@@ -3,17 +3,18 @@
   buildDotnetModule,
   fetchFromGitHub,
   dotnetCorePackages,
+  nix-update-script,
 }:
 
 buildDotnetModule rec {
   pname = "hactoolnet";
-  version = "unstable-2024-08-27";
+  version = "0.19.0-unstable-2024-08-28";
 
   src = fetchFromGitHub {
     owner = "Thealexbarney";
     repo = "LibHac";
     rev = "fefa38ff2204de978efdf9df1ff193d85d4d83e5";
-    sha256 = "m+aHMNz0C77dJpukvkNTlTYBlUAkmJxGSB27UuNTGVc=";
+    sha256 = "sha256-m+aHMNz0C77dJpukvkNTlTYBlUAkmJxGSB27UuNTGVc=";
   };
 
   projectFile = "LibHac.sln";
@@ -29,6 +30,8 @@ buildDotnetModule rec {
   packNupkg = true;
 
   preConfigure = "unset version";
+
+  passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch" ]; };
 
   meta = with lib; {
     homepage = "https://github.com/Thealexbarney/LibHac";
