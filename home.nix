@@ -57,7 +57,7 @@
         colmena
         fusee-nano
         obs-studio
-        thunderbird
+        thunderbird-latest
         gamescope
         lutris
         pkgsCross.avr.stdenv.cc
