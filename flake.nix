@@ -30,6 +30,7 @@
   inputs.nixos-apple-silicon = {
     url = "github:tpwrules/nixos-apple-silicon";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.upd8r = {
     url = "github:leo60228/upd8r";
@@ -43,6 +44,7 @@
   inputs.lix = {
     url = "git+https://git@git.lix.systems/lix-project/lix";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.lix-module = {
     url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
@@ -52,6 +54,7 @@
   inputs.colmena = {
     url = "github:zhaofengli/colmena";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.flake-programs-sqlite = {
     url = "github:wamserma/flake-programs-sqlite";
@@ -64,6 +67,7 @@
   inputs.pre-commit-hooks = {
     url = "github:cachix/git-hooks.nix";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.rom-properties = {
     url = "github:Whovian9369/rom-properties-nix-flake";
@@ -73,6 +77,7 @@
   inputs.lanzaboote = {
     url = "github:nix-community/lanzaboote/v0.4.2";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
   inputs.pnpm2nix = {
@@ -83,6 +88,10 @@
     url = "github:moonlight-mod/moonlight";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.pnpm2nix.follows = "pnpm2nix";
+  };
+  inputs.flake-compat = {
+    url = "git+https://git.lix.systems/lix-project/flake-compat";
+    flake = false;
   };
 
   outputs =
