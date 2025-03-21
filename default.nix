@@ -12,15 +12,14 @@ with (import (
   }
 ) { src = ./.; }).defaultNix;
 rec {
+  inherit (inputs.nixpkgs) lib;
   leoPkgs =
     (import inputs.nixpkgs {
       inherit system overlays;
     }).leoPkgs;
-  overlays =
-    (builtins.attrValues (inputs.nixpkgs.lib.removeAttrs outputs.overlays [ "default" ]))
-    ++ [
-      (self: super: {
-        leoPkgs = self.callPackages ./pkgs { };
-      })
-    ];
+  overlays = (builtins.attrValues (lib.removeAttrs outputs.overlays [ "default" ])) ++ [
+    (self: super: {
+      leoPkgs = self.callPackages ./pkgs { };
+    })
+  ];
 }
