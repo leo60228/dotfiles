@@ -1,5 +1,6 @@
 {
   callPackage,
+  callPackages,
   nodejs_18,
   python3,
   libsForQt5,
@@ -29,6 +30,7 @@ rec {
   taglib2 = callPackage ./taglib2 { };
   twemoji-ttf = callPackage ./twemoji-ttf { };
   udisks2 = callPackage ./udisks/2-default.nix { };
+  vimPlugins = callPackages ./vim-plugins { };
   vscode-fhs = callPackage ./vscode-fhs { };
   vxis-capture-fw-mod = callPackage ./vxis-capture-fw-mod { };
 }

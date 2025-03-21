@@ -8,59 +8,63 @@
   callPackage,
   lib,
   fetchFromGitHub,
+  leoPkgs,
 }:
 let
-  ftPlugins = with vimPlugins; [
-    {
-      plug = vim-graphql;
-      ft = "graphql";
-      ext = "graphql";
-    }
-    {
-      plug = callPackage ./omnisharp-vim.nix { };
-      ft = "cs";
-      ext = "cs";
-    }
-    {
-      plug = vim-qml;
-      ft = "qml";
-      ext = "qml";
-      init = "set smartindent";
-    }
-    {
-      plug = vim-toml;
-      ft = "toml";
-      ext = "toml";
-    }
-    {
-      plug = vim-terraform;
-      ft = "terraform";
-      ext = "tf";
-    }
-    {
-      plug = kotlin-vim;
-      ft = "kotlin";
-      ext = "kts";
-    }
-    {
-      plug = coc-nvim;
-      ft = "java";
-      ext = "java";
-      init = "let b:ale_disable_lsp = 1";
-    }
-    {
-      plug = coc-nvim;
-      ft = "slint";
-      ext = "slint";
-      init = "set smartindent";
-    }
-    {
-      plug = nvim-metals;
-      ft = "scala";
-      ext = "scala";
-      init = "lua require('metals').initialize_or_attach({})";
-    }
-  ];
+  ftPlugins =
+    with vimPlugins;
+    with leoPkgs.vimPlugins;
+    [
+      {
+        plug = vim-graphql;
+        ft = "graphql";
+        ext = "graphql";
+      }
+      {
+        plug = omnisharp-vim;
+        ft = "cs";
+        ext = "cs";
+      }
+      {
+        plug = vim-qml;
+        ft = "qml";
+        ext = "qml";
+        init = "set smartindent";
+      }
+      {
+        plug = vim-toml;
+        ft = "toml";
+        ext = "toml";
+      }
+      {
+        plug = vim-terraform;
+        ft = "terraform";
+        ext = "tf";
+      }
+      {
+        plug = kotlin-vim;
+        ft = "kotlin";
+        ext = "kts";
+      }
+      {
+        plug = coc-nvim;
+        ft = "java";
+        ext = "java";
+        init = "let b:ale_disable_lsp = 1";
+      }
+      {
+        plug = coc-nvim;
+        ft = "slint";
+        ext = "slint";
+        init = "set smartindent";
+      }
+      {
+        plug = nvim-metals;
+        ft = "scala";
+        ext = "scala";
+        init = "lua require('metals').initialize_or_attach({})";
+      }
+    ];
   plugins = builtins.attrNames (builtins.readDir ./vimrc.d);
 in
 neovim.override {
@@ -82,31 +86,34 @@ neovim.override {
       + "\" }}}\n\n\" vimrc.d/ contents:\n\n"
       + lib.concatMapStrings (x: "\" ${x}\n${(builtins.readFile (./vimrc.d + "/${x}"))}\n\n") plugins;
 
-    packages.leovim = with vimPlugins; {
-      start = [
-        vim-abolish
-        vim-unimpaired
-        vim-hardtime
-        editorconfig-vim
-        vim-sleuth
-        plenary-nvim
-        ale
-        nvim-treesitter.withAllGrammars
-        playground
-        nvim-treesitter-refactor
-        vim-auto-save
-        (callPackage ./nvim-echo-diagnostics.nix { })
-        nvim-solarized-lua
-        (callPackage ./vim-poryscript.nix { })
-        vim-fetch
-        direnv-vim
-        (vimUtils.buildVimPlugin {
-          name = "leovim";
-          src = ./runtime;
-        })
-      ];
+    packages.leovim =
+      with vimPlugins;
+      with leoPkgs.vimPlugins;
+      {
+        start = [
+          vim-abolish
+          vim-unimpaired
+          vim-hardtime
+          editorconfig-vim
+          vim-sleuth
+          plenary-nvim
+          ale
+          nvim-treesitter.withAllGrammars
+          playground
+          nvim-treesitter-refactor
+          vim-auto-save
+          nvim-echo-diagnostics
+          nvim-solarized-lua
+          vim-poryscript
+          vim-fetch
+          direnv-vim
+          (vimUtils.buildVimPlugin {
+            name = "leovim";
+            src = ./runtime;
+          })
+        ];
 
-      opt = [ vimspector ] ++ map (x: x.plug) ftPlugins;
-    };
+        opt = [ vimspector ] ++ map (x: x.plug) ftPlugins;
+      };
   };
 }
