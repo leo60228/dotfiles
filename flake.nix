@@ -152,6 +152,23 @@
             }) self.outputs.nixosConfigurations;
           in
           jobs;
+
+        overlays =
+          (nixpkgs.lib.mapAttrs' (
+            e: v:
+            let
+              name = nixpkgs.lib.removeSuffix ".nix" e;
+              rawOverlay = import (./nixpkgs + ("/" + e));
+              hasArgs = builtins.functionArgs rawOverlay != { };
+              overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+            in
+            nixpkgs.lib.nameValuePair name overlay
+          ) (builtins.readDir ./nixpkgs))
+          // {
+            default = self: super: {
+              leoPkgs = self.callPackages ./pkgs { };
+            };
+          };
       }
       // (flake-utils.lib.eachDefaultSystem (
         system:
@@ -203,18 +220,8 @@
           legacyPackages =
             (import flakes.nixpkgs {
               inherit system;
-              overlays = map (
-                e:
-                let
-                  rawOverlay = import (./nixpkgs + ("/" + e));
-                  hasArgs = builtins.functionArgs rawOverlay != { };
-                  overlay = if hasArgs then rawOverlay flakes else rawOverlay;
-                in
-                overlay
-              ) (builtins.attrNames (builtins.readDir ./nixpkgs));
-            }).callPackages
-              ./pkgs
-              { };
+              overlays = builtins.attrValues self.overlays;
+            }).leoPkgs;
           apps = nixpkgs.lib.mapAttrs (n: x: {
             type = "app";
             program = "${x}/bin/${n}";
