@@ -2,6 +2,7 @@
   lib,
   fetchFromGitHub,
   python3,
+  unstableGitUpdater,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -27,6 +28,8 @@ python3.pkgs.buildPythonApplication rec {
   pythonImportsCheck = [
     "hyfetch"
   ];
+
+  passthru.updateScript = unstableGitUpdater { };
 
   meta = with lib; {
     description = "neofetch with pride flags <3";
