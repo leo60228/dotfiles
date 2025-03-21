@@ -3,6 +3,12 @@
   fetchMavenArtifact,
   jdk,
   makeWrapper,
+  writeShellScript,
+  lib,
+  curl,
+  jq,
+  yq,
+  common-updater-scripts,
 }:
 stdenv.mkDerivation rec {
   pname = "reposilite-bin";
@@ -26,5 +32,20 @@ stdenv.mkDerivation rec {
       --add-flags "-Xmx40m -jar ${src.jar}" \
       --set JAVA_HOME ${jdk}
     runHook postInstall
+  '';
+
+  passthru.updateScript = writeShellScript "update-reposilite" ''
+    set -ex
+    export PATH="${
+      lib.makeBinPath [
+        curl
+        yq
+        common-updater-scripts
+      ]
+    }:$PATH"
+
+    NEW_VERSION=$(curl -s 'https://maven.reposilite.com/releases/com/reposilite/reposilite/maven-metadata.xml' | xq -r '.metadata.versioning.latest')
+
+    update-source-version "$UPDATE_NIX_ATTR_PATH" "$NEW_VERSION" --ignore-same-version --source-key=src.jar
   '';
 }
