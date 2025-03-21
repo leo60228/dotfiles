@@ -167,7 +167,7 @@ stdenv.mkDerivation rec {
   passthru = {
     tests.mastodon = nixosTests.mastodon;
     # run with: nix-shell ./maintainers/scripts/update.nix --argstr package mastodon
-    updateScript = ./update.sh;
+    #updateScript = ./update.sh;
   };
 
   meta = with lib; {

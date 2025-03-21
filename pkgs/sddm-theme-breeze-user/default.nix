@@ -1,6 +1,6 @@
-{ runCommandNoCC, plasma-desktop }:
+{ runCommand, plasma-desktop }:
 
-runCommandNoCC "sddm-theme-breeze-user" { } ''
+runCommand "sddm-theme-breeze-user" { } ''
   mkdir -p $out/share/sddm/themes
   cp -r ${plasma-desktop}/share/sddm/themes/breeze $out/share/sddm/themes/breeze-user
   chmod -R u+w $out

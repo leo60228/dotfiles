@@ -5,7 +5,7 @@
   unzip,
   libsecret,
   libXScrnSaver,
-  wrapGAppsHook,
+  wrapGAppsHook3,
   gtk2,
   at-spi2-atk,
   autoPatchelfHook,
