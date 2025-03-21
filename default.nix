@@ -11,8 +11,11 @@ with (import (
     sha256 = narHash;
   }
 ) { src = ./.; }).defaultNix;
-{
-  leoPkgs = outputs.legacyPackages.${system};
+rec {
+  leoPkgs =
+    (import inputs.nixpkgs {
+      inherit system overlays;
+    }).leoPkgs;
   overlays =
     (builtins.attrValues (inputs.nixpkgs.lib.removeAttrs outputs.overlays [ "default" ]))
     ++ [
