@@ -6,6 +6,7 @@
   pkg-config,
   qt6,
   perl,
+  gitUpdater,
 
   # Cantata doesn't build with cdparanoia enabled so we disable that
   # default for now until I (or someone else) figure it out.
@@ -189,6 +190,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   cmakeFlags = lib.flatten (map (e: map (f: fstat e.enable f) e.names) options);
+
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "v";
+  };
 
   meta = {
     description = "Graphical client for MPD";
