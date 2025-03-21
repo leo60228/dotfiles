@@ -23,7 +23,7 @@ set completeopt-=preview
 
 set termguicolors
 set background=dark
-colorscheme solarized-flat
+colorscheme vriselenized
 
 filetype plugin indent on
 " }}}

@@ -2,6 +2,7 @@
   neovim,
   tree-sitter,
   python3,
+  vimUtils,
   vimPlugins,
   omnisharp-roslyn,
   callPackage,
@@ -99,6 +100,10 @@ neovim.override {
         (callPackage ./vim-poryscript.nix { })
         vim-fetch
         direnv-vim
+        (vimUtils.buildVimPlugin {
+          name = "leovim";
+          src = ./runtime;
+        })
       ];
 
       opt = [ vimspector ] ++ map (x: x.plug) ftPlugins;
