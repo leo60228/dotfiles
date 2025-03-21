@@ -23,16 +23,17 @@
   libfprint,
   python3,
   libpam-wrapper,
+  gitUpdater,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pam-fprint-grosshack";
-  version = "unstable-2022-07-27";
+  version = "0.3.0";
 
   src = fetchFromGitLab {
     owner = "mishakmak";
     repo = "pam-fprint-grosshack";
-    rev = "45b42524fb5783e1e555067743d7e0f70d27888a";
+    rev = "v${finalAttrs.version}";
     hash = "sha256-obczZbf/oH4xGaVvp3y3ZyDdYhZnxlCWvL0irgEYIi0=";
   };
 
@@ -90,6 +91,11 @@ stdenv.mkDerivation (finalAttrs: {
     "--no-suite"
     "fprintd:TestPamFprintd"
   ];
+
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "v";
+    allowedVersions = "^v?0\.";
+  };
 
   postPatch = ''
     patchShebangs \
