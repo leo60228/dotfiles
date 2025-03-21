@@ -6,13 +6,12 @@
   writeShellScript,
   lib,
   curl,
-  jq,
   yq,
   common-updater-scripts,
 }:
 stdenv.mkDerivation rec {
   pname = "reposilite-bin";
-  version = "3.5.13";
+  version = "3.5.23";
 
   src = fetchMavenArtifact {
     groupId = "com.reposilite";
@@ -20,7 +19,7 @@ stdenv.mkDerivation rec {
     inherit version;
     classifier = "all";
     repos = [ "https://maven.reposilite.com/releases" ];
-    hash = "sha256-G9J1nOK1dM8XC+3Mj8uUnNvM5BiUPzOIRT/T5CZzvqo=";
+    hash = "sha256-7DNl0u2iYAlqhflJCIppy8huMKtFjjyRJzUPcWHoRnE=";
   };
 
   dontUnpack = true;
