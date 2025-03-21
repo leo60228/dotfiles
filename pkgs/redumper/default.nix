@@ -5,18 +5,19 @@
   cmake,
   ninja,
   build_type ? "Release",
-# Typical values include `Debug`, `Release`, `RelWithDebInfo` and `MinSizeRel`
-# Usually set to "Release" for GitHub Actions use, so that's what it's set to by default here.
+  # Typical values include `Debug`, `Release`, `RelWithDebInfo` and `MinSizeRel`
+  # Usually set to "Release" for GitHub Actions use, so that's what it's set to by default here.
+  gitUpdater,
 }:
 
 llvmPackages_18.libcxxStdenv.mkDerivation rec {
   pname = "redumper";
-  version = "build_426";
+  version = "426";
 
   src = fetchFromGitHub {
     owner = "superg";
     repo = "redumper";
-    rev = version;
+    rev = "build_${version}";
     hash = "sha256-YAhxkltnun17Ky8L7PS05ZL4UTUY6nId+dVucYTdllo=";
   };
 
@@ -27,13 +28,15 @@ llvmPackages_18.libcxxStdenv.mkDerivation rec {
   ];
 
   env.NIX_CFLAGS_COMPILE = "-v";
-  env.gh_run_version = lib.removePrefix "build_" version;
+  env.gh_run_version = version;
 
   cmakeFlags = [
     "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON"
     "-DREDUMPER_CLANG_LINK_OPTIONS="
     "-DREDUMPER_VERSION_BUILD=${env.gh_run_version}"
   ];
+
+  passthru.updateScript = gitUpdater { rev-prefix = "build_"; };
 
   meta = with lib; {
     description = "Low level CD dumper utility";
