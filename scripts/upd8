@@ -1,9 +1,2 @@
 #!/usr/bin/env bash
-set -ex
-
-"./scripts/update-$1" | tee "pkgs/$1/default.nix"
-sudo nixos-rebuild switch
-
-git add "pkgs/$1/default.nix"
-git commit -m "upd8 $1"
-git push
+exec nix-shell '<nixpkgs/maintainers/scripts/update.nix>' --argstr path leoPkgs --arg include-overlays "(import /home/leo60228/dotfiles {}).overlays" --argstr commit true "$@"
