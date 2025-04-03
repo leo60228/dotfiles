@@ -109,7 +109,21 @@
         colmena =
           let
             dotfiles = import ./. null;
-            inherit (dotfiles) systems;
+            lib = import ./lib;
+            genSystems =
+              generator:
+              (
+                let
+                  read = builtins.readDir ./systems;
+                in
+                builtins.listToAttrs (
+                  map (x: {
+                    name = builtins.elemAt (builtins.match "(.*)\\.nix" x) 0;
+                    value = generator x;
+                  }) (builtins.filter (x: builtins.getAttr (x) (read) == "regular") (builtins.attrNames read))
+                )
+              );
+            systems = genSystems (lib.getSystemConfig false);
             meta = {
               nixpkgs = nixpkgs.legacyPackages.x86_64-linux;
 
