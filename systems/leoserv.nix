@@ -182,4 +182,12 @@ with import ../components;
       PasswordAuthentication = false;
     };
   };
+
+  virtualisation.oci-containers.containers.actual = {
+    pull = "newer";
+    ports = [ "127.0.0.1:5006:5006" ];
+    volumes = [ "actual:/data" ];
+    image = "ghcr.io/actualbudget/actual:latest-alpine";
+    extraOptions = [ "--tz=local" ];
+  };
 }
