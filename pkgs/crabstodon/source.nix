@@ -18,5 +18,5 @@ in
 })
 // {
   inherit version;
-  yarnHash = "sha256-5FqQ6jYjDeu/jCzwsA08JPADmi+BKSk+pv2VqREwGUE=";
+  yarnHash = "sha256-QP5x7eWg4nt8h3j6eJ0qr72x0ZYUyNpFL/nvO3U1zBY=";
 }
