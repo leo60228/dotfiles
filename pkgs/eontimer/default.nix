@@ -6,7 +6,7 @@
   fetchFromGitHub,
   fetchpatch,
   cmake,
-  sfml,
+  sfml_2,
   qtbase,
   qttools,
   qtsass,
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     qtbase
     qttools
-    sfml
+    sfml_2
   ];
 
   meta = with lib; {
