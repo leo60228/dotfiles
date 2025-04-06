@@ -460,15 +460,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1743591328,
-        "narHash": "sha256-aSD3+jSwh6Lqz0o5Jwd4zPolcRgl/maqtLXnahnXXMA=",
-        "rev": "9a33e45800c3ea19a816cfe7630c97107c40bd62",
+        "lastModified": 1743908748,
+        "narHash": "sha256-HQELxzF4vTwHj0GDGjWScc68YPomAQLXo3R3SP7/o8g=",
+        "rev": "5d1e49c0028a9e8d8514013a42a6b1f2bbccb9f1",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/hydra/archive/9a33e45800c3ea19a816cfe7630c97107c40bd62.tar.gz?rev=9a33e45800c3ea19a816cfe7630c97107c40bd62"
+        "url": "https://git.lix.systems/api/v1/repos/benaryorg/hydra/archive/5d1e49c0028a9e8d8514013a42a6b1f2bbccb9f1.tar.gz?rev=5d1e49c0028a9e8d8514013a42a6b1f2bbccb9f1"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz"
+        "url": "https://git.lix.systems/benaryorg/hydra/archive/fix-2025-04-06.tar.gz"
       }
     },
     "lanzaboote": {
