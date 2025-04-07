@@ -10,7 +10,6 @@ let mapleader = ","
 let localleader = "\\"
 set encoding=utf-8
 set statusline=%f\ (%y)
-set pastetoggle=<f5>
 set foldlevelstart=0
 set hlsearch incsearch
 set t_PS=[200~
