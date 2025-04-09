@@ -321,6 +321,11 @@
     Wants=mpdiscord.service
   '';
 
+  xdg.configFile."systemd/user/app-calibre\\x2dgui.service.d/override.conf".text = ''
+    [Service]
+    Environment=CALIBRE_USE_SYSTEM_THEME=1
+  '';
+
   systemd.user.services.mpdiscord = lib.mkIf (!small) {
     Unit = {
       Description = "mpdiscord";
