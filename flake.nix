@@ -8,7 +8,10 @@
     url = "github:oxalica/rust-overlay";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.nur.url = "github:nix-community/NUR";
+  inputs.nur = {
+    url = "github:nix-community/NUR";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.naersk = {
     url = "github:nmattia/naersk";
