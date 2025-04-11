@@ -109,7 +109,7 @@ rec {
     recommendedProxySettings = true;
 
     commonHttpConfig = ''
-      ssl_ecdh_curve X25519Kyber768Draft00:X25519:prime256v1:secp521r1:secp384r1;
+      ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp521r1:secp384r1;
     '';
 
     appendHttpConfig = ''
