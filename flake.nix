@@ -83,15 +83,6 @@
     inputs.flake-compat.follows = "flake-compat";
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
-  inputs.pnpm2nix = {
-    url = "github:leo60228/pnpm2nix-nzbr";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-  inputs.moonlight = {
-    url = "github:moonlight-mod/moonlight";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.pnpm2nix.follows = "pnpm2nix";
-  };
   inputs.flake-compat = {
     url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake = false;

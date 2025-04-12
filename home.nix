@@ -135,7 +135,7 @@
         openssl.dev
         nix-prefetch-git
         pandoc
-        discord-canary
+        (discord-canary.override { withMoonlight = true; })
         vesktop
         (hiPrio gtk2)
         SDL
