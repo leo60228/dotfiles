@@ -11,6 +11,8 @@ with import ../components;
     bluetooth = true;
   } docker steam extra home { deviceScaleFactor = 2; } tailscale flatpak fwupd kdeconnect kvm;
 
+  system.stateVersion = "18.03";
+
   users.extraUsers.leo60228 = {
     extraGroups = [
       "wheel"

@@ -8,6 +8,8 @@ with import ../components;
 rec {
   components = en_us server tailscale reverseproxy { host = "digitaleo"; };
 
+  system.stateVersion = "18.03";
+
   networking.firewall = {
     allowedTCPPorts = [
       24872

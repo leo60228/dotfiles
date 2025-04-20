@@ -8,6 +8,8 @@ with import ../components;
 rec {
   components = en_us server tailscale;
 
+  system.stateVersion = "18.03";
+
   networking.firewall.allowedTCPPorts = [
     80
     443

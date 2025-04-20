@@ -23,6 +23,8 @@ rec {
       kdeconnect
       fwupd;
 
+  system.stateVersion = "18.03";
+
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
     34568

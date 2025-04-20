@@ -60,8 +60,6 @@
   # }}}
 
   # Nixpkgs {{{
-  system.stateVersion = "18.03"; # Did you read the comment?
-
   nixpkgs.overlays = map (
     e:
     let

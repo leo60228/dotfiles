@@ -6,6 +6,8 @@ rec {
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   components = en_us docker server reverseproxy { host = "aws"; } tailscale;
 
+  system.stateVersion = "18.03";
+
   networking.firewall.allowedTCPPorts = [
     22
     80

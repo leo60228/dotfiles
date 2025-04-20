@@ -11,6 +11,8 @@ with import ../components;
 rec {
   components = efi en_us home { small = true; } prometheus tailscale;
 
+  system.stateVersion = "18.03";
+
   users.extraUsers.minecraft = {
     isSystemUser = true;
     createHome = true;
