@@ -12,7 +12,6 @@ in
         (../systems + "/${name}")
         ../modules/componentBase.nix
         ../modules/base.nix
-        ../modules/external.nix
       ];
       networking.hostName = builtins.head (builtins.match "([^.]+)(\\.nix)?" name);
     });

@@ -10,11 +10,15 @@
 
 {
   imports = [
-    ./flakes.nix
-    ./nix-daemon.nix
     ./cachix.nix
 
-    ./mastodon.nix # FIXME: remove after https://github.com/NixOS/nixpkgs/pull/337545
+    # dependencies
+    flakes.home-manager.nixosModules.home-manager
+    "${flakes.hydra}/nixos-modules/hydra.nix"
+    flakes.lix-module.nixosModules.default
+
+    # patches
+    ./mastodon.nix
   ];
   disabledModules = [ "services/web-apps/mastodon.nix" ];
 
@@ -60,56 +64,61 @@
   # }}}
 
   # Nixpkgs {{{
-  nixpkgs.overlays = map (
-    e:
-    let
-      rawOverlay = import (../nixpkgs + ("/" + e));
-      hasArgs = builtins.functionArgs rawOverlay != { };
-      overlay = if hasArgs then rawOverlay flakes else rawOverlay;
-    in
-    overlay
-  ) (builtins.attrNames (builtins.readDir ../nixpkgs));
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "olm-3.2.16" # these vulnerabilities aren't real.
-      "dotnet-core-combined"
-      "dotnet-sdk-6.0.428"
-      "dotnet-sdk-wrapped-6.0.428"
-    ];
+  nixpkgs = {
+    overlays =
+      [ flakes.hydra.overlays.default ]
+      ++ map (
+        e:
+        let
+          rawOverlay = import (../nixpkgs + ("/" + e));
+          hasArgs = builtins.functionArgs rawOverlay != { };
+          overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+        in
+        overlay
+      ) (builtins.attrNames (builtins.readDir ../nixpkgs));
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "olm-3.2.16" # these vulnerabilities aren't real.
+        "dotnet-core-combined"
+        "dotnet-sdk-6.0.428"
+        "dotnet-sdk-wrapped-6.0.428"
+      ];
+    };
   };
   # }}}
 
   # Nix {{{
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
-  nix.settings.allowed-uris = [
-    "https://github.com"
-    "https://gitlab.com"
-    "https://git.sr.ht"
-    "https://git.lix.systems"
-    "https://git@git.lix.systems"
-  ];
-  nix.settings.trusted-public-keys = [ "desktop-1:jpWiJK7Ltbcf1b9xr9mx/4on1NqqmqTZG4bldBl41oQ=" ];
-  nix.settings.substituters =
-    if config.networking.hostName == "desktop" then
-      [ ]
-    else
-      [
-        "https://cache.nixos.org/"
-        "http://desktop:9999"
-      ];
-  nix.settings.trusted-substituters =
-    if config.networking.hostName == "desktop" then
-      [ "https://cache.nixos.org/" ]
-    else
-      [
-        "https://cache.nixos.org/"
-        "http://desktop:9999"
-      ];
-  nix.extraOptions = "!include /etc/nix/secrets.conf"; # put a GitHub PAT here!
+  nix = {
+    settings =
+      let
+        substituters = [
+          "https://cache.nixos.org/"
+        ] ++ lib.optional (config.networking.hostName != "desktop") "http://desktop:9999";
+      in
+      {
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
+        allowed-uris = [
+          "https://github.com"
+          "https://gitlab.com"
+          "https://git.sr.ht"
+          "https://git.lix.systems"
+          "https://git@git.lix.systems"
+        ];
+        trusted-public-keys = [ "desktop-1:jpWiJK7Ltbcf1b9xr9mx/4on1NqqmqTZG4bldBl41oQ=" ];
+        inherit substituters;
+        trusted-substituters = substituters;
+        warn-dirty = false;
+      };
+    extraOptions = "!include /etc/nix/secrets.conf"; # put a GitHub PAT here!
+  };
   # }}}
 
   # Packages {{{
