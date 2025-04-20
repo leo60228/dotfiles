@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   config,
   lib,
@@ -14,6 +16,16 @@
   ];
 
   config = {
+    services.power-profiles-daemon.enable = true;
+    services.hardware.bolt.enable = true;
+    services.udisks2.package = pkgs.leoPkgs.udisks2;
+
+    networking.networkmanager.wifi.backend = "iwd";
+
+    deployment.tags = [ "workstation" ];
+    deployment.allowLocalDeployment = true;
+
+    # Kernel {{{1
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [
       "nvme"
@@ -32,6 +44,7 @@
       options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
     '';
 
+    # Disks {{{1
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/41691e95-8ec6-45a9-8f0e-6a3c72fd6c70";
       fsType = "ext4";
@@ -50,18 +63,7 @@
 
     boot.initrd.luks.devices."lvm".device = "/dev/disk/by-uuid/32bfc36e-2640-4110-bc58-b93564acaafa";
 
-    services.power-profiles-daemon.enable = true;
-
-    console.earlySetup = true;
-    console.packages = [ pkgs.terminus_font ];
-    console.font = "ter-128n";
-
-    services.displayManager.sddm.wayland.enable = true;
-
-    security.pam.services.polkit-1.fprintAuth = true;
-    security.pam.services.polkit-1.rules.auth.fprintd.modulePath =
-      lib.mkForce "${pkgs.leoPkgs.pam-fprint-grosshack}/lib/security/pam_fprintd_grosshack.so";
-
+    # Boot {{{1
     boot.loader.systemd-boot.enable = lib.mkForce false;
 
     boot.lanzaboote = {
@@ -74,11 +76,14 @@
       pkgs.kdePackages.plasma-thunderbolt
     ];
 
-    services.hardware.bolt.enable = true;
-    services.udisks2.package = pkgs.leoPkgs.udisks2;
+    # HiDPI {{{1
+    console.earlySetup = true;
+    console.packages = [ pkgs.terminus_font ];
+    console.font = "ter-128n";
 
-    networking.networkmanager.wifi.backend = "iwd";
+    services.displayManager.sddm.wayland.enable = true;
 
+    # Sound {{{1
     hardware.framework.laptop13.audioEnhancement = {
       enable = true;
       rawDeviceName = "alsa_output.pci-0000_c1_00.6.analog-stereo-speaker";
@@ -106,8 +111,10 @@
     systemd.services.alsa-store.serviceConfig.ExecStart =
       lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
 
-    deployment.tags = [ "workstation" ];
-    deployment.allowLocalDeployment = true;
+    # Fingerprint {{{1
+    security.pam.services.polkit-1.fprintAuth = true;
+    security.pam.services.polkit-1.rules.auth.fprintd.modulePath =
+      lib.mkForce "${pkgs.leoPkgs.pam-fprint-grosshack}/lib/security/pam_fprintd_grosshack.so";
   };
 
   options.security.pam.services = lib.mkOption {
@@ -122,4 +129,5 @@
         )
       );
   };
+  # }}}
 }

@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   config,
   pkgs,
@@ -20,10 +22,18 @@ with import ../../components;
 
   hardware.bluetooth.enable = true;
 
+  networking.firewall.allowedTCPPorts = lib.range 3000 3010;
+  networking.firewall.allowedUDPPorts = lib.range 3000 3010;
+
+  boot.binfmt = {
+    emulatedSystems = [ "aarch64-linux" ];
+    preferStaticEmulators = true;
+    addEmulatedSystemsToNixSandbox = false;
+  };
+
+  # LXC {{{1
   users.extraUsers.leo60228 = {
     extraGroups = [
-      "wheel"
-      "docker"
       "lxc-user"
     ];
     createHome = false;
@@ -50,9 +60,6 @@ with import ../../components;
     ];
   };
 
-  networking.firewall.allowedTCPPorts = lib.range 3000 3010;
-  networking.firewall.allowedUDPPorts = lib.range 3000 3010;
-
   virtualisation.waydroid.enable = true;
 
   virtualisation.lxc = {
@@ -63,12 +70,7 @@ with import ../../components;
     '';
   };
 
-  boot.binfmt = {
-    emulatedSystems = [ "aarch64-linux" ];
-    preferStaticEmulators = true;
-    addEmulatedSystemsToNixSandbox = false;
-  };
-
+  # fwupd {{{1
   services.fwupd.enable = true;
   services.packagekit.enable = true;
   services.packagekit.settings.Daemon.DefaultBackend = "test_succeed";
@@ -84,4 +86,5 @@ with import ../../components;
       ApprovalRequired=false
     '';
   };
+  # }}}
 }
