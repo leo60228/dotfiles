@@ -7,7 +7,7 @@
 
 with import ../components;
 rec {
-  components = steam home { deviceScaleFactor = 2; } prometheus apcupsd {
+  components = steam home { deviceScaleFactor = 2; } apcupsd {
     timeout = 300;
     minutes = 15;
     batteryLevel = 50;
@@ -17,6 +17,7 @@ rec {
 
   vris.workstation = true;
   vris.graphical = true;
+  vris.prometheus = true;
 
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567

@@ -10,9 +10,10 @@
 
 {
   imports = [
+    ./cachix.nix
     ./workstation.nix
     ./graphical.nix
-    ./cachix.nix
+    ./prometheus.nix
 
     # dependencies
     flakes.home-manager.nixosModules.home-manager

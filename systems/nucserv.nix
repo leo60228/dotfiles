@@ -7,9 +7,11 @@
 
 with import ../components;
 rec {
-  components = home { small = true; } prometheus;
+  components = home { small = true; };
 
   system.stateVersion = "18.03";
+
+  vris.prometheus = true;
 
   users.extraUsers.minecraft = {
     isSystemUser = true;
