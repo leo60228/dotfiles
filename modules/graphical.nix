@@ -20,6 +20,7 @@
     services.xserver.enable = true;
     services.libinput.enable = true;
     programs.dconf.enable = true;
+    services.flatpak.enable = true;
     # }}}
 
     # Sound {{{
