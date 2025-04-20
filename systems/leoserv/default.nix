@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 { config, pkgs, ... }:
 
 with import ../../components;
@@ -7,9 +9,9 @@ with import ../../components;
   components = home { small = true; };
 
   system.stateVersion = "18.03";
-
   boot.enableContainers = false;
 
+  # Networking {{{1
   networking.firewall.allowedTCPPorts = [
     25565
     25575
@@ -32,8 +34,12 @@ with import ../../components;
     5353 # hass
   ];
 
-  users.extraUsers.leo60228.extraGroups = [ "wheel" ];
+  services.openssh.ports = [
+    22
+    5022
+  ];
 
+  # Minecraft {{{1
   users.users.minecraft = {
     home = "/var/lib/minecraft";
     group = "nogroup";
@@ -57,43 +63,21 @@ with import ../../components;
     };
   };
 
-  users.users.showdown = {
-    home = "/var/lib/pokemon-showdown";
-    group = "nogroup";
-    createHome = true;
-    isSystemUser = true;
-    useDefaultShell = true;
-  };
+  security.polkit.enable = true;
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "minecraft" &&
+          action.id == "org.freedesktop.systemd1.manage-units") {
+        var unit = action.lookup("unit");
+        if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
+          return polkit.Result.YES;
+      }
+    });
+  '';
 
-  #systemd.services.pokemon-showdown = {
-  #  after = [ "network-online.target" ];
-  #  wants = [ "network-online.target" ];
-  #  wantedBy = [ "multi-user.target" ];
-  #  script = "./pokemon-showdown";
-  #  path = with pkgs; [ nodejs ];
-  #  serviceConfig = {
-  #    User = "showdown";
-  #    WorkingDirectory = "/var/lib/pokemon-showdown";
-  #    Restart = "always";
-  #    RestartSec = 5;
-  #    AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-  #  };
-  #};
-
-  #services.cloudflared = {
-  #  enable = true;
-  #  tunnels = {
-  #    "e6eaa4f6-af36-4acf-be20-17c48c209744" = {
-  #      credentialsFile = "/var/lib/cloudflared/e6eaa4f6-af36-4acf-be20-17c48c209744.json";
-  #      default = "http_status:404";
-  #      ingress."showdown.l3.pm" = "http://127.0.0.1:80";
-  #    };
-  #    "9c84d720-4fcf-46d5-a8b9-204a2e843f02" = {
-  #      credentialsFile = "/var/lib/cloudflared/9c84d720-4fcf-46d5-a8b9-204a2e843f02.json";
-  #      default = "unix:/var/run/nginx.sock";
-  #    };
-  #  };
-  #};
+  # Nginx {{{1
+  security.acme.defaults.email = "leo@60228.dev";
+  security.acme.acceptTerms = true;
 
   services.nginx = {
     enable = true;
@@ -114,93 +98,14 @@ with import ../../components;
     };
   };
 
-  security.acme.defaults.email = "leo@60228.dev";
-  security.acme.acceptTerms = true;
-
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_14;
-    ensureDatabases = [ "showdown" ];
-    authentication = pkgs.lib.mkOverride 10 ''
-      #type database  DBuser  auth-method
-      local all       all     trust
-    '';
-  };
-
-  #systemd.services.serversync = {
-  #  after = [ "network-online.target" ];
-  #  wants = [ "network-online.target" ];
-  #  wantedBy = [ "multi-user.target" ];
-  #  script = "java -jar serversync-3.6.0-all.jar --server";
-  #  path = with pkgs; [ jre_headless ];
-  #  serviceConfig = {
-  #    User = "minecraft";
-  #    WorkingDirectory = "/var/lib/minecraft";
-  #  };
-  #};
-
+  # Inadyn {{{1
   systemd.services.inadyn = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     script = "${pkgs.inadyn}/bin/inadyn --foreground --syslog -f /root/inadyn.conf";
   };
 
-  networking.dhcpcd.extraConfig = ''
-    static domain_name_servers=100.100.100.100 79.110.170.43 1.1.1.1 1.0.0.1
-    static domain_search=60228.dev.beta.tailscale.net
-  '';
-
-  #services.borgbackup.jobs."leoserv-modfest" = {
-  #  paths = [ "/var/lib/minecraft" ];
-  #  repo = "de3482s2@de3482.rsync.net:leoserv-modfest";
-  #  encryption = {
-  #    mode = "repokey-blake2";
-  #    passCommand = "cat /root/borgbackup/passphrase";
-  #  };
-  #  environment.BORG_RSH = "ssh -i /root/borgbackup/ssh_key";
-  #  environment.BORG_REMOTE_PATH = "borg1";
-  #  compression = "auto,lzma";
-  #  startAt = "hourly";
-  #  prune.keep = {
-  #    within = "1d";
-  #    daily = 7;
-  #    weekly = 4;
-  #    monthly = -1;
-  #  };
-  #};
-
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (subject.user == "minecraft" &&
-          action.id == "org.freedesktop.systemd1.manage-units") {
-        var unit = action.lookup("unit");
-        if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
-          return polkit.Result.YES;
-      }
-    });
-  '';
-
-  services.openssh = {
-    ports = [
-      22
-      5022
-    ];
-    settings = {
-      KbdInteractiveAuthentication = false;
-      PasswordAuthentication = false;
-    };
-  };
-
-  virtualisation.oci-containers.containers.actual = {
-    pull = "newer";
-    ports = [ "127.0.0.1:5006:5006" ];
-    volumes = [ "actual:/data" ];
-    image = "ghcr.io/actualbudget/actual:latest-alpine";
-    extraOptions = [ "--tz=local" ];
-  };
-
-  # apcupsd
+  # apcupsd {{{1
   services.apcupsd = {
     enable = true;
     configText = ''
@@ -224,7 +129,7 @@ with import ../../components;
     upsmon.settings.MINSUPPLIES = 0;
   };
 
-  # mqtt
+  # mqtt {{{1
   services.mosquitto = {
     enable = true;
     listeners = [
@@ -241,7 +146,7 @@ with import ../../components;
     ];
   };
 
-  # unifi
+  # Unifi {{{1
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi8;
@@ -249,7 +154,7 @@ with import ../../components;
     openFirewall = true;
   };
 
-  # znc
+  # ZNC {{{1
   services.znc = {
     enable = true;
     mutable = true;
@@ -257,7 +162,7 @@ with import ../../components;
     openFirewall = true;
   };
 
-  # hass
+  # hass {{{1
   virtualisation.oci-containers.backend = "podman";
   virtualisation.oci-containers.containers.homeassistant = {
     volumes = [ "home-assistant:/config" ];
@@ -281,4 +186,14 @@ with import ../../components;
       groups = "groups.yaml";
     };
   };
+
+  # Actual {{{1
+  virtualisation.oci-containers.containers.actual = {
+    pull = "newer";
+    ports = [ "127.0.0.1:5006:5006" ];
+    volumes = [ "actual:/data" ];
+    image = "ghcr.io/actualbudget/actual:latest-alpine";
+    extraOptions = [ "--tz=local" ];
+  };
+  # }}}
 }
