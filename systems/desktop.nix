@@ -13,7 +13,6 @@ rec {
     efi en_us est extra { graalvm = true; } gui kde steam docker home { deviceScaleFactor = 2; } kvm
       flatpak
       prometheus
-      fcitx5
       apcupsd
       {
         timeout = 300;
