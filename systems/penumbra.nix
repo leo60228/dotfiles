@@ -7,7 +7,7 @@
 
 with import ../components;
 {
-  components = steam extra home {
+  components = steam home {
     deviceScaleFactor = 2;
   } tailscale;
 
