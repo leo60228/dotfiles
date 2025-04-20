@@ -56,20 +56,6 @@ rec {
 
   networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
 
-  security.pam.services.sshd.unixAuth = lib.mkForce true;
-
-  services.openssh = {
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-    extraConfig = ''
-      Match Address 10.4.13.0/24,100.64.0.0/10,fd7a:115c:a1e0:ab12::/64
-      	PasswordAuthentication yes
-      	ChallengeResponseAuthentication yes
-    '';
-  };
-
   boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
 
   services.hydra-dev = {
