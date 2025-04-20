@@ -11,6 +11,7 @@
 {
   imports = [
     ./workstation.nix
+    ./graphical.nix
     ./cachix.nix
 
     # dependencies

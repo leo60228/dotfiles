@@ -10,9 +10,7 @@
 with import ../components;
 rec {
   components =
-    efi en_us extra { graalvm = true; } gui kde steam docker home { deviceScaleFactor = 2; } kvm flatpak
-      prometheus
-      apcupsd
+    efi en_us extra gui kde steam docker home { deviceScaleFactor = 2; } kvm flatpak prometheus apcupsd
       {
         timeout = 300;
         minutes = 15;

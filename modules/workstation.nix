@@ -60,21 +60,6 @@
     programs.fuse.userAllowOther = true;
     programs.command-not-found.dbPath =
       flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
-
-    security.pam.loginLimits = [
-      {
-        domain = "@wheel";
-        type = "-";
-        item = "rtprio";
-        value = "95";
-      }
-      {
-        domain = "@wheel";
-        type = "-";
-        item = "memlock";
-        value = "unlimited";
-      }
-    ];
     # }}}
 
     # Debuggers {{{
