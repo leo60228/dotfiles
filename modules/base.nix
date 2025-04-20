@@ -14,6 +14,7 @@
     ./workstation.nix
     ./graphical.nix
     ./prometheus.nix
+    ./apcupsd.nix
 
     # dependencies
     flakes.home-manager.nixosModules.home-manager

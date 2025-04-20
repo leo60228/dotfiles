@@ -7,17 +7,19 @@
 
 with import ../components;
 rec {
-  components = steam home { deviceScaleFactor = 2; } apcupsd {
-    timeout = 300;
-    minutes = 15;
-    batteryLevel = 50;
-  };
+  components = steam home { deviceScaleFactor = 2; };
 
   system.stateVersion = "18.03";
 
   vris.workstation = true;
   vris.graphical = true;
   vris.prometheus = true;
+  vris.apcupsd = {
+    enable = true;
+    timeout = 300;
+    minutes = 15;
+    batteryLevel = 50;
+  };
 
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
