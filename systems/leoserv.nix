@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale znc hass;
+  components = efi en_us est home { small = true; } tailscale hass;
 
   boot.enableContainers = false;
 
@@ -228,6 +228,14 @@ with import ../components;
     enable = true;
     unifiPackage = pkgs.unifi8;
     mongodbPackage = pkgs.mongodb-6_0;
+    openFirewall = true;
+  };
+
+  # znc
+  services.znc = {
+    enable = true;
+    mutable = true;
+    useLegacyConfig = false;
     openFirewall = true;
   };
 }
