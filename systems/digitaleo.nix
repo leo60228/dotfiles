@@ -6,7 +6,7 @@
 }:
 with import ../components;
 rec {
-  components = server reverseproxy { host = "digitaleo"; };
+  components = reverseproxy { host = "digitaleo"; };
 
   system.stateVersion = "18.03";
 

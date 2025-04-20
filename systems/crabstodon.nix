@@ -6,8 +6,6 @@
 }:
 with import ../components;
 rec {
-  components = server;
-
   system.stateVersion = "18.03";
 
   networking.firewall.allowedTCPPorts = [

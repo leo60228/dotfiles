@@ -37,6 +37,7 @@
     settings = {
       X11Forwarding = true;
       StreamLocalBindUnlink = true;
+      GatewayPorts = "yes";
     };
   };
 
