@@ -19,7 +19,7 @@ rec {
     5601
   ];
 
-  # Mastodon {{{
+  # Mastodon {{{1
   services.mastodon = {
     enable = true;
     package = pkgs.leoPkgs.crabstodon;
@@ -66,9 +66,8 @@ rec {
   '';
 
   services.postgresql.package = pkgs.postgresql_14;
-  # }}}
 
-  # Elasticsearch {{{
+  # Elasticsearch {{{1
   services.elasticsearch = {
     enable = true;
     package = pkgs.elasticsearch7;
@@ -91,9 +90,8 @@ rec {
       sleep 1
     done
   '';
-  # }}}
 
-  # Nginx {{{
+  # Nginx {{{1
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;

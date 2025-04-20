@@ -11,7 +11,7 @@
 
   nix.settings.max-jobs = lib.mkDefault 24;
 
-  # Kernel {{{
+  # Kernel {{{1
   boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.initrd.includeDefaultModules = false;
   boot.initrd.availableKernelModules = [
@@ -54,16 +54,14 @@
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
-  # }}}
 
-  # Boot {{{
+  # Boot {{{1
   boot.loader.systemd-boot = {
     enable = true;
     memtest86.enable = true;
   };
-  # }}}
 
-  # Disks {{{
+  # Disks {{{1
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
     fsType = "ext4";
@@ -75,9 +73,8 @@
   };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/13e11580-45e0-4d16-a67e-27abf1277788"; } ];
-  # }}}
 
-  # Graphics {{{
+  # Graphics {{{1
   environment.systemPackages = with pkgs; [
     vulkan-loader
     vulkan-tools
@@ -99,9 +96,8 @@
   '';
 
   hardware.nvidia-container-toolkit.enable = true;
-  # }}}
 
-  # HiDPI {{{
+  # HiDPI {{{1
   services.xserver.displayManager.xserverArgs = [ "-dpi 157" ];
   console.earlySetup = true;
   console.packages = [ pkgs.terminus_font ];
@@ -125,9 +121,8 @@
   services.xserver.displayManager.setupCommands = ''
     echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
   '';
-  # }}}
 
-  # Sound {{{
+  # Sound {{{1
   services.udev.extraRules = ''
     SUBSYSTEM!="sound", GOTO="pipewire_end"
     ACTION!="change", GOTO="pipewire_end"
@@ -137,9 +132,8 @@
 
     LABEL="pipewire_end"
   '';
-  # }}}
 
-  # Workarounds {{{
+  # Workarounds {{{1
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.rngd.conflicts = [ "shutdown.target" ];
   systemd.services.rngd.before = [

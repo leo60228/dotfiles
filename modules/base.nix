@@ -27,7 +27,7 @@
   ];
   disabledModules = [ "services/web-apps/mastodon.nix" ];
 
-  # SSH {{{
+  # SSH {{{1
   services.openssh = {
     enable = true;
 
@@ -56,9 +56,8 @@
       keys = builtins.filter (x: x != "") split;
     in
     keys;
-  # }}}
 
-  # Users {{{
+  # Users {{{1
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
@@ -74,9 +73,8 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
-  # }}}
 
-  # Nixpkgs {{{
+  # Nixpkgs {{{1
   nixpkgs = {
     overlays =
       [ flakes.hydra.overlays.default ]
@@ -99,9 +97,8 @@
       ];
     };
   };
-  # }}}
 
-  # Nix {{{
+  # Nix {{{1
   nix = {
     settings =
       let
@@ -132,9 +129,8 @@
       };
     extraOptions = "!include /etc/nix/secrets.conf"; # put a GitHub PAT here!
   };
-  # }}}
 
-  # Packages {{{
+  # Packages {{{1
   environment.systemPackages = with pkgs; [
     openssh
     git
@@ -144,9 +140,8 @@
   boot.initrd.extraUtilsCommands = ''
     copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
   '';
-  # }}}
 
-  # Kernel {{{
+  # Kernel {{{1
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
   services.udev.extraRules = ''
@@ -173,27 +168,24 @@
       cp -vt $out/etc/udev/rules.d ${../files/51-ftd3xx.rules} ${../files/80-m1n1.rules} ${../files/mchp-udev}/*
     '')
   ];
-  # }}}
 
-  # Filesystems {{{
+  # Filesystems {{{1
   boot.tmp.useTmpfs = true;
 
   # increase inotify limits (per upstream recommendation, see kernel commits
   # 92890123749bafc317bbfacbe0a62ce08d78efb7 and ac7b79fd190b02e7151bc7d2b9da692f537657f3)
   boot.kernel.sysctl."fs.inotify.max_user_instances" = 2147483647;
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 1048576;
-  # }}}
 
-  # Internationalization {{{
+  # Internationalization {{{1
   console = {
     font = lib.mkDefault "Lat2-Terminus16";
     keyMap = "us";
   };
 
   time.timeZone = "America/New_York";
-  # }}}
 
-  # Tailscale {{{
+  # Tailscale {{{1
   services.tailscale.enable = true;
   networking.firewall.trustedInterfaces = [ "tailscale0" ]; # tailscale has its own firewall, and default-deny on tailscale0 causes breakage
   networking.firewall.checkReversePath = "loose";

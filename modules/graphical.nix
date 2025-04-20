@@ -16,14 +16,13 @@
   };
 
   config = lib.mkIf config.vris.graphical {
-    # Core {{{
+    # Core {{{1
     services.xserver.enable = true;
     services.libinput.enable = true;
     programs.dconf.enable = true;
     services.flatpak.enable = true;
-    # }}}
 
-    # Sound {{{
+    # Sound {{{1
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -32,9 +31,8 @@
       jack.enable = true;
     };
     systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR = ../files/profile-sets;
-    # }}}
 
-    # Fonts {{{
+    # Fonts {{{1
     fonts.enableDefaultPackages = false;
     fonts.packages = with pkgs; [
       dejavu_fonts
@@ -48,9 +46,8 @@
       corefonts
     ];
     fonts.fontconfig.cache32Bit = true;
-    # }}}
 
-    # mpd {{{
+    # mpd {{{1
     services.mpd = {
       enable = true;
       startWhenNeeded = true;
@@ -87,9 +84,8 @@
         value = "unlimited";
       }
     ];
-    # }}}
 
-    # KDE {{{
+    # KDE {{{1
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm = {
       enable = true;

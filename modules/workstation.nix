@@ -24,7 +24,7 @@
       }
     ];
 
-    # Packages {{{
+    # Packages {{{1
     hardware.enableAllFirmware = true;
     services.pcscd.enable = true;
     programs.java.enable = true;
@@ -54,9 +54,8 @@
         patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
       }))
     ];
-    # }}}
 
-    # Avahi {{{
+    # Avahi {{{1
     services.avahi = {
       enable = true;
       allowPointToPoint = true;
@@ -67,9 +66,8 @@
         addresses = true;
       };
     };
-    # }}}
 
-    # Printing {{{
+    # Printing {{{1
     services.printing = {
       enable = true;
       drivers = [
@@ -82,23 +80,20 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
-    # }}}
 
-    # Configuration {{{
+    # Configuration {{{1
     programs.fuse.userAllowOther = true;
     programs.command-not-found.dbPath =
       flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
-    # }}}
 
-    # Debuggers {{{
+    # Debuggers {{{1
     services.udev.packages = [
       pkgs.android-udev-rules
       pkgs.platformio-core
       pkgs.openocd
     ];
-    # }}}
 
-    # KVM {{{
+    # KVM {{{1
     virtualisation.libvirtd = {
       enable = true;
       onBoot = "ignore";
@@ -116,17 +111,15 @@
       kmod
       swtpm
     ];
-    # }}}
 
-    # Docker {{{
+    # Docker {{{1
     virtualisation.docker = {
       enable = true;
       enableOnBoot = false;
       extraOptions = "--experimental";
     };
-    # }}}
 
-    # Nix {{{
+    # Nix {{{1
     nix.distributedBuilds = true;
     nix.buildMachines = [
       {
@@ -141,9 +134,8 @@
       }
     ];
     nix.settings.builders-use-substitutes = true;
-    # }}}
 
-    # Steam {{{
+    # Steam {{{1
     hardware.graphics.enable32Bit = true;
     services.pipewire.alsa.support32Bit = true;
     hardware.steam-hardware.enable = true;

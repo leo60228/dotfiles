@@ -17,7 +17,7 @@ rec {
   system.stateVersion = "18.03";
   boot.enableContainers = false;
 
-  # Nginx {{{
+  # Nginx {{{1
   security.acme = {
     defaults.email = "leo@60228.dev";
     acceptTerms = true;
@@ -37,9 +37,8 @@ rec {
                       '"$http_referer" "$http_user_agent"';
     '';
   };
-  # }}}
 
-  # Networking {{{
+  # Networking {{{1
   networking.firewall = {
     allowedTCPPorts = [
       24872
@@ -55,9 +54,8 @@ rec {
     ];
     allowPing = true;
   };
-  # }}}
 
-  # Miscellaneous Services {{{
+  # Miscellaneous Services {{{1
   # minecraft-server-forwarder {{{2
   systemd.services.minecraft-server-forwarder = {
     wantedBy = [ "multi-user.target" ];
@@ -89,9 +87,8 @@ rec {
     };
     script = "${pkgs.upd8r}/bin/upd8r";
   };
-  # }}}1
 
-  # Searchdown {{{
+  # Searchdown {{{1
   virtualisation.oci-containers = {
     backend = "podman";
     containers = {
@@ -113,9 +110,8 @@ rec {
       Unit = "podman-auto-update.service";
     };
   };
-  # }}}
 
-  # Reposilite {{{
+  # Reposilite {{{1
   systemd.services.reposilite = {
     wantedBy = [ "multi-user.target" ];
 

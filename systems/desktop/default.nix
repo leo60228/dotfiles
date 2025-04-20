@@ -26,7 +26,7 @@ rec {
 
   boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
 
-  # Networking {{{
+  # Networking {{{1
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
     34568
@@ -59,9 +59,8 @@ rec {
   ];
 
   services.tailscale.useRoutingFeatures = "both";
-  # }}}
 
-  # Hydra {{{
+  # Hydra {{{1
   services.hydra-dev = {
     enable = true;
     package = pkgs.hydra;
@@ -87,9 +86,8 @@ rec {
 
   services.postgresql.package = pkgs.postgresql_16;
   services.postgresql.settings.max_connections = 200;
-  # }}}
 
-  # Kodi {{{
+  # Kodi {{{1
   services.nfs.server = {
     enable = true;
     exports = ''
