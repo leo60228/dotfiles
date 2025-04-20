@@ -1,4 +1,3 @@
-# includes = ../rawConfig.nix:../hardware/aws.nix:../components/{mailserver,en_us,est,docker,extra,shellinabox,server,gui,reverseproxy,home}.nix
 { config, pkgs, ... }:
 with import ../components;
 rec {

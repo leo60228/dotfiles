@@ -1,4 +1,3 @@
-# includes = ../modules/componentBase.nix
 let
   lib = import ./.;
 in
