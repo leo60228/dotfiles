@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale znc hass unifi apcupsd-server mqtt;
+  components = efi en_us est home { small = true; } tailscale znc hass unifi mqtt;
 
   boot.enableContainers = false;
 
@@ -13,6 +13,7 @@ with import ../components;
     8443
     80
     443
+    3551 # apcupsd
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -189,5 +190,18 @@ with import ../components;
     volumes = [ "actual:/data" ];
     image = "ghcr.io/actualbudget/actual:latest-alpine";
     extraOptions = [ "--tz=local" ];
+  };
+
+  # apcupsd
+  services.apcupsd = {
+    enable = true;
+    configText = ''
+      UPSCABLE usb
+      UPSTYPE usb
+      DEVICE
+      UPSCLASS standalone
+      UPSMODE disable
+      NETSERVER on
+    '';
   };
 }
