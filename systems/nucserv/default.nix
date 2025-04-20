@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   config,
   pkgs,
@@ -15,6 +17,27 @@ rec {
 
   vris.prometheus = true;
 
+  # Networking {{{1
+  networking.firewall.allowedTCPPorts = [
+    41300
+    9516
+    9225
+    8096
+    8920
+    80
+    443
+    4001
+    25567
+  ];
+  networking.firewall.allowedUDPPorts = [
+    41300
+    19132
+    1900
+    7359
+    4001
+  ];
+
+  # Minecraft {{{1
   users.extraUsers.minecraft = {
     isSystemUser = true;
     createHome = true;
@@ -76,27 +99,6 @@ rec {
     restartIfChanged = false;
   };
 
-  networking.firewall.allowedTCPPorts = [
-    41300
-    9516
-    9225
-    8096
-    8920
-    80
-    443
-    4001
-    25567
-  ];
-  networking.firewall.allowedUDPPorts = [
-    41300
-    19132
-    1900
-    7359
-    4001
-  ];
-
-  services.openssh.settings.PasswordAuthentication = false;
-
   security.polkit.enable = true;
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
@@ -107,6 +109,5 @@ rec {
         }
     });
   '';
-
-  networking.hostName = "nucserv";
+  # }}}
 }
