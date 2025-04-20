@@ -6,6 +6,8 @@
 }:
 with import ../../components;
 rec {
+  imports = [ ./hardware.nix ];
+
   components = reverseproxy { host = "digitaleo"; };
 
   system.stateVersion = "18.03";

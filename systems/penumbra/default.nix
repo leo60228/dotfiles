@@ -7,6 +7,8 @@
 
 with import ../../components;
 {
+  imports = [ ./hardware.nix ];
+
   components = home {
     deviceScaleFactor = 2;
   };

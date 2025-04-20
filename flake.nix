@@ -104,7 +104,18 @@
           let
             dotfiles = import ./. null;
             lib = import ./lib;
-            systems = nixpkgs.lib.mapAttrs (n: x: lib.getSystemConfig false n) (builtins.readDir ./systems);
+            systems = nixpkgs.lib.mapAttrs (
+              n: x:
+              { ... }:
+              {
+                imports = [
+                  ./modules/base.nix
+                  (./systems + "/${n}")
+                ];
+
+                networking.hostName = n;
+              }
+            ) (builtins.readDir ./systems);
             meta = {
               nixpkgs = nixpkgs.legacyPackages.x86_64-linux;
 

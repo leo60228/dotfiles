@@ -6,6 +6,8 @@
 }:
 with import ../../components;
 rec {
+  imports = [ ./hardware.nix ];
+
   system.stateVersion = "18.03";
 
   networking.firewall.allowedTCPPorts = [

@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 with import ../../components;
 rec {
+  imports = [ ./hardware.nix ];
+
   components = reverseproxy { host = "aws"; };
 
   system.stateVersion = "18.03";

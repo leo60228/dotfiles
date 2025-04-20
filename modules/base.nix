@@ -11,6 +11,7 @@
 {
   imports = [
     ./cachix.nix
+    ./componentBase.nix
     ./workstation.nix
     ./graphical.nix
     ./prometheus.nix

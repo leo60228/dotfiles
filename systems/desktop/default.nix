@@ -7,6 +7,8 @@
 
 with import ../../components;
 rec {
+  imports = [ ./hardware.nix ];
+
   components = home { deviceScaleFactor = 2; };
 
   system.stateVersion = "18.03";

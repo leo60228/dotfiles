@@ -1,1 +1,0 @@
-path: (import path).nixos
