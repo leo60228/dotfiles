@@ -25,6 +25,27 @@
     programs.bash.completion.enable = true;
     programs.nix-ld.enable = true;
     boot.supportedFilesystems = [ "ntfs" ];
+
+    environment.systemPackages =
+      [
+        pkgs.androidenv.androidPkgs.platform-tools
+        pkgs.openocd
+      ]
+      ++ lib.optionals config.vris.graphical [
+        pkgs.kdePackages.sddm-kcm
+        pkgs.kdePackages.audiocd-kio
+        pkgs.kdePackages.skanpage
+        pkgs.kdePackages.isoimagewriter
+        pkgs.kdePackages.krdc
+        pkgs.kdePackages.neochat
+        pkgs.kdePackages.konversation
+        pkgs.kdePackages.discover
+        pkgs.kdePackages.partitionmanager
+        pkgs.kdePackages.kclock
+        (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
+          patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
+        }))
+      ];
     # }}}
 
     # Avahi {{{
@@ -66,11 +87,6 @@
     services.udev.packages = [
       pkgs.android-udev-rules
       pkgs.platformio-core
-      pkgs.openocd
-    ];
-
-    environment.systemPackages = [
-      pkgs.androidenv.androidPkgs.platform-tools
       pkgs.openocd
     ];
     # }}}
