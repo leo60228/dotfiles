@@ -38,6 +38,14 @@
     leoPkgs.bin
   ];
 
+  programs.git = {
+    enable = true;
+    userName = "leo60228";
+    userEmail = "leo@60228.dev";
+    extraConfig.init.defaultBranch = "main";
+    extraConfig.hub.protocol = "ssh";
+  };
+
   programs.home-manager.enable = true;
 
   systemd.user.startServices = true;
