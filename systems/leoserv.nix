@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale znc hass unifi mqtt;
+  components = efi en_us est home { small = true; } tailscale znc hass unifi;
 
   boot.enableContainers = false;
 
@@ -14,6 +14,7 @@ with import ../components;
     80
     443
     3551 # apcupsd
+    1883 # mqtt
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -203,5 +204,22 @@ with import ../components;
       UPSMODE disable
       NETSERVER on
     '';
+  };
+
+  # mqtt
+  services.mosquitto = {
+    enable = true;
+    listeners = [
+      {
+        address = "0.0.0.0";
+        settings.allow_anonymous = true;
+        omitPasswordAuth = true;
+        acl = [
+          "topic readwrite #"
+          "user DVES_USER"
+          "topic readwrite #"
+        ];
+      }
+    ];
   };
 }
