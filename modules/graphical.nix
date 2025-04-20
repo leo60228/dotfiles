@@ -87,5 +87,45 @@
       }
     ];
     # }}}
+
+    # KDE {{{
+    services.desktopManager.plasma6.enable = true;
+    services.displayManager.sddm = {
+      enable = true;
+      enableHidpi = true;
+      theme = "breeze-user";
+    };
+
+    environment.systemPackages = [
+      pkgs.kdePackages.sddm-kcm
+      pkgs.kdePackages.breeze-icons
+
+      pkgs.exfatprogs
+      pkgs.leoPkgs.sddm-theme-breeze-user
+    ] ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
+
+    qt = {
+      enable = true;
+      platformTheme = "kde";
+    };
+
+    xdg = {
+      icons.enable = true;
+      portal = {
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+        xdgOpenUsePortal = true;
+      };
+    };
+
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      MOZ_DISABLE_RDD_SANDBOX = "1";
+      QT_LOGGING_RULES = "*.debug=false";
+
+      GTK_USE_PORTAL = 1;
+      GDK_DEBUG = "portals";
+      PLASMA_INTEGRATION_USE_PORTAL = 1;
+    };
+    # }}}
   };
 }
