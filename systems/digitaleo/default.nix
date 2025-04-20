@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   pkgs,
   lib,
@@ -8,11 +10,36 @@ with import ../../components;
 rec {
   imports = [
     ./hardware.nix
-    ./reverseproxy.nix
+    ./prometheus.nix
+    ./mediawiki.nix
   ];
 
   system.stateVersion = "18.03";
+  boot.enableContainers = false;
 
+  # Nginx {{{
+  security.acme = {
+    defaults.email = "leo@60228.dev";
+    acceptTerms = true;
+  };
+
+  services.nginx = {
+    enable = true;
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
+    clientMaxBodySize = "50m";
+    commonHttpConfig = ''
+      ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp521r1:secp384r1;
+      log_format full '$remote_addr - $remote_user [$time_local] '
+                      '"$request" $status $bytes_sent '
+                      '"$http_referer" "$http_user_agent"';
+    '';
+  };
+  # }}}
+
+  # Networking {{{
   networking.firewall = {
     allowedTCPPorts = [
       24872
@@ -28,75 +55,10 @@ rec {
     ];
     allowPing = true;
   };
+  # }}}
 
-  services.prometheus = {
-    enable = true;
-    listenAddress = "127.0.0.1";
-    port = 9090;
-    scrapeConfigs = [
-      {
-        job_name = "prometheus";
-        static_configs = [ { targets = [ "100.84.68.17:9090" ]; } ];
-      }
-      {
-        job_name = "prometheus-host";
-        static_configs = [ { targets = [ "localhost:9100" ]; } ];
-      }
-      {
-        job_name = "minecraft-ping";
-        scrape_interval = "5s";
-        static_configs = [ { targets = [ "localhost:9427" ]; } ];
-      }
-      {
-        job_name = "desktop";
-        static_configs = [ { targets = [ "100.70.195.127:9100" ]; } ];
-      }
-      {
-        job_name = "apcupsd";
-        static_configs = [ { targets = [ "100.70.195.127:9162" ]; } ];
-      }
-      {
-        job_name = "nucserv";
-        static_configs = [ { targets = [ "100.98.216.28:9100" ]; } ];
-      }
-      {
-        job_name = "internet";
-        metrics_path = "/probe";
-        scrape_interval = "5m";
-        scrape_timeout = "45s";
-        static_configs = [ { targets = [ "100.98.216.28:9516" ]; } ];
-      }
-      {
-        job_name = "minecraft";
-        static_configs = [ { targets = [ "100.98.216.28:9225" ]; } ];
-      }
-    ];
-    exporters = {
-      node = {
-        enable = true;
-      };
-      ping = {
-        enable = true;
-        settings.targets = [ "mc.vsix.dev" ];
-      };
-    };
-  };
-
-  services.grafana = {
-    enable = true;
-    settings.server.http_addr = "0.0.0.0";
-    settings.server.domain = "grafana.leo60228.space";
-    settings.server.protocol = "http";
-    settings.security.admin_user = "leo60228";
-    settings.security.admin_password = "$__file{/var/lib/grafana/grafana-password.txt}";
-    settings."auth.anonymous".enabled = true;
-  };
-
-  systemd.services.grafana.serviceConfig.AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
-
-  security.acme.defaults.email = "leo@60228.dev";
-  security.acme.acceptTerms = true;
-
+  # Miscellaneous Services {{{
+  # minecraft-server-forwarder {{{2
   systemd.services.minecraft-server-forwarder = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -106,6 +68,7 @@ rec {
     script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:100.115.35.128:25565";
   };
 
+  # fizz-strat {{{2
   systemd.services.fizz-strat = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -116,16 +79,7 @@ rec {
     script = "${pkgs.fizz-strat}/bin/fizz-strat";
   };
 
-  systemd.services.searchdown = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    serviceConfig = {
-      Restart = "on-failure";
-      WorkingDirectory = "/var/lib/searchdown";
-    };
-    script = "${pkgs.nodejs_20}/bin/node dist/discord.js";
-  };
-
+  # upd8r {{{2
   systemd.services.upd8r = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -135,107 +89,9 @@ rec {
     };
     script = "${pkgs.upd8r}/bin/upd8r";
   };
+  # }}}1
 
-  services.mediawiki = {
-    enable = true;
-    package = pkgs.nur.repos.ihaveamac.mediawiki_1_43;
-    name = "CHORDIOID Wiki";
-    url = "https://chordiwiki.l3.pm";
-    passwordFile = "/var/lib/mediawiki/mw-password";
-    passwordSender = "chordiwiki@60228.dev";
-    webserver = "nginx";
-    nginx.hostName = "chordiwiki.l3.pm";
-
-    skins.MinervaNeue = "${config.services.mediawiki.package}/share/mediawiki/skins/MinervaNeue";
-
-    extensions = {
-      inherit (pkgs.leoPkgs.mediawiki-extensions)
-        CodeMirror
-        MobileFrontend
-        OpenGraphMeta
-        TimedMediaHandler
-        Description2
-        PortableInfobox
-        ;
-
-      WikiEditor = null;
-      VisualEditor = null;
-      Cite = null;
-      AbuseFilter = null;
-      PageImages = null;
-      ConfirmEdit = null;
-      Interwiki = null;
-      TemplateData = null;
-      CodeEditor = null;
-    };
-
-    extraConfig = ''
-      wfLoadExtension("ConfirmEdit/QuestyCaptcha");
-      $wgCaptchaQuestions = [
-        "Who is the main protagonist of CHORDIOID?" => ["Sam", "Sam Mardot"],
-        "What genre is CHORDIOID?" => ["Rhythm", "RPG", "Rhythm RPG"],
-        "Where does CHORDIOID take place?" => ["Concordia", "Capital", "the Capital"]
-      ];
-
-      $wgLogos = [
-        '1x' => "https://chordiwiki.l3.pm/chordiwiki-1x.png",
-        '1.5x' => "https://chordiwiki.l3.pm/chordiwiki-1.5x.png",
-        '2x' => "https://chordiwiki.l3.pm/chordiwiki-2x.png",
-        'icon' => "https://chordiwiki.l3.pm/chordiwiki-icon.png"
-      ];
-
-      $wgRightsText = "Creative Commons Attribution-ShareAlike";
-      $wgRightsUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
-      $wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by-sa.png";
-
-      $wgUsePathInfo = true;
-
-      $wgSMTP = [
-        "host" => "smtp-relay.gmail.com",
-        "IDHost" => "60228.dev",
-        "localhost" => "60228.dev",
-        "port" => 587,
-        "auth" => false
-      ];
-
-      $wgMainCacheType = CACHE_ACCEL;
-      $wgSessionCacheType = CACHE_DB;
-
-      $wgFFmpegLocation = "${pkgs.ffmpeg-headless}/bin/ffmepg";
-
-      $wgEnableMetaDescriptionFunctions = true;
-
-      $wgDefaultMobileSkin = "minerva";
-
-      $wgMinervaNightMode['base'] = true;
-      $wgVectorNightMode['logged_in'] = true;
-      $wgVectorNightMode['logged_out'] = true;
-      $wgDefaultUserOptions['vector-theme'] = 'os';
-      $wgDefaultUserOptions['minerva-theme'] = 'os';
-
-      $wgUseCdn = true;
-
-      $wgCodeMirrorV6 = true;
-      $wgDefaultUserOptions['usecodemirror'] = 1;
-      $wgVisualEditorEnableWikitext = true;
-
-      $wgGroupPermissions['sysop']['interwiki'] = true;
-    '';
-  };
-  services.phpfpm.pools.mediawiki.phpPackage = lib.mkForce (
-    pkgs.php82.buildEnv {
-      extensions =
-        { enabled, all }:
-        enabled
-        ++ [
-          all.opcache
-          all.apcu
-          all.igbinary
-        ];
-    }
-  );
-  users.users.nginx.extraGroups = [ "mediawiki" ];
-
+  # Searchdown {{{
   virtualisation.oci-containers = {
     backend = "podman";
     containers = {
@@ -257,8 +113,9 @@ rec {
       Unit = "podman-auto-update.service";
     };
   };
+  # }}}
 
-  # reposilite
+  # Reposilite {{{
   systemd.services.reposilite = {
     wantedBy = [ "multi-user.target" ];
 
@@ -274,4 +131,14 @@ rec {
       WorkingDirectory = "/var/lib/reposilite";
     };
   };
+
+  services.nginx.virtualHosts."maven.vriska.dev" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://localhost:8080";
+      proxyWebsockets = true;
+    };
+  };
+  # }}}
 }
