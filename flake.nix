@@ -87,6 +87,10 @@
     url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake = false;
   };
+  inputs.mobile-nixos = {
+    url = "github:mobile-nixos/mobile-nixos";
+    flake = false;
+  };
 
   outputs =
     {

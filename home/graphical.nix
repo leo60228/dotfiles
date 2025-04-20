@@ -7,29 +7,33 @@
 }:
 
 lib.mkIf osConfig.vris.graphical {
-  home.packages = with pkgs; [
-    bitwarden
-    calibre
-    obsidian
-    signal-desktop
-    thunderbird-latest
-    libnotify
-    glxinfo
-    leoPkgs.cantata
-    zenity
-    (discord-canary.override { withMoonlight = true; })
-    mpv
-    appimage-run
-    steam-run
-    xclip
-    xsel
-    wl-clipboard
-    gimp
-    vlc
-    leoPkgs.twemoji-ttf
-    leoPkgs.determination-fonts
-    leoPkgs.office-2007-fonts
-  ];
+  home.packages =
+    with pkgs;
+    [
+      bitwarden
+      calibre
+      obsidian
+      signal-desktop
+      thunderbird-latest
+      libnotify
+      glxinfo
+      leoPkgs.cantata
+      zenity
+      mpv
+      appimage-run
+      xclip
+      xsel
+      wl-clipboard
+      gimp
+      vlc
+      leoPkgs.twemoji-ttf
+      leoPkgs.determination-fonts
+      leoPkgs.office-2007-fonts
+    ]
+    ++ lib.optionals pkgs.stdenv.isx86_64 [
+      steam-run
+      (discord-canary.override { withMoonlight = true; })
+    ];
 
   xdg.configFile."systemd/user/app-vesktop@.service.d/override.conf".text = ''
     [Unit]

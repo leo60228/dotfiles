@@ -512,6 +512,22 @@
         "url": "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz"
       }
     },
+    "mobile-nixos": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743812405,
+        "narHash": "sha256-BedQ9Z3+nqtp9BRjHjJNPUeLIMVbTsP3Udbz0b1cUn0=",
+        "owner": "mobile-nixos",
+        "repo": "mobile-nixos",
+        "rev": "6679fd7a8dd4ccf4aa538b82216723861cfe61a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mobile-nixos",
+        "repo": "mobile-nixos",
+        "type": "github"
+      }
+    },
     "mpdiscord": {
       "inputs": {
         "flake-utils": "flake-utils_6",
@@ -969,6 +985,7 @@
         "lanzaboote": "lanzaboote",
         "lix": "lix",
         "lix-module": "lix-module",
+        "mobile-nixos": "mobile-nixos",
         "mpdiscord": "mpdiscord",
         "naersk": "naersk_3",
         "nixos-apple-silicon": "nixos-apple-silicon",
