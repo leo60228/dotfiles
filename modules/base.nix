@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   pkgs,
   lib,
@@ -16,6 +18,30 @@
   ];
   disabledModules = [ "services/web-apps/mastodon.nix" ];
 
+  # SSH {{{
+  services.openssh = {
+    enable = true;
+
+    extraConfig = ''
+      TrustedUserCAKeys ${../files/ssh-ca.pub}
+    '';
+
+    settings = {
+      X11Forwarding = true;
+      StreamLocalBindUnlink = true;
+    };
+  };
+
+  users.users.root.openssh.authorizedKeys.keys =
+    let
+      text = builtins.readFile ../files/authorized_keys;
+      split = lib.splitString "\n" text;
+      keys = builtins.filter (x: x != "") split;
+    in
+    keys;
+  # }}}
+
+  # Users {{{
   users.extraUsers.leo60228 = {
     isNormalUser = true;
     uid = 1000;
@@ -30,22 +56,10 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
-  users.users.root.openssh.authorizedKeys.keys =
-    let
-      text = builtins.readFile ../files/authorized_keys;
-      split = lib.splitString "\n" text;
-      keys = builtins.filter (x: x != "") split;
-    in
-    keys;
+  security.sudo.wheelNeedsPassword = false;
+  # }}}
 
-  services.openssh.extraConfig = ''
-    TrustedUserCAKeys ${../files/ssh-ca.pub}
-  '';
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
+  # Nixpkgs {{{
   system.stateVersion = "18.03"; # Did you read the comment?
 
   nixpkgs.overlays = map (
@@ -66,8 +80,9 @@
       "dotnet-sdk-wrapped-6.0.428"
     ];
   };
+  # }}}
 
-  # trusted users
+  # Nix {{{
   nix.settings.trusted-users = [
     "root"
     "@wheel"
@@ -96,19 +111,21 @@
         "https://cache.nixos.org/"
         "http://desktop:9999"
       ];
-  nix.extraOptions = "!include /etc/nix/secrets.conf";
+  nix.extraOptions = "!include /etc/nix/secrets.conf"; # put a GitHub PAT here!
+  # }}}
 
+  # Packages {{{
   environment.systemPackages = with pkgs; [
     openssh
     git
   ];
 
-  services.openssh.enable = true;
-
   boot.initrd.extraUtilsCommands = ''
     copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
   '';
+  # }}}
 
+  # Kernel {{{
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
   services.udev.extraRules = ''
@@ -135,17 +152,23 @@
       cp -vt $out/etc/udev/rules.d ${../files/51-ftd3xx.rules} ${../files/80-m1n1.rules} ${../files/mchp-udev}/*
     '')
   ];
+  # }}}
 
-  # tmpfs
+  # Filesystems {{{
   boot.tmp.useTmpfs = true;
-
-  services.openssh.settings.X11Forwarding = true;
-  services.openssh.settings.StreamLocalBindUnlink = true;
-
-  security.sudo.wheelNeedsPassword = false;
 
   # increase inotify limits (per upstream recommendation, see kernel commits
   # 92890123749bafc317bbfacbe0a62ce08d78efb7 and ac7b79fd190b02e7151bc7d2b9da692f537657f3)
   boot.kernel.sysctl."fs.inotify.max_user_instances" = 2147483647;
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 1048576;
+  # }}}
+
+  # Internationalization {{{
+  console = {
+    font = lib.mkDefault "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
+  time.timeZone = "America/New_York";
+  # }}}
 }

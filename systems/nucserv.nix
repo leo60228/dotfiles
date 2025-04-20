@@ -9,7 +9,7 @@
 
 with import ../components;
 rec {
-  components = efi en_us est home { small = true; } prometheus tailscale;
+  components = efi en_us home { small = true; } prometheus tailscale;
 
   users.extraUsers.minecraft = {
     isSystemUser = true;

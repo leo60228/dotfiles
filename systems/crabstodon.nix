@@ -6,7 +6,7 @@
 }:
 with import ../components;
 rec {
-  components = en_us est server tailscale;
+  components = en_us server tailscale;
 
   networking.firewall.allowedTCPPorts = [
     80

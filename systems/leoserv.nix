@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale;
+  components = efi en_us home { small = true; } tailscale;
 
   boot.enableContainers = false;
 

@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est gui kde {
+  components = efi en_us gui kde {
     bluetooth = true;
   } docker steam extra home tailscale flatpak fwupd kdeconnect;
 

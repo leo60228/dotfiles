@@ -4,7 +4,7 @@ with import ../components;
 rec {
   #components = mailserver en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
   #components = en_us est docker extra shellinabox server gui { audio = false; } reverseproxy { host = "aws"; } home;
-  components = en_us est docker server reverseproxy { host = "aws"; } tailscale;
+  components = en_us docker server reverseproxy { host = "aws"; } tailscale;
 
   networking.firewall.allowedTCPPorts = [
     22

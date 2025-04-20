@@ -13,9 +13,6 @@ lib.makeComponent "en_us" (
     opts = { };
 
     config = {
-      # Select internationalisation properties.
-      console.font = lib.mkDefault "Lat2-Terminus16";
-      console.keyMap = lib.mkDefault "us";
       environment.systemPackages = with pkgs; [
         aspell
         aspellDicts.en

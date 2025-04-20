@@ -6,7 +6,7 @@
 }:
 with import ../components;
 rec {
-  components = en_us est server tailscale reverseproxy { host = "digitaleo"; };
+  components = en_us server tailscale reverseproxy { host = "digitaleo"; };
 
   networking.firewall = {
     allowedTCPPorts = [
