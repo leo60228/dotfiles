@@ -1,5 +1,6 @@
 {
   pkgs,
+  osConfig,
   config,
   lib,
   ...
@@ -30,7 +31,7 @@
     gist
     p7zip
     python3
-    (callPackage ./neovim { })
+    (callPackage ./neovim { inherit (osConfig.vris) workstation; })
     file
     unzip
     usbutils
