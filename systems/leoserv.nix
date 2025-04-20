@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale znc hass unifi;
+  components = efi en_us est home { small = true; } tailscale znc hass;
 
   boot.enableContainers = false;
 
@@ -221,5 +221,13 @@ with import ../components;
         ];
       }
     ];
+  };
+
+  # unifi
+  services.unifi = {
+    enable = true;
+    unifiPackage = pkgs.unifi8;
+    mongodbPackage = pkgs.mongodb-6_0;
+    openFirewall = true;
   };
 }
