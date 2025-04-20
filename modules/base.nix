@@ -10,6 +10,7 @@
 
 {
   imports = [
+    ./workstation.nix
     ./cachix.nix
 
     # dependencies
