@@ -103,7 +103,6 @@
         colmena =
           let
             dotfiles = import ./. null;
-            lib = import ./lib;
             systems = nixpkgs.lib.mapAttrs (
               n: x:
               { ... }:
