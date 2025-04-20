@@ -25,12 +25,6 @@ with import ../../components;
   networking.firewall.allowedTCPPorts = lib.range 3000 3010;
   networking.firewall.allowedUDPPorts = lib.range 3000 3010;
 
-  boot.binfmt = {
-    emulatedSystems = [ "aarch64-linux" ];
-    preferStaticEmulators = true;
-    addEmulatedSystemsToNixSandbox = false;
-  };
-
   # LXC {{{1
   users.extraUsers.leo60228 = {
     extraGroups = [

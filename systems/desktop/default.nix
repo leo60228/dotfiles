@@ -24,8 +24,6 @@ rec {
     batteryLevel = 50;
   };
 
-  boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
-
   # Networking {{{1
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567

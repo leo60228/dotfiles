@@ -140,6 +140,21 @@
     services.pipewire.alsa.support32Bit = true;
     hardware.steam-hardware.enable = true;
     boot.blacklistedKernelModules = [ "hid-steam" ];
+
+    # binfmt {{{1
+    boot.binfmt = {
+      emulatedSystems = [
+        "armv7l-linux"
+        "aarch64-linux"
+      ];
+      preferStaticEmulators = true;
+      addEmulatedSystemsToNixSandbox = false;
+    };
+
+    nix.settings.extra-platforms = [
+      "armv7l-linux"
+    ] ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 "i686-linux";
+    nix.settings.extra-sandbox-paths = [ "/run/binfmt" ];
     # }}}
 
     users.extraUsers.leo60228.extraGroups = [
