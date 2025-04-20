@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 with import ../components;
 rec {
-  components = docker server reverseproxy { host = "aws"; } tailscale;
+  components = server reverseproxy { host = "aws"; } tailscale;
 
   system.stateVersion = "18.03";
 
@@ -55,6 +55,7 @@ rec {
     };
   };
 
+  virtualisation.docker.enable = true;
   systemd.services.pds = {
     requires = [ "docker.service" ];
     after = [ "docker.service" ];

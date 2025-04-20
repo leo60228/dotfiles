@@ -77,7 +77,6 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
-    users.extraUsers.leo60228.extraGroups = [ "scanner" ];
     # }}}
 
     # Configuration {{{
@@ -113,5 +112,18 @@
       swtpm
     ];
     # }}}
+
+    # Docker {{{
+    virtualisation.docker = {
+      enable = true;
+      enableOnBoot = false;
+      extraOptions = "--experimental";
+    };
+    # }}}
+
+    users.extraUsers.leo60228.extraGroups = [
+      "scanner"
+      "docker"
+    ];
   };
 }
