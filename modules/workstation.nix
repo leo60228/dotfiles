@@ -34,6 +34,7 @@
         config.virtualisation.libvirtd.qemu.package
       ]
       ++ lib.optionals config.vris.graphical [
+        pkgs.steam
         pkgs.virt-manager
         pkgs.kdePackages.sddm-kcm
         pkgs.kdePackages.audiocd-kio
@@ -136,6 +137,13 @@
       }
     ];
     nix.settings.builders-use-substitutes = true;
+    # }}}
+
+    # Steam {{{
+    hardware.graphics.enable32Bit = config.vris.graphical;
+    services.pipewire.alsa.support32Bit = config.vris.graphical;
+    hardware.steam-hardware.enable = config.vris.graphical;
+    boot.blacklistedKernelModules = lib.optional config.vris.graphical "hid-steam";
     # }}}
 
     users.extraUsers.leo60228.extraGroups = [

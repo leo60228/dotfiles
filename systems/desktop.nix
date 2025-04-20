@@ -7,7 +7,7 @@
 
 with import ../components;
 rec {
-  components = steam home { deviceScaleFactor = 2; };
+  components = home { deviceScaleFactor = 2; };
 
   system.stateVersion = "18.03";
 

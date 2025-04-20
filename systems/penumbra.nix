@@ -7,7 +7,7 @@
 
 with import ../components;
 {
-  components = steam home {
+  components = home {
     deviceScaleFactor = 2;
   };
 
