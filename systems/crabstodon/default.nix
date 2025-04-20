@@ -1,3 +1,5 @@
+# vi: set foldmethod=marker:
+
 {
   config,
   pkgs,
@@ -17,6 +19,7 @@ rec {
     5601
   ];
 
+  # Mastodon {{{
   services.mastodon = {
     enable = true;
     package = pkgs.leoPkgs.crabstodon;
@@ -58,8 +61,14 @@ rec {
     };
   };
 
-  services.postgresql.package = pkgs.postgresql_14;
+  systemd.services.mastodon-init-dirs.postStart = ''
+    cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
+  '';
 
+  services.postgresql.package = pkgs.postgresql_14;
+  # }}}
+
+  # Elasticsearch {{{
   services.elasticsearch = {
     enable = true;
     package = pkgs.elasticsearch7;
@@ -82,30 +91,9 @@ rec {
       sleep 1
     done
   '';
+  # }}}
 
-  #services.kibana = {
-  #  enable = true;
-  #  listenAddress = "crabstodon.capybara-pirate.ts.net";
-  #  elasticsearch = {
-  #    username = "kibana_system";
-  #    password = "\${ES_PASS}";
-  #    certificateAuthorities = [];
-  #  };
-  #  extraConf = {
-  #    xpack.encryptedSavedObjects.encryptionKey = "\${ESO_KEY}";
-  #    xpack.reporting.encryptionKey = "\${REPORTING_KEY}";
-  #    xpack.security.encryptionKey = "\${SECURITY_KEY}";
-  #  };
-  #};
-
-  nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ];
-
-  #systemd.services.kibana.serviceConfig.EnvironmentFile = "/var/lib/kibana/.secrets_env";
-
-  systemd.services.mastodon-init-dirs.postStart = ''
-    cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
-  '';
-
+  # Nginx {{{
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
@@ -119,6 +107,7 @@ rec {
     '';
 
     virtualHosts = {
+      # social.crabs.life {{{2
       ".social.crabs.life" = {
         root = "${config.services.mastodon.package}/public/";
         forceSSL = true;
@@ -158,6 +147,7 @@ rec {
         };
       };
 
+      # assets.crabs.life {{{2
       "assets.crabs.life" = {
         root = "${config.services.mastodon.package}/public/";
         forceSSL = true;
@@ -168,6 +158,7 @@ rec {
         '';
       };
 
+      # files.crabs.life {{{2
       "files.crabs.life" = {
         forceSSL = true;
         enableACME = true;
@@ -207,6 +198,7 @@ rec {
           proxyPass = "https://idpkbyow62bg.compat.objectstorage.us-ashburn-1.oraclecloud.com/crabstodon-user-content/";
         };
       };
+      # }}}
     };
     upstreams.mastodon-streaming = {
       extraConfig = ''
@@ -232,4 +224,5 @@ rec {
   };
 
   users.groups.mastodon.members = [ "nginx" ];
+  # }}}
 }
