@@ -9,7 +9,7 @@ with import ../components;
 {
   components = efi docker steam extra home {
     deviceScaleFactor = 2;
-  } tailscale fwupd kvm;
+  } tailscale kvm;
 
   system.stateVersion = "18.03";
 
@@ -65,5 +65,21 @@ with import ../components;
     emulatedSystems = [ "aarch64-linux" ];
     preferStaticEmulators = true;
     addEmulatedSystemsToNixSandbox = false;
+  };
+
+  services.fwupd.enable = true;
+  services.packagekit.enable = true;
+  services.packagekit.settings.Daemon.DefaultBackend = "test_succeed";
+  environment.etc."fwupd/remotes.d/lvfs-testing.conf" = lib.mkForce {
+    text = ''
+      [fwupd Remote]
+      Enabled=true
+      Title=Linux Vendor Firmware Service (testing)
+      MetadataURI=https://cdn.fwupd.org/downloads/firmware-testing.xml.gz
+      ReportURI=https://fwupd.org/lvfs/firmware/report
+      OrderBefore=lvfs,fwupd
+      AutomaticReports=false
+      ApprovalRequired=false
+    '';
   };
 }
