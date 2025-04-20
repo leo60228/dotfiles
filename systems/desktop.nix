@@ -11,7 +11,6 @@ with import ../components;
 rec {
   components =
     efi en_us est extra { graalvm = true; } gui kde steam docker home { deviceScaleFactor = 2; } kvm
-      glances
       flatpak
       prometheus
       fcitx5
@@ -23,12 +22,9 @@ rec {
       }
       tailscale
       postgres
-      mosh
-      usbmuxd
       nixbuild
       kdeconnect
-      fwupd
-      lxd;
+      fwupd;
 
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
