@@ -147,7 +147,10 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 " nvim-treesitter
 lua <<EOF
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+local has_parsers, parsers = pcall(require, "nvim-treesitter.parsers")
+if not has_parsers then return end
+
+local parser_config = parsers.get_parser_configs()
 parser_config.pioasm = {
   install_info = {
     url = "https://github.com/leo60228/tree-sitter-pioasm",
