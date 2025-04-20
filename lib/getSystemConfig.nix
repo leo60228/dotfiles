@@ -7,7 +7,7 @@ in
   let
     base = ({
       imports = [
-        (lib.generateHardware (../hardware + "/${name}"))
+        (lib.generateHardware (../hardware + "/${name}.nix"))
         (../systems + "/${name}")
         ../modules/componentBase.nix
         ../modules/base.nix
@@ -15,5 +15,5 @@ in
       networking.hostName = builtins.head (builtins.match "([^.]+)(\\.nix)?" name);
     });
   in
-  (if nixops then base // (import (../hardware + "/${name}")).nixops else base)
+  (if nixops then base // (import (../hardware + "/${name}.nix")).nixops else base)
 )

@@ -4,7 +4,7 @@
   lib,
   ...
 }:
-with import ../components;
+with import ../../components;
 rec {
   system.stateVersion = "18.03";
 

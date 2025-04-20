@@ -5,7 +5,7 @@
   ...
 }:
 
-with import ../components;
+with import ../../components;
 {
   components = home {
     deviceScaleFactor = 2;

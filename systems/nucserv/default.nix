@@ -5,7 +5,7 @@
   ...
 }:
 
-with import ../components;
+with import ../../components;
 rec {
   components = home { small = true; };
 

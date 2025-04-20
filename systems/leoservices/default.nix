@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-with import ../components;
+with import ../../components;
 rec {
   components = reverseproxy { host = "aws"; };
 

@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-with import ../components;
+with import ../../components;
 {
   components = home { small = true; };
 
