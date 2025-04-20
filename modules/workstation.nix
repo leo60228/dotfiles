@@ -17,6 +17,13 @@
   };
 
   config = lib.mkIf config.vris.workstation {
+    assertions = [
+      {
+        assertion = config.vris.graphical;
+        message = "workstations must be graphical";
+      }
+    ];
+
     # Packages {{{
     hardware.enableAllFirmware = true;
     services.pcscd.enable = true;
@@ -26,30 +33,27 @@
     programs.nix-ld.enable = true;
     boot.supportedFilesystems = [ "ntfs" ];
 
-    environment.systemPackages =
-      [
-        pkgs.androidenv.androidPkgs.platform-tools
-        pkgs.openocd
-        pkgs.OVMFFull
-        config.virtualisation.libvirtd.qemu.package
-      ]
-      ++ lib.optionals config.vris.graphical [
-        pkgs.steam
-        pkgs.virt-manager
-        pkgs.kdePackages.sddm-kcm
-        pkgs.kdePackages.audiocd-kio
-        pkgs.kdePackages.skanpage
-        pkgs.kdePackages.isoimagewriter
-        pkgs.kdePackages.krdc
-        pkgs.kdePackages.neochat
-        pkgs.kdePackages.konversation
-        pkgs.kdePackages.discover
-        pkgs.kdePackages.partitionmanager
-        pkgs.kdePackages.kclock
-        (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
-          patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
-        }))
-      ];
+    environment.systemPackages = [
+      pkgs.androidenv.androidPkgs.platform-tools
+      pkgs.openocd
+      pkgs.OVMFFull
+      config.virtualisation.libvirtd.qemu.package
+      pkgs.steam
+      pkgs.virt-manager
+      pkgs.kdePackages.sddm-kcm
+      pkgs.kdePackages.audiocd-kio
+      pkgs.kdePackages.skanpage
+      pkgs.kdePackages.isoimagewriter
+      pkgs.kdePackages.krdc
+      pkgs.kdePackages.neochat
+      pkgs.kdePackages.konversation
+      pkgs.kdePackages.discover
+      pkgs.kdePackages.partitionmanager
+      pkgs.kdePackages.kclock
+      (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
+        patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
+      }))
+    ];
     # }}}
 
     # Avahi {{{
@@ -140,10 +144,10 @@
     # }}}
 
     # Steam {{{
-    hardware.graphics.enable32Bit = config.vris.graphical;
-    services.pipewire.alsa.support32Bit = config.vris.graphical;
-    hardware.steam-hardware.enable = config.vris.graphical;
-    boot.blacklistedKernelModules = lib.optional config.vris.graphical "hid-steam";
+    hardware.graphics.enable32Bit = true;
+    services.pipewire.alsa.support32Bit = true;
+    hardware.steam-hardware.enable = true;
+    boot.blacklistedKernelModules = [ "hid-steam" ];
     # }}}
 
     users.extraUsers.leo60228.extraGroups = [
