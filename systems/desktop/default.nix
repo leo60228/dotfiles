@@ -1,3 +1,4 @@
+# vi: set foldmethod=marker:
 {
   config,
   pkgs,
@@ -23,6 +24,9 @@ rec {
     batteryLevel = 50;
   };
 
+  boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
+
+  # Networking {{{
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
     34568
@@ -54,10 +58,10 @@ rec {
     20048
   ];
 
-  networking.hosts."52.218.200.91" = [ "www.blaseball2.com" ];
+  services.tailscale.useRoutingFeatures = "both";
+  # }}}
 
-  boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
-
+  # Hydra {{{
   services.hydra-dev = {
     enable = true;
     package = pkgs.hydra;
@@ -81,19 +85,11 @@ rec {
   };
   systemd.services.hydra-queue-runner.wants = [ "network-online.target" ];
 
-  nix.settings.allowed-uris = [
-    "github:"
-    "https://github.com"
-    "git+https://github.com"
-    "gitlab:"
-    "https://gitlab.com"
-    "git+https://gitlab.com"
-  ];
-
+  services.postgresql.package = pkgs.postgresql_16;
   services.postgresql.settings.max_connections = 200;
+  # }}}
 
-  services.tailscale.useRoutingFeatures = "both";
-
+  # Kodi {{{
   services.nfs.server = {
     enable = true;
     exports = ''
@@ -123,6 +119,5 @@ rec {
     '';
     settings.mysqld.bind-address = "0.0.0.0";
   };
-
-  services.postgresql.package = pkgs.postgresql_16;
+  # }}}
 }
