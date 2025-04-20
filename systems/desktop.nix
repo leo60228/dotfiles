@@ -138,4 +138,6 @@ rec {
     '';
     settings.mysqld.bind-address = "0.0.0.0";
   };
+
+  services.postgresql.package = pkgs.postgresql_16;
 }
