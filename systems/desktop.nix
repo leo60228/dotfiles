@@ -20,7 +20,6 @@ rec {
         batteryLevel = 50;
       }
       tailscale
-      postgres
       nixbuild
       kdeconnect
       fwupd;
