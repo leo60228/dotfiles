@@ -109,7 +109,7 @@
               { ... }:
               {
                 imports = [
-                  ./modules/base.nix
+                  ./nixos/base.nix
                   (./systems + "/${n}")
                 ];
 
@@ -172,12 +172,12 @@
             e: v:
             let
               name = nixpkgs.lib.removeSuffix ".nix" e;
-              rawOverlay = import (./nixpkgs + ("/" + e));
+              rawOverlay = import (./overlays + ("/" + e));
               hasArgs = builtins.functionArgs rawOverlay != { };
               overlay = if hasArgs then rawOverlay flakes else rawOverlay;
             in
             nixpkgs.lib.nameValuePair name overlay
-          ) (builtins.readDir ./nixpkgs))
+          ) (builtins.readDir ./overlays))
           // {
             default = self: super: {
               leoPkgs = self.callPackages ./pkgs { };

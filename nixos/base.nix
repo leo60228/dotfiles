@@ -81,12 +81,12 @@
       ++ map (
         e:
         let
-          rawOverlay = import (../nixpkgs + ("/" + e));
+          rawOverlay = import (../overlays + ("/" + e));
           hasArgs = builtins.functionArgs rawOverlay != { };
           overlay = if hasArgs then rawOverlay flakes else rawOverlay;
         in
         overlay
-      ) (builtins.attrNames (builtins.readDir ../nixpkgs));
+      ) (builtins.attrNames (builtins.readDir ../overlays));
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
