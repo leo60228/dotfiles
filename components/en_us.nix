@@ -13,16 +13,6 @@ lib.makeComponent "en_us" (
     opts = { };
 
     config = {
-      environment.systemPackages = with pkgs; [
-        aspell
-        aspellDicts.en
-        aspellDicts.en-computers
-      ];
-      environment.etc."/etc/aspell.conf".text = ''
-        master en_US
-        extra-dicts en-computers.rws
-        add-extra-dicts en_US-science.rws
-      '';
     };
   }
 )

@@ -102,7 +102,17 @@
 
       pkgs.exfatprogs
       pkgs.leoPkgs.sddm-theme-breeze-user
+
+      pkgs.aspell
+      pkgs.aspellDicts.en
+      pkgs.aspellDicts.en-computers
     ] ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
+
+    environment.etc."/etc/aspell.conf".text = ''
+      master en_US
+      extra-dicts en-computers.rws
+      add-extra-dicts en_US-science.rws
+    '';
 
     qt = {
       enable = true;
