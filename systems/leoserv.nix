@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi en_us est home { small = true; } tailscale hass;
+  components = efi en_us est home { small = true; } tailscale;
 
   boot.enableContainers = false;
 
@@ -15,6 +15,8 @@ with import ../components;
     443
     3551 # apcupsd
     1883 # mqtt
+    8123 # hass
+    21063 # hass
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -23,6 +25,7 @@ with import ../components;
     80
     443
     24454
+    5353 # hass
   ];
 
   users.extraUsers.leo60228.extraGroups = [ "wheel" ];
@@ -206,6 +209,17 @@ with import ../components;
     '';
   };
 
+  power.ups = {
+    enable = true;
+    mode = "netserver";
+    ups.apcupsd = {
+      driver = "apcupsd-ups";
+      port = "leoserv";
+    };
+    upsd.listen = [ { address = "0.0.0.0"; } ];
+    upsmon.settings.MINSUPPLIES = 0;
+  };
+
   # mqtt
   services.mosquitto = {
     enable = true;
@@ -237,5 +251,30 @@ with import ../components;
     mutable = true;
     useLegacyConfig = false;
     openFirewall = true;
+  };
+
+  # hass
+  virtualisation.oci-containers.backend = "podman";
+  virtualisation.oci-containers.containers.homeassistant = {
+    volumes = [ "home-assistant:/config" ];
+    image = "ghcr.io/home-assistant/home-assistant:stable";
+    extraOptions = [
+      "--privileged"
+      "--network=host"
+      "--pull=newer"
+      "--tz=local"
+    ];
+  };
+
+  services.zigbee2mqtt = {
+    enable = true;
+    settings = {
+      homeassistant = true;
+      serial.port = "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_a0b342a38245ed119082c68f0a86e0b4-if00-port0";
+      frontend.port = 8456;
+      advanced.network_key = "!secret network_key";
+      mqtt.server = "mqtt://127.0.0.1";
+      groups = "groups.yaml";
+    };
   };
 }
