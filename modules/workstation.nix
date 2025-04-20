@@ -121,6 +121,23 @@
     };
     # }}}
 
+    # Nix {{{
+    nix.distributedBuilds = true;
+    nix.buildMachines = [
+      {
+        systems = [ "aarch64-linux" ];
+        supportedFeatures = [
+          "big-parallel"
+          "benchmark"
+        ];
+        sshKey = "/home/leo60228/.ssh/id_ed25519";
+        maxJobs = 100;
+        hostName = "eu.nixbuild.net";
+      }
+    ];
+    nix.settings.builders-use-substitutes = true;
+    # }}}
+
     users.extraUsers.leo60228.extraGroups = [
       "scanner"
       "docker"

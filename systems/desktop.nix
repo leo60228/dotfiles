@@ -11,7 +11,7 @@ rec {
     timeout = 300;
     minutes = 15;
     batteryLevel = 50;
-  } nixbuild;
+  };
 
   system.stateVersion = "18.03";
 
