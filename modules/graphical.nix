@@ -96,6 +96,8 @@
       theme = "breeze-user";
     };
 
+    programs.kdeconnect.enable = true;
+
     environment.systemPackages = [
       pkgs.kdePackages.sddm-kcm
       pkgs.kdePackages.breeze-icons
