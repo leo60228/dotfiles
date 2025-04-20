@@ -72,6 +72,11 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
+  home-manager = {
+    useGlobalPkgs = true;
+    users.leo60228 = import ../home.nix;
+  };
+
   security.sudo.wheelNeedsPassword = false;
 
   # Nixpkgs {{{1

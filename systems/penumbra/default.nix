@@ -11,10 +11,6 @@ with import ../../components;
 {
   imports = [ ./hardware.nix ];
 
-  components = home {
-    deviceScaleFactor = 2;
-  };
-
   system.stateVersion = "18.03";
 
   vris.workstation = true;

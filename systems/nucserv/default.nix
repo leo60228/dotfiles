@@ -11,8 +11,6 @@ with import ../../components;
 rec {
   imports = [ ./hardware.nix ];
 
-  components = home { small = true; };
-
   system.stateVersion = "18.03";
 
   vris.prometheus = true;
