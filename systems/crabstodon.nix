@@ -6,7 +6,7 @@
 }:
 with import ../components;
 rec {
-  components = server tailscale;
+  components = server;
 
   system.stateVersion = "18.03";
 

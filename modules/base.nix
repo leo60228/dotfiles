@@ -127,6 +127,7 @@
   environment.systemPackages = with pkgs; [
     openssh
     git
+    tailscale
   ];
 
   boot.initrd.extraUtilsCommands = ''
@@ -179,5 +180,11 @@
   };
 
   time.timeZone = "America/New_York";
+  # }}}
+
+  # Tailscale {{{
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ]; # tailscale has its own firewall, and default-deny on tailscale0 causes breakage
+  networking.firewall.checkReversePath = "loose";
   # }}}
 }

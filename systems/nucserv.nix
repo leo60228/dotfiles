@@ -7,7 +7,7 @@
 
 with import ../components;
 rec {
-  components = home { small = true; } prometheus tailscale;
+  components = home { small = true; } prometheus;
 
   system.stateVersion = "18.03";
 

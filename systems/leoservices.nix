@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 with import ../components;
 rec {
-  components = server reverseproxy { host = "aws"; } tailscale;
+  components = server reverseproxy { host = "aws"; };
 
   system.stateVersion = "18.03";
 

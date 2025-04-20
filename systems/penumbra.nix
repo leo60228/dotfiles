@@ -9,7 +9,7 @@ with import ../components;
 {
   components = steam home {
     deviceScaleFactor = 2;
-  } tailscale;
+  };
 
   system.stateVersion = "18.03";
 

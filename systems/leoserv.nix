@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = home { small = true; } tailscale;
+  components = home { small = true; };
 
   system.stateVersion = "18.03";
 
