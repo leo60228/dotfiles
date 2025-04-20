@@ -7,11 +7,16 @@
 
 with import ../components;
 {
-  components = efi en_us gui kde {
-    bluetooth = true;
-  } docker steam extra home { deviceScaleFactor = 2; } tailscale flatpak fwupd kdeconnect kvm;
+  components = efi docker steam extra home {
+    deviceScaleFactor = 2;
+  } tailscale flatpak fwupd kdeconnect kvm;
 
   system.stateVersion = "18.03";
+
+  vris.workstation = true;
+  vris.graphical = true;
+
+  hardware.bluetooth.enable = true;
 
   users.extraUsers.leo60228 = {
     extraGroups = [

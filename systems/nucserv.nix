@@ -7,7 +7,7 @@
 
 with import ../components;
 rec {
-  components = efi en_us home { small = true; } prometheus tailscale;
+  components = efi home { small = true; } prometheus tailscale;
 
   system.stateVersion = "18.03";
 

@@ -7,19 +7,16 @@
 
 with import ../components;
 rec {
-  components =
-    efi en_us extra gui kde steam docker home { deviceScaleFactor = 2; } kvm flatpak prometheus apcupsd
-      {
-        timeout = 300;
-        minutes = 15;
-        batteryLevel = 50;
-      }
-      tailscale
-      nixbuild
-      kdeconnect
-      fwupd;
+  components = efi steam docker home { deviceScaleFactor = 2; } kvm flatpak prometheus apcupsd {
+    timeout = 300;
+    minutes = 15;
+    batteryLevel = 50;
+  } tailscale nixbuild kdeconnect fwupd;
 
   system.stateVersion = "18.03";
+
+  vris.workstation = true;
+  vris.graphical = true;
 
   networking.firewall.allowedTCPPorts = (lib.range 3000 3010) ++ [
     34567
