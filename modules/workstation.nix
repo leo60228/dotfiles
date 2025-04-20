@@ -30,8 +30,11 @@
       [
         pkgs.androidenv.androidPkgs.platform-tools
         pkgs.openocd
+        pkgs.OVMFFull
+        config.virtualisation.libvirtd.qemu.package
       ]
       ++ lib.optionals config.vris.graphical [
+        pkgs.virt-manager
         pkgs.kdePackages.sddm-kcm
         pkgs.kdePackages.audiocd-kio
         pkgs.kdePackages.skanpage
@@ -88,6 +91,26 @@
       pkgs.android-udev-rules
       pkgs.platformio-core
       pkgs.openocd
+    ];
+    # }}}
+
+    # KVM {{{
+    virtualisation.libvirtd = {
+      enable = true;
+      onBoot = "ignore";
+      onShutdown = "shutdown";
+      qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
+    };
+    users.groups.libvirtd.members = [
+      "root"
+      "leo60228"
+    ];
+    systemd.services.libvirtd.path = with pkgs; [
+      bash
+      killall
+      libvirt
+      kmod
+      swtpm
     ];
     # }}}
   };

@@ -9,7 +9,7 @@ with import ../components;
 {
   components = efi docker steam extra home {
     deviceScaleFactor = 2;
-  } tailscale kvm;
+  } tailscale;
 
   system.stateVersion = "18.03";
 
