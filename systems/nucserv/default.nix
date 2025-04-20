@@ -7,7 +7,6 @@
   ...
 }:
 
-with import ../../components;
 rec {
   imports = [ ./hardware.nix ];
 

@@ -1,7 +1,6 @@
 # vi: set foldmethod=marker:
 
 { config, pkgs, ... }:
-with import ../../components;
 rec {
   imports = [
     ./hardware.nix

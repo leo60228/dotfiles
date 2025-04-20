@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 
-with import ../../components;
 {
   imports = [ ./hardware.nix ];
 
