@@ -111,8 +111,7 @@
               nodeNixpkgs = nixpkgs.lib.mapAttrs (
                 n: x:
                 let
-                  hardware = import (./hardware + "/${n}.nix");
-                  inherit (hardware) system;
+                  system = nixpkgs.lib.trim (builtins.readFile (./systems + "/${n}/system"));
                 in
                 nixpkgs.legacyPackages.${system}
               ) systems;
