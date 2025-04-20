@@ -7,7 +7,7 @@
 
 with import ../components;
 {
-  components = efi docker steam extra home {
+  components = docker steam extra home {
     deviceScaleFactor = 2;
   } tailscale;
 

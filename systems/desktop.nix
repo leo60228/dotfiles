@@ -7,7 +7,7 @@
 
 with import ../components;
 rec {
-  components = efi steam docker home { deviceScaleFactor = 2; } prometheus apcupsd {
+  components = steam docker home { deviceScaleFactor = 2; } prometheus apcupsd {
     timeout = 300;
     minutes = 15;
     batteryLevel = 50;

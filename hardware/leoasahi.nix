@@ -19,6 +19,8 @@
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
 
+      boot.loader.systemd-boot.enable = true;
+
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/ef8a4547-4f94-419d-8cc4-a064c55a9932";
         fsType = "ext4";

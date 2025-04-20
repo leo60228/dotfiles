@@ -90,6 +90,8 @@
       boot.extraModulePackages = [ (pkgs.leoPkgs.datapath-vision config.boot.kernelPackages) ];
       hardware.firmware = [ pkgs.leoPkgs.datapath-vision-firmware ];
 
+      boot.loader.systemd-boot.enable = true;
+
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
         fsType = "ext4";

@@ -2,7 +2,7 @@
 
 with import ../components;
 {
-  components = efi home { small = true; } tailscale;
+  components = home { small = true; } tailscale;
 
   system.stateVersion = "18.03";
 }

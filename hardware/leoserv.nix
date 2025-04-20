@@ -21,6 +21,8 @@
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
 
+      boot.loader.systemd-boot.enable = true;
+
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/d3eb82e7-ce0f-4dd3-827e-d66a509e57ef";
         fsType = "ext4";
