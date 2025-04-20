@@ -53,4 +53,10 @@ with import ../components;
       leo60228 veth lxcbr0 10
     '';
   };
+
+  boot.binfmt = {
+    emulatedSystems = [ "aarch64-linux" ];
+    preferStaticEmulators = true;
+    addEmulatedSystemsToNixSandbox = false;
+  };
 }
