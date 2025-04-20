@@ -7,5 +7,95 @@
 }:
 
 lib.mkIf osConfig.vris.workstation {
+  home.packages = with pkgs; [
+    docker-credential-helpers
+    libsecret
+    parsec-bin
+    leoPkgs.redumper
+    wiimms-iso-tools
+    leoPkgs.hactoolnet
+    colmena
+    fusee-nano
+    obs-studio
+    ares
+    ryujinx
+    ctrtool
+    hactool
+    qpwgraph
+    leoPkgs.eontimer
+    jetbrains-toolbox
+    rsgain
+    kio-fuse
+    gitAndTools.lab
+    bitwarden-cli
+    cargo-edit
+    qbittorrent
+    nix-prefetch-github
+    element-desktop
+    mosquitto
+    rclone
+    (hiPrio rustup)
+    lftp
+    dolphin-emu-beta
+    gdb
+    easytag
+    nodejs_latest
+    nix-prefetch-git
+    audacity
+    ffmpeg
+    gnupg
+    pkg-config
+    yt-dlp
+    leoPkgs.rust.rust
+    libreoffice
+    gitAndTools.hub
+    prismlauncher
+    mgba
+    wineWowPackages.staging
+    gnumake
+    (hiPrio gcc)
+    hplip
+    dotnet-sdk
+    mono
+    leoPkgs.vscode-fhs
+  ];
 
+  programs.git.package = pkgs.gitAndTools.gitFull;
+
+  programs.go.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    enableExtraSocket = true;
+    grabKeyboardAndMouse = false;
+    pinentryPackage = pkgs.pinentry-qt;
+  };
+
+  home.file.".rustup/toolchains/system".source = pkgs.leoPkgs.rust.rust;
+
+  home.file.".gradle/gradle.properties" = {
+    text = ''
+      org.gradle.java.installations.paths=${pkgs.jdk8}
+      org.gradle.java.installations.auto-download=false
+    '';
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    stdlib = ''
+      eval _orig_"$(declare -f use_nix)"
+      use_nix() {
+        _orig_use_nix "$@"
+        unset IN_NIX_SHELL
+      }
+
+      eval _orig_"$(declare -f use_flake)"
+      use_flake() {
+        _orig_use_flake "$@"
+        unset IN_NIX_SHELL
+      }
+    '';
+  };
 }
