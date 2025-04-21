@@ -28,7 +28,6 @@
     hardware.enableAllFirmware = true;
     services.pcscd.enable = true;
     programs.java.enable = true;
-    networking.networkmanager.enable = true;
     programs.bash.completion.enable = true;
     programs.nix-ld.enable = true;
     boot.supportedFilesystems = [ "ntfs" ];
