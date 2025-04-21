@@ -88,7 +88,7 @@
     flake = false;
   };
   inputs.mobile-nixos = {
-    url = "github:mobile-nixos/mobile-nixos";
+    url = "github:leo60228/mobile-nixos/vriska";
     flake = false;
   };
 
