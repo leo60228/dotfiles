@@ -61,6 +61,9 @@ lib.mkIf osConfig.vris.workstation {
   ];
 
   programs.git.package = pkgs.gitAndTools.gitFull;
+  programs.bash.initExtra = ''
+    eval $(hub alias -s)
+  '';
 
   programs.go.enable = true;
 

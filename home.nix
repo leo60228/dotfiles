@@ -58,8 +58,6 @@
 
     [[ $- != *i* ]] && return
 
-    eval $(hub alias -s)
-
     if [ -z "$NEOFETCH_RAN" ]; then
         fastfetch --config ${./files/fastfetch.jsonc}
         export NEOFETCH_RAN=1
