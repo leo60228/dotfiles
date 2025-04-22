@@ -16,7 +16,6 @@
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
-    fastfetch
     htop
     imagemagick
     alsa-utils
@@ -50,6 +49,67 @@
 
   systemd.user.startServices = true;
 
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      modules =
+        [
+          "title"
+          "separator"
+          "os"
+          {
+            type = "command";
+            key = "Host";
+            text = "fastfetch --pipe -l none --key-type none -s host --host-format '{name}' | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'";
+          }
+          "kernel"
+          "uptime"
+          "shell"
+        ]
+        ++ (lib.optionals osConfig.vris.graphical [
+          {
+            type = "display";
+            compactType = "original-with-refresh-rate";
+          }
+          {
+            type = "command";
+            key = "DE";
+            text = "[ -z \"$XDG_SESSION_TYPE\" ] && exit; echo \"Plasma $(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//') [Frameworks $(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')] ($XDG_SESSION_TYPE)\"";
+          }
+        ])
+        ++ [
+          "cpu"
+        ]
+        ++ (lib.optional osConfig.vris.graphical (
+          if osConfig.services.xserver.videoDrivers != [ "nvidia" ] then
+            {
+              type = "gpu";
+              driverSpecific = true;
+              format = "{name} ({core-count}) @ {frequency} ({driver})";
+            }
+          else
+            "gpu"
+        ))
+        ++ [
+          "memory"
+          "disk"
+          {
+            type = "battery";
+            key = "Battery";
+          }
+          {
+            type = "localip";
+            compact = true;
+            showPrefixLen = false;
+          }
+        ];
+      logo.color = {
+        "1" = "38;2;74;107;175";
+        "2" = "38;2;126;177;221";
+      };
+    };
+  };
+
   programs.bash.enable = true;
   programs.bash.initExtra = ''
     PROMPT_COLOR="1;2;37m"
@@ -59,7 +119,7 @@
     [[ $- != *i* ]] && return
 
     if [ -z "$NEOFETCH_RAN" ]; then
-        fastfetch --config ${./files/fastfetch.jsonc}
+        fastfetch
         export NEOFETCH_RAN=1
     fi
   '';
