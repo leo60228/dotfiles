@@ -3,6 +3,7 @@
   osConfig,
   lib,
   pkgs,
+  flakes,
   ...
 }:
 
@@ -71,22 +72,28 @@ lib.mkIf osConfig.vris.graphical {
 
   programs.firefox = {
     enable = true;
+    package = if osConfig.vris.workstation then pkgs.firefox else pkgs.firefox-devedition;
     policies = {
       OverrideFirstRunPage = "about:newtab";
       EnableTrackingProtection.Value = true;
       PasswordManagerEnabled = false;
     };
-    profiles.default = {
-      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-        darkreader
-        old-reddit-redirect
-        reddit-enhancement-suite
-        stylus
-        greasemonkey
-        ublock-origin
-        bitwarden
-        plasma-integration
-      ];
+    profiles.${if osConfig.vris.workstation then "default" else "dev-edition-default"} = {
+      extensions.packages =
+        with pkgs.nur.repos.rycee.firefox-addons;
+        [
+          darkreader
+          old-reddit-redirect
+          reddit-enhancement-suite
+          stylus
+          greasemonkey
+          ublock-origin
+          bitwarden
+          plasma-integration
+        ]
+        ++
+          lib.optional (!osConfig.vris.workstation)
+            (flakes.moonlight.overlays.default pkgs pkgs).moonlight-mod.firefox;
       settings = {
         "extensions.autoDisableScopes" = 0;
         "dom.allow_scripts_to_close_windows" = true;
@@ -141,6 +148,7 @@ lib.mkIf osConfig.vris.graphical {
             "developer-button"
           ];
         };
+        "xpinstall.signatures.required" = osConfig.vris.workstation;
       };
       userChrome = ''
         #tabbrowser-tabs:not([overflow="true"]) ~ #alltabs-button {

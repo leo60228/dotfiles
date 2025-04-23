@@ -74,6 +74,7 @@
   home-manager = {
     useGlobalPkgs = true;
     users.leo60228 = import ../home.nix;
+    extraSpecialArgs = { inherit flakes; };
   };
 
   security.sudo.wheelNeedsPassword = false;
