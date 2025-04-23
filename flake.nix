@@ -83,6 +83,10 @@
     inputs.flake-compat.follows = "flake-compat";
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
+  inputs.moonlight = {
+    url = "github:moonlight-mod/moonlight";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.flake-compat = {
     url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake = false;
