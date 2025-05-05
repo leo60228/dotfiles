@@ -30,7 +30,10 @@
     programs.java.enable = true;
     programs.bash.completion.enable = true;
     programs.nix-ld.enable = true;
-    boot.supportedFilesystems = [ "ntfs" ];
+    boot.supportedFilesystems = [
+      "nfs"
+      "ntfs"
+    ];
 
     environment.systemPackages = [
       pkgs.androidenv.androidPkgs.platform-tools
