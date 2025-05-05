@@ -114,11 +114,6 @@
       add-extra-dicts en_US-science.rws
     '';
 
-    qt = {
-      enable = true;
-      platformTheme = "kde";
-    };
-
     xdg = {
       icons.enable = true;
       portal = {
