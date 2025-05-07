@@ -37,6 +37,7 @@
       TrustedUserCAKeys = builtins.toString ../files/ssh-ca.pub;
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
+      UseDns = true;
     };
 
     extraConfig = ''
