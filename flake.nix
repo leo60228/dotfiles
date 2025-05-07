@@ -95,6 +95,10 @@
     url = "github:leo60228/mobile-nixos/vriska";
     flake = false;
   };
+  inputs.flake-firefox-nightly = {
+    url = "github:nix-community/flake-firefox-nightly";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {

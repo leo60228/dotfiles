@@ -57,6 +57,8 @@
       }))
     ];
 
+    vris.firefox = lib.mkDefault pkgs.firefox;
+
     # Avahi {{{1
     services.avahi = {
       enable = true;

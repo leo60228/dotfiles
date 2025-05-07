@@ -25,5 +25,20 @@
 
   hardware.firmware = [ pkgs.chromeos-sc7180-unredistributable-firmware ];
 
-  hardware.sensor.iio.enable = true;
+  vris.firefox =
+    let
+      wrapFirefox = pkgs.wrapFirefox.override {
+        ffmpeg = pkgs.ffmpeg.overrideAttrs (oldAttrs: {
+          patches = oldAttrs.patches ++ [
+            (pkgs.fetchpatch {
+              url = "https://raw.githubusercontent.com/LibreELEC/LibreELEC.tv/9c99ad0f0bdad077176be4250e64e9deda70c062/packages/multimedia/ffmpeg/patches/rpi/ffmpeg-001-rpi.patch";
+              hash = "sha256-IZsRZ25UUTvuSeXGGNJ8TODU51EO8rmAfjdsRPA9O5M=";
+            })
+          ];
+          doCheck = false;
+        });
+      };
+    in
+    wrapFirefox (flakes.flake-firefox-nightly.overlays.default pkgs pkgs).firefox-nightly-bin.unwrapped
+      { pname = "firefox-nightly-bin"; };
 }
