@@ -13,11 +13,6 @@
       type = lib.types.bool;
       default = false;
     };
-
-    vris.firefox = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.firefox-devedition;
-    };
   };
 
   config = lib.mkIf config.vris.graphical {
