@@ -28,4 +28,6 @@
     pkgs.maliit-framework
     pkgs.maliit-keyboard
   ];
+
+  virtualisation.waydroid.enable = true;
 }
