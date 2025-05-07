@@ -24,4 +24,6 @@
   zramSwap.enable = true;
 
   hardware.firmware = [ pkgs.chromeos-sc7180-unredistributable-firmware ];
+
+  hardware.sensor.iio.enable = true;
 }
