@@ -154,13 +154,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "cantata";
-  version = "3.3.0";
+  version = "3.3.1";
 
   src = fetchFromGitHub {
     owner = "nullobsi";
     repo = "cantata";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-dx0XkMUrxg3+c3fxhXjYK36x5M8xbX+IyVAalvib2iY=";
+    hash = "sha256-4lkfY+87lEE2A863JogG5PtO5SyGn7Hb8shQljSqq3Q=";
   };
 
   patches = [
