@@ -33,7 +33,7 @@ lib.mkIf osConfig.vris.graphical {
     ]
     ++ lib.optionals pkgs.stdenv.isx86_64 [
       steam-run
-      (discord-canary.override { withMoonlight = true; })
+      discord-canary
     ];
 
   xdg.configFile."systemd/user/app-vesktop@.service.d/override.conf".text = ''
@@ -97,9 +97,7 @@ lib.mkIf osConfig.vris.graphical {
             bitwarden
             plasma-integration
           ]
-          ++
-            lib.optional (!osConfig.vris.workstation)
-              (flakes.moonlight.overlays.default pkgs pkgs).moonlight-mod.firefox;
+          ++ lib.optional (!osConfig.vris.workstation) pkgs.moonlight-mod.firefox;
         settings = {
           "extensions.autoDisableScopes" = 0;
           "dom.allow_scripts_to_close_windows" = true;
