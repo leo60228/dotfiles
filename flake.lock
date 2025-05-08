@@ -629,16 +629,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1745429265,
-        "narHash": "sha256-IZZq7wgvT17W+SIRokYOlzUlQWvRV1T2QzYDgvH4R0Y=",
-        "owner": "leo60228",
+        "lastModified": 1745980935,
+        "narHash": "sha256-aLx/HDrnGTgcRZFs5kiiz173yi/RnARERDKIq+p4OJw=",
+        "owner": "moonlight-mod",
         "repo": "moonlight",
-        "rev": "6e1eda03f199a2d48e60f6fb7561649a480b3310",
+        "rev": "f2395a937ca7e4e933a44e71eb38a4c621125595",
         "type": "github"
       },
       "original": {
-        "owner": "leo60228",
-        "ref": "nix-firefox",
+        "owner": "moonlight-mod",
         "repo": "moonlight",
         "type": "github"
       }
