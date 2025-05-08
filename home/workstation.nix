@@ -72,7 +72,7 @@ lib.mkIf osConfig.vris.workstation {
     enableSshSupport = true;
     enableExtraSocket = true;
     grabKeyboardAndMouse = false;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentry.package = pkgs.pinentry-qt;
   };
 
   home.file.".rustup/toolchains/system".source = pkgs.leoPkgs.rust.rust;
