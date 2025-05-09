@@ -151,7 +151,8 @@
         "armv7l-linux"
         "aarch64-linux"
       ];
-      preferStaticEmulators = true;
+      # TODO: https://nixpk.gs/pr-tracker.html?pr=402027
+      #preferStaticEmulators = true;
       addEmulatedSystemsToNixSandbox = false;
     };
 
