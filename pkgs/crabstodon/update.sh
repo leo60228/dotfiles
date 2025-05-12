@@ -47,7 +47,7 @@ in
   src = fetchFromGitHub {
     owner = "$OWNER";
     repo = "$REPO";
-    rev = "v\${version}";
+    rev = "$REVISION";
     hash = "$HASH";
   };
   patches = patches ++ [ ];

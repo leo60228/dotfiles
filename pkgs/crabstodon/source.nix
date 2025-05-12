@@ -11,7 +11,7 @@ in
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "v${version}";
+    rev = "bf898efe0106ff3d5c03bff27a418046c2ea1631";
     hash = "sha256-vIhjNwofA2Ff1P4Z1+WtWLa/kCK9oNvi9sYQO8TiMRU=";
   };
   patches = patches ++ [ ];
