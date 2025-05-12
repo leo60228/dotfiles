@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p bundix coreutils diffutils nix-prefetch-github gnused jq yarn-berry_4.yarn-berry-fetcher
+#! nix-shell -i bash -p bundix coreutils diffutils nix-prefetch-github gnused jq yarn-berry_4.yarn-berry-fetcher nixfmt-rfc-style
 set -e
 
 OWNER=BlaseballCrabs
@@ -61,7 +61,7 @@ SOURCE_DIR="$(nix-build --no-out-link -E '(import <nixpkgs> {}).callPackage ./so
 
 echo "Creating gemset.nix"
 bundix --lockfile="$SOURCE_DIR/Gemfile.lock" --gemfile="$SOURCE_DIR/Gemfile"
-echo "" >> gemset.nix # Create trailing newline to please EditorConfig checks
+nixfmt gemset.nix
 
 echo "Creating missing-hashes.json"
 yarn-berry-fetcher missing-hashes "$SOURCE_DIR/yarn.lock" > missing-hashes.json
