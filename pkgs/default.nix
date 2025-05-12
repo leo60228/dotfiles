@@ -1,7 +1,6 @@
 {
   callPackage,
   callPackages,
-  nodejs_18,
   python3,
   libsForQt5,
   qt6,
