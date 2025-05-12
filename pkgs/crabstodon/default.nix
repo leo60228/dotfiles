@@ -36,9 +36,11 @@ stdenv.mkDerivation rec {
     pname = "${pname}-modules";
     inherit src version;
 
+    missingHashes = ./missing-hashes.json;
     yarnOfflineCache = yarn-berry.fetchYarnBerryDeps {
       inherit src;
       hash = yarnHash;
+      missingHashes = ./missing-hashes.json;
     };
 
     nativeBuildInputs = [

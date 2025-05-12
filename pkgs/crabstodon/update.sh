@@ -63,6 +63,9 @@ echo "Creating gemset.nix"
 bundix --lockfile="$SOURCE_DIR/Gemfile.lock" --gemfile="$SOURCE_DIR/Gemfile"
 echo "" >> gemset.nix # Create trailing newline to please EditorConfig checks
 
+echo "Creating missing-hashes.json"
+yarn-berry-fetcher missing-hashes "$SOURCE_DIR/yarn.lock" > missing-hashes.json
+
 echo "Updating yarnHash"
-YARN_HASH="$(yarn-berry-fetcher prefetch "$SOURCE_DIR/yarn.lock" 2> /dev/null)"
+YARN_HASH="$(yarn-berry-fetcher prefetch "$SOURCE_DIR/yarn.lock" missing-hashes.json)"
 sed -i "s;sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;$YARN_HASH;g" source.nix
