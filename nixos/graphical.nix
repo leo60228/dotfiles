@@ -14,6 +14,11 @@
       default = false;
     };
 
+    vris.gpuSupportsStats = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+
     vris.firefox = lib.mkOption {
       type = lib.types.package;
       default = pkgs.firefox-devedition;

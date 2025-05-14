@@ -19,6 +19,7 @@
     services.power-profiles-daemon.enable = true;
     services.hardware.bolt.enable = true;
     services.udisks2.package = pkgs.leoPkgs.udisks2;
+    vris.gpuSupportsStats = true;
 
     networking.networkmanager.wifi.backend = "iwd";
 

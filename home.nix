@@ -88,7 +88,7 @@
           "cpu"
         ]
         ++ (lib.optional osConfig.vris.graphical (
-          if osConfig.services.xserver.videoDrivers != [ "nvidia" ] then
+          if osConfig.vris.gpuSupportsStats then
             {
               type = "gpu";
               driverSpecific = true;
@@ -126,7 +126,7 @@
     [[ $- != *i* ]] && return
 
     if [ -z "$NEOFETCH_RAN" ]; then
-        fastfetch
+        LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/run/opengl-driver/lib" fastfetch
         export NEOFETCH_RAN=1
     fi
   '';

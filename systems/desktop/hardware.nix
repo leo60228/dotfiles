@@ -96,6 +96,7 @@
   '';
 
   hardware.nvidia-container-toolkit.enable = true;
+  vris.gpuSupportsStats = true;
 
   # HiDPI {{{1
   services.xserver.displayManager.xserverArgs = [ "-dpi 157" ];
