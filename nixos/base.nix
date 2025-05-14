@@ -34,7 +34,7 @@
       X11Forwarding = true;
       StreamLocalBindUnlink = true;
       GatewayPorts = "yes";
-      TrustedUserCAKeys = builtins.toString ../files/ssh-ca.pub;
+      TrustedUserCAKeys = "${../files/ssh-ca.pub}";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       UseDns = true;
