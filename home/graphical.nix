@@ -46,7 +46,7 @@ lib.mkIf osConfig.vris.graphical {
     Wants=mpdiscord.service
   '';
 
-  xdg.configFile."systemd/user/app-calibre\\x2dgui.service.d/override.conf".text = ''
+  xdg.configFile."systemd/user/app-calibre\\x2dgui@.service.d/override.conf".text = ''
     [Service]
     Environment=CALIBRE_USE_SYSTEM_THEME=1
   '';
