@@ -41,8 +41,15 @@
     enable = true;
     userName = "leo60228";
     userEmail = "leo@60228.dev";
-    extraConfig.init.defaultBranch = "main";
-    extraConfig.hub.protocol = "ssh";
+    extraConfig = {
+      init.defaultBranch = "main";
+      hub.protocol = "ssh";
+      pull.ff = "only";
+      rerere.enabled = true;
+      merge.conflictStyle = "zdiff3";
+      diff.algorithm = "histogram";
+      feature.manyFiles = true;
+    };
   };
 
   programs.home-manager.enable = true;

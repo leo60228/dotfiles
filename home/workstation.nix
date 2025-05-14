@@ -74,6 +74,7 @@ lib.mkIf osConfig.vris.workstation {
     grabKeyboardAndMouse = false;
     pinentry.package = pkgs.pinentry-qt;
   };
+  programs.git.signing.signByDefault = true;
 
   home.file.".rustup/toolchains/system".source = pkgs.leoPkgs.rust.rust;
 
