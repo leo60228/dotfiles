@@ -8,6 +8,7 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    beets
     docker-credential-helpers
     libsecret
     parsec-bin
