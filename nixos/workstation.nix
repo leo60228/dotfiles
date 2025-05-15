@@ -55,6 +55,7 @@
       (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
         patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
       }))
+      pkgs.syncthingtray
     ];
 
     vris.firefox = lib.mkDefault pkgs.firefox;
@@ -160,6 +161,15 @@
       "armv7l-linux"
     ] ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 "i686-linux";
     nix.settings.extra-sandbox-paths = [ "/run/binfmt" ];
+
+    # Syncthing {{{1
+    services.syncthing = {
+      enable = true;
+      user = "leo60228";
+      group = "users";
+      dataDir = "/home/leo60228";
+      openDefaultPorts = true;
+    };
     # }}}
 
     users.extraUsers.leo60228.extraGroups = [
