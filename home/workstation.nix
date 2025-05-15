@@ -64,6 +64,11 @@ lib.mkIf osConfig.vris.workstation {
   programs.bash.initExtra = ''
     eval $(hub alias -s)
   '';
+  programs.bash.shellAliases = {
+    ffmpeg = "ffmpeg -hide_banner";
+    ffplay = "ffplay -hide_banner";
+    ffprobe = "ffprobe -hide_banner";
+  };
 
   programs.go.enable = true;
 
