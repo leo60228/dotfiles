@@ -8,7 +8,12 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
-    beets
+    (beets.override {
+      pluginOverrides.filetote = {
+        enable = true;
+        propagatedBuildInputs = [ beetsPackages.filetote ];
+      };
+    })
     docker-credential-helpers
     libsecret
     parsec-bin
