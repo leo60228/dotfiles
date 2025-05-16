@@ -8,7 +8,7 @@ REPO=mastodon
 COMMIT_JSON="$(curl -SsL "https://api.github.com/repos/$OWNER/$REPO/branches/crabstodon")"
 REVISION="$(jq -r '.commit.sha' <<< "$COMMIT_JSON")"
 DATE="$(jq -r '.commit.commit.committer.date' <<< "$COMMIT_JSON")"
-VERSION="unstable-$(date --date="$date" --iso-8601=date)"
+VERSION="unstable-$(date --date="$DATE" --iso-8601=date)"
 
 rm -f gemset.nix source.nix
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1

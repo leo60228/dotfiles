@@ -5,7 +5,7 @@
   patches ? [ ],
 }:
 let
-  version = "unstable-2025-05-12";
+  version = "unstable-2025-05-11";
 in
 (applyPatches {
   src = fetchFromGitHub {
