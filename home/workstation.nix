@@ -65,6 +65,7 @@ lib.mkIf osConfig.vris.workstation {
     dotnet-sdk
     mono
     leoPkgs.vscode-fhs
+    yubikey-touch-detector
   ];
 
   programs.git.package = pkgs.gitAndTools.gitFull;
@@ -87,6 +88,20 @@ lib.mkIf osConfig.vris.workstation {
     pinentry.package = pkgs.pinentry-qt;
   };
   programs.git.signing.signByDefault = true;
+
+  systemd.user.services.yubikey-touch-detector = {
+    Unit = {
+      Description = "Detects when your YubiKey is waiting for a touch";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector --libnotify";
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   home.file.".rustup/toolchains/system".source = pkgs.leoPkgs.rust.rust;
 
