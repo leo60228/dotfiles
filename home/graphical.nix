@@ -15,7 +15,7 @@ lib.mkIf osConfig.vris.graphical {
       calibre
       obsidian
       signal-desktop
-      thunderbird-latest
+      thunderbird-latest-bin
       libnotify
       glxinfo
       leoPkgs.cantata
