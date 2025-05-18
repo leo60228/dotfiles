@@ -15,7 +15,6 @@ lib.mkIf osConfig.vris.graphical {
       calibre
       obsidian
       signal-desktop
-      thunderbird-latest-bin
       libnotify
       glxinfo
       leoPkgs.cantata
@@ -34,6 +33,7 @@ lib.mkIf osConfig.vris.graphical {
     ++ lib.optionals pkgs.stdenv.isx86_64 [
       steam-run
       discord-canary
+      thunderbird-latest-bin
     ];
 
   xdg.configFile."systemd/user/app-vesktop@.service.d/override.conf".text = ''
