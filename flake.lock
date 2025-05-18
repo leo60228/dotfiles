@@ -607,11 +607,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1746483105,
-        "narHash": "sha256-QMQWOSNqkC/+4j4UUGp0hD1oHVc8uZkR6GCwmSzZVwA=",
+        "lastModified": 1747535361,
+        "narHash": "sha256-Wn0gCUzkRhmh/3aeU7ivviz+kahEs/Qx8TanQ/bGC70=",
         "owner": "leo60228",
         "repo": "mobile-nixos",
-        "rev": "9fbce24c43e176a5aca7547f20ebee0eae851662",
+        "rev": "bcac1ebc46e0d3c7bfe962d4ee8a83eea9ce8aae",
         "type": "github"
       },
       "original": {
