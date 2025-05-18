@@ -54,6 +54,8 @@ rec {
     allowPing = true;
   };
 
+  services.tailscale.useRoutingFeatures = "both";
+
   # Miscellaneous Services {{{1
   # minecraft-server-forwarder {{{2
   systemd.services.minecraft-server-forwarder = {
