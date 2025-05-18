@@ -34,6 +34,7 @@
       "nfs"
       "ntfs"
     ];
+    environment.sessionVariables.LD_LIBRARY_PATH = [ (lib.makeLibraryPath [ pkgs.icu ]) ];
 
     environment.systemPackages = [
       pkgs.androidenv.androidPkgs.platform-tools
