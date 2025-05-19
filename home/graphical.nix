@@ -24,7 +24,7 @@ lib.mkIf osConfig.vris.graphical {
       xclip
       xsel
       wl-clipboard
-      gimp
+      gimp3
       vlc
       leoPkgs.twemoji-ttf
       leoPkgs.determination-fonts
