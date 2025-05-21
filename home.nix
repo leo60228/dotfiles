@@ -49,6 +49,7 @@
       merge.conflictStyle = "zdiff3";
       diff.algorithm = "histogram";
       feature.manyFiles = true;
+      rebase.autosquash = true;
     };
   };
 
