@@ -99,6 +99,8 @@
       pkgs.openocd
     ];
 
+    services.nixseparatedebuginfod.enable = true;
+
     # KVM {{{1
     virtualisation.libvirtd = {
       enable = true;
