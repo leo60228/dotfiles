@@ -9,7 +9,7 @@
 {
   imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
 
-  nix.settings.max-jobs = lib.mkDefault 24;
+  nix.settings.max-jobs = lib.mkDefault 48;
 
   # Kernel {{{1
   boot.kernelPackages = pkgs.linuxPackages_6_6;
@@ -141,6 +141,7 @@
     "sysinit.target"
     "shutdown.target"
   ];
+  powerManagement.cpuFreqGovernor = "performance";
   # }}}
 
   deployment.tags = [ "workstation" ];
