@@ -126,9 +126,9 @@
 
     [[ $- != *i* ]] && return
 
-    if [ -z "$NEOFETCH_RAN" ]; then
+    if [ -z "$FASTFETCH_RAN" ]; then
         LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/run/opengl-driver/lib" fastfetch
-        export NEOFETCH_RAN=1
+        export FASTFETCH_RAN=1
     fi
   '';
 
