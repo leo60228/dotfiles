@@ -9,7 +9,6 @@
 
 rec {
   bin = callPackage ./bin { };
-  cantata = callPackage ./cantata { inherit taglib2; };
   crabstodon = callPackage ./crabstodon { };
   eontimer = libsForQt5.callPackage ./eontimer { inherit qtsass; };
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
@@ -25,7 +24,6 @@ rec {
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };
   sddm-theme-breeze-user = kdePackages.callPackage ./sddm-theme-breeze-user { };
-  taglib2 = callPackage ./taglib2 { };
   twemoji-ttf = callPackage ./twemoji-ttf { };
   udisks2 = callPackage ./udisks/2-default.nix { };
   vimPlugins = callPackages ./vim-plugins { };

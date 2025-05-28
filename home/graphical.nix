@@ -17,7 +17,7 @@ lib.mkIf osConfig.vris.graphical {
       signal-desktop
       libnotify
       glxinfo
-      leoPkgs.cantata
+      cantata
       zenity
       mpv
       appimage-run

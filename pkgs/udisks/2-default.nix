@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  substituteAll,
+  replaceVars,
   pkg-config,
   gnused,
   autoreconfHook,
@@ -55,8 +55,7 @@ stdenv.mkDerivation rec {
   ] ++ lib.optional (stdenv.hostPlatform == stdenv.buildPlatform) "devdoc";
 
   patches = [
-    (substituteAll {
-      src = ./fix-paths.patch;
+    (replaceVars ./fix-paths.patch {
       bash = "${bash}/bin/bash";
       false = "${coreutils}/bin/false";
       mdadm = "${mdadm}/bin/mdadm";
@@ -67,8 +66,7 @@ stdenv.mkDerivation rec {
       swapon = "${util-linux}/bin/swapon";
       true = "${coreutils}/bin/true";
     })
-    (substituteAll {
-      src = ./force-path.patch;
+    (replaceVars ./force-path.patch {
       path = lib.makeBinPath [
         btrfs-progs
         coreutils
