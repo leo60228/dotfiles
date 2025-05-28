@@ -56,14 +56,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     (replaceVars ./fix-paths.patch {
-      bash = "${bash}/bin/bash";
       false = "${coreutils}/bin/false";
       mdadm = "${mdadm}/bin/mdadm";
-      mkswap = "${util-linux}/bin/mkswap";
       sed = "${gnused}/bin/sed";
       sh = "${bash}/bin/sh";
       sleep = "${coreutils}/bin/sleep";
-      swapon = "${util-linux}/bin/swapon";
       true = "${coreutils}/bin/true";
     })
     (replaceVars ./force-path.patch {
