@@ -497,15 +497,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1747534931,
-        "narHash": "sha256-4PwWTpJJNTQy+vVJGvtpiKfQzlm41/h/oHIsgbsLVn8=",
-        "rev": "5cdd0978f2f982a54093ec3dae34b6e9f3de205d",
+        "lastModified": 1748549212,
+        "narHash": "sha256-KCH4fqvjTgx7jzoEvzSzXiqDzwURUm8DbOAtKVF3Lsc=",
+        "rev": "e382dd2f1a5bfbc6c41df85f9ca9364401d4ad91",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/hydra/archive/5cdd0978f2f982a54093ec3dae34b6e9f3de205d.tar.gz?rev=5cdd0978f2f982a54093ec3dae34b6e9f3de205d"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/hydra/archive/e382dd2f1a5bfbc6c41df85f9ca9364401d4ad91.tar.gz?rev=e382dd2f1a5bfbc6c41df85f9ca9364401d4ad91"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz"
+        "url": "https://git.lix.systems/lix-project/hydra/archive/pull/47/head.tar.gz"
       }
     },
     "lanzaboote": {
@@ -568,11 +568,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1747597880,
-        "narHash": "sha256-jSjL/UltXkvnfMo0hO0Afva1LCukHGJ4cw8uCzIfTGc=",
+        "lastModified": 1748525112,
+        "narHash": "sha256-dV38lWAd2nECc0zielYnsi4VhnyP/IhM7c/0UEkIQlo=",
         "ref": "refs/heads/main",
-        "rev": "cfaeed469b969c5d823b2c652fa571151533fec1",
-        "revCount": 17896,
+        "rev": "0c2ced0224bd419b7b792b3935846177fe76b251",
+        "revCount": 17965,
         "type": "git",
         "url": "https://git@git.lix.systems/lix-project/lix"
       },
