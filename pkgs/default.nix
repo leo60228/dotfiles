@@ -8,6 +8,7 @@
 }:
 
 rec {
+  avmvc12 = callPackage ./avmvc12 { };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
   eontimer = libsForQt5.callPackage ./eontimer { inherit qtsass; };

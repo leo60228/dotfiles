@@ -44,12 +44,16 @@
     "i2c-dev"
     "edac_mce_amd"
     "rgb133"
+    "HwsUHDX1Capture"
   ];
   boot.extraModprobeConfig = ''
     options kvm-amd nested=1
   '';
 
-  boot.extraModulePackages = [ (pkgs.leoPkgs.datapath-vision config.boot.kernelPackages) ];
+  boot.extraModulePackages = [
+    (pkgs.leoPkgs.datapath-vision config.boot.kernelPackages)
+    (pkgs.leoPkgs.avmvc12.override { linuxPackages = config.boot.kernelPackages; })
+  ];
   hardware.firmware = [ pkgs.leoPkgs.datapath-vision-firmware ];
 
   hardware.enableRedistributableFirmware = true;
