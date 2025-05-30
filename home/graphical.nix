@@ -49,6 +49,7 @@ lib.mkIf osConfig.vris.graphical {
   xdg.configFile."systemd/user/app-calibre\\x2dgui@.service.d/override.conf".text = ''
     [Service]
     Environment=CALIBRE_USE_SYSTEM_THEME=1
+    Environment=LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [ pkgs.openssl ]}
   '';
 
   systemd.user.services.mpdiscord = {
