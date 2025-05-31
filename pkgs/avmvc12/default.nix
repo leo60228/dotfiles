@@ -33,10 +33,11 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    mkdir -p $out/lib/modules/${linuxPackages.kernel.modDirVersion}/drivers/misc
+    mkdir -p $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc
     for x in $(find . -name '*.ko'); do
       nuke-refs $x
-      cp $x $out/lib/modules/${linuxPackages.kernel.modDirVersion}/drivers/misc/
+      cp $x $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc/
+      xz -f $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc/$x
     done
   '';
 
