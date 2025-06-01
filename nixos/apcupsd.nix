@@ -43,6 +43,10 @@
         MINUTES ${toString config.vris.apcupsd.minutes}
         TIMEOUT ${toString config.vris.apcupsd.timeout}
       '';
+      hooks = {
+        commfailure = "exit 99";
+        commok = "exit 99";
+      };
     };
 
     systemd.services.apcupsd-killpower.enable = false;
