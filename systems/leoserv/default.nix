@@ -1,6 +1,11 @@
 # vi: set foldmethod=marker:
 
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./hardware.nix ];
@@ -191,6 +196,52 @@
     volumes = [ "actual:/data" ];
     image = "ghcr.io/actualbudget/actual:latest-alpine";
     extraOptions = [ "--tz=local" ];
+  };
+
+  # RIPE Atlas Probe {{{1
+  virtualisation.oci-containers.containers.ripe-atlas = {
+    image = "docker.io/jamesits/ripe-atlas:latest";
+    volumes = [
+      "/etc/ripe-atlas:/etc/ripe-atlas"
+      "/run/ripe-atlas:/run/ripe-atlas"
+      "/var/spool/ripe-atlas:/var/spool/ripe-atlas"
+    ];
+    environment.HTTP_POST_PORT = "8028";
+    privileged = true;
+    extraOptions = [
+      "--network=host"
+      "--tz=local"
+    ];
+    pull = "newer";
+    labels."io.containers.autoupdate" = "registry";
+  };
+
+  systemd.services.podman-ripe-atlas.after = lib.mkAfter [ "systemd-tmpfiles-setup.service" ];
+
+  systemd.timers.podman-auto-update = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnUnitActiveSet = "10m";
+      Unit = "podman-auto-update.service";
+    };
+  };
+
+  systemd.tmpfiles.settings = {
+    "10-ripe-atlas" =
+      let
+        settings = {
+          d = {
+            group = "999";
+            mode = "0755";
+            user = "101";
+          };
+        };
+      in
+      {
+        "/etc/ripe-atlas" = settings;
+        "/run/ripe-atlas" = settings;
+        "/var/spool/ripe-atlas" = settings;
+      };
   };
   # }}}
 }
