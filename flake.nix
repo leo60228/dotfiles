@@ -40,7 +40,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.hydra = {
-    url = "https://git.lix.systems/lix-project/hydra/archive/pull/47/head.tar.gz";
+    url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.lix.follows = "lix";
   };
@@ -149,6 +149,8 @@
               };
           in
           systems // { inherit meta defaults; };
+
+        colmenaHive = colmena.lib.makeHive self.outputs.colmena;
 
         nixosConfigurations =
           nixpkgs.lib.mapAttrs
