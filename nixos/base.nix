@@ -20,11 +20,7 @@
     flakes.home-manager.nixosModules.home-manager
     "${flakes.hydra}/nixos-modules/hydra.nix"
     flakes.lix-module.nixosModules.default
-
-    # patches
-    ./mastodon.nix
   ];
-  disabledModules = [ "services/web-apps/mastodon.nix" ];
 
   # SSH {{{1
   services.openssh = {
