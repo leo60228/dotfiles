@@ -10,6 +10,8 @@
   writeShellScript,
   brotli,
   python3,
+  defaultGemConfig,
+  openssl,
 
   # Allow building a fork or custom version of Mastodon:
   pname ? "mastodon",
@@ -30,6 +32,11 @@ stdenv.mkDerivation rec {
     name = "${pname}-gems-${version}";
     inherit version gemset ruby;
     gemdir = src;
+    gemConfig = defaultGemConfig // {
+      hiredis-client = attrs: {
+        buildInputs = [ openssl ];
+      };
+    };
   };
 
   mastodonModules = stdenv.mkDerivation {
