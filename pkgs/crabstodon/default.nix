@@ -86,8 +86,6 @@ stdenv.mkDerivation rec {
       find public/assets -type f -regextype posix-extended -iregex '.*\.(css|html|js|json|svg)' \
         -exec gzip --best --keep --force {} ';' \
         -exec brotli --best --keep {} ';'
-      gzip --best --keep public/packs/report.html
-      brotli --best --keep public/packs/report.html
 
       runHook postBuild
     '';
