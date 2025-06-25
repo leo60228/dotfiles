@@ -137,10 +137,8 @@ stdenv.mkDerivation rec {
       -exec brotli --best --keep {} ';'
     ln -s assets/500.html.gz public/500.html.gz
     ln -s assets/500.html.br public/500.html.br
-    ln -s packs/sw.js.gz public/sw.js.gz
-    ln -s packs/sw.js.br public/sw.js.br
-    ln -s packs/sw.js.map.gz public/sw.js.map.gz
-    ln -s packs/sw.js.map.br public/sw.js.map.br
+    ln -s packs/sw.js public/sw.js
+    ln -s packs/sw.js.map public/sw.js.map
 
     rm -rf log
     ln -s /var/log/mastodon log
