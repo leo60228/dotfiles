@@ -102,6 +102,9 @@ rec {
       MAX_POLL_OPTIONS = "15";
       MAX_PROFILE_FIELDS = "15";
 
+      EXPERIMENTAL_FEATURES = "inbound_quotes";
+      FETCH_REPLIES_ENABLED = "true";
+
       GITHUB_REPOSITORY = "BlaseballCrabs/mastodon";
       SOURCE_TAG = config.services.mastodon.package.src.rev;
     };
