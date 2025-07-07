@@ -65,7 +65,7 @@ lib.mkIf osConfig.vris.workstation {
     hplip
     dotnet-sdk
     mono
-    leoPkgs.vscode-fhs
+    vscode-fhs
     yubikey-touch-detector
   ];
 
