@@ -8,6 +8,7 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    pnpm
     unixtools.xxd
     (beets.override {
       pluginOverrides.filetote = {
