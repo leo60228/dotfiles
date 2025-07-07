@@ -106,6 +106,7 @@ neovim.override {
             vim-auto-save
             vim-poryscript
             direnv-vim
+            fzf-vim
           ];
 
         opt = lib.optionals workstation ([ vimspector ] ++ map (x: x.plug) ftPlugins);
