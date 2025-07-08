@@ -2,8 +2,6 @@
   callPackage,
   callPackages,
   python3,
-  libsForQt5,
-  qt6,
   kdePackages,
 }:
 
@@ -11,7 +9,6 @@ rec {
   avmvc12 = callPackage ./avmvc12 { };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
-  eontimer = libsForQt5.callPackage ./eontimer { inherit qtsass; };
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
   datapath-vision-firmware = callPackage ./datapath-vision-firmware { };
   determination-fonts = callPackage ./determination-fonts { };
@@ -20,7 +17,6 @@ rec {
   mediawiki-extensions = callPackage ./mediawiki-extensions { };
   office-2007-fonts = callPackage ./office-2007-fonts { };
   pam-fprint-grosshack = callPackage ./pam-fprint-grosshack { };
-  qtsass = python3.pkgs.toPythonApplication (python3.pkgs.callPackage ./qtsass { });
   redumper = callPackage ./redumper { };
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };

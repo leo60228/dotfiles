@@ -31,7 +31,6 @@ lib.mkIf osConfig.vris.workstation {
     ctrtool
     hactool
     qpwgraph
-    leoPkgs.eontimer
     jetbrains-toolbox
     rsgain
     kio-fuse
