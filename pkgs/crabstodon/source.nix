@@ -5,18 +5,18 @@
   patches ? [ ],
 }:
 let
-  version = "unstable-2025-06-23";
+  version = "unstable-2025-07-08";
 in
 (applyPatches {
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "46382f07c98084266f22ceb3b43704148d65cc7b";
-    hash = "sha256-+j7QeVQal4I9xuPurxSRjLPd010o2uIZF2Ffw8y4zq0=";
+    rev = "36cb0c10b6d05b2ef66ce10fb6f83f0d20082e11";
+    hash = "sha256-xWTCZdkFqd+1q7gHR5LW6iwCTD82INpyvl2wTjGcLbw=";
   };
   patches = patches ++ [ ];
 })
 // {
   inherit version;
-  yarnHash = "sha256-nthfaUt6ZQzE5wD/zCRF9XA0ivph0WHCKnD4GGGmZyk=";
+  yarnHash = "sha256-uJ5CborG6I9o1uIKRLaE0eLBqAHQFtpOPqDk7pHpMsI=";
 }
