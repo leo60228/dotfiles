@@ -13,6 +13,15 @@
     fsType = "ext4";
   };
 
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/58A1-A55A";
+    fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
+  };
+
   # This file was populated at runtime with the networking
   # details gathered from the active system.
   networking = {
