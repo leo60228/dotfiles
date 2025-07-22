@@ -163,6 +163,7 @@
     ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2145", TAG+="uaccess", MODE="0666"
     ATTRS{idVendor}=="1781", ATTRS{idProduct}=="0c9f", TAG+="uaccess", MODE="0666"
     ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="5014", TAG+="uaccess", MODE="0666"
+    ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="9008", TAG+="uaccess", MODE="0666"
   '';
   services.udev.packages = [
     (pkgs.runCommand "udev-rules" { } ''
