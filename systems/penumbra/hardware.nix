@@ -46,7 +46,10 @@
       options ttm pages_limit=8037464
     '';
 
-    networking.wireless.iwd.settings.General.ControlPortOverNL80211 = false;
+    networking.wireless.iwd.settings = {
+      General.ControlPortOverNL80211 = false;
+      Rank.BandModifier6GHz = 1.1;
+    };
 
     # Disks {{{1
     fileSystems."/" = {
