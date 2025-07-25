@@ -27,7 +27,7 @@
     deployment.allowLocalDeployment = true;
 
     # Kernel {{{1
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_testing;
     boot.initrd.availableKernelModules = [
       "nvme"
       "xhci_pci"
@@ -45,6 +45,8 @@
       options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
       options ttm pages_limit=8037464
     '';
+
+    networking.wireless.iwd.settings.General.ControlPortOverNL80211 = false;
 
     # Disks {{{1
     fileSystems."/" = {
