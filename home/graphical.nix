@@ -98,7 +98,7 @@ lib.mkIf osConfig.vris.graphical {
             bitwarden
             plasma-integration
           ]
-          ++ lib.optional (!osConfig.vris.workstation) pkgs.moonlight-mod.firefox;
+          ++ lib.optional (!osConfig.vris.workstation) pkgs.moonlight.firefox;
         settings = {
           "extensions.autoDisableScopes" = 0;
           "dom.allow_scripts_to_close_windows" = true;
