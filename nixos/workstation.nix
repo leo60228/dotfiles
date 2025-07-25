@@ -162,7 +162,8 @@
 
     nix.settings.extra-platforms = [
       "armv7l-linux"
-    ] ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 "i686-linux";
+    ]
+    ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 "i686-linux";
     nix.settings.extra-sandbox-paths = [ "/run/binfmt" ];
 
     # Syncthing {{{1

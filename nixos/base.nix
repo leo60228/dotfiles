@@ -78,17 +78,18 @@
 
   # Nixpkgs {{{1
   nixpkgs = {
-    overlays =
-      [ flakes.hydra.overlays.default ]
-      ++ map (
-        e:
-        let
-          rawOverlay = import (../overlays + ("/" + e));
-          hasArgs = builtins.functionArgs rawOverlay != { };
-          overlay = if hasArgs then rawOverlay flakes else rawOverlay;
-        in
-        overlay
-      ) (builtins.attrNames (builtins.readDir ../overlays));
+    overlays = [
+      flakes.hydra.overlays.default
+    ]
+    ++ map (
+      e:
+      let
+        rawOverlay = import (../overlays + ("/" + e));
+        hasArgs = builtins.functionArgs rawOverlay != { };
+        overlay = if hasArgs then rawOverlay flakes else rawOverlay;
+      in
+      overlay
+    ) (builtins.attrNames (builtins.readDir ../overlays));
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
@@ -106,7 +107,8 @@
       let
         substituters = [
           "https://cache.nixos.org/"
-        ] ++ lib.optional (config.networking.hostName != "desktop") "http://desktop:9999";
+        ]
+        ++ lib.optional (config.networking.hostName != "desktop") "http://desktop:9999";
       in
       {
         experimental-features = [

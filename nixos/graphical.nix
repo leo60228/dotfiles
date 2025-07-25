@@ -116,7 +116,8 @@
       pkgs.aspell
       pkgs.aspellDicts.en
       pkgs.aspellDicts.en-computers
-    ] ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
+    ]
+    ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
 
     environment.etc."/etc/aspell.conf".text = ''
       master en_US

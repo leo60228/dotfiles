@@ -18,13 +18,11 @@ let
           buildInputs = (old.buildInputs or [ ]) ++ [ prev.setuptools ];
         });
         libarchive-c = prev.libarchive-c.overridePythonAttrs (old: {
-          postPatch =
-            (old.postPatch or "")
-            + ''
-              echo "Patching find_library call."
-              substituteInPlace libarchive/ffi.py \
-                --replace-warn "find_library('archive')" "\"${libarchive.lib}/lib/libarchive.so\""
-            '';
+          postPatch = (old.postPatch or "") + ''
+            echo "Patching find_library call."
+            substituteInPlace libarchive/ffi.py \
+              --replace-warn "find_library('archive')" "\"${libarchive.lib}/lib/libarchive.so\""
+          '';
         });
       }
     );

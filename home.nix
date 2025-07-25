@@ -60,57 +60,56 @@
   programs.fastfetch = {
     enable = true;
     settings = {
-      modules =
-        [
-          "title"
-          "separator"
-          "os"
+      modules = [
+        "title"
+        "separator"
+        "os"
+        {
+          type = "command";
+          key = "Host";
+          text = "fastfetch --pipe -l none --key-type none -s host --host-format '{name}' | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'";
+        }
+        "kernel"
+        "uptime"
+        "shell"
+      ]
+      ++ (lib.optionals osConfig.vris.graphical [
+        {
+          type = "display";
+          compactType = "original-with-refresh-rate";
+        }
+        {
+          type = "command";
+          key = "DE";
+          text = "set -eu -o pipefail; x=\"$(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; y=\"$(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; echo \"Plasma $x [Frameworks $y] ($XDG_SESSION_TYPE)\"";
+        }
+      ])
+      ++ [
+        "cpu"
+      ]
+      ++ (lib.optional osConfig.vris.graphical (
+        if osConfig.vris.gpuSupportsStats then
           {
-            type = "command";
-            key = "Host";
-            text = "fastfetch --pipe -l none --key-type none -s host --host-format '{name}' | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'";
+            type = "gpu";
+            driverSpecific = true;
+            format = "{name} ({core-count}) @ {frequency} ({driver})";
           }
-          "kernel"
-          "uptime"
-          "shell"
-        ]
-        ++ (lib.optionals osConfig.vris.graphical [
-          {
-            type = "display";
-            compactType = "original-with-refresh-rate";
-          }
-          {
-            type = "command";
-            key = "DE";
-            text = "set -eu -o pipefail; x=\"$(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; y=\"$(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; echo \"Plasma $x [Frameworks $y] ($XDG_SESSION_TYPE)\"";
-          }
-        ])
-        ++ [
-          "cpu"
-        ]
-        ++ (lib.optional osConfig.vris.graphical (
-          if osConfig.vris.gpuSupportsStats then
-            {
-              type = "gpu";
-              driverSpecific = true;
-              format = "{name} ({core-count}) @ {frequency} ({driver})";
-            }
-          else
-            "gpu"
-        ))
-        ++ [
-          "memory"
-          "disk"
-          {
-            type = "battery";
-            key = "Battery";
-          }
-          {
-            type = "localip";
-            compact = true;
-            showPrefixLen = false;
-          }
-        ];
+        else
+          "gpu"
+      ))
+      ++ [
+        "memory"
+        "disk"
+        {
+          type = "battery";
+          key = "Battery";
+        }
+        {
+          type = "localip";
+          compact = true;
+          showPrefixLen = false;
+        }
+      ];
       logo.color = {
         "1" = "38;2;74;107;175";
         "2" = "38;2;126;177;221";

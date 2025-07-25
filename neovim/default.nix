@@ -82,32 +82,31 @@ neovim.override {
       with vimPlugins;
       with leoPkgs.vimPlugins;
       {
-        start =
-          [
-            vim-abolish
-            vim-unimpaired
-            vim-hardtime
-            editorconfig-vim
-            vim-sleuth
-            plenary-nvim
-            ale
-            nvim-echo-diagnostics
-            nvim-solarized-lua
-            vim-fetch
-            (vimUtils.buildVimPlugin {
-              name = "leovim";
-              src = ./runtime;
-            })
-          ]
-          ++ lib.optionals workstation [
-            nvim-treesitter.withAllGrammars
-            playground
-            nvim-treesitter-refactor
-            vim-auto-save
-            vim-poryscript
-            direnv-vim
-            fzf-vim
-          ];
+        start = [
+          vim-abolish
+          vim-unimpaired
+          vim-hardtime
+          editorconfig-vim
+          vim-sleuth
+          plenary-nvim
+          ale
+          nvim-echo-diagnostics
+          nvim-solarized-lua
+          vim-fetch
+          (vimUtils.buildVimPlugin {
+            name = "leovim";
+            src = ./runtime;
+          })
+        ]
+        ++ lib.optionals workstation [
+          nvim-treesitter.withAllGrammars
+          playground
+          nvim-treesitter-refactor
+          vim-auto-save
+          vim-poryscript
+          direnv-vim
+          fzf-vim
+        ];
 
         opt = lib.optionals workstation ([ vimspector ] ++ map (x: x.plug) ftPlugins);
       };
