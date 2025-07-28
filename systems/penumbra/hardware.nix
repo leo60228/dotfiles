@@ -35,7 +35,9 @@
     ];
     boot.initrd.kernelModules = [ "dm-snapshot" ];
     boot.kernelModules = [ "kvm-amd" ];
-    boot.extraModulePackages = [ ];
+    boot.extraModulePackages = [
+      (pkgs.leoPkgs.ath12k.override { linuxPackages = config.boot.kernelPackages; })
+    ];
 
     boot.extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="US"
@@ -115,7 +117,6 @@
     networking.networkmanager.wifi.backend = "iwd";
 
     networking.wireless.iwd.settings = {
-      General.ControlPortOverNL80211 = false;
       Rank.BandModifier6GHz = 1.1;
     };
 

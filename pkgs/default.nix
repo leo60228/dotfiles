@@ -6,6 +6,7 @@
 }:
 
 rec {
+  ath12k = callPackage ./ath12k { };
   avmvc12 = callPackage ./avmvc12 { };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
