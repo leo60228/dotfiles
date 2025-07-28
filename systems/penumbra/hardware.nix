@@ -21,8 +21,6 @@
     services.udisks2.package = pkgs.leoPkgs.udisks2;
     vris.gpuSupportsStats = true;
 
-    networking.networkmanager.wifi.backend = "iwd";
-
     deployment.tags = [ "workstation" ];
     deployment.allowLocalDeployment = true;
 
@@ -45,11 +43,6 @@
       options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
       options ttm pages_limit=8037464
     '';
-
-    networking.wireless.iwd.settings = {
-      General.ControlPortOverNL80211 = false;
-      Rank.BandModifier6GHz = 1.1;
-    };
 
     # Disks {{{1
     fileSystems."/" = {
@@ -117,6 +110,14 @@
     hardware.alsa.enablePersistence = true;
     systemd.services.alsa-store.serviceConfig.ExecStart =
       lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
+
+    # Wi-Fi {{{1
+    networking.networkmanager.wifi.backend = "iwd";
+
+    networking.wireless.iwd.settings = {
+      General.ControlPortOverNL80211 = false;
+      Rank.BandModifier6GHz = 1.1;
+    };
 
     # Fingerprint {{{1
     security.pam.services.polkit-1.fprintAuth = true;
