@@ -84,7 +84,7 @@
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
   inputs.moonlight = {
-    url = "github:leo60228/moonlight/nixpkgs-warn";
+    url = "github:moonlight-mod/moonlight";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.flake-compat = {
