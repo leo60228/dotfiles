@@ -117,6 +117,7 @@
     networking.networkmanager.wifi.backend = "iwd";
 
     networking.wireless.iwd.settings = {
+      General.RoamThreshold5G = -66;
       Rank.BandModifier6GHz = 1.1;
     };
 
