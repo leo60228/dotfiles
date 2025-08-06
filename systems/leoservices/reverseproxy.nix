@@ -17,7 +17,6 @@
     recommendedGzipSettings = true;
     recommendedProxySettings = true;
     commonHttpConfig = ''
-      ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp521r1:secp384r1;
       log_format full '$remote_addr - $remote_user [$time_local] '
                       '"$request" $status $bytes_sent '
                       '"$http_referer" "$http_user_agent"';

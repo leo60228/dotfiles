@@ -95,10 +95,6 @@ rec {
     enable = true;
     recommendedProxySettings = true;
 
-    commonHttpConfig = ''
-      ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp521r1:secp384r1;
-    '';
-
     appendHttpConfig = ''
       proxy_cache_path /var/cache/nginx keys_zone=CACHE:10m;
     '';
