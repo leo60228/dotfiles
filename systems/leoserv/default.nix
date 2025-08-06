@@ -179,8 +179,10 @@
 
   services.zigbee2mqtt = {
     enable = true;
+    package = pkgs.zigbee2mqtt_2;
     settings = {
       homeassistant = true;
+      serial.adapter = "zstack";
       serial.port = "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_a0b342a38245ed119082c68f0a86e0b4-if00-port0";
       frontend.port = 8456;
       advanced.network_key = "!secret network_key";
