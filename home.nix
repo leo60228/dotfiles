@@ -3,6 +3,7 @@
   osConfig,
   config,
   lib,
+  flakes,
   ...
 }:
 
@@ -10,6 +11,7 @@
   imports = [
     ./home/graphical.nix
     ./home/workstation.nix
+    flakes.nix-index-database.homeModules.nix-index
   ];
 
   home.stateVersion = "21.05";
@@ -118,12 +120,12 @@
   };
 
   programs.bash.enable = true;
-  programs.bash.initExtra = ''
+  programs.bash.initExtra = lib.mkAfter ''
+    alias cat=bat
+
     PROMPT_COLOR="1;2;37m"
     PS1='\n\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]$([ -z "$IN_NIX_SHELL" ] && echo "\u@\h" || echo nix-shell):\w]\\$\[\033[0m\] '
     export NIX_SHELL_PRESERVE_PROMPT=1
-
-    [[ $- != *i* ]] && return
 
     if [ -z "$FASTFETCH_RAN" ]; then
         LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/run/opengl-driver/lib" fastfetch
@@ -137,7 +139,6 @@
   };
 
   programs.bash.shellAliases = {
-    cat = "bat";
     sudo = "sudo ";
   };
 
@@ -166,4 +167,6 @@
     msmtp.extraConfig.auth = "oauthbearer";
     passwordCommand = "${pkgs.oama}/bin/oama access leo@60228.dev";
   };
+
+  programs.nix-index.enable = lib.mkOverride 900 false;
 }

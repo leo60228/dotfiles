@@ -130,4 +130,6 @@ lib.mkIf osConfig.vris.workstation {
       }
     '';
   };
+
+  programs.nix-index.enable = true;
 }

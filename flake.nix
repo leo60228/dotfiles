@@ -59,8 +59,8 @@
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
   };
-  inputs.flake-programs-sqlite = {
-    url = "github:wamserma/flake-programs-sqlite";
+  inputs.nix-index-database = {
+    url = "github:nix-community/nix-index-database";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.treefmt-nix = {

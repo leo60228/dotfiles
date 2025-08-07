@@ -196,27 +196,6 @@
         "type": "github"
       }
     },
-    "flake-programs-sqlite": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1754218429,
-        "narHash": "sha256-CndpgsJDUqqbVdLxwexCjamRQVq4YMPVuMB2SoGkx88=",
-        "owner": "wamserma",
-        "repo": "flake-programs-sqlite",
-        "rev": "79f3770b2e5c51218b7c69eba4a303b920d1b1a3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wamserma",
-        "repo": "flake-programs-sqlite",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -853,6 +832,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1754195341,
+        "narHash": "sha256-YL71IEf2OugH3gmAsxQox6BJI0KOcHKtW2QqT/+s2SA=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "b7fcd4e26d67fca48e77de9b0d0f954b18ae9562",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nix2container": {
       "flake": false,
       "locked": {
@@ -1191,7 +1190,6 @@
         "fizz-strat": "fizz-strat",
         "flake-compat": "flake-compat",
         "flake-firefox-nightly": "flake-firefox-nightly",
-        "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_5",
         "home-manager": "home-manager",
         "hydra": "hydra",
@@ -1202,6 +1200,7 @@
         "moonlight": "moonlight",
         "mpdiscord": "mpdiscord",
         "naersk": "naersk_3",
+        "nix-index-database": "nix-index-database",
         "nixos-apple-silicon": "nixos-apple-silicon",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
@@ -1631,21 +1630,6 @@
       "original": {
         "owner": "leo60228",
         "repo": "upd8r",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1678901627,
-        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     }

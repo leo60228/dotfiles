@@ -89,8 +89,6 @@
 
     # Configuration {{{1
     programs.fuse.userAllowOther = true;
-    programs.command-not-found.dbPath =
-      flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
 
     # Debuggers {{{1
     services.udev.packages = [
