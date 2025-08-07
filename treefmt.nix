@@ -8,8 +8,13 @@
 
   programs.shfmt = {
     enable = true;
-    indent_size = null;
+    indent_size = 4;
   };
+  settings.formatter.shfmt.options = [
+    "--space-redirects"
+    "--case-indent"
+    "--language-dialect=bash"
+  ];
 
   programs.mdformat = {
     enable = true;
