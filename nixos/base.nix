@@ -176,6 +176,9 @@
 
   # Filesystems {{{1
   boot.tmp.useTmpfs = true;
+  networking.hostId = builtins.substring 0 8 (
+    builtins.hashString "sha256" config.networking.hostName
+  );
 
   # increase inotify limits (per upstream recommendation, see kernel commits
   # 92890123749bafc317bbfacbe0a62ce08d78efb7 and ac7b79fd190b02e7151bc7d2b9da692f537657f3)

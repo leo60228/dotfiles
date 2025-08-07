@@ -66,6 +66,9 @@
   };
 
   # Disks {{{1
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
     fsType = "ext4";
