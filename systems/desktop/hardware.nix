@@ -70,16 +70,20 @@
   boot.zfs.forceImportRoot = false;
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/b1301acc-d5bf-4a8d-9738-c2aaf36660a2";
-    fsType = "ext4";
+    device = "rpool/root";
+    fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3556-7F76";
+    device = "/dev/disk/by-uuid/EB6E-B0DA";
     fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/13e11580-45e0-4d16-a67e-27abf1277788"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/5d7d9524-c956-4e2a-acf7-2821cd922d7e"; } ];
 
   # Graphics {{{1
   environment.systemPackages = with pkgs; [
