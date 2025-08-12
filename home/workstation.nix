@@ -27,7 +27,7 @@ lib.mkIf osConfig.vris.workstation {
     fusee-nano
     obs-studio
     ares
-    ryujinx
+    ryubing
     ctrtool
     hactool
     qpwgraph
