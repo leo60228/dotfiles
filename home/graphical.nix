@@ -107,6 +107,7 @@ lib.mkIf osConfig.vris.graphical {
           "browser.ctrlTab.recentlyUsedOrder" = false;
           "datareporting.policy.firstRunURL" = "";
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "browser.fixup.dns_first_for_single_words" = true;
           "browser.uiCustomization.state" = {
             currentVersion = 18;
             placements = {
