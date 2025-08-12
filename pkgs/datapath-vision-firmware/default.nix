@@ -13,7 +13,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.datapathsoftware.com/supportdownloads/linux/vision-driver-app/VisionInstall-${version}.tar.gz";
-    sha256 = "1995klvpvps3k25w0ly1qvhm9n73ad58yp87ln2n34nrf3bynhiq";
+    hash = "sha256-7XHpWaE34HY41Z4oXyae6mj3Os2WJ4EMqUlxKSL9Lww=";
   };
 
   sourceRoot = "firmware";
