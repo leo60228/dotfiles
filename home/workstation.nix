@@ -16,6 +16,10 @@ lib.mkIf osConfig.vris.workstation {
         enable = true;
         propagatedBuildInputs = [ beetsPackages.filetote ];
       };
+      pluginOverrides.bandcamp = {
+        enable = true;
+        propagatedBuildInputs = [ leoPkgs.beetcamp ];
+      };
     })
     docker-credential-helpers
     libsecret

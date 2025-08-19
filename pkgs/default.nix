@@ -3,11 +3,13 @@
   callPackages,
   python3,
   kdePackages,
+  beetsPackages,
 }:
 
 rec {
   ath12k = callPackage ./ath12k { };
   avmvc12 = callPackage ./avmvc12 { };
+  beetcamp = callPackage ./beetcamp { beets = beetsPackages.beets-minimal; };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
   datapath-vision = kernelPackages: kernelPackages.callPackage ./datapath-vision { };
