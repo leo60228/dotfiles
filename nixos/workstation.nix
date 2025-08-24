@@ -104,18 +104,19 @@
       enable = true;
       onBoot = "ignore";
       onShutdown = "shutdown";
-      qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
+      qemu = {
+        package = pkgs.qemu.override { smbdSupport = true; };
+        swtpm.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+        verbatimConfig = ''
+          namespaces = []
+          seccomp_sandbox = 0
+        '';
+      };
     };
     users.groups.libvirtd.members = [
       "root"
       "leo60228"
-    ];
-    systemd.services.libvirtd.path = with pkgs; [
-      bash
-      killall
-      libvirt
-      kmod
-      swtpm
     ];
 
     # Docker {{{1
