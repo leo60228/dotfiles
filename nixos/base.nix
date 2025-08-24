@@ -141,9 +141,11 @@
     tailscale
   ];
 
-  boot.initrd.extraUtilsCommands = ''
+  boot.initrd.extraUtilsCommands = lib.mkIf (!config.boot.initrd.systemd.enable) ''
     copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
   '';
+
+  boot.initrd.systemd.initrdBin = lib.mkIf (config.boot.initrd.systemd.enable) [ pkgs.e2fsprogs ];
 
   # Kernel {{{1
   boot.kernel.sysctl."kernel.sysrq" = 1;

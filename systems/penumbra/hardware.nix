@@ -63,7 +63,13 @@
 
     swapDevices = [ { device = "/dev/disk/by-uuid/f735a083-e7e4-46ca-a0b0-73f280f3d8ad"; } ];
 
-    boot.initrd.luks.devices."lvm".device = "/dev/disk/by-uuid/32bfc36e-2640-4110-bc58-b93564acaafa";
+    boot.initrd.luks.devices."lvm" = {
+      device = "/dev/disk/by-uuid/32bfc36e-2640-4110-bc58-b93564acaafa";
+      crypttabExtraOpts = [
+        "tpm2-device=auto"
+        "tpm2-measure-pcr=yes"
+      ];
+    };
 
     # Boot {{{1
     boot.loader.systemd-boot.enable = lib.mkForce false;
@@ -77,6 +83,8 @@
       pkgs.sbctl
       pkgs.kdePackages.plasma-thunderbolt
     ];
+
+    boot.initrd.systemd.enable = true;
 
     # HiDPI {{{1
     console.earlySetup = true;
