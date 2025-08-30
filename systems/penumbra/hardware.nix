@@ -35,9 +35,6 @@
     ];
     boot.initrd.kernelModules = [ "dm-snapshot" ];
     boot.kernelModules = [ "kvm-amd" ];
-    boot.extraModulePackages = [
-      (pkgs.leoPkgs.ath12k.override { linuxPackages = config.boot.kernelPackages; })
-    ];
 
     boot.extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="US"

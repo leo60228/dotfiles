@@ -51,10 +51,8 @@
   '';
 
   boot.extraModulePackages = [
-    (pkgs.leoPkgs.datapath-vision config.boot.kernelPackages)
     (pkgs.leoPkgs.avmvc12.override { linuxPackages = config.boot.kernelPackages; })
   ];
-  hardware.firmware = [ pkgs.leoPkgs.datapath-vision-firmware ];
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
