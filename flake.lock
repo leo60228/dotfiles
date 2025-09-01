@@ -13,15 +13,16 @@
         "stable": "stable"
       },
       "locked": {
-        "lastModified": 1755272288,
-        "narHash": "sha256-ypTPb2eKcOBbOoyvPV0j4ZOXs4kayo73/2KI456QnE0=",
-        "owner": "zhaofengli",
+        "lastModified": 1756764935,
+        "narHash": "sha256-9QU78qrC6JUTOygRGb7qyUCtKhE3O9BIkpSglhRd3dA=",
+        "owner": "leo60228",
         "repo": "colmena",
-        "rev": "5bf4ce6a24adba74a5184f4a9bef01d545a09473",
+        "rev": "c57bf6d41a85a9f4402262832ebe342ac521004d",
         "type": "github"
       },
       "original": {
-        "owner": "zhaofengli",
+        "owner": "leo60228",
+        "ref": "npkgs-lib",
         "repo": "colmena",
         "type": "github"
       }

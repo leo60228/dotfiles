@@ -55,7 +55,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.colmena = {
-    url = "github:zhaofengli/colmena";
+    url = "github:leo60228/colmena/npkgs-lib";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
   };
@@ -156,25 +156,7 @@
 
         colmenaHive = colmena.lib.makeHive self.outputs.colmena;
 
-        nixosConfigurations =
-          nixpkgs.lib.mapAttrs
-            (
-              n: x:
-              nixpkgs.lib.nixosSystem {
-                system = self.outputs.colmena.meta.nodeNixpkgs.${n}.system;
-                modules = [
-                  x
-                  colmena.nixosModules.deploymentOptions
-                ];
-                inherit (self.outputs.colmena.meta) specialArgs;
-              }
-            )
-            (
-              builtins.removeAttrs self.outputs.colmena [
-                "meta"
-                "defaults"
-              ]
-            );
+        nixosConfigurations = self.outputs.colmenaHive.nodes;
 
         hydraJobs =
           let
