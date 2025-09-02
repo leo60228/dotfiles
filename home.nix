@@ -81,7 +81,13 @@
         {
           type = "command";
           key = "DE";
-          text = "set -eu -o pipefail; x=\"$(dbus-send --dest=org.kde.plasmashell --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; y=\"$(dbus-send --dest=org.kde.kded6 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion | sed 's/^ *variant *//')\"; echo \"Plasma $x [Frameworks $y] ($XDG_SESSION_TYPE)\"";
+          text = ''
+            set -eu -o pipefail
+            dbusArgs=(--reply-timeout=50 --print-reply=literal /MainApplication org.freedesktop.DBus.Properties.Get string:org.qtproject.Qt.QCoreApplication string:applicationVersion)
+            x="$(dbus-send --dest=org.kde.plasmashell "''${dbusArgs[@]}" | sed 's/^ *variant *//')"
+            y="$(dbus-send --dest=org.kde.kded6 "''${dbusArgs[@]}" | sed 's/^ *variant *//')"
+            echo "Plasma $x [Frameworks $y] ($XDG_SESSION_TYPE)"
+          '';
         }
       ])
       ++ [
