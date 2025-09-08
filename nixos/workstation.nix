@@ -177,6 +177,66 @@
       dataDir = "/home/leo60228";
       openDefaultPorts = true;
     };
+
+    # Networking {{{1
+    networking.firewall = {
+      trustedInterfaces = [ "tailscale0" ]; # tailscale has its own firewall, and default-deny on tailscale0 causes breakage
+      checkReversePath = "loose";
+
+      # allow SSDP responses
+      allowedUDPPorts = [ 1900 ];
+      extraPackages = [ pkgs.conntrack-tools ];
+      extraCommands = ''
+        nfct add helper ssdp inet udp
+        nfct add helper ssdp inet6 udp
+        ip46tables -t raw -I OUTPUT -p udp --dport 1900 -j CT --helper ssdp
+        ip46tables -t raw -I PREROUTING -p udp --dport 1900 -j CT --helper ssdp
+      '';
+      extraStopCommands = ''
+        ip46tables -t raw -D OUTPUT -p udp --dport 1900 -j CT --helper ssdp
+        ip46tables -t raw -D PREROUTING -p udp --dport 1900 -j CT --helper ssdp
+      '';
+    };
+
+    environment.etc."conntrackd/conntrackd.conf".text = ''
+      Helper {
+        Type ssdp inet udp {
+          QueueNum 5
+          QueueLen 10240
+          Policy ssdp {
+            ExpectMax 1
+            ExpectTimeout 300
+          }
+        }
+        Type ssdp inet6 udp {
+          QueueNum 5
+          QueueLen 10240
+          Policy ssdp {
+            ExpectMax 1
+            ExpectTimeout 300
+          }
+        }
+      }
+
+      General {
+        Systemd yes
+        Syslog yes
+        LockFile /var/lock/conntrack.lock
+        UNIX {
+          Path /var/run/conntrackd.ctl
+        }
+      }
+    '';
+
+    systemd.services.conntrackd = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      restartTriggers = [ config.environment.etc."conntrackd/conntrackd.conf".source ];
+      serviceConfig = {
+        Type = "notify";
+        ExecStart = "${pkgs.conntrack-tools}/bin/conntrackd";
+      };
+    };
     # }}}
 
     users.extraUsers.leo60228.extraGroups = [
