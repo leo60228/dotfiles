@@ -14,4 +14,6 @@
   wsl.defaultUser = "leo60228";
 
   deployment.allowLocalDeployment = true;
+
+  home-manager.users.leo60228.home.packages = [ pkgs.colmena ];
 }
