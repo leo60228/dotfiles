@@ -93,7 +93,7 @@ rec {
     backend = "podman";
     containers = {
       searchdown = {
-        image = "registry.gitlab.com/vriska/searchdown:latest";
+        image = "registry.gitlab.com/arachnidsGrip/searchdown:latest";
         environmentFiles = [ "/var/lib/searchdown/.env" ];
         extraOptions = [
           "--label=io.containers.autoupdate=registry"
