@@ -49,14 +49,23 @@
     ];
   };
 
-  virtualisation.waydroid.enable = true;
-
   virtualisation.lxc = {
     enable = true;
     unprivilegedContainers = true;
     usernetConfig = ''
       leo60228 veth lxcbr0 10
     '';
+  };
+
+  # Waydroid {{{1
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid.overrideAttrs (oldAttrs: {
+      preFixup = ''
+        sed -i~ -E 's/=.\$\(command -v (nft|ip6?tables-legacy).*/=/g' $out/lib/waydroid/data/scripts/waydroid-net.sh
+        ${oldAttrs.preFixup}
+      '';
+    });
   };
 
   # fwupd {{{1
