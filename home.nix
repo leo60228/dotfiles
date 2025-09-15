@@ -172,4 +172,22 @@
     msmtp.extraConfig.auth = "oauthbearer";
     passwordCommand = "${pkgs.oama}/bin/oama access leo@60228.dev";
   };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    stdlib = ''
+      eval _orig_"$(declare -f use_nix)"
+      use_nix() {
+        _orig_use_nix "$@"
+        unset IN_NIX_SHELL
+      }
+
+      eval _orig_"$(declare -f use_flake)"
+      use_flake() {
+        _orig_use_flake "$@"
+        unset IN_NIX_SHELL
+      }
+    '';
+  };
 }

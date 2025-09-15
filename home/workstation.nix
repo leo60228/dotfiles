@@ -116,22 +116,4 @@ lib.mkIf osConfig.vris.workstation {
       org.gradle.java.installations.auto-download=false
     '';
   };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    stdlib = ''
-      eval _orig_"$(declare -f use_nix)"
-      use_nix() {
-        _orig_use_nix "$@"
-        unset IN_NIX_SHELL
-      }
-
-      eval _orig_"$(declare -f use_flake)"
-      use_flake() {
-        _orig_use_flake "$@"
-        unset IN_NIX_SHELL
-      }
-    '';
-  };
 }
