@@ -21,6 +21,7 @@ lib.mkIf osConfig.vris.workstation {
         propagatedBuildInputs = [ leoPkgs.beetcamp ];
       };
     })
+    opusTools
     docker-credential-helpers
     libsecret
     parsec-bin
