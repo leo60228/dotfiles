@@ -32,6 +32,12 @@ lib.mkIf osConfig.vris.workstation {
     fusee-nano
     obs-studio
     ares
+    (mesen.overrideAttrs (oldAttrs: {
+      dotnetRuntimeDeps = oldAttrs.dotnetRuntimeDeps ++ [
+        xorg.libXrandr
+        xorg.libXcursor
+      ];
+    }))
     ryubing
     ctrtool
     hactool
