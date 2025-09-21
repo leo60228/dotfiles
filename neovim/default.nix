@@ -106,6 +106,7 @@ neovim.override {
           vim-poryscript
           direnv-vim
           fzf-vim
+          jupytext-nvim
         ];
 
         opt = lib.optionals workstation ([ vimspector ] ++ map (x: x.plug) ftPlugins);

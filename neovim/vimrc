@@ -196,6 +196,13 @@ require("echo-diagnostics").setup {
 }
 EOF
 
+" jupytext-nvim
+lua <<EOF
+require("jupytext").setup {
+    format = "auto:percent",
+}
+EOF
+
 " }}}
 
 " Filetype commands {{{
