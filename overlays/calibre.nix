@@ -1,7 +1,13 @@
 self: super:
 
 {
-  calibre = super.calibre.overrideAttrs (oldAttrs: {
-    doInstallCheck = self.stdenv.isx86_64;
-  });
+  calibre =
+    (super.calibre.override {
+      piper-tts = self.piper-tts.override {
+        withTrain = false;
+      };
+    }).overrideAttrs
+      (oldAttrs: {
+        doInstallCheck = self.stdenv.isx86_64;
+      });
 }
