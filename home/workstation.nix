@@ -12,13 +12,15 @@ lib.mkIf osConfig.vris.workstation {
     pnpm
     unixtools.xxd
     (beets.override {
-      pluginOverrides.filetote = {
-        enable = true;
-        propagatedBuildInputs = [ beetsPackages.filetote ];
-      };
-      pluginOverrides.bandcamp = {
-        enable = true;
-        propagatedBuildInputs = [ leoPkgs.beetcamp ];
+      pluginOverrides = {
+        #filetote = {
+        #  enable = true;
+        #  propagatedBuildInputs = [ beetsPackages.filetote ];
+        #};
+        bandcamp = {
+          enable = true;
+          propagatedBuildInputs = [ leoPkgs.beetcamp ];
+        };
       };
     })
     opusTools
