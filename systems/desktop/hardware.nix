@@ -81,7 +81,16 @@
     ];
   };
 
-  #swapDevices = [ { device = "/dev/disk/by-uuid/5d7d9524-c956-4e2a-acf7-2821cd922d7e"; } ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-partuuid/7ce37c65-7e1f-4dc9-bc7f-90f388eec3e3";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+        sectorSize = 4096;
+      };
+    }
+  ];
 
   # Graphics {{{1
   environment.systemPackages = with pkgs; [
