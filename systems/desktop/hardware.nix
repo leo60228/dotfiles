@@ -2,6 +2,7 @@
 {
   config,
   lib,
+  utils,
   modulesPath,
   pkgs,
   ...
@@ -91,6 +92,104 @@
       };
     }
   ];
+
+  # derived from https://discourse.nixos.org/t/import-zpool-before-luks-with-systemd-on-boot/65400/2
+  boot.initrd = {
+    systemd.enable = true;
+
+    systemd.services.zfs-import-rpool.enable = false;
+
+    systemd.services.import-rpool-bare =
+      let
+        devices = map (p: utils.escapeSystemdPath p + ".device") [
+          "/dev/disk/by-id/nvme-TEAM_TM8FP4004T_1B2310020140078-part2"
+        ];
+      in
+      {
+        after = [ "modprobe@zfs.service" ] ++ devices;
+        requires = [ "modprobe@zfs.service" ];
+
+        wants = [ "cryptsetup-pre.target" ] ++ devices;
+        before = [ "cryptsetup-pre.target" ];
+
+        unitConfig.DefaultDependencies = false;
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        path = [ config.boot.zfs.package ];
+        enableStrictShellChecks = true;
+        script =
+          let
+            # Check that the FSes we're about to mount actually come from
+            # our encryptionroot. If not, they may be fraudulent.
+            shouldCheckFS = fs: fs.fsType == "zfs" && utils.fsNeededForBoot fs;
+            checkFS = fs: ''
+              encroot="$(zfs get -H -o value encryptionroot ${fs.device})"
+              if [ "$encroot" != rpool/root ]; then
+                echo ${fs.device} has invalid encryptionroot "$encroot" >&2
+                exit 1
+              else
+                echo ${fs.device} has valid encryptionroot "$encroot" >&2
+              fi
+            '';
+          in
+          ''
+            function cleanup() {
+              exit_code=$?
+              if [ "$exit_code" != 0 ]; then
+                zpool export rpool
+              fi
+            }
+            trap cleanup EXIT
+            zpool import -N -d /dev/disk/by-id rpool
+
+            # Check that the file systems we will mount have the right encryptionroot.
+            ${lib.concatStringsSep "\n" (
+              lib.map checkFS (lib.filter shouldCheckFS config.system.build.fileSystems)
+            )}
+          '';
+      };
+
+    luks.devices.credstore = {
+      device = "/dev/zvol/rpool/credstore";
+      # crypttabExtraOpts = [ "tpm2-measure-pcr=yes" "tpm2-device=auto" ];
+    };
+
+    supportedFilesystems.ext4 = true;
+    systemd.contents."/etc/fstab".text = ''
+      /dev/mapper/credstore /etc/credstore ext4 defaults,x-systemd.after=systemd-cryptsetup@credstore.service 0 2
+    '';
+    systemd.targets.initrd-switch-root = {
+      conflicts = [
+        "etc-credstore.mount"
+        "systemd-cryptsetup@credstore.service"
+      ];
+      after = [
+        "etc-credstore.mount"
+        "systemd-cryptsetup@credstore.service"
+      ];
+    };
+    systemd.services.systemd-udevd.before = [ "systemd-cryptsetup@credstore.service" ];
+
+    systemd.services.rpool-load-key = {
+      requiredBy = [ "initrd.target" ];
+      before = [
+        "sysroot.mount"
+        "initrd.target"
+      ];
+      requires = [ "import-rpool-bare.service" ];
+      after = [ "import-rpool-bare.service" ];
+      unitConfig.RequiresMountsFor = "/etc/credstore";
+      unitConfig.DefaultDependencies = false;
+      serviceConfig = {
+        Type = "oneshot";
+        ImportCredential = "zfs-sysroot.mount";
+        RemainAfterExit = true;
+        ExecStart = "${config.boot.zfs.package}/bin/zfs load-key -L file://\"\${CREDENTIALS_DIRECTORY}\"/zfs-sysroot.mount rpool/root";
+      };
+    };
+  };
 
   # Graphics {{{1
   environment.systemPackages = with pkgs; [
