@@ -2,13 +2,16 @@
 {
   config,
   lib,
-  utils,
   modulesPath,
   pkgs,
+  flakes,
   ...
 }:
 {
-  imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
+  imports = [
+    "${modulesPath}/installer/scan/not-detected.nix"
+    flakes.lanzaboote.nixosModules.lanzaboote
+  ];
 
   nix.settings.max-jobs = lib.mkDefault 48;
 
@@ -59,10 +62,13 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # Boot {{{1
-  boot.loader.systemd-boot = {
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+
+  boot.lanzaboote = {
     enable = true;
-    memtest86.enable = true;
+    pkiBundle = "/var/lib/sbctl";
   };
+
   boot.initrd.systemd.enable = true;
 
   # Disks {{{1
@@ -105,6 +111,7 @@
   environment.systemPackages = with pkgs; [
     vulkan-loader
     vulkan-tools
+    sbctl
   ];
 
   hardware.graphics = {
