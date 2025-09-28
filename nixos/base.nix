@@ -15,6 +15,7 @@
     ./graphical.nix
     ./prometheus.nix
     ./apcupsd.nix
+    ./zfs-credstore.nix
 
     # dependencies
     flakes.home-manager.nixosModules.home-manager
