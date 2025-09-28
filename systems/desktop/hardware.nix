@@ -74,6 +74,7 @@
   # Disks {{{1
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
+  services.zfs.trim.enable = true;
 
   fileSystems."/" = {
     device = "rpool/root";
@@ -94,7 +95,6 @@
       device = "/dev/disk/by-partuuid/7ce37c65-7e1f-4dc9-bc7f-90f388eec3e3";
       randomEncryption = {
         enable = true;
-        allowDiscards = true;
         sectorSize = 4096;
       };
     }
