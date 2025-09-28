@@ -133,29 +133,11 @@
   vris.gpuSupportsStats = true;
 
   # HiDPI {{{1
-  services.xserver.displayManager.xserverArgs = [ "-dpi 157" ];
   console.earlySetup = true;
   console.packages = [ pkgs.terminus_font ];
   console.font = "ter-128n";
-  services.xserver.exportConfiguration = true;
-  services.displayManager.sddm.settings = {
-    General = {
-      Numlock = "none";
-    };
 
-    Theme = {
-      CursorSize = 48;
-      CursorTheme = "breeze_cursors";
-      Font = "Sans Serif,10,-1,5,50,0,0,0,0,0";
-    };
-
-    X11 = {
-      ServerArguments = "-dpi 192";
-    };
-  };
-  services.xserver.displayManager.setupCommands = ''
-    echo 'Xcursor.theme: breeze_cursors' | ${pkgs.xorg.xrdb}/bin/xrdb -nocpp -merge
-  '';
+  services.displayManager.sddm.wayland.enable = true;
 
   # Sound {{{1
   services.udev.extraRules = ''
