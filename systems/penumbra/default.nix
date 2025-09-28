@@ -68,21 +68,5 @@
     });
   };
 
-  # fwupd {{{1
-  services.fwupd.enable = true;
-  services.packagekit.enable = true;
-  services.packagekit.settings.Daemon.DefaultBackend = "test_succeed";
-  environment.etc."fwupd/remotes.d/lvfs-testing.conf" = lib.mkForce {
-    text = ''
-      [fwupd Remote]
-      Enabled=true
-      Title=Linux Vendor Firmware Service (testing)
-      MetadataURI=https://cdn.fwupd.org/downloads/firmware-testing.xml.gz
-      ReportURI=https://fwupd.org/lvfs/firmware/report
-      OrderBefore=lvfs,fwupd
-      AutomaticReports=false
-      ApprovalRequired=false
-    '';
-  };
   # }}}
 }
