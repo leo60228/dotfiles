@@ -136,8 +136,8 @@
             "sysroot.mount"
             "initrd.target"
           ];
-          requires = [ "import-${cfg.pool}.service" ];
-          after = [ "import-${cfg.pool}.service" ];
+          requires = [ "import-${cfg.pool}-bare.service" ];
+          after = [ "import-${cfg.pool}-bare.service" ];
           unitConfig.RequiresMountsFor = "/etc/credstore";
           unitConfig.DefaultDependencies = false;
           serviceConfig = {
