@@ -105,6 +105,7 @@
     devices = [
       "/dev/disk/by-id/nvme-TEAM_TM8FP4004T_1B2310020140078-part2"
     ];
+    tpm2 = true;
   };
 
   # Graphics {{{1
