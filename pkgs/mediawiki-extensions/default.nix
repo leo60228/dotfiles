@@ -28,38 +28,38 @@ in
 {
   CodeMirror = getWMExtension {
     name = "CodeMirror";
-    rev = "3def77c029ea8d5c74856710f5e231fd2d9185ae";
-    hash = "sha256-TFA0CtLiLr6abjmVeu8m89xEI7jMLPJy7AO1kDS3AOY=";
+    rev = "3fd9acb48870a04c245a5a074adbba4a41efc851";
+    hash = "sha256-r4p5u8AQGuB6ANuHPChjNqxiBqf54JWAXGCMAwNueH4=";
   };
   MobileFrontend = getWMExtension {
     name = "MobileFrontend";
-    rev = "aae56d488072b725c8df9126567f1c068bbc4e59";
-    hash = "sha256-ZKsDFzC10bwvVm7IQfY+uEzXInPq5WR49C/jVm0jVtk=";
+    rev = "fa47ad32e1566e10e97c2f2ecde29c0686e6e0f2";
+    hash = "sha256-4Ly7qntP1G4bfq9fagsCePPt9/4j6koCSfRe70EIlG4=";
   };
   OpenGraphMeta = getWMExtension {
     name = "OpenGraphMeta";
-    rev = "cb990fcea3b7827f02bcc328e367a7b2387a32a3";
-    hash = "sha256-GNtsKbyFZDBCvQUhKzN57ShTflvSCFvVXVNnTPYBmOY=";
+    rev = "11db8b6ecfd78fc010ffe8c3f83f71b10c651e3d";
+    hash = "sha256-tgg+XY2zaTnqPOGtYL0mRmTUUvp4BpDRetHE1kCLXhU=";
   };
   TimedMediaHandler = mkMWExtension rec {
     pname = "TimedMediaHandler";
     src = getWMExtension {
       name = pname;
-      rev = "5e0454259958af6790c929114e56336b40be8f81";
-      hash = "sha256-wCdBbw6FrDE686iEFG2bHvYTGj1amQjLk+OsYUPcNaU=";
+      rev = "ae529cc004a014028b4199bf73a9349e45eb0f18";
+      hash = "sha256-Yx0lV+v2JHzu/tnedkCJnrRL7FbkdkBdRyHcHguAiz8=";
     };
-    vendorHash = "sha256-4Xfz+qV5qqaAXZamDn2cqpfL6wxrAw3PCWgf9UBOU/c=";
+    vendorHash = "sha256-AY8prvrSKAr/5i1a8Qu2mzcQm5RcZLeVklD+rNBnie4=";
     composerLock = ./TimedMediaHandler.lock;
   };
   Description2 = getWMExtension {
     name = "Description2";
-    rev = "50e2aef88053be12a66b617657c414a665e2d38e";
-    hash = "sha256-awJ7piKA5k14c2ZRPM/oyWvnVLizAauecYRoCysuwnQ=";
+    rev = "eb3c8cec4852c8381a860b14bb4bf86e87f8313b";
+    hash = "sha256-Y3RJsONwDVVY2jS3br4ap3JQFFutyWY9rLQUzaqUIYw=";
   };
   PortableInfobox = pkgs.fetchFromGitHub {
     owner = "Universal-Omega";
     repo = "PortableInfobox";
-    rev = "f5780412fcb25d3981cdc7f2af8f75518d9ee3cb";
-    hash = "sha256-Hm1+jzhq+PIx699ICgJM92xt6UW8jko+kxT2icdCDFc=";
+    rev = "b700a0c0a1e3a4083ee95601ae041d9c083184c0";
+    hash = "sha256-B0TzFtNiPo/WuacvcSQuKBitAfOo5P0qsnJhWpZYN9M=";
   };
 }

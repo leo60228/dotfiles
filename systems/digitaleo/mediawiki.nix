@@ -7,7 +7,10 @@
 {
   services.mediawiki = {
     enable = true;
-    package = pkgs.nur.repos.ihaveamac.mediawiki_1_43;
+    package = pkgs.nur.repos.ihaveamac.mediawiki_1_44.override {
+      version = "1.44.1";
+      hash = "sha256-cMsjrJtGDsGZH6M4J6TbWPoIDmc36kIdQoHEkGWy3VA=";
+    };
     name = "CHORDIOID Wiki";
     url = "https://chordiwiki.l3.pm";
     passwordFile = "/var/lib/mediawiki/mw-password";
