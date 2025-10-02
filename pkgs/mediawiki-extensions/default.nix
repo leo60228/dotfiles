@@ -28,18 +28,18 @@ in
 {
   CodeMirror = getWMExtension {
     name = "CodeMirror";
-    rev = "3fd9acb48870a04c245a5a074adbba4a41efc851";
-    hash = "sha256-r4p5u8AQGuB6ANuHPChjNqxiBqf54JWAXGCMAwNueH4=";
+    rev = "8ede4d472a243ba9ae337bce6e82bcc370da143e";
+    hash = "sha256-YtLSxwmYR6jBcGI8uBqnqLMtyNrm4VcgEwS4TSrKY+Q=";
   };
   MobileFrontend = getWMExtension {
     name = "MobileFrontend";
-    rev = "fa47ad32e1566e10e97c2f2ecde29c0686e6e0f2";
-    hash = "sha256-4Ly7qntP1G4bfq9fagsCePPt9/4j6koCSfRe70EIlG4=";
+    rev = "6c41d8ac39849def7263b27907feec949676c36c";
+    hash = "sha256-VovSDIG7/UY1+/40bIYAgkB4bmQkG1msPkpohlorKK8=";
   };
   OpenGraphMeta = getWMExtension {
     name = "OpenGraphMeta";
-    rev = "11db8b6ecfd78fc010ffe8c3f83f71b10c651e3d";
-    hash = "sha256-tgg+XY2zaTnqPOGtYL0mRmTUUvp4BpDRetHE1kCLXhU=";
+    rev = "c01f171eb11ba8abd070c376757524b87fba78f3";
+    hash = "sha256-pHO8kHGp2Rd7q/pd1D4rf26LwSy2x7sU5Tw/tifqmNQ=";
   };
   TimedMediaHandler = mkMWExtension rec {
     pname = "TimedMediaHandler";
@@ -53,8 +53,8 @@ in
   };
   Description2 = getWMExtension {
     name = "Description2";
-    rev = "eb3c8cec4852c8381a860b14bb4bf86e87f8313b";
-    hash = "sha256-Y3RJsONwDVVY2jS3br4ap3JQFFutyWY9rLQUzaqUIYw=";
+    rev = "defa8c4fb5f312affac24c306d64dcf4ec577652";
+    hash = "sha256-OOjqsVD5EGsgutONQugJ0TTUMKLD70zALBy/Hf6uwbI=";
   };
   PortableInfobox = pkgs.fetchFromGitHub {
     owner = "Universal-Omega";
