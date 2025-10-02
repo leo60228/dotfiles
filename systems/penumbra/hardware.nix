@@ -25,7 +25,7 @@
     deployment.allowLocalDeployment = true;
 
     # Kernel {{{1
-    boot.kernelPackages = pkgs.linuxPackages_testing;
+    boot.kernelPackages = pkgs.linuxPackages_6_16;
     boot.initrd.availableKernelModules = [
       "nvme"
       "xhci_pci"
@@ -33,7 +33,6 @@
       "usb_storage"
       "sd_mod"
     ];
-    boot.initrd.kernelModules = [ "dm-snapshot" ];
     boot.kernelModules = [ "kvm-amd" ];
 
     boot.extraModprobeConfig = ''
@@ -44,9 +43,12 @@
     '';
 
     # Disks {{{1
+    boot.supportedFilesystems = [ "zfs" ];
+    boot.zfs.forceImportRoot = false;
+
     fileSystems."/" = {
-      device = "/dev/disk/by-uuid/41691e95-8ec6-45a9-8f0e-6a3c72fd6c70";
-      fsType = "ext4";
+      device = "rpool/root";
+      fsType = "zfs";
     };
 
     fileSystems."/boot" = {
@@ -58,14 +60,12 @@
       ];
     };
 
-    swapDevices = [ { device = "/dev/disk/by-uuid/f735a083-e7e4-46ca-a0b0-73f280f3d8ad"; } ];
-
-    boot.initrd.luks.devices."lvm" = {
-      device = "/dev/disk/by-uuid/32bfc36e-2640-4110-bc58-b93564acaafa";
-      crypttabExtraOpts = [
-        "tpm2-device=auto"
-        "tpm2-measure-pcr=yes"
+    vris.zfs-credstore = {
+      enable = true;
+      devices = [
+        "/dev/disk/by-id/nvme-WD_BLACK_SN850X_2000GB_24144C803060-part2"
       ];
+      tpm2 = true;
     };
 
     # Boot {{{1
