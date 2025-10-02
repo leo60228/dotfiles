@@ -68,6 +68,14 @@
       tpm2 = true;
     };
 
+    boot.initrd.luks.devices.swap = {
+      device = "/dev/disk/by-id/nvme-WD_BLACK_SN850X_2000GB_24144C803060-part3";
+      keyFile = "/etc/credstore/swap.mount";
+      crypttabExtraOpts = [ "keyfile-timeout=15" ]; # required to outlive /etc/credstore!
+    };
+
+    swapDevices = [ { device = "/dev/mapper/swap"; } ];
+
     # Boot {{{1
     boot.loader.systemd-boot.enable = lib.mkForce false;
 
