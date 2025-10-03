@@ -8,8 +8,8 @@
   services.mediawiki = {
     enable = true;
     package = pkgs.nur.repos.ihaveamac.mediawiki_1_44.override {
-      version = "1.44.1";
-      hash = "sha256-cMsjrJtGDsGZH6M4J6TbWPoIDmc36kIdQoHEkGWy3VA=";
+      version = "1.44.2";
+      hash = "sha256-59cCZpeWcfr9A3BeF6IfGFvRsoP/hD7XL+KQ6G+sQzE=";
     };
     name = "CHORDIOID Wiki";
     url = "https://chordiwiki.l3.pm";
