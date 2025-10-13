@@ -175,6 +175,7 @@
       user = "leo60228";
       group = "users";
       dataDir = "/home/leo60228";
+      configDir = "/home/leo60228/.config/syncthing";
       openDefaultPorts = true;
     };
 
