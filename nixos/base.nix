@@ -148,7 +148,13 @@
 
   boot.initrd.systemd.initrdBin = lib.mkIf (config.boot.initrd.systemd.enable) [ pkgs.e2fsprogs ];
 
-  services.tailscale.enable = true;
+  # Networking {{{1
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+  };
+
+  services.resolved.enable = true;
 
   # Kernel {{{1
   boot.kernel.sysctl."kernel.sysrq" = 1;
