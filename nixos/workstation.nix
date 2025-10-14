@@ -108,15 +108,7 @@
       enable = true;
       onBoot = "ignore";
       onShutdown = "shutdown";
-      qemu = {
-        package = pkgs.qemu.override { smbdSupport = true; };
-        swtpm.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-        verbatimConfig = ''
-          namespaces = []
-          seccomp_sandbox = 0
-        '';
-      };
+      qemu.swtpm.enable = true;
     };
     users.groups.libvirtd.members = [
       "root"
