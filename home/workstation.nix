@@ -71,7 +71,7 @@ lib.mkIf osConfig.vris.workstation {
     libreoffice
     gitAndTools.hub
     prismlauncher
-    mgba
+    #mgba
     wineWowPackages.staging
     gnumake
     (hiPrio gcc)
