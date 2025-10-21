@@ -39,9 +39,9 @@
 
   programs.git = {
     enable = true;
-    userName = "leo60228";
-    userEmail = "leo@60228.dev";
-    extraConfig = {
+    settings = {
+      user.name = "leo60228";
+      user.email = "leo@60228.dev";
       init.defaultBranch = "main";
       hub.protocol = "ssh";
       pull.ff = "only";
