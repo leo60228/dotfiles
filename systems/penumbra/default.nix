@@ -17,6 +17,8 @@
 
   hardware.bluetooth.enable = true;
 
+  time.timeZone = null;
+
   networking.firewall.allowedTCPPorts = lib.range 3000 3010;
   networking.firewall.allowedUDPPorts = lib.range 3000 3010;
 
