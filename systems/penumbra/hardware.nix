@@ -25,7 +25,8 @@
     deployment.allowLocalDeployment = true;
 
     # Kernel {{{1
-    boot.kernelPackages = pkgs.linuxPackages_6_16;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.zfs.package = pkgs.zfs_unstable;
     boot.initrd.availableKernelModules = [
       "nvme"
       "xhci_pci"
