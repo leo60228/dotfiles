@@ -96,7 +96,6 @@
 
     # Debuggers {{{1
     services.udev.packages = [
-      pkgs.android-udev-rules
       pkgs.platformio-core
       pkgs.openocd
     ];
