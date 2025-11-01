@@ -14,7 +14,6 @@
 
   boot.supportedFilesystems = [ "nfs" ];
 
-  services.displayManager.sessionPackages = [ pkgs.kdePackages.plasma-mobile ];
   services.displayManager.sddm.wayland.compositorCommand = lib.concatStringsSep " " [
     "${lib.getBin pkgs.kdePackages.kwin}/bin/kwin_wayland"
     "--no-global-shortcuts"
