@@ -57,8 +57,8 @@ noremap _ ddkP
 inoremap <c-d> <esc>"_ddi
 inoremap <c-u> <esc>maviwU`aa
 nnoremap <c-u> maviwU`a
-nnoremap <leader>ev :vsplit $HOME/Dotfiles/neovim/vimrc<cr>
-nnoremap <leader>sv :source $HOME/Dotfiles/neovim/vimrc<cr>
+nnoremap <leader>ev :vsplit $HOME/dotfiles/neovim/vimrc<cr>
+nnoremap <leader>sv :source $HOME/dotfiles/neovim/vimrc<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
@@ -176,6 +176,15 @@ require'nvim-treesitter.configs'.setup {
   refactor = {
     navigation = {
       enable = true,
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["is"] = "@string.inner",
+        ["as"] = { query = "@string", query_group = "highlights" },
+      },
     },
   },
 }

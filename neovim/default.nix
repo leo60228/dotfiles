@@ -102,6 +102,7 @@ neovim.override {
           nvim-treesitter.withAllGrammars
           playground
           nvim-treesitter-refactor
+          nvim-treesitter-textobjects
           vim-auto-save
           vim-poryscript
           direnv-vim
