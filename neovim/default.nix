@@ -9,6 +9,7 @@
   lib,
   fetchFromGitHub,
   leoPkgs,
+  nodejs,
 }:
 let
   ftPlugins =
@@ -99,7 +100,26 @@ neovim.override {
           })
         ]
         ++ lib.optionals workstation [
-          nvim-treesitter.withAllGrammars
+          (nvim-treesitter.withPlugins (
+            _:
+            map (
+              x:
+              if (x.pname == "markdown-grammar") || (x.pname == "markdown_inline-grammar") then
+                x.overrideAttrs (oldAttrs: {
+                  nativeBuildInputs = [
+                    nodejs
+                    tree-sitter
+                  ];
+                  configurePhase = ''
+                    ${oldAttrs.configurePhase}
+                    tree-sitter generate
+                  '';
+                  EXTENSION_WIKI_LINK = 1;
+                })
+              else
+                x
+            ) nvim-treesitter.allGrammars
+          ))
           playground
           nvim-treesitter-refactor
           nvim-treesitter-textobjects
