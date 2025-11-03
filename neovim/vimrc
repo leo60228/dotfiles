@@ -207,7 +207,9 @@ EOF
 
 " jupytext-nvim
 lua <<EOF
-require("jupytext").setup {
+local has_jupytext, jupytext = pcall(require, "jupytext")
+if not has_jupytext then return end
+jupytext.setup {
     format = "auto:percent",
 }
 EOF
