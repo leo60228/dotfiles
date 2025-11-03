@@ -125,7 +125,7 @@
 
   programs.bash.enable = true;
   programs.bash.initExtra = ''
-    PROMPT_COLOR="1;2;37m"
+    PROMPT_COLOR="1;38;2;88;110;117m"
     PS1='\n\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]$([ -z "$IN_NIX_SHELL" ] && echo "\u@\h" || echo nix-shell):\w]\\$\[\033[0m\] '
     export NIX_SHELL_PRESERVE_PROMPT=1
 
