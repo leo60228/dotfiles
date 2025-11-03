@@ -103,6 +103,10 @@
     url = "github:nix-community/NixOS-WSL/main";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.neovim-nightly-overlay = {
+    url = "github:nix-community/neovim-nightly-overlay";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs =
     {
