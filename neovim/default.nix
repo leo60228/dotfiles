@@ -98,6 +98,7 @@ neovim.override {
             name = "leovim";
             src = ./runtime;
           })
+          direnv-vim
         ]
         ++ lib.optionals workstation [
           (nvim-treesitter.withPlugins (
@@ -125,7 +126,6 @@ neovim.override {
           nvim-treesitter-textobjects
           vim-auto-save
           vim-poryscript
-          direnv-vim
           fzf-vim
           jupytext-nvim
         ];
