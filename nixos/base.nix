@@ -154,7 +154,7 @@
     useRoutingFeatures = "both";
   };
 
-  services.resolved.enable = true;
+  services.resolved.enable = lib.mkDefault true;
 
   # Kernel {{{1
   boot.kernel.sysctl."kernel.sysrq" = 1;

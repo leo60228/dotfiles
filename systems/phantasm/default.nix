@@ -12,6 +12,7 @@
 
   wsl.enable = true;
   wsl.defaultUser = "leo60228";
+  services.resolved.enable = false;
 
   deployment.allowLocalDeployment = true;
 
