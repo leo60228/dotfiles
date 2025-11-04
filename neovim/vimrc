@@ -70,6 +70,8 @@ onoremap p i(
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <c-space> <c-x><c-o>
 nnoremap <leader>c :nohlsearch<cr>
+vnoremap <M-/> <Esc>/\%V
+nmap     <M-/> m`vi}<Esc>``/\%V
 
 function! s:EnableRelativeAutocomplete() abort
   let b:relative_autocomplete_cleanup_pending = 1
@@ -186,6 +188,18 @@ require'nvim-treesitter.configs'.setup {
       keymaps = {
         ["is"] = "@string.inner",
         ["as"] = { query = "@string", query_group = "highlights" },
+        ["i}"] = "@paragraph",
+      },
+    },
+    move = {
+      enable = true,
+      goto_next_start = {
+        ["<M-.>"] = "@statement.outer",
+        ["}"] = "@paragraph",
+      },
+      goto_previous_start = {
+        ["<M-,>"] = "@statement.outer",
+        ["{"] = "@paragraph",
       },
     },
   },
@@ -239,6 +253,8 @@ augroup vimrc
     autocmd BufRead,BufNewFile *.pio set filetype=pioasm
 
     autocmd FileType vim setlocal foldmethod=marker
+
+    autocmd FileType * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
 
     if !has('ide')
       autocmd FileType scala nnoremap <buffer> <leader>a :lua vim.lsp.buf.code_action()<cr>
