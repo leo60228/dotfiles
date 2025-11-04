@@ -69,7 +69,8 @@ nnoremap <leader>w <c-w>
 onoremap p i(
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <c-space> <c-x><c-o>
-nnoremap <leader>c :nohlsearch<cr>
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+nmap     <leader>c <C-L>
 vnoremap <M-/> <Esc>/\%V
 nmap     <M-/> m`vi}<Esc>``/\%V
 
