@@ -99,6 +99,7 @@ neovim.override {
             src = ./runtime;
           })
           direnv-vim
+          vim-pasta
         ]
         ++ lib.optionals workstation [
           (nvim-treesitter.withPlugins (

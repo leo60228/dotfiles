@@ -231,6 +231,11 @@ jupytext.setup {
 }
 EOF
 
+" vim-pasta
+let g:pasta_disabled_filetypes = []
+let g:pasta_paste_before_mapping = ']P'
+let g:pasta_paste_after_mapping = ']p'
+
 " }}}
 
 " Filetype commands {{{
