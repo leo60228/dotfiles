@@ -52,8 +52,8 @@ set listchars=tab:\ \ ,trail:◌
 " }}}
 
 " Mappings {{{
-noremap - ddp
-noremap _ ddkP
+noremap  - ddp
+noremap  _ ddkP
 inoremap <c-d> <esc>"_ddi
 inoremap <c-u> <esc>maviwU`aa
 nnoremap <c-u> maviwU`a
