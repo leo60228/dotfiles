@@ -188,18 +188,19 @@ require'nvim-treesitter.configs'.setup {
       keymaps = {
         ["is"] = "@string.inner",
         ["as"] = { query = "@string", query_group = "highlights" },
-        ["i}"] = "@paragraph",
+        ["i}"] = "@block.inner",
+        ["a}"] = "@block.outer",
       },
     },
     move = {
       enable = true,
       goto_next_start = {
         ["<M-.>"] = "@statement.outer",
-        ["}"] = "@paragraph",
+        ["}"] = "@block.inner",
       },
       goto_previous_start = {
         ["<M-,>"] = "@statement.outer",
-        ["{"] = "@paragraph",
+        ["{"] = "@block.inner",
       },
     },
   },
@@ -254,7 +255,7 @@ augroup vimrc
 
     autocmd FileType vim setlocal foldmethod=marker
 
-    autocmd FileType * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
+    autocmd BufEnter * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
 
     if !has('ide')
       autocmd FileType scala nnoremap <buffer> <leader>a :lua vim.lsp.buf.code_action()<cr>
