@@ -140,6 +140,7 @@
   home.sessionVariables = {
     EDITOR = "vim";
     RUSTFMT = "rustfmt";
+    MANPAGER = "vim '+set laststatus=0' +Man!";
   };
 
   programs.bash.shellAliases = {
