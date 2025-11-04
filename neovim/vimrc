@@ -62,6 +62,7 @@ nnoremap <leader>sv :source $HOME/dotfiles/neovim/vimrc<cr>
 nnoremap <leader>r <Cmd>RG<cr>
 nnoremap <leader>t <Cmd>Tags<cr>
 nnoremap <leader>g :Git 
+nnoremap <leader>G <Cmd>Git<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
