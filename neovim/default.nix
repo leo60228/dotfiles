@@ -87,7 +87,6 @@ neovim.override {
           vim-abolish
           vim-unimpaired
           vim-hardtime
-          editorconfig-vim
           vim-sleuth
           plenary-nvim
           ale
@@ -122,7 +121,6 @@ neovim.override {
                 x
             ) nvim-treesitter.allGrammars
           ))
-          playground
           nvim-treesitter-refactor
           nvim-treesitter-textobjects
           vim-auto-save
