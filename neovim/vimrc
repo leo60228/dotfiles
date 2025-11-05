@@ -63,6 +63,9 @@ nnoremap <leader>r <Cmd>RG<cr>
 nnoremap <leader>t <Cmd>Tags<cr>
 nnoremap <leader>g :Git 
 nnoremap <leader>G <Cmd>Git<cr>
+nnoremap <C-P> <Cmd>Files<cr>
+nnoremap <C-[> <Cmd>BTags<cr>
+nnoremap <M-[> <Cmd>BTags<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
