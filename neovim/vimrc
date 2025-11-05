@@ -7,7 +7,7 @@ set backspace=indent,eol,start  " more powerful backspacing
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab ai
 set relativenumber wrap shiftround
 let mapleader = ","
-let localleader = "\\"
+let maplocalleader = ","
 set encoding=utf-8
 set statusline=%f\ (%y)
 set foldlevelstart=0
