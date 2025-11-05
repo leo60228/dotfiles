@@ -57,8 +57,8 @@ noremap  _ ddkP
 inoremap <c-d> <esc>"_ddi
 inoremap <c-u> <esc>maviwU`aa
 nnoremap <c-u> maviwU`a
-nnoremap <leader>ev :vsplit $HOME/dotfiles/neovim/vimrc<cr>
-nnoremap <leader>sv :source $HOME/dotfiles/neovim/vimrc<cr>
+nnoremap <leader>ve :vsplit $HOME/dotfiles/neovim/vimrc<cr>
+nnoremap <leader>vs :source $HOME/dotfiles/neovim/vimrc<cr>
 nnoremap <leader>r <Cmd>RG<cr>
 nnoremap <leader>t <Cmd>Tags<cr>
 nnoremap <leader>g :Git 
