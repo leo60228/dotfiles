@@ -99,6 +99,7 @@ neovim.override {
           })
           direnv-vim
           vim-pasta
+          mini-keymap
         ]
         ++ lib.optionals workstation [
           (nvim-treesitter.withPlugins (
