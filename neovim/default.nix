@@ -125,7 +125,7 @@ neovim.override {
           nvim-treesitter-textobjects
           vim-auto-save
           vim-poryscript
-          fzf-vim
+          fzf-lua
           jupytext-nvim
           vim-fugitive
         ];

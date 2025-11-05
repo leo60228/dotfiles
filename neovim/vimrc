@@ -239,6 +239,17 @@ let g:pasta_disabled_filetypes = []
 let g:pasta_paste_before_mapping = ']P'
 let g:pasta_paste_after_mapping = ']p'
 
+" fzf-lua
+lua <<EOF
+require('fzf-lua').setup({
+    'fzf-vim',
+    fzf_colors = true,
+    defaults = { git_icons = false, file_icons = false },
+    winopts = { preview = { hidden = false } },
+    btags = { ctags_autogen = false },
+})
+EOF
+
 " }}}
 
 " Filetype commands {{{
