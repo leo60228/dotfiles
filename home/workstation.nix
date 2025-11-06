@@ -87,6 +87,7 @@ lib.mkIf osConfig.vris.workstation {
     ruff
     nixfmt
     nil
+    lua-language-server
     nerd-fonts.hack
   ];
 

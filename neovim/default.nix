@@ -2,12 +2,9 @@
   workstation ? true,
   neovim,
   tree-sitter,
-  python3,
   vimUtils,
   vimPlugins,
-  callPackage,
   lib,
-  fetchFromGitHub,
   leoPkgs,
   nodejs,
 }:
@@ -118,6 +115,8 @@ neovim.override {
           vim-fugitive
           nvim-lspconfig
           conform-nvim
+          otter-nvim
+          lazydev-nvim
         ];
 
         opt = lib.optionals workstation ([ vimspector ] ++ map (x: x.plug) ftPlugins);

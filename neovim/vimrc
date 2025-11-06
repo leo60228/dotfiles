@@ -60,12 +60,9 @@ nnoremap <c-u> maviwU`a
 nnoremap <leader>ve :vsplit $HOME/dotfiles/neovim/vimrc<cr>
 nnoremap <leader>vs :source $HOME/dotfiles/neovim/vimrc<cr>
 nnoremap <leader>r <Cmd>RG<cr>
-nnoremap <leader>t <Cmd>lua if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then FzfLua.tags() else FzfLua.lsp_workspace_symbols() end<cr>
 nnoremap <leader>g :Git 
 nnoremap <leader>G <Cmd>Git<cr>
-nnoremap <leader>s <Cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <C-P> <Cmd>Files<cr>
-nnoremap <M-[> <Cmd>lua if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then FzfLua.btags() else FzfLua.lsp_document_symbols() end<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
@@ -77,6 +74,27 @@ nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR
 nmap     <leader>c <C-L>
 vnoremap <M-/> <Esc>/\%V
 nmap     <M-/> m`vi}<Esc>``/\%V
+
+lua <<EOF
+vim.keymap.set({'n'}, '<Leader>t', function()
+    if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then
+        FzfLua.tags()
+    else
+        FzfLua.lsp_workspace_symbols()
+    end
+end)
+vim.keymap.set({'n'}, '<M-[>', function()
+    if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then
+        FzfLua.btags()
+    else
+        FzfLua.lsp_document_symbols()
+    end
+end)
+
+vim.keymap.set({'n'}, '<Leader>s', vim.lsp.buf.hover)
+vim.keymap.set({'n'}, '<Leader>a', vim.lsp.buf.code_action)
+vim.keymap.set({'n'}, '<Leader>f', require('conform').format)
+EOF
 
 function! s:EnableRelativeAutocomplete() abort
   let b:relative_autocomplete_cleanup_pending = 1
@@ -106,8 +124,6 @@ if has('ide')
 else
   nnoremap <leader>cn <Cmd>cnext<cr>
   nnoremap <leader>cN <Cmd>cprevious<cr>
-  nnoremap <leader>a <Cmd>lua vim.lsp.buf.code_action()<cr>
-  nnoremap <leader>f <Cmd>lua require('conform').format()<cr>
 endif
 " }}}
 
@@ -128,19 +144,15 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 " nvim-treesitter
 lua <<EOF
-local has_parsers, parsers = pcall(require, "nvim-treesitter.parsers")
-if not has_parsers then return end
+local has_configs, configs = pcall(require, "nvim-treesitter.configs")
+if not has_configs then return end
+configs.setup {
+  modules = {},
+  ensure_installed = {},
+  sync_install = false,
+  auto_install = false,
+  ignore_install = {},
 
-local parser_config = parsers.get_parser_configs()
-parser_config.pioasm = {
-  install_info = {
-    url = "https://github.com/leo60228/tree-sitter-pioasm",
-    branch = "main",
-    files = {"src/parser.c", "src/scanner.c"}
-  },
-}
-
-require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
     custom_captures = {
@@ -215,7 +227,9 @@ let g:pasta_paste_after_mapping = ']p'
 
 " fzf-lua
 lua <<EOF
-require('fzf-lua').setup({
+local has_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
+if not has_fzf_lua then return end
+fzf_lua.setup({
     'fzf-vim',
     fzf_colors = true,
     defaults = { git_icons = false, file_icons = false },
@@ -227,9 +241,9 @@ EOF
 " mini.keymap
 lua <<EOF
 vim.keymap.del('i', 'jk')
-if not jk_mapped then
+if not JK_MAPPED then
     require('mini.keymap').map_combo({'i', 'c', 'x', 's'}, 'jk', '<BS><BS><Esc>')
-    jk_mapped = true
+    JK_MAPPED = true
 end
 EOF
 
@@ -249,6 +263,7 @@ vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('ts_ls')
 vim.lsp.enable('eslint')
 vim.lsp.enable('nil_ls')
+vim.lsp.enable('lua_ls')
 
 vim.diagnostic.config({
     signs = {
@@ -262,7 +277,9 @@ highlight LspInlayHint guifg=#2d5b69 gui=NONE
 
 " conform.nvim
 lua <<EOF
-require("conform").setup({
+local has_conform, conform = pcall(require, "conform")
+if not has_conform then return end
+conform.setup({
     formatters_by_ft = {
         python = { "ruff_format" },
         rust = { "rustfmt" },
@@ -284,6 +301,29 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 EOF
 
+" otter.nvim
+lua <<EOF
+local has_otter, otter = pcall(require, "otter")
+if not has_otter or otter.did_setup then return end
+otter.setup({
+    lsp = {
+        diagnostic_update_events = { "BufWritePost", "InsertLeave", "TextChanged" },
+    },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "vim",
+    callback = function() otter.activate() end,
+})
+EOF
+
+" lazydev.nvim
+lua <<EOF
+local has_lazydev, lazydev = pcall(require, "lazydev")
+if not has_lazydev then return end
+lazydev.setup()
+EOF
+
 " }}}
 
 " Filetype commands {{{
@@ -292,7 +332,6 @@ augroup vimrc
 
     autocmd FileType rust nnoremap <buffer> <localleader>c I// <esc>
     autocmd FileType rust nnoremap <buffer> <localleader>sr ^O#[serde(rename = "")]<esc>^ci"
-    autocmd FileType vim nnoremap <buffer> <localleader>c I" <esc>
 
     autocmd FileType rust iabbrev <buffer> retu return
     autocmd FileType rust iabbrev <buffer> return <nop>
