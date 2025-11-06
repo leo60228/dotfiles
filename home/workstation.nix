@@ -88,6 +88,7 @@ lib.mkIf osConfig.vris.workstation {
     nixfmt
     nil
     lua-language-server
+    stylua
     nerd-fonts.hack
   ];
 

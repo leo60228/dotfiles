@@ -1,4 +1,5 @@
 " Misc settings {{{
+" vi:set sw=2:
 set nocp
 set history=50                  " keep 50 lines of command line history
 set ruler                       " show the cursor position all the time
@@ -76,24 +77,24 @@ vnoremap <M-/> <Esc>/\%V
 nmap     <M-/> m`vi}<Esc>``/\%V
 
 lua <<EOF
-vim.keymap.set({'n'}, '<Leader>t', function()
-    if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then
-        FzfLua.tags()
-    else
-        FzfLua.lsp_workspace_symbols()
-    end
+vim.keymap.set({ 'n' }, '<Leader>t', function()
+  if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })) == nil then
+    FzfLua.tags()
+  else
+    FzfLua.lsp_workspace_symbols()
+  end
 end)
-vim.keymap.set({'n'}, '<M-[>', function()
-    if next(vim.lsp.get_clients({bufnr = vim.fn.bufnr()})) == nil then
-        FzfLua.btags()
-    else
-        FzfLua.lsp_document_symbols()
-    end
+vim.keymap.set({ 'n' }, '<M-[>', function()
+  if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })) == nil then
+    FzfLua.btags()
+  else
+    FzfLua.lsp_document_symbols()
+  end
 end)
 
-vim.keymap.set({'n'}, '<Leader>s', vim.lsp.buf.hover)
-vim.keymap.set({'n'}, '<Leader>a', vim.lsp.buf.code_action)
-vim.keymap.set({'n'}, '<Leader>f', require('conform').format)
+vim.keymap.set({ 'n' }, '<Leader>s', vim.lsp.buf.hover)
+vim.keymap.set({ 'n' }, '<Leader>a', vim.lsp.buf.code_action)
+vim.keymap.set({ 'n' }, '<Leader>f', require('conform').format)
 EOF
 
 function! s:EnableRelativeAutocomplete() abort
@@ -144,9 +145,11 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 " nvim-treesitter
 lua <<EOF
-local has_configs, configs = pcall(require, "nvim-treesitter.configs")
-if not has_configs then return end
-configs.setup {
+local has_configs, configs = pcall(require, 'nvim-treesitter.configs')
+if not has_configs then
+  return
+end
+configs.setup({
   modules = {},
   ensure_installed = {},
   sync_install = false,
@@ -156,11 +159,11 @@ configs.setup {
   highlight = {
     enable = true,
     custom_captures = {
-      ["comment"] = "Comment",
-      ["string.special"] = "Special",
-      ["include"] = "Keyword",
-      ["punctuation.delimiter"] = "NONE",
-      ["punctuation.bracket"] = "NONE",
+      ['comment'] = 'Comment',
+      ['string.special'] = 'Special',
+      ['include'] = 'Keyword',
+      ['punctuation.delimiter'] = 'NONE',
+      ['punctuation.bracket'] = 'NONE',
     },
   },
   playground = {
@@ -175,25 +178,25 @@ configs.setup {
     select = {
       enable = true,
       keymaps = {
-        ["is"] = "@string.inner",
-        ["as"] = { query = "@string", query_group = "highlights" },
-        ["i}"] = "@block.inner",
-        ["a}"] = "@block.outer",
+        ['is'] = '@string.inner',
+        ['as'] = { query = '@string', query_group = 'highlights' },
+        ['i}'] = '@block.inner',
+        ['a}'] = '@block.outer',
       },
     },
     move = {
       enable = true,
       goto_next_start = {
-        ["<M-.>"] = "@statement.outer",
-        ["}"] = "@block.inner",
+        ['<M-.>'] = '@statement.outer',
+        ['}'] = '@block.inner',
       },
       goto_previous_start = {
-        ["<M-,>"] = "@statement.outer",
-        ["{"] = "@block.inner",
+        ['<M-,>'] = '@statement.outer',
+        ['{'] = '@block.inner',
       },
     },
   },
-}
+})
 EOF
 
 hi! link @variable Identifier
@@ -203,21 +206,23 @@ let g:auto_save = 0
 
 " nvim-echo-diagnostics
 lua <<EOF
-vim.diagnostic.config({virtual_text = false})
+vim.diagnostic.config({ virtual_text = false })
 
-require("echo-diagnostics").setup {
-    show_diagnostic_number = false,
-    show_diagnostic_source = false,
-}
+require('echo-diagnostics').setup({
+  show_diagnostic_number = false,
+  show_diagnostic_source = false,
+})
 EOF
 
 " jupytext-nvim
 lua <<EOF
-local has_jupytext, jupytext = pcall(require, "jupytext")
-if not has_jupytext then return end
-jupytext.setup {
-    format = "auto:percent",
-}
+local has_jupytext, jupytext = pcall(require, 'jupytext')
+if not has_jupytext then
+  return
+end
+jupytext.setup({
+  format = 'auto:percent',
+})
 EOF
 
 " vim-pasta
@@ -227,14 +232,16 @@ let g:pasta_paste_after_mapping = ']p'
 
 " fzf-lua
 lua <<EOF
-local has_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
-if not has_fzf_lua then return end
+local has_fzf_lua, fzf_lua = pcall(require, 'fzf-lua')
+if not has_fzf_lua then
+  return
+end
 fzf_lua.setup({
-    'fzf-vim',
-    fzf_colors = true,
-    defaults = { git_icons = false, file_icons = false },
-    winopts = { preview = { hidden = false } },
-    btags = { ctags_autogen = false },
+  'fzf-vim',
+  fzf_colors = true,
+  defaults = { git_icons = false, file_icons = false },
+  winopts = { preview = { hidden = false } },
+  btags = { ctags_autogen = false },
 })
 EOF
 
@@ -242,8 +249,8 @@ EOF
 lua <<EOF
 vim.keymap.del('i', 'jk')
 if not JK_MAPPED then
-    require('mini.keymap').map_combo({'i', 'c', 'x', 's'}, 'jk', '<BS><BS><Esc>')
-    JK_MAPPED = true
+  require('mini.keymap').map_combo({ 'i', 'c', 'x', 's' }, 'jk', '<BS><BS><Esc>')
+  JK_MAPPED = true
 end
 EOF
 
@@ -251,13 +258,13 @@ EOF
 lua <<EOF
 vim.lsp.enable('basedpyright')
 vim.lsp.config('basedpyright', {
-    settings = {
-        basedpyright = {
-            analysis = {
-                typeCheckingMode = "standard",
-            },
-        },
+  settings = {
+    basedpyright = {
+      analysis = {
+        typeCheckingMode = 'standard',
+      },
     },
+  },
 })
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('ts_ls')
@@ -266,9 +273,9 @@ vim.lsp.enable('nil_ls')
 vim.lsp.enable('lua_ls')
 
 vim.diagnostic.config({
-    signs = {
-        severity = { min = vim.diagnostic.severity.INFO },
-    },
+  signs = {
+    severity = { min = vim.diagnostic.severity.INFO },
+  },
 })
 vim.lsp.inlay_hint.enable()
 EOF
@@ -277,50 +284,60 @@ highlight LspInlayHint guifg=#2d5b69 gui=NONE
 
 " conform.nvim
 lua <<EOF
-local has_conform, conform = pcall(require, "conform")
-if not has_conform then return end
+local has_conform, conform = pcall(require, 'conform')
+if not has_conform then
+  return
+end
 conform.setup({
-    formatters_by_ft = {
-        python = { "ruff_format" },
-        rust = { "rustfmt" },
-        nix = { "nixfmt" },
-    },
-    default_format_opts = {
-        lsp_format = "fallback",
-    },
+  formatters_by_ft = {
+    python = { 'ruff_format' },
+    rust = { 'rustfmt' },
+    nix = { 'nixfmt' },
+    lua = { 'stylua' },
+    vim = { 'injected' },
+  },
+  default_format_opts = {
+    lsp_format = 'fallback',
+  },
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = "*",
-    callback = function(args)
-        local formatters, lsp = require("conform").list_formatters_to_run(args.buf)
-        if not lsp and next(formatters) ~= nil then
-            vim.bo[args.buf].formatexpr = "v:lua.require'conform'.formatexpr()"
-        end
-    end,
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  callback = function(args)
+    local formatters, lsp = require('conform').list_formatters_to_run(args.buf)
+    if not lsp and next(formatters) ~= nil then
+      vim.bo[args.buf].formatexpr = "v:lua.require'conform'.formatexpr()"
+    end
+  end,
 })
 EOF
 
 " otter.nvim
 lua <<EOF
-local has_otter, otter = pcall(require, "otter")
-if not has_otter or otter.did_setup then return end
+local has_otter, otter = pcall(require, 'otter')
+if not has_otter or otter.did_setup then
+  return
+end
 otter.setup({
-    lsp = {
-        diagnostic_update_events = { "BufWritePost", "InsertLeave", "TextChanged" },
-    },
+  lsp = {
+    diagnostic_update_events = { 'BufWritePost', 'InsertLeave', 'TextChanged' },
+  },
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "vim",
-    callback = function() otter.activate() end,
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'vim',
+  callback = function()
+    otter.activate()
+  end,
 })
 EOF
 
 " lazydev.nvim
 lua <<EOF
-local has_lazydev, lazydev = pcall(require, "lazydev")
-if not has_lazydev then return end
+local has_lazydev, lazydev = pcall(require, 'lazydev')
+if not has_lazydev then
+  return
+end
 lazydev.setup()
 EOF
 
@@ -328,29 +345,29 @@ EOF
 
 " Filetype commands {{{
 augroup vimrc
-    autocmd!
+  autocmd!
 
-    autocmd FileType rust nnoremap <buffer> <localleader>c I// <esc>
-    autocmd FileType rust nnoremap <buffer> <localleader>sr ^O#[serde(rename = "")]<esc>^ci"
+  autocmd FileType rust nnoremap <buffer> <localleader>c I// <esc>
+  autocmd FileType rust nnoremap <buffer> <localleader>sr ^O#[serde(rename = "")]<esc>^ci"
 
-    autocmd FileType rust iabbrev <buffer> retu return
-    autocmd FileType rust iabbrev <buffer> return <nop>
+  autocmd FileType rust iabbrev <buffer> retu return
+  autocmd FileType rust iabbrev <buffer> return <nop>
 
-    autocmd FileType rust iabbrev <buffer> return <nop>
+  autocmd FileType rust iabbrev <buffer> return <nop>
 
-    autocmd FileType rust let b:auto_save = 1
-    autocmd FileType scala let b:auto_save = 1
+  autocmd FileType rust let b:auto_save = 1
+  autocmd FileType scala let b:auto_save = 1
 
-    autocmd BufRead,BufNewFile *.astro set filetype=astro
-    autocmd BufRead,BufNewFile *.nix set filetype=nix
-    autocmd BufRead,BufNewFile *.pio set filetype=pioasm
+  autocmd BufRead,BufNewFile *.astro set filetype=astro
+  autocmd BufRead,BufNewFile *.nix set filetype=nix
+  autocmd BufRead,BufNewFile *.pio set filetype=pioasm
 
-    autocmd FileType vim setlocal foldmethod=marker
+  autocmd FileType vim setlocal foldmethod=marker
 
-    autocmd BufEnter * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
+  autocmd BufEnter * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
 
-    if !has('ide')
-      autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
-    endif
+  if !has('ide')
+    autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
+  endif
 augroup END
 " }}}

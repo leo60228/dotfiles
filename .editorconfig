@@ -12,5 +12,12 @@ switch_case_indent = true
 [*.nix]
 indent_size = 2
 
+[*.lua]
+indent_size = 2
+quote_type = single
+
+[*.vim]
+indent_size = 2
+
 [*.{yml,yaml}]
 indent_size = 2
