@@ -87,6 +87,7 @@ lib.mkIf osConfig.vris.workstation {
     ruff
     nixfmt
     nil
+    nerd-fonts.hack
   ];
 
   programs.git.package = pkgs.gitAndTools.gitFull;
