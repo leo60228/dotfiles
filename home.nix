@@ -10,6 +10,7 @@
   imports = [
     ./home/graphical.nix
     ./home/workstation.nix
+    ./home/npiperelay.nix
   ];
 
   home.stateVersion = "21.05";
