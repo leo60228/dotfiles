@@ -227,7 +227,10 @@ EOF
 " mini.keymap
 lua <<EOF
 vim.keymap.del('i', 'jk')
-require('mini.keymap').map_combo({'i', 'c', 'x', 's'}, 'jk', '<BS><BS><Esc>')
+if not jk_mapped then
+    require('mini.keymap').map_combo({'i', 'c', 'x', 's'}, 'jk', '<BS><BS><Esc>')
+    jk_mapped = true
+end
 EOF
 
 " nvim-lspconfig
