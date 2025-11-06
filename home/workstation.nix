@@ -81,6 +81,12 @@ lib.mkIf osConfig.vris.workstation {
     mono
     vscode-fhs
     yubikey-touch-detector
+    basedpyright
+    typescript-language-server
+    vscode-langservers-extracted
+    ruff
+    nixfmt
+    nil
   ];
 
   programs.git.package = pkgs.gitAndTools.gitFull;

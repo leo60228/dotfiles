@@ -43,18 +43,6 @@ let
         ext = "kts";
       }
       {
-        plug = coc-nvim;
-        ft = "java";
-        ext = "java";
-        init = "let b:ale_disable_lsp = 1";
-      }
-      {
-        plug = coc-nvim;
-        ft = "slint";
-        ext = "slint";
-        init = "set smartindent";
-      }
-      {
         plug = nvim-metals;
         ft = "scala";
         ext = "scala";
@@ -89,7 +77,6 @@ neovim.override {
           vim-hardtime
           vim-sleuth
           plenary-nvim
-          ale
           nvim-echo-diagnostics
           nvim-solarized-lua
           vim-fetch
@@ -129,6 +116,8 @@ neovim.override {
           fzf-lua
           jupytext-nvim
           vim-fugitive
+          nvim-lspconfig
+          conform-nvim
         ];
 
         opt = lib.optionals workstation ([ vimspector ] ++ map (x: x.plug) ftPlugins);

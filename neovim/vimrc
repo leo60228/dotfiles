@@ -63,9 +63,9 @@ nnoremap <leader>r <Cmd>RG<cr>
 nnoremap <leader>t <Cmd>Tags<cr>
 nnoremap <leader>g :Git 
 nnoremap <leader>G <Cmd>Git<cr>
+nnoremap <leader>s <Cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <C-P> <Cmd>Files<cr>
-nnoremap <C-[> <Cmd>BTags<cr>
-nnoremap <M-[> <Cmd>BTags<cr>
+nnoremap <M-P> <Cmd>BTags<cr>
 nnoremap H ^
 nnoremap L $
 inoremap jk <esc>
@@ -104,11 +104,10 @@ if has('ide')
   nmap <leader>f <Action>(ReformatCode)
   nmap <leader>i <Action>(OptimizeImports)
 else
-  nnoremap <leader>cn :cnext<cr>
-  nnoremap <leader>cN :cprevious<cr>
-  nnoremap <leader>a :ALECodeAction<cr>
-  nnoremap <leader>f :ALEFix<cr>
-  nnoremap <leader>i :CocCommand java.action.organizeImports<cr>
+  nnoremap <leader>cn <Cmd>cnext<cr>
+  nnoremap <leader>cN <Cmd>cprevious<cr>
+  nnoremap <leader>a <Cmd>lua vim.lsp.buf.code_action()<cr>
+  nnoremap <leader>f <Cmd>lua require('conform').format()<cr>
 endif
 " }}}
 
@@ -122,33 +121,6 @@ let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:OmniSharp_selector_ui = ''
 let g:OmniSharp_loglevel = 'none' " workaround for log file path being in store
 let g:OmniSharp_highlighting = 3
-
-" ALE
-let g:ale_linters = { 'cs': ['OmniSharp'], 'c': [], 'cpp': [], 'rust': ['analyzer'], 'java': [] }
-let g:ale_fixers = { 'javascript': ['eslint'], 'rust': ['rustfmt'], 'terraform': ['terraform'] }
-let g:ale_lint_on_text_changed = 'always'
-
-if !empty($RA_TARGET)
-  let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}, 'cargo': {'target': $RA_TARGET}}
-elseif !empty($RA_RUSTC)
-  let g:ale_rust_analyzer_config = {
-    \   'checkOnSave': {
-    \     'overrideCommand': ['./x.py', 'check', '--json-output']
-    \   },
-    \   'rustfmt': {
-    \     'overrideCommand': ['./build/x86_64-unknown-linux-gnu/stage0/bin/rustfmt']
-    \   },
-    \   'cargo': {
-    \     'runBuildScripts': v:false
-    \   },
-    \   'rustcSrc': './Cargo.toml',
-    \   'procMacro': {
-    \     'enable': v:false
-    \   }
-    \ }
-else
-  let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy'}}
-endif
 
 " Vimspector
 let g:vimspector_base_dir = expand('$HOME/.vimspector')
@@ -258,6 +230,57 @@ vim.keymap.del('i', 'jk')
 require('mini.keymap').map_combo({'i', 'c', 'x', 's'}, 'jk', '<BS><BS><Esc>')
 EOF
 
+" nvim-lspconfig
+lua <<EOF
+vim.lsp.enable('basedpyright')
+vim.lsp.config('basedpyright', {
+    settings = {
+        basedpyright = {
+            analysis = {
+                typeCheckingMode = "standard",
+            },
+        },
+    },
+})
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('eslint')
+vim.lsp.enable('nil_ls')
+
+vim.diagnostic.config({
+    signs = {
+        severity = { min = vim.diagnostic.severity.INFO },
+    },
+})
+vim.lsp.inlay_hint.enable()
+EOF
+highlight DiagnosticUnderlineHint guisp=#184956 gui=underdotted
+highlight LspInlayHint guifg=#2d5b69 gui=NONE
+
+" conform.nvim
+lua <<EOF
+require("conform").setup({
+    formatters_by_ft = {
+        python = { "ruff_format" },
+        rust = { "rustfmt" },
+        nix = { "nixfmt" },
+    },
+    default_format_opts = {
+        lsp_format = "fallback",
+    },
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function(args)
+        local formatters, lsp = require("conform").list_formatters_to_run(args.buf)
+        if not lsp and next(formatters) ~= nil then
+            vim.bo[args.buf].formatexpr = "v:lua.require'conform'.formatexpr()"
+        end
+    end,
+})
+EOF
+
 " }}}
 
 " Filetype commands {{{
@@ -285,9 +308,6 @@ augroup vimrc
     autocmd BufEnter * if &ft !=# 'yaml' | silent! unmap <buffer> {| silent! unmap <buffer> }| end
 
     if !has('ide')
-      autocmd FileType scala nnoremap <buffer> <leader>a :lua vim.lsp.buf.code_action()<cr>
-      autocmd FileType scala nnoremap <buffer> <leader>f :lua vim.lsp.buf.formatting()<cr>
-
       autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
     endif
 augroup END
