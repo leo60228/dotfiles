@@ -303,14 +303,23 @@ lua <<EOF
       vim_indent = {
         format = function(_, ctx, _, callback)
           local view = vim.fn.winsaveview()
+          local old_start_l, old_start_c = unpack(vim.api.nvim_buf_get_mark(0, '<'))
+          local old_end_l, old_end_c = unpack(vim.api.nvim_buf_get_mark(0, '>'))
 
-          local cmd = (ctx.range ~= nil) and '=' or 'gg=G'
-          vim.cmd('normal! ' .. cmd)
+          if ctx.range ~= nil then
+            vim.api.nvim_buf_set_mark(0, '<', ctx.range['start'][1], ctx.range['start'][2], {})
+            vim.api.nvim_buf_set_mark(0, '>', ctx.range['end'][1], ctx.range['end'][2], {})
+          end
+
+          local cmd = (ctx.range ~= nil) and 'gv=' or 'gg=G'
+          vim.cmd('silent normal! ' .. cmd)
           local out_lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-          vim.cmd('normal! u')
+          vim.cmd('silent normal! u')
 
           callback(nil, out_lines)
 
+          vim.api.nvim_buf_set_mark(0, '<', old_start_l, old_start_c, {})
+          vim.api.nvim_buf_set_mark(0, '>', old_end_l, old_end_c, {})
           vim.fn.winrestview(view)
         end,
       },
