@@ -1,7 +1,6 @@
 # vi: set foldmethod=marker:
 
 {
-  config,
   pkgs,
   lib,
   ...
@@ -14,10 +13,9 @@
 
   vris.workstation = true;
   vris.graphical = true;
+  vris.mobile = true;
 
   hardware.bluetooth.enable = true;
-
-  time.timeZone = null;
 
   networking.firewall.allowedTCPPorts = lib.range 3000 3010;
   networking.firewall.allowedUDPPorts = lib.range 3000 3010;

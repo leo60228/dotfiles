@@ -16,6 +16,7 @@
     ./prometheus.nix
     ./apcupsd.nix
     ./zfs-credstore.nix
+    ./mobile.nix
 
     # dependencies
     flakes.home-manager.nixosModules.home-manager
