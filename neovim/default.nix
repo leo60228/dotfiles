@@ -84,6 +84,7 @@ neovim.override {
           direnv-vim
           vim-pasta
           mini-keymap
+          vim-nix
         ]
         ++ lib.optionals workstation [
           (nvim-treesitter.withPlugins (

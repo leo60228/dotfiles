@@ -164,7 +164,7 @@ lua <<EOF
         ['punctuation.delimiter'] = 'NONE',
         ['punctuation.bracket'] = 'NONE',
       },
-      additional_vim_regex_highlighting = { 'vim' },
+      additional_vim_regex_highlighting = { 'vim', 'nix' },
     },
     playground = {
       enable = true,
