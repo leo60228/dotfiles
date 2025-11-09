@@ -380,8 +380,6 @@ augroup vimrc
   autocmd FileType rust iabbrev <buffer> retu return
   autocmd FileType rust iabbrev <buffer> return <nop>
 
-  autocmd FileType rust iabbrev <buffer> return <nop>
-
   autocmd FileType rust let b:auto_save = 1
   autocmd FileType scala let b:auto_save = 1
 
