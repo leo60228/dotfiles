@@ -14,6 +14,7 @@
   ];
 
   nix.settings.max-jobs = lib.mkDefault 48;
+  services.tailscale.extraDaemonFlags = [ "--encrypt-state" ];
 
   # Kernel {{{1
   boot.kernelPackages = pkgs.linuxPackages_6_6;

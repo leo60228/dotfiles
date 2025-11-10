@@ -1,7 +1,6 @@
 # vi: set foldmethod=marker:
 
 {
-  config,
   lib,
   modulesPath,
   pkgs,
@@ -19,6 +18,7 @@
     services.power-profiles-daemon.enable = true;
     services.hardware.bolt.enable = true;
     services.udisks2.package = pkgs.leoPkgs.udisks2;
+    services.tailscale.extraDaemonFlags = [ "--encrypt-state" ];
     vris.gpuSupportsStats = true;
 
     deployment.tags = [ "workstation" ];
