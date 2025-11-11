@@ -81,6 +81,7 @@
     url = "github:nix-community/lanzaboote/v0.4.3";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
+    inputs.rust-overlay.follows = "rust-overlay";
   };
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
   inputs.moonlight = {
