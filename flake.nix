@@ -78,7 +78,7 @@
   };
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
   inputs.lanzaboote = {
-    url = "github:nix-community/lanzaboote/v0.4.2";
+    url = "github:nix-community/lanzaboote/v0.4.3";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
   };
