@@ -3,12 +3,11 @@
   callPackages,
   python3,
   kdePackages,
-  beetsPackages,
 }:
 
-rec {
+{
   avmvc12 = callPackage ./avmvc12 { };
-  beetcamp = callPackage ./beetcamp { beets = beetsPackages.beets-minimal; };
+  beetcamp = python3.pkgs.callPackage ./beetcamp { };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
   determination-fonts = callPackage ./determination-fonts { };

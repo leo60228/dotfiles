@@ -1,9 +1,7 @@
 {
-  config,
   osConfig,
   lib,
   pkgs,
-  flakes,
   ...
 }:
 
@@ -11,12 +9,12 @@ lib.mkIf osConfig.vris.graphical {
   home.packages =
     with pkgs;
     [
-      bitwarden
+      bitwarden-desktop
       calibre
       obsidian
       signal-desktop
       libnotify
-      glxinfo
+      mesa-demos
       cantata
       zenity
       mpv

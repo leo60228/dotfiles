@@ -1,2 +1,2 @@
 { mpdiscord, ... }:
-self: super: { inherit (mpdiscord.packages.${self.targetPlatform.system}) mpdiscord; }
+self: super: { inherit (mpdiscord.packages.${self.stdenv.hostPlatform.system}) mpdiscord; }

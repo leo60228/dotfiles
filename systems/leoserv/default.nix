@@ -1,7 +1,6 @@
 # vi: set foldmethod=marker:
 
 {
-  config,
   lib,
   utils,
   pkgs,
@@ -162,7 +161,7 @@
         url = "https://fw-download.ubnt.com/data/unifi-os-server/2f3a-${platform}-${version}-be3b4ae0-6bcd-435d-b893-e93da668b9d0.6-x64";
         hash = "sha256-J2f+Y2NPSTbm7B8VjGFYOt9WmuQLKCT8r6F6oAnwOfE=";
       };
-      imageFile = pkgs.runCommandNoCC "image.tar" { inherit src; } ''
+      imageFile = pkgs.runCommand "image.tar" { inherit src; } ''
         ${pkgs.unzip}/bin/unzip -p $src image.tar > $out || (($?==1))
       '';
       directories = [

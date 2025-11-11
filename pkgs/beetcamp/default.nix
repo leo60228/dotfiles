@@ -1,13 +1,15 @@
 {
-  lib,
   fetchFromGitHub,
-  python3Packages,
-  beets,
-  beetsPackages,
+  beets-minimal,
   gitUpdater,
+  buildPythonApplication,
+  poetry-core,
+  pycountry,
+  httpx,
+  packaging,
 }:
 
-python3Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "beets-beetcamp";
   version = "0.22.0";
   pyproject = true;
@@ -20,12 +22,12 @@ python3Packages.buildPythonApplication rec {
   };
 
   nativeBuildInputs = [
-    beets
+    beets-minimal
   ];
 
-  build-system = [ python3Packages.poetry-core ];
+  build-system = [ poetry-core ];
 
-  dependencies = with python3Packages; [
+  dependencies = [
     pycountry
     httpx
     packaging

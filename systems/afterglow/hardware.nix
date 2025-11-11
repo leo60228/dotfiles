@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   flakes,
@@ -24,6 +23,7 @@
   zramSwap.enable = true;
 
   hardware.firmware = [ pkgs.chromeos-sc7180-unredistributable-firmware ];
+  mobile.boot.stage-1.kernel.useNixOSKernel = true;
 
   vris.firefox =
     let

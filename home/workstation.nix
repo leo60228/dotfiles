@@ -11,18 +11,20 @@ lib.mkIf osConfig.vris.workstation {
     fzf
     pnpm
     unixtools.xxd
-    (beets.override {
-      pluginOverrides = {
-        #filetote = {
-        #  enable = true;
-        #  propagatedBuildInputs = [ beetsPackages.filetote ];
-        #};
-        bandcamp = {
-          enable = true;
-          propagatedBuildInputs = [ leoPkgs.beetcamp ];
+    (python3.pkgs.toPythonApplication (
+      python3.pkgs.beets.override {
+        pluginOverrides = {
+          #filetote = {
+          #  enable = true;
+          #  propagatedBuildInputs = [ beetsPackages.filetote ];
+          #};
+          bandcamp = {
+            enable = true;
+            propagatedBuildInputs = [ leoPkgs.beetcamp ];
+          };
         };
-      };
-    })
+      }
+    ))
     opusTools
     docker-credential-helpers
     libsecret
@@ -47,7 +49,7 @@ lib.mkIf osConfig.vris.workstation {
     jetbrains-toolbox
     rsgain
     kio-fuse
-    gitAndTools.lab
+    lab
     bitwarden-cli
     cargo-edit
     qbittorrent
@@ -55,9 +57,9 @@ lib.mkIf osConfig.vris.workstation {
     element-desktop
     mosquitto
     rclone
-    (hiPrio rustup)
+    (lib.hiPrio rustup)
     lftp
-    dolphin-emu-beta
+    dolphin-emu
     gdb
     easytag
     nodejs_latest
@@ -69,13 +71,13 @@ lib.mkIf osConfig.vris.workstation {
     yt-dlp
     leoPkgs.rust.rust
     libreoffice
-    gitAndTools.hub
+    hub
     prismlauncher
     mcpelauncher-ui-qt
     #mgba
     wineWowPackages.staging
     gnumake
-    (hiPrio gcc)
+    (lib.hiPrio gcc)
     hplip
     dotnet-sdk
     mono
@@ -92,7 +94,7 @@ lib.mkIf osConfig.vris.workstation {
     nerd-fonts.hack
   ];
 
-  programs.git.package = pkgs.gitAndTools.gitFull;
+  programs.git.package = pkgs.gitFull;
   programs.bash.initExtra = ''
     eval $(hub alias -s)
   '';

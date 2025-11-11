@@ -53,9 +53,11 @@
       pkgs.kdePackages.discover
       pkgs.kdePackages.partitionmanager
       pkgs.kdePackages.kclock
-      (flakes.rom-properties.packages.${pkgs.system}.rp_kde6.overrideAttrs (oldAttrs: {
-        patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
-      }))
+      (flakes.rom-properties.packages.${pkgs.stdenv.hostPlatform.system}.rp_kde6.overrideAttrs
+        (oldAttrs: {
+          patches = oldAttrs.patches ++ [ ../files/rp_larger_icons.diff ];
+        })
+      )
       pkgs.syncthingtray
     ];
 
@@ -91,7 +93,7 @@
     programs.fuse.userAllowOther = true;
     programs.command-not-found = {
       enable = true;
-      dbPath = flakes.flake-programs-sqlite.packages.${pkgs.system}.programs-sqlite;
+      dbPath = flakes.flake-programs-sqlite.packages.${pkgs.stdenv.hostPlatform.system}.programs-sqlite;
     };
 
     # Debuggers {{{1
