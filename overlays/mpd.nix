@@ -1,12 +1,5 @@
 self: super: {
   vgmstream = super.vgmstream.overrideAttrs (oldAttrs: {
-    version = "2023-unstable-2025-05-23";
-    src = self.fetchFromGitHub {
-      owner = "vgmstream";
-      repo = "vgmstream";
-      rev = "c6e317f82c527fae462e566aa8b3a8004d6b14a4";
-      hash = "sha256-HMu4TK3/bLVRG03+0jhaq0Ad5oQTgktrH9H5BS06Y54=";
-    };
     cmakeFlags = oldAttrs.cmakeFlags ++ [ "-DBUILD_SHARED_LIBS=ON" ];
   });
 
