@@ -28,7 +28,7 @@
   vris.firefox =
     let
       wrapFirefox = pkgs.wrapFirefox.override {
-        ffmpeg = pkgs.ffmpeg.overrideAttrs (oldAttrs: {
+        ffmpeg_7 = pkgs.ffmpeg_7.overrideAttrs (oldAttrs: {
           patches = oldAttrs.patches ++ [
             (pkgs.fetchpatch {
               url = "https://raw.githubusercontent.com/LibreELEC/LibreELEC.tv/9c99ad0f0bdad077176be4250e64e9deda70c062/packages/multimedia/ffmpeg/patches/rpi/ffmpeg-001-rpi.patch";
