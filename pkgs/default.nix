@@ -16,7 +16,6 @@
   mediawiki-extensions = callPackage ./mediawiki-extensions { };
   office-2007-fonts = callPackage ./office-2007-fonts { };
   pam-fprint-grosshack = callPackage ./pam-fprint-grosshack { };
-  redumper = callPackage ./redumper { };
   reposilite = callPackage ./reposilite { };
   rust = callPackage ./rust { };
   sddm-theme-breeze-user = kdePackages.callPackage ./sddm-theme-breeze-user { };

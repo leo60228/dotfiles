@@ -29,7 +29,6 @@ lib.mkIf osConfig.vris.workstation {
     docker-credential-helpers
     libsecret
     parsec-bin
-    leoPkgs.redumper
     wiimms-iso-tools
     leoPkgs.hactoolnet
     colmena
