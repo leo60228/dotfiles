@@ -1,6 +1,5 @@
 {
   rust-bin,
-  lowPrio,
   small ? false,
 }:
 
