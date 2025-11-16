@@ -1,7 +1,6 @@
 {
   pkgs,
   osConfig,
-  config,
   lib,
   ...
 }:
@@ -27,7 +26,7 @@
     pciutils
     bat
     screen
-    irssi
+    senpai
     gist
     p7zip
     python3
