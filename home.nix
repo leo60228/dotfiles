@@ -68,7 +68,18 @@
         {
           type = "command";
           key = "Host";
-          text = "fastfetch --pipe -l none --key-type none -s host --host-format '{name}' | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'";
+          text =
+            let
+              config = builtins.toJSON {
+                modules = [
+                  {
+                    type = "host";
+                    format = "{name}";
+                  }
+                ];
+              };
+            in
+            "echo '${config}' | fastfetch --pipe -l none --key-type none -c - | sed 's/^Laptop/Framework &/;T;s/7040S/7040 S/'";
         }
         "kernel"
         "uptime"
