@@ -43,18 +43,19 @@ cat > source.nix << EOF
 let
   version = "$VERSION";
 in
-(applyPatches {
+applyPatches {
   src = fetchFromGitHub {
     owner = "$OWNER";
     repo = "$REPO";
     rev = "$REVISION";
     hash = "$HASH";
+    passthru = {
+      inherit version;
+      yarnHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      yarnMissingHashes = ./missing-hashes.json;
+    };
   };
-  patches = patches ++ [ ];
-})
-// {
-  inherit version;
-  yarnHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  patches = patches ++ [ $PATCHES];
 }
 EOF
 SOURCE_DIR="$(nix-build --no-out-link -E '(import <nixpkgs> {}).callPackage ./source.nix {}')"
@@ -63,9 +64,7 @@ echo "Creating gemset.nix"
 bundix --lockfile="$SOURCE_DIR/Gemfile.lock" --gemfile="$SOURCE_DIR/Gemfile"
 nixfmt gemset.nix
 
-echo "Creating missing-hashes.json"
-yarn-berry-fetcher missing-hashes "$SOURCE_DIR/yarn.lock" > missing-hashes.json
-
 echo "Updating yarnHash"
-YARN_HASH="$(yarn-berry-fetcher prefetch "$SOURCE_DIR/yarn.lock" missing-hashes.json)"
+yarn-berry-fetcher missing-hashes "$SOURCE_DIR/yarn.lock" > missing-hashes.json
+YARN_HASH="$(yarn-berry-fetcher prefetch "$SOURCE_DIR/yarn.lock" ./missing-hashes.json)"
 sed -i "s;sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=;$YARN_HASH;g" source.nix
