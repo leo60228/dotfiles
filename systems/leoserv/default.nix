@@ -4,6 +4,7 @@
   lib,
   utils,
   pkgs,
+  config,
   ...
 }:
 
@@ -207,12 +208,14 @@
       };
     };
 
-  # ZNC {{{1
-  services.znc = {
+  # soju {{{1
+  services.soju = {
     enable = true;
-    mutable = true;
-    useLegacyConfig = false;
-    openFirewall = true;
+    hostName = "${config.networking.hostName}.capybara-pirate.ts.net";
+    listen = [
+      "irc://localhost:5002"
+      "http://localhost:5003"
+    ];
   };
 
   # hass {{{1
