@@ -1,5 +1,4 @@
 {
-  config,
   osConfig,
   lib,
   pkgs,
@@ -8,6 +7,7 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    nix-eval-jobs
     fzf
     pnpm
     unixtools.xxd
