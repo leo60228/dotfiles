@@ -254,6 +254,18 @@
     extraOptions = [ "--tz=local" ];
   };
 
+  virtualisation.oci-containers.containers.actualtap = {
+    pull = "newer";
+    ports = [ "127.0.0.1:3001:3001" ];
+    image = "ghcr.io/mattfaz/actualtap:latest";
+    dependsOn = [ "actual" ];
+    environment.ACTUAL_URL = "http://actual:5006";
+    environmentFiles = [ "/var/lib/actualtap.env" ];
+    extraOptions = [ "--tz=local" ];
+  };
+
+  virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
+
   # RIPE Atlas Probe {{{1
   virtualisation.oci-containers.containers.ripe-atlas = {
     image = "docker.io/jamesits/ripe-atlas:latest";
