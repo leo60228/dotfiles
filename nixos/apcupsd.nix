@@ -33,7 +33,7 @@
       configText = ''
         UPSCABLE ether
         UPSTYPE net
-        DEVICE leoserv:3551
+        DEVICE greenhouse:3551
         UPSCLASS standalone
         UPSMODE disable
         POLLTIME 10

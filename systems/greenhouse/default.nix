@@ -123,7 +123,7 @@
     mode = "netserver";
     ups.apcupsd = {
       driver = "apcupsd-ups";
-      port = "leoserv";
+      port = "greenhouse";
     };
     upsd.listen = [ { address = "0.0.0.0"; } ];
     upsmon.settings.MINSUPPLIES = 0;
