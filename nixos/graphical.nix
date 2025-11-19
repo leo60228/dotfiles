@@ -109,6 +109,7 @@
     environment.systemPackages = [
       pkgs.kdePackages.sddm-kcm
       pkgs.kdePackages.breeze-icons
+      pkgs.kdePackages.fcitx5-configtool
 
       pkgs.exfatprogs
       pkgs.leoPkgs.sddm-theme-breeze-user
@@ -133,10 +134,17 @@
       };
     };
 
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.waylandFrontend = true;
+    };
+
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
       MOZ_DISABLE_RDD_SANDBOX = "1";
       QT_LOGGING_RULES = "*.debug=false";
+      QT_IM_MODULES = "wayland;fcitx;ibus";
 
       GTK_USE_PORTAL = 1;
       GDK_DEBUG = "portals";
