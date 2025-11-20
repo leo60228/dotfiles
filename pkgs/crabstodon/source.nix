@@ -5,17 +5,17 @@
   patches ? [ ],
 }:
 let
-  version = "unstable-2025-11-16";
+  version = "unstable-2025-11-20";
 in
 applyPatches {
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "2e6f7ff5570c01fc2e791578f10a5d0312620e35";
-    hash = "sha256-gRQbGwE+ZTsS/ZW96zIpcn0DGZy8Phb6fD7vzyZ6XWw=";
+    rev = "71b6986d4d5b54207b76895802a60ecd85d59b31";
+    hash = "sha256-4MrbLEbaBQKDxRiT79mRChigeBLtl5LBzGmQfvv6Gn4=";
     passthru = {
       inherit version;
-      yarnHash = "sha256-EIUTC433eM+t4/uu6TGxoc9zQlkvZ2cukG/eSofzHps=";
+      yarnHash = "sha256-1g0A9jVrGG0I0W6LGlevNg3C3ocx0LXa5U0UMUAQNIA=";
       yarnMissingHashes = ./missing-hashes.json;
     };
   };
