@@ -41,7 +41,6 @@
       pkgs.openocd
       pkgs.OVMFFull
       config.virtualisation.libvirtd.qemu.package
-      pkgs.steam
       pkgs.virt-manager
       pkgs.kdePackages.sddm-kcm
       pkgs.kdePackages.audiocd-kio
@@ -140,9 +139,15 @@
     nix.settings.builders-use-substitutes = true;
 
     # Steam {{{1
-    hardware.graphics.enable32Bit = true;
-    services.pipewire.alsa.support32Bit = true;
-    hardware.steam-hardware.enable = true;
+    programs.steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = true;
+          LD_PRELOAD = "${pkgs.mangohud}/lib/mangohud/libMangoHud_shim.so";
+        };
+      };
+    };
     boot.blacklistedKernelModules = [ "hid-steam" ];
 
     # binfmt {{{1
