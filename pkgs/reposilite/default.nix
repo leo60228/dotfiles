@@ -11,7 +11,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "reposilite-bin";
-  version = "3.5.25";
+  version = "3.5.26";
 
   src = fetchMavenArtifact {
     groupId = "com.reposilite";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     inherit version;
     classifier = "all";
     repos = [ "https://maven.reposilite.com/releases" ];
-    hash = "sha256-g1a+9TGRqRK4qcJW2ZACsiew5f27T4qkm/A+c7sVxHI=";
+    hash = "sha256-JSvp4Ka/98AkeExrSA2WCNoqMQAmpCllIRNyHzhkzqM=";
   };
 
   dontUnpack = true;
