@@ -114,6 +114,11 @@ lib.mkIf osConfig.vris.workstation {
   };
   programs.git.signing.signByDefault = true;
 
+  programs.mangohud = {
+    enable = true;
+    settings.no_display = true;
+  };
+
   systemd.user.services.yubikey-touch-detector = {
     Unit = {
       Description = "Detects when your YubiKey is waiting for a touch";
