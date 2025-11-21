@@ -217,6 +217,7 @@
       "http://localhost:5003"
     ];
   };
+  systemd.services.soju.environment.GODEBUG = "tlsrsakex=1"; # eyeroll
 
   # hass {{{1
   virtualisation.oci-containers.backend = "podman";
