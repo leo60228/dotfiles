@@ -141,6 +141,7 @@
     # Steam {{{1
     programs.steam = {
       enable = true;
+      protontricks.enable = true;
       package = pkgs.steam.override {
         extraEnv = {
           MANGOHUD = true;
