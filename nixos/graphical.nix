@@ -117,6 +117,9 @@
       pkgs.aspell
       pkgs.aspellDicts.en
       pkgs.aspellDicts.en-computers
+
+      pkgs.xsettingsd
+      pkgs.xorg.xrdb
     ]
     ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
 
