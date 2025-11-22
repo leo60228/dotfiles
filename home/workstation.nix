@@ -7,6 +7,7 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    archipelago
     nix-eval-jobs
     fzf
     pnpm
@@ -92,6 +93,11 @@ lib.mkIf osConfig.vris.workstation {
     stylua
     nerd-fonts.hack
   ];
+
+  xdg.configFile."systemd/user/app-archipelago@.service.d/override.conf".text = ''
+    [Service]
+    Environment=KIVY_METRICS_DENSITY=2
+  '';
 
   programs.git.package = pkgs.gitFull;
   programs.bash.initExtra = ''
