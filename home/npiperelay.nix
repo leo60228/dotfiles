@@ -25,23 +25,48 @@ let
   };
 in
 lib.mkIf (osConfig.wsl.enable or false) {
+  home.packages = [ pkgs.gnupg ];
   home.sessionVariables.SSH_AUTH_SOCK = sshAuthSock;
 
-  systemd.user.services.wsl-ssh-relay = {
-    Unit = {
-      Description = "Relay SSH Agent to Windows";
-    };
-    Service = {
-      Type = "simple";
-      ExecStartPre = [
-        "${pkgs.coreutils}/bin/rm -f ${sshAuthSock}"
-        "${pkgs.coreutils}/bin/mkdir -p ${config.home.homeDirectory}/.ssh"
-      ];
-      ExecStart = "${pkgs.socat}/bin/socat UNIX-LISTEN:${sshAuthSock},fork EXEC:\"${npiperelay}/bin/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent\",nofork";
-      Restart = "on-failure";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
+  systemd.user.services =
+    let
+      services = {
+        relay-ssh-agent = {
+          path = sshAuthSock;
+          args = "-ei -s //./pipe/openssh-ssh-agent";
+        };
+        relay-gpg-agent = {
+          path = "/run/user/1000/gnupg/S.gpg-agent";
+          args = "-ei -a C:/Users/leo60228/AppData/Local/gnupg/S.gpg-agent";
+        };
+        relay-gpg-extra = {
+          path = "/run/user/1000/gnupg/S.gpg-agent.extra";
+          args = "-ei -a C:/Users/leo60228/AppData/Local/gnupg/S.gpg-agent.extra";
+        };
+      };
+      genService =
+        name:
+        { path, args }:
+        {
+          Service = {
+            Type = "simple";
+            ExecStartPre = [
+              "${pkgs.coreutils}/bin/rm -f ${path}"
+              "${pkgs.coreutils}/bin/mkdir -p ${builtins.dirOf path}"
+            ];
+            ExecStart =
+              let
+                escapedArgs = lib.escape [ ":" "\\" ] args;
+                escapedExec = lib.escapeShellArg "${npiperelay}/bin/npiperelay.exe ${escapedArgs}";
+                command = "${pkgs.socat}/bin/socat UNIX-LISTEN:${path},fork EXEC:${escapedExec},nofork";
+              in
+              lib.escape [ "\\" ] command;
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "default.target" ];
+          };
+        };
+    in
+    lib.mapAttrs genService services;
 }
