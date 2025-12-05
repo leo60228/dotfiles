@@ -149,6 +149,8 @@
 
   boot.initrd.systemd.initrdBin = lib.mkIf (config.boot.initrd.systemd.enable) [ pkgs.e2fsprogs ];
 
+  services.nginx.package = lib.mkDefault pkgs.nginxMainline;
+
   # Networking {{{1
   services.tailscale = {
     enable = true;
