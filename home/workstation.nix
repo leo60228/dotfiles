@@ -7,6 +7,10 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    sameboy
+    mgba
+    melonDS
+    emuhawk
     archipelago
     nix-eval-jobs
     fzf
@@ -74,7 +78,6 @@ lib.mkIf osConfig.vris.workstation {
     hub
     prismlauncher
     mcpelauncher-ui-qt
-    #mgba
     wineWowPackages.staging
     gnumake
     (lib.hiPrio gcc)

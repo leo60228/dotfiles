@@ -108,6 +108,10 @@
     url = "github:nix-community/neovim-nightly-overlay";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.bizhawk = {
+    url = "github:TASEmulators/BizHawk";
+    flake = false;
+  };
 
   outputs =
     {

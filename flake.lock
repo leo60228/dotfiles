@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bizhawk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764812805,
+        "narHash": "sha256-BI5i/P6WBCnQq0rYtvXQLkszUHhRIAcXhBoVKIeQ0Rc=",
+        "owner": "TASEmulators",
+        "repo": "BizHawk",
+        "rev": "db070b93bbe23a9ed0bb9c10f77958361863e9f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TASEmulators",
+        "repo": "BizHawk",
+        "type": "github"
+      }
+    },
     "colmena": {
       "inputs": {
         "flake-compat": [
@@ -1286,6 +1302,7 @@
     },
     "root": {
       "inputs": {
+        "bizhawk": "bizhawk",
         "colmena": "colmena",
         "fizz-strat": "fizz-strat",
         "flake-compat": "flake-compat",
