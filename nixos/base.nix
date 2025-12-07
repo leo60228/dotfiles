@@ -110,7 +110,7 @@
         substituters = [
           "https://cache.nixos.org/"
         ]
-        ++ lib.optional (config.networking.hostName != "desktop") "http://desktop:9999";
+        ++ lib.optional (config.networking.hostName != "desktop") "https://hydra.capybara-pirate.ts.net/";
       in
       {
         experimental-features = [

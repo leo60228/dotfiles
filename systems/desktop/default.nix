@@ -59,7 +59,7 @@ rec {
   services.hydra-dev = {
     enable = true;
     package = pkgs.hydra;
-    hydraURL = "http://desktop:9999";
+    hydraURL = "https://hydra.capybara-pirate.ts.net";
     port = 9999;
     notificationSender = "hydra@60228.dev";
     minimumDiskFree = 30;
