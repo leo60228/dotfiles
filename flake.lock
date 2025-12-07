@@ -1287,11 +1287,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761533450,
-        "narHash": "sha256-sC+GSVTQUNm8AB0xjJBiOY89qi1RU9PtPc7YXEUKeI4=",
+        "lastModified": 1765134627,
+        "narHash": "sha256-LhhLKSSmIGeqLnhO2kkRTAPgAWUDl1cSqsAi05jQQUE=",
         "owner": "Whovian9369",
         "repo": "rom-properties-nix-flake",
-        "rev": "ec8691d663ea16009b74d1ae15dc67b59f2f708d",
+        "rev": "520cc29828e5a6101d6511b395c68ac84e749dd4",
         "type": "github"
       },
       "original": {
