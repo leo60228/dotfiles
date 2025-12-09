@@ -80,7 +80,9 @@
 
   services.nginx = {
     enable = true;
-    recommendedTlsSettings = true;
+    commonHttpConfig = ''
+      ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp384r1;
+    '';
     recommendedOptimisation = true;
     recommendedGzipSettings = true;
     recommendedProxySettings = true;
