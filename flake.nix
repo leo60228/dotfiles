@@ -109,7 +109,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.bizhawk = {
-    url = "github:TASEmulators/BizHawk";
+    url = "github:TASEmulators/BizHawk/db070b93bbe23a9ed0bb9c10f77958361863e9f7";
     flake = false;
   };
 
