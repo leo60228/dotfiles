@@ -26,6 +26,7 @@
     1883 # mqtt
     8123 # hass
     21063 # hass
+    34197
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -35,6 +36,7 @@
     443
     24454
     5353 # hass
+    34197
   ];
 
   services.openssh.ports = [
@@ -54,7 +56,9 @@
   environment.systemPackages = [
     pkgs.archipelago
     pkgs.factorio-headless
+    pkgs.expect
   ];
+  environment.pathsToLink = [ "/share/factorio" ];
 
   systemd.services.archipelago-server = {
     after = [ "network-online.target" ];
