@@ -42,41 +42,33 @@
     5022
   ];
 
-  # Minecraft {{{1
-  users.users.minecraft = {
-    home = "/var/lib/minecraft";
+  # Archipelago {{{1
+  users.users.archipelago = {
+    home = "/var/lib/archipelago";
     group = "nogroup";
     createHome = true;
     isSystemUser = true;
     useDefaultShell = true;
   };
 
-  systemd.services.minecraft-server = {
+  environment.systemPackages = [
+    pkgs.archipelago
+    pkgs.factorio-headless
+  ];
+
+  systemd.services.archipelago-server = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    script = "./ServerStart.sh";
-    path = with pkgs; [ jre ];
+    script = "./start.sh";
     restartIfChanged = false;
     serviceConfig = {
-      User = "minecraft";
-      WorkingDirectory = "/var/lib/minecraft";
+      User = "archipelago";
+      WorkingDirectory = "/var/lib/archipelago";
       Restart = "always";
       RestartSec = 5;
     };
   };
-
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (subject.user == "minecraft" &&
-          action.id == "org.freedesktop.systemd1.manage-units") {
-        var unit = action.lookup("unit");
-        if (unit == "minecraft-server.service" || unit == "borgbackup-job-leoserv-modfest.service")
-          return polkit.Result.YES;
-      }
-    });
-  '';
 
   # Nginx {{{1
   security.acme.defaults.email = "leo@60228.dev";
