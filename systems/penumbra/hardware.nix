@@ -25,7 +25,7 @@
     deployment.allowLocalDeployment = true;
 
     # Kernel {{{1
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_6_17;
     boot.zfs.package = pkgs.zfs_unstable;
     boot.initrd.availableKernelModules = [
       "nvme"
