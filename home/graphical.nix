@@ -161,4 +161,47 @@ lib.mkIf osConfig.vris.graphical {
         '';
       };
   };
+
+  programs.plasma = {
+    enable = true;
+
+    window-rules =
+      let
+        mapping = {
+          "NixHawk" = "emuhawk-monort-2.11";
+          "signal" = "signal-desktop";
+          ".virt-manager-wrapped" = "virt-manager";
+          "io.mrarm." = "mcpelauncher-ui-qt";
+          "mcpelauncher-client" = "mcpelauncher-ui-qt";
+          "Actual" = "com.actualbudget.actual";
+          ".sameboy-wrapped" = "sameboy";
+          "discord" = "discord-canary";
+          "ArchipelagoLauncher" = "archipelago";
+        };
+        makeRule = wmclass: desktopfile: {
+          description = "Fix desktop file for ${desktopfile}";
+          match.window-class = {
+            value = wmclass;
+            match-whole = false;
+          };
+          apply.desktopfile = {
+            value = desktopfile;
+            apply = "force";
+          };
+        };
+        rules = lib.mapAttrsToList makeRule mapping;
+      in
+      rules;
+
+    configFile = {
+      kdeglobals.General.AccentColor = "61,212,37";
+      kwinrc.Wayland = {
+        InputMethod = {
+          value = "/run/current-system/sw/share/applications/org.fcitx.Fcitx5.desktop";
+          shellExpand = true;
+        };
+        VirtualKeyboardEnabled = true;
+      };
+    };
+  };
 }

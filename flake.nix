@@ -112,6 +112,11 @@
     url = "github:TASEmulators/BizHawk/db070b93bbe23a9ed0bb9c10f77958361863e9f7";
     flake = false;
   };
+  inputs.plasma-manager = {
+    url = "github:nix-community/plasma-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.home-manager.follows = "home-manager";
+  };
 
   outputs =
     {
@@ -127,7 +132,6 @@
       {
         colmena =
           let
-            dotfiles = import ./. null;
             systems = nixpkgs.lib.mapAttrs (
               n: x:
               { ... }:

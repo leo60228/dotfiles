@@ -74,6 +74,7 @@
     useGlobalPkgs = true;
     users.leo60228 = import ../home.nix;
     extraSpecialArgs = { inherit flakes; };
+    sharedModules = [ flakes.plasma-manager.homeModules.plasma-manager ];
   };
 
   security.sudo.wheelNeedsPassword = false;
