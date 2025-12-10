@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e -o pipefail
+
+out="$(curl -L -H 'Accept: application/json' "https://hydra.capybara-pirate.ts.net/job/dotfiles/Configurations/$(hostname).x86_64-linux/latest" | jq -r .buildoutputs.out.path)"
+set -x
+nix copy --from ssh-ng://desktop.capybara-pirate.ts.net --no-check-sigs "$out"
