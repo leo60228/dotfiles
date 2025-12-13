@@ -169,7 +169,6 @@ lib.mkIf osConfig.vris.graphical {
       let
         mapping = {
           "NixHawk" = "emuhawk-monort-2.11";
-          "signal" = "signal-desktop";
           ".virt-manager-wrapped" = "virt-manager";
           "io.mrarm." = "mcpelauncher-ui-qt";
           "mcpelauncher-client" = "mcpelauncher-ui-qt";
