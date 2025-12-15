@@ -178,7 +178,10 @@
       volumes = map (x: "uosserver-${utils.escapeSystemdPath x}:/${x}") directories;
       image = "uosserver:${imageVersion}";
       inherit imageFile;
-      extraOptions = [ "--tz=local" ];
+      extraOptions = [
+        "--tz=local"
+        "--ip=10.88.0.7"
+      ];
       ports =
         (map (x: "${toString x}:${toString x}") [
           5005
