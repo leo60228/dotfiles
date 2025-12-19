@@ -153,12 +153,12 @@
   #};
   virtualisation.oci-containers.containers.uosserver =
     let
-      version = "4.3.6";
-      imageVersion = "0.0.49";
+      version = "5.0.6";
+      imageVersion = "0.0.54";
       platform = "linux-x64";
       src = pkgs.fetchurl {
-        url = "https://fw-download.ubnt.com/data/unifi-os-server/2f3a-${platform}-${version}-be3b4ae0-6bcd-435d-b893-e93da668b9d0.6-x64";
-        hash = "sha256-J2f+Y2NPSTbm7B8VjGFYOt9WmuQLKCT8r6F6oAnwOfE=";
+        url = "https://fw-download.ubnt.com/data/unifi-os-server/1856-linux-x64-5.0.6-33f4990f-6c68-4e72-9d9c-477496c22450.6-x64";
+        hash = "sha256-IPoWR5GTiy7J1WgMEYdTxGo26qM2nO+U1c742pRo354=";
       };
       imageFile = pkgs.runCommand "image.tar" { inherit src; } ''
         ${pkgs.unzip}/bin/unzip -p $src image.tar > $out || (($?==1))
