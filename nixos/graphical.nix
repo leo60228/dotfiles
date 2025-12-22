@@ -21,7 +21,7 @@
 
     vris.firefox = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.firefox-devedition;
+      default = pkgs.firefox-devedition-bin;
     };
   };
 
