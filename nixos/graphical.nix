@@ -67,10 +67,12 @@
       musicDirectory = "/home/leo60228/Music";
       playlistDirectory = "/home/leo60228/Playlists";
       settings = {
-        audio_output = {
-          type = "pipewire";
-          name = "PipeWire";
-        };
+        audio_output = [
+          {
+            type = "pipewire";
+            name = "PipeWire";
+          }
+        ];
         replaygain = "track";
         replaygain_preamp = "5";
       };
