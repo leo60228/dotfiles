@@ -66,14 +66,14 @@
       group = "users";
       musicDirectory = "/home/leo60228/Music";
       playlistDirectory = "/home/leo60228/Playlists";
-      extraConfig = ''
-        audio_output {
-          type "pipewire"
-          name "PipeWire"
-        }
-        replaygain "track"
-        replaygain_preamp "5"
-      '';
+      settings = {
+        audio_output = {
+          type = "pipewire";
+          name = "PipeWire";
+        };
+        replaygain = "track";
+        replaygain_preamp = "5";
+      };
       network.listenAddress = "any";
     };
     systemd.services.mpd.environment = {
