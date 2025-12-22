@@ -73,7 +73,7 @@
     inputs.flake-compat.follows = "flake-compat";
   };
   inputs.rom-properties = {
-    url = "github:Whovian9369/rom-properties-nix-flake";
+    url = "github:leo60228/rom-properties-nix-flake/libcurl";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
