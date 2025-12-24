@@ -68,5 +68,51 @@
     });
   };
 
+  # zrepl {{{1
+  services.zrepl = {
+    enable = true;
+    settings = {
+      jobs = [
+        {
+          type = "push";
+          name = "push_to_workstation";
+          connect = {
+            type = "tcp";
+            address = "100.70.195.127:8888";
+          };
+          filesystems = {
+            "rpool/root<" = true;
+          };
+          send = {
+            encrypted = true;
+          };
+          replication = {
+            protection = {
+              initial = "guarantee_resumability";
+              incremental = "guarantee_incremental";
+            };
+          };
+          snapshotting = {
+            type = "manual";
+          };
+          pruning = {
+            keep_sender = [ { type = "not_replicated"; } ];
+            keep_receiver = [
+              {
+                type = "regex";
+                negate = true;
+                regex = "^zrepl_.*$";
+              }
+              {
+                type = "last_n";
+                count = 2;
+                regex = "^zrepl_.*$";
+              }
+            ];
+          };
+        }
+      ];
+    };
+  };
   # }}}
 }

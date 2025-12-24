@@ -1,12 +1,11 @@
 # vi: set foldmethod=marker:
 {
-  config,
   pkgs,
   lib,
   ...
 }:
 
-rec {
+{
   imports = [ ./hardware.nix ];
 
   system.stateVersion = "18.03";
@@ -36,6 +35,7 @@ rec {
     4002
     20048
     3306
+    8888
   ];
   networking.firewall.allowedUDPPorts = [
     4010
@@ -111,6 +111,28 @@ rec {
       GRANT ALL ON *.* TO 'kodi';
     '';
     settings.mysqld.bind-address = "0.0.0.0";
+  };
+
+  # zrepl {{{1
+  services.zrepl = {
+    enable = true;
+    settings = {
+      jobs = [
+        {
+          type = "sink";
+          name = "sink";
+          serve = {
+            type = "tcp";
+            listen = "100.70.195.127:8888";
+            listen_freebind = true;
+            clients = {
+              "100.105.49.45" = "penumbra";
+            };
+          };
+          root_fs = "rpool/zrepl/sink";
+        }
+      ];
+    };
   };
   # }}}
 }
