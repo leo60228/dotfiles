@@ -121,15 +121,16 @@
         {
           type = "sink";
           name = "sink";
+
           serve = {
             type = "tcp";
             listen = "100.70.195.127:8888";
             listen_freebind = true;
-            clients = {
-              "100.105.49.45" = "penumbra";
-            };
+            clients."100.105.49.45" = "penumbra";
           };
+
           root_fs = "rpool/zrepl/sink";
+          recv.placeholder.encryption = "off";
         }
       ];
     };

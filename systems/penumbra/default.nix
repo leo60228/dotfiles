@@ -76,25 +76,23 @@
         {
           type = "push";
           name = "push_to_workstation";
+
           connect = {
             type = "tcp";
             address = "100.70.195.127:8888";
           };
-          filesystems = {
-            "rpool/root<" = true;
-          };
-          send = {
-            encrypted = true;
-          };
+
+          filesystems."rpool/root<" = true;
+
+          send.encrypted = true;
           replication = {
             protection = {
               initial = "guarantee_resumability";
               incremental = "guarantee_incremental";
             };
           };
-          snapshotting = {
-            type = "manual";
-          };
+
+          snapshotting.type = "manual";
           pruning = {
             keep_sender = [ { type = "not_replicated"; } ];
             keep_receiver = [
