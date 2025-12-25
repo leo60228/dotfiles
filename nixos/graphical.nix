@@ -155,12 +155,6 @@
       GDK_DEBUG = "portals";
       PLASMA_INTEGRATION_USE_PORTAL = 1;
     };
-
-    # sched-ext {{{1
-    services.scx = {
-      enable = true;
-      scheduler = "scx_lavd";
-    };
     # }}}
   };
 }
