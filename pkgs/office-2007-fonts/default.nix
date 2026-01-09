@@ -2,33 +2,43 @@
   lib,
   stdenvNoCC,
   runCommand,
-  poetry2nix,
+  pyproject-nix,
+  pyproject-build-systems,
+  uv2nix,
+  callPackage,
+  python3,
   libarchive,
+  writeScript,
 }:
 
 let
-  dl = poetry2nix.mkPoetryApplication {
-    projectDir = ./.;
-    overrides = poetry2nix.defaultPoetryOverrides.extend (
-      final: prev: {
-        pycdlib = prev.pycdlib.overridePythonAttrs (old: {
-          buildInputs = (old.buildInputs or [ ]) ++ [ prev.setuptools ];
-        });
-        httpio = prev.httpio.overridePythonAttrs (old: {
-          buildInputs = (old.buildInputs or [ ]) ++ [ prev.setuptools ];
-        });
-        libarchive-c = prev.libarchive-c.overridePythonAttrs (old: {
-          postPatch = (old.postPatch or "") + ''
-            echo "Patching find_library call."
-            substituteInPlace libarchive/ffi.py \
-              --replace-warn "find_library('archive')" "\"${libarchive.lib}/lib/libarchive.so\""
-          '';
-        });
-      }
-    );
+  baseSet = callPackage pyproject-nix.build.packages {
+    python = python3;
   };
+  script = uv2nix.lib.scripts.loadScript { script = ./fetcher.py; };
+  fetcher = writeScript "fetcher.py" (
+    script.renderScript {
+      venv = script.mkVirtualEnv {
+        pythonSet = baseSet.overrideScope (
+          lib.composeManyExtensions [
+            pyproject-build-systems.overlays.wheel
+            (script.mkOverlay { sourcePreference = "wheel"; })
+            (self: super: {
+              httpio = super.httpio.overrideAttrs (oldAttrs: {
+                nativeBuildInputs =
+                  (oldAttrs.nativeBuildInputs or [ ])
+                  ++ self.resolveBuildSystem {
+                    setuptools = [ ];
+                  };
+              });
+            })
+          ]
+        );
+      };
+    }
+  );
 in
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "office-fonts";
   version = "2007";
 
@@ -37,12 +47,11 @@ stdenvNoCC.mkDerivation rec {
       {
         outputHashMode = "recursive";
         outputHash = "sha256-unbiYm7lBGt4xy0/ul3VFOylAUbQV8GF44MVJWDbt5I=";
-        nativeBuildInputs = [ dl ];
       }
       ''
         mkdir $out
         cd $out
-        dl
+        LIBARCHIVE="${libarchive.lib}/lib/libarchive.so" ${fetcher}
       '';
 
   installPhase = ''

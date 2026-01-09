@@ -17,10 +17,6 @@
     url = "github:nmattia/naersk";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.poetry2nix-src = {
-    url = "github:nix-community/poetry2nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
   inputs.mpdiscord = {
     url = "github:leo60228/mpdiscord";
     inputs.nixpkgs.follows = "nixpkgs";
@@ -83,7 +79,21 @@
     inputs.flake-compat.follows = "flake-compat";
     inputs.rust-overlay.follows = "rust-overlay";
   };
-  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
+  inputs.pyproject-nix = {
+    url = "github:pyproject-nix/pyproject.nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.uv2nix = {
+    url = "github:pyproject-nix/uv2nix";
+    inputs.pyproject-nix.follows = "pyproject-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.pyproject-build-systems = {
+    url = "github:pyproject-nix/build-system-pkgs";
+    inputs.pyproject-nix.follows = "pyproject-nix";
+    inputs.uv2nix.follows = "uv2nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.moonlight = {
     url = "github:moonlight-mod/moonlight/develop";
     inputs.nixpkgs.follows = "nixpkgs";
