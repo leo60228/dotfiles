@@ -107,7 +107,6 @@ neovim.override {
                 x
             ) nvim-treesitter.allGrammars
           ))
-          nvim-treesitter-refactor
           nvim-treesitter-textobjects
           vim-auto-save
           vim-poryscript
