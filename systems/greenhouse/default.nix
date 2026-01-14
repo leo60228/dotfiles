@@ -217,8 +217,25 @@
       "irc://localhost:5002"
       "http://localhost:5003"
     ];
+    extraConfig = ''
+      http-ingress https://${config.networking.hostName}.capybara-pirate.ts.net:5001
+      file-upload http http://localhost:40413/upload
+    '';
   };
   systemd.services.soju.environment.GODEBUG = "tlsrsakex=1"; # eyeroll
+
+  systemd.services.filehost-elixire = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.leoPkgs.filehost-elixire}/bin/filehost-elixire";
+    environment.APIKEY_PATH = "%d/apikey";
+    serviceConfig = {
+      Restart = "always";
+      DynamicUser = true;
+      LoadCredential = "apikey:/var/lib/elixire-apikey";
+    };
+  };
 
   # hass {{{1
   virtualisation.oci-containers.backend = "podman";
