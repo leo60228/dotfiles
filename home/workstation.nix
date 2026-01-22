@@ -7,6 +7,7 @@
 
 lib.mkIf osConfig.vris.workstation {
   home.packages = with pkgs; [
+    picard
     pre-commit
     sameboy
     mgba

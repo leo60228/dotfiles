@@ -1,0 +1,100 @@
+From a5a669730acdccbc3ead63da5052f750d710ff95 Mon Sep 17 00:00:00 2001
+From: leo60228 <leo@60228.dev>
+Date: Fri, 16 Jan 2026 16:51:47 -0500
+Subject: [PATCH] Support parsing raw SCSI TOC data file
+
+(cherry picked from commit d4d0a85af9890005783ab12865a26ea50d5dce62)
+---
+ picard/disc/scsitoc.py | 47 ++++++++++++++++++++++++++++++++++++++++++
+ picard/tagger.py       |  5 ++++-
+ 2 files changed, 51 insertions(+), 1 deletion(-)
+ create mode 100644 picard/disc/scsitoc.py
+
+diff --git a/picard/disc/scsitoc.py b/picard/disc/scsitoc.py
+new file mode 100644
+index 000000000..2e63fd124
+--- /dev/null
++++ b/picard/disc/scsitoc.py
+@@ -0,0 +1,47 @@
++# -*- coding: utf-8 -*-
++#
++# Picard, the next-generation MusicBrainz tagger
++#
++# Copyright (C) 2022 Philipp Wolfer
++# Copyright (C) 2022-2024 Laurent Monin
++#
++# This program is free software; you can redistribute it and/or
++# modify it under the terms of the GNU General Public License
++# as published by the Free Software Foundation; either version 2
++# of the License, or (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
++
++
++from picard.disc.utils import NotSupportedTOCError, TocEntry, calculate_mb_toc_numbers
++
++
++def parse_toc_entries(f):
++    """Parse a TOC in the format used by SCSI's READ TOC command."""
++
++    data = f.read()
++    first_track = data[2]
++    last_track = data[3]
++    for number in range(first_track, last_track + 1):
++        base = ((number - first_track) * 8) + 4
++        start_sector = int.from_bytes(data[base + 4 : base + 8], 'big')
++        end_sector = int.from_bytes(data[base + 12 : base + 16], 'big')
++        if end_sector < start_sector:
++            raise NotSupportedTOCError("Track has negative length, likely not an SCSI TOC")
++        if number == last_track:
++            end_sector -= 1
++        yield TocEntry(number, start_sector, end_sector)
++
++
++def toc_from_file(path):
++    """Reads a TOC in the SCSI format, generates MusicBrainz disc TOC listing for use as discid."""
++
++    with open(path, 'rb') as f:
++        return calculate_mb_toc_numbers(parse_toc_entries(f))
+diff --git a/picard/tagger.py b/picard/tagger.py
+index 7042ecd01..a216d384a 100644
+--- a/picard/tagger.py
++++ b/picard/tagger.py
+@@ -106,6 +106,7 @@ from picard.disc import (
+     Disc,
+     dbpoweramplog,
+     eaclog,
++    scsitoc,
+     whipperlog,
+ )
+ from picard.file import File
+@@ -1201,9 +1202,10 @@ class Tagger(QtWidgets.QApplication):
+     def lookup_discid_from_logfile(self):
+         file_chooser = QtWidgets.QFileDialog(self.window)
+         file_chooser.setNameFilters([
+-            _("All supported log files") + " (*.log *.txt)",
++            _("All supported log files") + " (*.log *.txt *.toc)",
+             _("EAC / XLD / Whipper / fre:ac log files") + " (*.log)",
+             _("dBpoweramp log files") + " (*.txt)",
++            _("SCSI TOC file") + " (*.toc)",
+             _("All files") + " (*)",
+         ])
+         if file_chooser.exec_():
+@@ -1220,6 +1222,7 @@ class Tagger(QtWidgets.QApplication):
+             eaclog.toc_from_file,
+             whipperlog.toc_from_file,
+             dbpoweramplog.toc_from_file,
++            scsitoc.toc_from_file,
+         )
+         for reader in log_readers:
+             module_name = reader.__module__
+-- 
+2.51.2
+
