@@ -127,9 +127,6 @@
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.home-manager.follows = "home-manager";
   };
-  inputs.proxmox-nixos = {
-    url = "github:elaldradrian/proxmox-nixos/aarch64";
-  };
 
   outputs =
     {
