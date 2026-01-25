@@ -29,19 +29,11 @@
     autoSubUidGidRange = lib.mkForce false;
     subUidRanges = [
       {
-        startUid = 1000;
-        count = 1;
-      }
-      {
         startUid = 100000;
         count = 65536 * 2;
       }
     ];
     subGidRanges = [
-      {
-        startGid = 100;
-        count = 1;
-      }
       {
         startGid = 100000;
         count = 65536 * 2;
