@@ -1,31 +1,23 @@
-{ lib, flakes, ... }:
+{ lib, ... }:
 
 {
-  imports = [
-    ./hardware.nix
-    flakes.proxmox-nixos.nixosModules.proxmox-ve
-  ];
+  imports = [ ./hardware.nix ];
 
-  nixpkgs.overlays = [ flakes.proxmox-nixos.overlays.aarch64-linux ];
+  system.stateVersion = "26.05";
 
-  services.proxmox-ve = {
-    enable = true;
-    ipAddress = "10.4.13.2";
-    bridges = [ "vmbr0" ];
-  };
-  services.openssh.settings.AcceptEnv = lib.mkForce [
-    "LANG"
-    "LC_*"
-  ];
+  users.extraUsers.leo60228.extraGroups = [ "incus-admin" ];
 
+  networking.nftables.enable = true;
   networking.useNetworkd = true;
   systemd.network = {
     enable = true;
 
-    netdevs.vmbr0.netdevConfig = {
-      Name = "vmbr0";
-      Kind = "bridge";
-    };
+    netdevs = lib.genAttrs [ "vmbr0" "vmbr1" ] (Name: {
+      netdevConfig = {
+        inherit Name;
+        Kind = "bridge";
+      };
+    });
 
     networks = {
       "10-lan" = {
@@ -41,8 +33,30 @@
         };
         linkConfig.RequiredForOnline = "routable";
       };
+
+      "10-wan" = {
+        matchConfig.Name = [ "enu1" ];
+        networkConfig.Bridge = "vmbr1";
+        linkConfig.ActivationPolicy = "always-up";
+      };
+
+      "10-wan-bridge" = {
+        matchConfig.Name = [ "vmbr1" ];
+        linkConfig.ActivationPolicy = "always-up";
+      };
     };
   };
 
-  system.stateVersion = "26.05";
+  virtualisation.incus = {
+    enable = true;
+    preseed = {
+      storage_pools = [
+        {
+          name = "data";
+          driver = "zfs";
+          config.source = "rpool/incus";
+        }
+      ];
+    };
+  };
 }
