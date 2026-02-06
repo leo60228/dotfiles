@@ -266,8 +266,20 @@ lua <<EOF
       },
     },
   })
-  vim.lsp.enable('rust_analyzer')
+
   vim.lsp.enable('ts_ls')
+  vim.lsp.config('ts_ls', {
+    init_options = {
+      preferences = {
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+      }
+    }
+  })
+
+  vim.lsp.enable('rust_analyzer')
   vim.lsp.enable('eslint')
   vim.lsp.enable('nil_ls')
   vim.lsp.enable('lua_ls')
