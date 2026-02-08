@@ -333,6 +333,7 @@ lua <<EOF
       nix = { 'nixfmt' },
       lua = { 'stylua' },
       vim = { 'vim_indent', 'injected' },
+      json = { 'jq' },
     },
     default_format_opts = {
       lsp_format = 'fallback',
