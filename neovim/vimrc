@@ -144,61 +144,76 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 " nvim-treesitter
 lua <<EOF
-  local has_configs, configs = pcall(require, 'nvim-treesitter.configs')
-  if not has_configs then
+  local languages = function(pattern, mods)
+    local set = {}
+    for _, path in ipairs(vim.api.nvim_get_runtime_file(pattern, true)) do
+      local lang = vim.fn.fnamemodify(path, mods)
+      set[lang] = true
+    end
+    return set
+  end
+
+  local parsers = languages('parser/*', ':t:r')
+  local highlights = languages('queries/*/highlights.scm', ':h:t')
+  local textobjects = languages('queries/*/textobjects.scm', ':h:t')
+
+  vim.api.nvim_create_autocmd('FileType', {
+    callback = function(args)
+      if not parsers[args.match] then return end
+
+      if highlights[args.match] then
+        vim.treesitter.start(args.buf)
+
+        if args.match == 'vim' or vim.match == 'nix' then
+          vim.bo[args.buf].syntax = 'ON'
+        end
+      end
+
+      if textobjects[args.match] then
+        vim.keymap.set({ 'x', 'o' }, 'is', function()
+          require "nvim-treesitter-textobjects.select".select_textobject('@string.inner', 'textobjects')
+        end, { buffer = args.buf })
+        vim.keymap.set({ 'x', 'o' }, 'as', function()
+          require "nvim-treesitter-textobjects.select".select_textobject('@string', 'highlights')
+        end, { buffer = args.buf })
+        vim.keymap.set({ 'x', 'o' }, 'i}', function()
+          require "nvim-treesitter-textobjects.select".select_textobject('@block.inner', 'textobjects')
+        end, { buffer = args.buf })
+        vim.keymap.set({ 'x', 'o' }, 'a}', function()
+          require "nvim-treesitter-textobjects.select".select_textobject('@block.outer', 'textobjects')
+        end, { buffer = args.buf })
+
+        if args.match == 'yaml' then
+          vim.keymap.set({ 'n', 'x', 'o' }, '<M-.>', function()
+            require "nvim-treesitter-textobjects.move".goto_next_start('@statement.outer', 'textobjects')
+          end, { buffer = args.buf })
+          vim.keymap.set({ 'n', 'x', 'o' }, '}', function()
+            require "nvim-treesitter-textobjects.move".goto_next_start('@block.inner', 'textobjects')
+          end, { buffer = args.buf })
+
+          vim.keymap.set({ 'n', 'x', 'o' }, '<M-,>', function()
+            require "nvim-treesitter-textobjects.move".goto_previous_start('@statement.outer', 'textobjects')
+          end, { buffer = args.buf })
+          vim.keymap.set({ 'n', 'x', 'o' }, '{', function()
+            require "nvim-treesitter-textobjects.move".goto_previous_start('@block.inner', 'textobjects')
+          end, { buffer = args.buf })
+        end
+      end
+    end
+  })
+
+  local has_textobjects, textobjects = pcall(require, 'nvim-treesitter-textobjects')
+  if not has_textobjects then
     return
   end
-  configs.setup({
-    modules = {},
-    ensure_installed = {},
-    sync_install = false,
-    auto_install = false,
-    ignore_install = {},
-
-    highlight = {
-      enable = true,
-      custom_captures = {
-        ['comment'] = 'Comment',
-        ['string.special'] = 'Special',
-        ['include'] = 'Keyword',
-        ['punctuation.delimiter'] = 'NONE',
-        ['punctuation.bracket'] = 'NONE',
-      },
-      additional_vim_regex_highlighting = { 'vim', 'nix' },
-    },
-    playground = {
-      enable = true,
-    },
-    refactor = {
-      navigation = {
-        enable = true,
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        keymaps = {
-          ['is'] = '@string.inner',
-          ['as'] = { query = '@string', query_group = 'highlights' },
-          ['i}'] = '@block.inner',
-          ['a}'] = '@block.outer',
-        },
-      },
-      move = {
-        enable = true,
-        goto_next_start = {
-          ['<M-.>'] = '@statement.outer',
-          ['}'] = '@block.inner',
-        },
-        goto_previous_start = {
-          ['<M-,>'] = '@statement.outer',
-          ['{'] = '@block.inner',
-        },
-      },
-    },
-  })
+  textobjects.setup({})
 EOF
 
+hi! link @comment Comment
+hi! link @string.special Special
+hi! link @include Keyword
+hi! link @punctuation.delimiter NONE
+hi! link @punctuation.bracket NONE
 hi! link @variable Identifier
 
 " vim-auto-save

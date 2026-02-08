@@ -1,8 +1,8 @@
 " Vim indent file
-" Language:	Vim script
-" Maintainer:	The Vim Project <https://github.com/vim/vim>
-" Last Change:	2023 Aug 10
-" Former Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Language:        Vim script
+" Maintainer:        The Vim Project <https://github.com/vim/vim>
+" Last Change:        2023 Aug 10
+" Former Maintainer:        Bram Moolenaar <Bram@vim.org>
 
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
@@ -83,26 +83,26 @@ function GetVimIndentIntern()
       return 0
     elseif syn_here =~ 'vimLuaHeredoc\|vimScriptHeredoc' || (syn_prev =~ 'vimLua$' && prev_text =~ '.*<<EOF$')
       if synIDattr(synID(lnum, 1, 1), "name") !~ 'vimLuaHeredoc\|vimScriptHeredoc'
-	" First line in heredoc: increase indent
-	return ind + shiftwidth()
+        " First line in heredoc: increase indent
+        return ind + shiftwidth()
       endif
       " Heredoc continues: use lua indentation
-      return nvim_treesitter#indent()
+      return v:lua.require'nvim-treesitter'.indentexpr()
     elseif syn_here =~ 'vimLetHereDocStop'
       " End of heredoc: use indent of matching start line
       let lnum = v:lnum - 1
       while lnum > 0
-	let attr = synIDattr(synID(lnum, 1, 1), "name")
-	if attr != '' && attr !~ 'vimLetHereDoc'
-	  return indent(lnum)
-	endif
-	let lnum -= 1
+        let attr = synIDattr(synID(lnum, 1, 1), "name")
+        if attr != '' && attr !~ 'vimLetHereDoc'
+          return indent(lnum)
+        endif
+        let lnum -= 1
       endwhile
       return 0
     elseif syn_here =~ 'vimLetHereDoc'
       if synIDattr(synID(lnum, 1, 1), "name") !~ 'vimLetHereDoc'
-	" First line in heredoc: increase indent
-	return ind + shiftwidth()
+        " First line in heredoc: increase indent
+        return ind + shiftwidth()
       endif
       " Heredoc continues: no change in indent
       return ind
@@ -110,12 +110,12 @@ function GetVimIndentIntern()
       " End of heredoc: use indent of matching start line
       let lnum = v:lnum - 1
       while lnum > 0
-	let attr = synIDattr(synID(lnum, 1, 1), "name")
-	echom attr
-	if attr != '' && attr !~ 'vimLetHereDoc\|vimLuaHeredoc\|vimScriptHeredoc'
-	  return indent(lnum)
-	endif
-	let lnum -= 1
+        let attr = synIDattr(synID(lnum, 1, 1), "name")
+        echom attr
+        if attr != '' && attr !~ 'vimLetHereDoc\|vimLuaHeredoc\|vimScriptHeredoc'
+          return indent(lnum)
+        endif
+        let lnum -= 1
       endwhile
       return 0
     endif
@@ -139,10 +139,10 @@ function GetVimIndentIntern()
       let i = match(prev_text, '\(^\||\)\s*\(export\s\+\)\?\({\|\(if\|wh\%[ile]\|for\|try\|cat\%[ch]\|fina\|finall\%[y]\|def\|el\%[seif]\)\>\|fu\%[nction][! ]\)')
       if i >= 0
         let ind += shiftwidth()
-	if strpart(prev_text, i, 1) == '|' && has('syntax_items')
-	      \ && synIDattr(synID(lnum, i, 1), "name") =~ '\(Comment\|String\|PatSep\)$'
-	  let ind -= shiftwidth()
-	endif
+        if strpart(prev_text, i, 1) == '|' && has('syntax_items')
+              \ && synIDattr(synID(lnum, i, 1), "name") =~ '\(Comment\|String\|PatSep\)$'
+          let ind -= shiftwidth()
+        endif
       endif
     endif
   endif
@@ -166,7 +166,7 @@ function GetVimIndentIntern()
       exe v:lnum
       silent! normal %
       if line('.') < v:lnum
-	let ind = indent('.')
+        let ind = indent('.')
       endif
     else
       " todo: use searchpair() to find a match
@@ -178,18 +178,18 @@ function GetVimIndentIntern()
     " Below a line starting with "}" find the matching "{".
     if prev_text =~ '^\s*}'
       if maparg('%') != ''
-	exe lnum
-	silent! normal %
-	if line('.') < lnum
-	  let lnum = line('.')
-	  let ind = indent(lnum)
-	  let prev_text = getline(lnum)
-	else
-	  break
-	endif
+        exe lnum
+        silent! normal %
+        if line('.') < lnum
+          let lnum = line('.')
+          let ind = indent(lnum)
+          let prev_text = getline(lnum)
+        else
+          break
+        endif
       else
-	" todo: use searchpair() to find a match
-	break
+        " todo: use searchpair() to find a match
+        break
       endif
     elseif prev_text =~ s:lineContPat
       " looks like a continuation like, go back one line
@@ -208,7 +208,7 @@ function GetVimIndentIntern()
   endif
 
   let ends_in_comment = has('syntax_items')
-	\ && synIDattr(synID(lnum, len(getline(lnum)), 1), "name") =~ '\(Comment\|String\)$'
+        \ && synIDattr(synID(lnum, len(getline(lnum)), 1), "name") =~ '\(Comment\|String\)$'
 
   " A line ending in "{" or "[" is most likely the start of a dict/list literal,
   " indent the next line more.  Not for a continuation line or {{{.
