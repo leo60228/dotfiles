@@ -62,11 +62,13 @@
     services.mpd = {
       enable = true;
       startWhenNeeded = true;
+      openFirewall = false;
       user = "leo60228";
       group = "users";
-      musicDirectory = "/home/leo60228/Music";
-      playlistDirectory = "/home/leo60228/Playlists";
       settings = {
+        bind_to_address = "any";
+        music_directory = "/home/leo60228/Music";
+        playlist_directory = "/home/leo60228/Playlists";
         audio_output = [
           {
             type = "pipewire";
@@ -76,7 +78,6 @@
         replaygain = "track";
         replaygain_preamp = "5";
       };
-      network.listenAddress = "any";
     };
     systemd.services.mpd.environment = {
       XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.leo60228.uid}";
