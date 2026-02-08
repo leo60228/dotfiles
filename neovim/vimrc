@@ -159,7 +159,9 @@ lua <<EOF
 
   vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
-      if not parsers[args.match] then return end
+      if not parsers[args.match] then
+        return
+      end
 
       if highlights[args.match] then
         vim.treesitter.start(args.buf)
@@ -171,35 +173,35 @@ lua <<EOF
 
       if textobjects[args.match] then
         vim.keymap.set({ 'x', 'o' }, 'is', function()
-          require "nvim-treesitter-textobjects.select".select_textobject('@string.inner', 'textobjects')
+          require('nvim-treesitter-textobjects.select').select_textobject('@string.inner', 'textobjects')
         end, { buffer = args.buf })
         vim.keymap.set({ 'x', 'o' }, 'as', function()
-          require "nvim-treesitter-textobjects.select".select_textobject('@string', 'highlights')
+          require('nvim-treesitter-textobjects.select').select_textobject('@string', 'highlights')
         end, { buffer = args.buf })
         vim.keymap.set({ 'x', 'o' }, 'i}', function()
-          require "nvim-treesitter-textobjects.select".select_textobject('@block.inner', 'textobjects')
+          require('nvim-treesitter-textobjects.select').select_textobject('@block.inner', 'textobjects')
         end, { buffer = args.buf })
         vim.keymap.set({ 'x', 'o' }, 'a}', function()
-          require "nvim-treesitter-textobjects.select".select_textobject('@block.outer', 'textobjects')
+          require('nvim-treesitter-textobjects.select').select_textobject('@block.outer', 'textobjects')
         end, { buffer = args.buf })
 
         if args.match == 'yaml' then
           vim.keymap.set({ 'n', 'x', 'o' }, '<M-.>', function()
-            require "nvim-treesitter-textobjects.move".goto_next_start('@statement.outer', 'textobjects')
+            require('nvim-treesitter-textobjects.move').goto_next_start('@statement.outer', 'textobjects')
           end, { buffer = args.buf })
           vim.keymap.set({ 'n', 'x', 'o' }, '}', function()
-            require "nvim-treesitter-textobjects.move".goto_next_start('@block.inner', 'textobjects')
+            require('nvim-treesitter-textobjects.move').goto_next_start('@block.inner', 'textobjects')
           end, { buffer = args.buf })
 
           vim.keymap.set({ 'n', 'x', 'o' }, '<M-,>', function()
-            require "nvim-treesitter-textobjects.move".goto_previous_start('@statement.outer', 'textobjects')
+            require('nvim-treesitter-textobjects.move').goto_previous_start('@statement.outer', 'textobjects')
           end, { buffer = args.buf })
           vim.keymap.set({ 'n', 'x', 'o' }, '{', function()
-            require "nvim-treesitter-textobjects.move".goto_previous_start('@block.inner', 'textobjects')
+            require('nvim-treesitter-textobjects.move').goto_previous_start('@block.inner', 'textobjects')
           end, { buffer = args.buf })
         end
       end
-    end
+    end,
   })
 
   local has_textobjects, textobjects = pcall(require, 'nvim-treesitter-textobjects')
@@ -290,8 +292,8 @@ lua <<EOF
         includeInlayVariableTypeHints = true,
         includeInlayPropertyDeclarationTypeHints = true,
         includeInlayFunctionLikeReturnTypeHints = true,
-      }
-    }
+      },
+    },
   })
 
   vim.lsp.enable('rust_analyzer')
