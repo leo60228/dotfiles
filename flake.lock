@@ -703,18 +703,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1769290167,
-        "narHash": "sha256-85W5OrP9Ju4ZJRUEZLpBreKxgUrHgxxZEv7KzcpqNDo=",
-        "owner": "moonlight-mod",
-        "repo": "moonlight",
-        "rev": "aed3fbaded899327c5c67d7792672b5819cfc2fc",
-        "type": "github"
+        "lastModified": 1770664149,
+        "narHash": "sha256-SFyn79nMBMJHF9KZkc2yJEH11nsPtesRgMJ6WduWIFM=",
+        "type": "tarball",
+        "url": "https://archive.softwareheritage.org/api/1/vault/flat/swh:1:dir:92463e702b7aa356ecea4c63cbe39f5c9158eb52/raw/"
       },
       "original": {
-        "owner": "moonlight-mod",
-        "ref": "develop",
-        "repo": "moonlight",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://archive.softwareheritage.org/api/1/vault/flat/swh:1:dir:92463e702b7aa356ecea4c63cbe39f5c9158eb52/raw/"
       }
     },
     "mpdiscord": {

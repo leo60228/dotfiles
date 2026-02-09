@@ -95,7 +95,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.moonlight = {
-    url = "github:moonlight-mod/moonlight/develop";
+    url = "https://archive.softwareheritage.org/api/1/vault/flat/swh:1:dir:92463e702b7aa356ecea4c63cbe39f5c9158eb52/raw/";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.flake-compat = {
