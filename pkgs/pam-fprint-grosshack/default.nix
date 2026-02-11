@@ -94,7 +94,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.updateScript = gitUpdater {
     rev-prefix = "v";
-    allowedVersions = "^v?0\.";
+    allowedVersions = "^v?0\\.";
   };
 
   postPatch = ''

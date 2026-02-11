@@ -133,6 +133,7 @@
         inherit substituters;
         trusted-substituters = substituters;
         warn-dirty = false;
+        extra-deprecated-features = [ "broken-string-indentation" ];
       };
     extraOptions = "!include /etc/nix/secrets.conf"; # put a GitHub PAT here!
   };
