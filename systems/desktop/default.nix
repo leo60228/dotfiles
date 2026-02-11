@@ -78,6 +78,11 @@
     '';
   };
   systemd.services.hydra-queue-runner.wants = [ "network-online.target" ];
+  nix.settings.trusted-users = lib.mkAfter [
+    "hydra"
+    "hydra-queue-runner"
+    "hydra-www"
+  ];
 
   services.postgresql.package = pkgs.postgresql_16;
   services.postgresql.settings.max_connections = 200;
