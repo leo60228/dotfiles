@@ -153,17 +153,17 @@ lua <<EOF
     return set
   end
 
-  local parsers = languages('parser/*', ':t:r')
-  local highlights = languages('queries/*/highlights.scm', ':h:t')
-  local textobjects = languages('queries/*/textobjects.scm', ':h:t')
+  local with_parsers = languages('parser/*', ':t:r')
+  local with_highlights = languages('queries/*/highlights.scm', ':h:t')
+  local with_textobjects = languages('queries/*/textobjects.scm', ':h:t')
 
   vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
-      if not parsers[args.match] then
+      if not with_parsers[args.match] then
         return
       end
 
-      if highlights[args.match] then
+      if with_highlights[args.match] then
         vim.treesitter.start(args.buf)
 
         if args.match == 'vim' or vim.match == 'nix' then
@@ -171,7 +171,7 @@ lua <<EOF
         end
       end
 
-      if textobjects[args.match] then
+      if with_textobjects[args.match] then
         vim.keymap.set({ 'x', 'o' }, 'is', function()
           require('nvim-treesitter-textobjects.select').select_textobject('@string.inner', 'textobjects')
         end, { buffer = args.buf })
@@ -257,7 +257,7 @@ lua <<EOF
     'fzf-vim',
     fzf_colors = true,
     defaults = { git_icons = false, file_icons = false },
-    winopts = { preview = { hidden = false } },
+    winopts = { preview = { hidden = false } }, ---@diagnostic disable-line: missing-fields
     btags = { ctags_autogen = false },
   })
 EOF
