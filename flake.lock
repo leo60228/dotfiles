@@ -682,11 +682,11 @@
     "mobile-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1771540704,
-        "narHash": "sha256-CvUoe5jBLlaJ1I+ZFyKNqZzQN6NV59VK5d6AzGflYCc=",
+        "lastModified": 1771540991,
+        "narHash": "sha256-1/O14UlO7QDuwfkK7LTjwPuD95eai7XaiizLAK7/x4E=",
         "owner": "leo60228",
         "repo": "mobile-nixos",
-        "rev": "de58b18dac6d62c6e4113b8358286c0f9ba1f7a5",
+        "rev": "91df1d8c564cdbda054d5905101d2ce62ad05427",
         "type": "github"
       },
       "original": {
