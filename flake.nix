@@ -103,7 +103,7 @@
     flake = false;
   };
   inputs.mobile-nixos = {
-    url = "github:leo60228/mobile-nixos/vriska";
+    url = "github:leo60228/mobile-nixos/homestar";
     flake = false;
   };
   inputs.flake-firefox-nightly = {
