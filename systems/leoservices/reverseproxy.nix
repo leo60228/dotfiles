@@ -109,12 +109,6 @@
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           '';
         };
-
-        locations."~ /pictshare/([\\s]*)$" = {
-          extraConfig = ''
-            return 301 /pictrs/image/$1;
-          '';
-        };
       };
       "*.pds.vriska.dev" = {
         forceSSL = true;
