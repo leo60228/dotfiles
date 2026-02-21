@@ -115,7 +115,16 @@
           "gpu"
       ))
       ++ [
-        "memory"
+        (
+          if osConfig.boot.supportedFilesystems.zfs or false then
+            {
+              type = "command";
+              key = "Memory";
+              text = ''awk '/^size/{x-=$3}/^c_min/{x+=$3}/^MemTotal/{x+=(y=$2*1024)}/^MemAvailable/{x-=$2*1024}END{z=x*100/y;printf "%.2f GiB / %.2f GiB (\033[3%dm%d%%\033[m)\n", x/1024/1024/1024.0, y/1024/1024/1024.0, (z>80)?1:(z>50?3:2), z}' /proc/spl/kstat/zfs/arcstats /proc/meminfo'';
+            }
+          else
+            "memory"
+        )
         "disk"
         {
           type = "battery";
