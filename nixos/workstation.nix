@@ -43,7 +43,6 @@
       config.virtualisation.libvirtd.qemu.package
       pkgs.virt-manager
       pkgs.kdePackages.sddm-kcm
-      pkgs.kdePackages.audiocd-kio
       pkgs.kdePackages.skanpage
       pkgs.kdePackages.isoimagewriter
       pkgs.kdePackages.krdc
