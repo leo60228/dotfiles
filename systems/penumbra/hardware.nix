@@ -5,6 +5,7 @@
   modulesPath,
   pkgs,
   flakes,
+  config,
   ...
 }:
 {
@@ -42,6 +43,10 @@
       options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw power_save=0
       options ttm pages_limit=8037464
     '';
+
+    boot.extraModulePackages = [
+      (pkgs.leoPkgs.amdgpu-hdmi-frl.override { linuxPackages = config.boot.kernelPackages; })
+    ];
 
     # Disks {{{1
     boot.supportedFilesystems = [ "zfs" ];

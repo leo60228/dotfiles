@@ -6,6 +6,7 @@
 }:
 
 {
+  amdgpu-hdmi-frl = callPackage ./amdgpu-hdmi-frl { };
   avmvc12 = callPackage ./avmvc12 { };
   beetcamp = python3.pkgs.callPackage ./beetcamp { };
   bin = callPackage ./bin { };
