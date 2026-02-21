@@ -110,7 +110,7 @@
           '';
         };
 
-        locations."~ /pictshare/([\s]*)$" = {
+        locations."~ /pictshare/([\\s]*)$" = {
           extraConfig = ''
             return 301 /pictrs/image/$1;
           '';
