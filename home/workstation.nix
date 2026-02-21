@@ -11,7 +11,7 @@ lib.mkIf osConfig.vris.workstation {
     pre-commit
     sameboy
     mgba
-    melonDS
+    melonds
     emuhawk
     archipelago
     nix-eval-jobs
@@ -32,7 +32,7 @@ lib.mkIf osConfig.vris.workstation {
         };
       }
     ))
-    opusTools
+    opus-tools
     docker-credential-helpers
     libsecret
     parsec-bin
@@ -44,8 +44,8 @@ lib.mkIf osConfig.vris.workstation {
     ares
     (mesen.overrideAttrs (oldAttrs: {
       dotnetRuntimeDeps = oldAttrs.dotnetRuntimeDeps ++ [
-        xorg.libXrandr
-        xorg.libXcursor
+        libXrandr
+        libXcursor
       ];
     }))
     ryubing
@@ -80,7 +80,7 @@ lib.mkIf osConfig.vris.workstation {
     hub
     prismlauncher
     mcpelauncher-ui-qt
-    wineWowPackages.staging
+    wineWow64Packages.staging
     gnumake
     (lib.hiPrio gcc)
     hplip

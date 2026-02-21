@@ -60,6 +60,7 @@
     settings.server.protocol = "http";
     settings.security.admin_user = "leo60228";
     settings.security.admin_password = "$__file{/var/lib/grafana/grafana-password.txt}";
+    settings.security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
     settings."auth.anonymous".enabled = true;
   };
 
