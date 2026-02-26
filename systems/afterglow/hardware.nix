@@ -24,6 +24,16 @@
 
   hardware.firmware = [ pkgs.chromeos-sc7180-unredistributable-firmware ];
 
+  mobile.boot.stage-1.kernel.useNixOSKernel = true;
+  boot.kernelPackages = pkgs.linuxPackagesFor (
+    pkgs.linux_6_18.overrideAttrs (oldAttrs: {
+      postConfigure = (oldAttrs.postConfigure or "") + ''
+        mv $buildRoot/.config $buildRoot/config-base
+        ./scripts/kconfig/merge_config.sh -O $buildRoot $buildRoot/config-base ${./config}
+      '';
+    })
+  );
+
   vris.firefox =
     let
       wrapFirefox = pkgs.wrapFirefox.override {
