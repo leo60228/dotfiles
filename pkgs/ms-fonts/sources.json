@@ -1,0 +1,406 @@
+{
+  "Arial": {
+    "40266578845": {
+      "name": "Arial.ttf",
+      "hash": "sha256-BcfaX+GV4E12u+TyK3gp68FC+VcGZEn2jVmvuy1EazM="
+    },
+    "40334174663": {
+      "name": "Arial Bold.ttf",
+      "hash": "sha256-bQvauLDfCayZUGFkcQCo+NTvjMll0NfrsFfl0niwAwo="
+    },
+    "52361835290": {
+      "name": "Arial Bold Italic.ttf",
+      "hash": "sha256-nv5/8glhgfYTJHUIdowYqt4vy2+LYEwQkV74M7CulT4="
+    },
+    "53893354205": {
+      "name": "Arial Italic.ttf",
+      "hash": "sha256-/Rbdz3Hfp8PByVEeWOZIUFjQi51IfR/weozBnxRWhVo="
+    },
+    "38906509964": {
+      "name": "Arial Narrow.ttf",
+      "hash": "sha256-/bM4+M94tFw00Wq9v2qxfjEJhbBSTUCswvs2uB170HM="
+    },
+    "36741775335": {
+      "name": "Arial Narrow Bold.ttf",
+      "hash": "sha256-BlmdGl7S617vxcGkEAXGYCnITDcD3HUycdTJ+gbovms="
+    },
+    "46200863804": {
+      "name": "Arial Narrow Bold Italic.ttf",
+      "hash": "sha256-+dPpurpmiGbGOdruHLqQ0NQ3LPHPXh/46AboFHBjBMk="
+    },
+    "41429613544": {
+      "name": "Arial Narrow Italic.ttf",
+      "hash": "sha256-nTVutUVWweuBYK6qo1Yi8vRsgc+wVngaCUv3S24qiV8="
+    },
+    "36152637550": {
+      "name": "Arial Black.ttf",
+      "hash": "sha256-nHcYUBu9D44eL2AX2pI89klDwAKLwYkaZJMqmoM/diQ="
+    }
+  },
+  "Calibri": {
+    "46569040739": {
+      "name": "Calibri.ttf",
+      "hash": "sha256-iSCnqYLsWYI4ahORH2zjggG3bd8N9RnyvTVHipmdhSI="
+    },
+    "37730708205": {
+      "name": "Calibri Bold.ttf",
+      "hash": "sha256-1A9sT4YNE7CTF/m1JSahSZyZ1Jn+ewiDAKlt7SBbdRw="
+    },
+    "46320603660": {
+      "name": "Calibri Italic.ttf",
+      "hash": "sha256-rlheREqpRIS9dZIf0qGIkiqM8RIkXSbGVY9/q7IfMj8="
+    },
+    "34818389165": {
+      "name": "Calibri Light.ttf",
+      "hash": "sha256-oiwn03dFfhBUPHrv+Z/SIaY5oLkz5rQYk4/1MTGs7gQ="
+    },
+    "35152426648": {
+      "name": "Calibri Light Italic.ttf",
+      "hash": "sha256-9H8eJBPueHzIoYQFiLiKRVcboA3roy+lOsuEmerVHgc="
+    },
+    "41416916172": {
+      "name": "Calibri Bold Italic.ttf",
+      "hash": "sha256-uqw7GsgwPpWHGwtP4M4ypbcBotQKqYIrSB1aR7lIxQY="
+    }
+  },
+  "Cambria": {
+    "38770737849": {
+      "name": "Cambria Bold.ttf",
+      "hash": "sha256-Y1b59s/N67XinwOirQi0pHp8gMkRuAsv1kG70iAN8ds="
+    },
+    "29027199858": {
+      "name": "Cambria Italic.ttf",
+      "hash": "sha256-wp4DDENzDnnHMI59O96sRBN4Q+ZVV6oUgJQ8pyzS/l8="
+    },
+    "33301484845": {
+      "name": "Cambria Bold Italic.ttf",
+      "hash": "sha256-YqvDklNPj6JLaXV6TShyblT0LX4naIjannAxxM+0tdk="
+    },
+    "38986015697": {
+      "name": "Cambria.ttf",
+      "hash": "sha256-/j//ztRD6Bi2WLF4zrnuaKKB+fUZRZGA835BIKGrURQ="
+    }
+  },
+  "Cambria Math": {
+    "40193268453": {
+      "name": "Cambria Math.ttf",
+      "hash": "sha256-wjc/ScC4HbYXYEoOQPGnmV1rX6fN9zp9EndFRn6TpjY="
+    }
+  },
+  "Candara": {
+    "37163175469": {
+      "name": "Candara.ttf",
+      "hash": "sha256-ACweM3jQLtfb2z3xyU1DNBOlbz8vOqgxWldyDuhR3EU="
+    },
+    "28503045197": {
+      "name": "Candara Bold.ttf",
+      "hash": "sha256-7A3OUXCqryz0hdS6Odhvu6HdHHbZFAy/daa4S1D7IN4="
+    },
+    "38750421375": {
+      "name": "Candara Italic.ttf",
+      "hash": "sha256-wWXbvDW78f766GXD5rAkBMjRggdP4E544iG6t9Nc4/g="
+    },
+    "32080890305": {
+      "name": "Candara Bold Italic.ttf",
+      "hash": "sha256-qHNYHZ8IhkQb1FxeQlpzTobgY+9YO5z4CBsaoDuHHxw="
+    }
+  },
+  "Comic Sans MS": {
+    "34621977852": {
+      "name": "Comic Sans MS.ttf",
+      "hash": "sha256-9NEU4ZXH1GKTe58gBHsmmDhZbFK1cbQ59fEsGz+5WD0="
+    },
+    "33578106500": {
+      "name": "Comic Sans MS Bold.ttf",
+      "hash": "sha256-f0CK1clTMh+HfsumhnP2mrDbioVXDt7KOj82liJm42g="
+    },
+    "25699812997": {
+      "name": "Comic Sans MS Italic.ttf",
+      "hash": "sha256-eaEP2XwYBRg25jUQsUEzI3yktx19l/54ADRjPbyFXmE="
+    },
+    "34876954765": {
+      "name": "Comic Sans MS Bold Italic.ttf",
+      "hash": "sha256-WHnEEAoQ5YOO9A9WdRyO2Hal4eoOxgQDbcvzxuzVuyY="
+    }
+  },
+  "Constantia": {
+    "31448377222": {
+      "name": "Constantia.TTF",
+      "hash": "sha256-4gkHXt3FoRjtQxtw2bYTnGvrLpsChRuh/GAupQnqyo0="
+    },
+    "38492810258": {
+      "name": "Constantia Bold.TTF",
+      "hash": "sha256-CKLyG1PSTtXR400gZzNsrlNESV7dkykCs3zB/B9X7z0="
+    },
+    "39168665702": {
+      "name": "Constantia Italic.TTF",
+      "hash": "sha256-HsESbEScWiOj0pXYLhxs43E6Kab8DNFDe40gMg83kO8="
+    },
+    "41878151071": {
+      "name": "Constantia Bold Italic.TTF",
+      "hash": "sha256-NZCal+LPGU6pi9t4ptlBeXK2l5hMeWbv/kijfmTDGgA="
+    }
+  },
+  "Corbel": {
+    "35115404204": {
+      "name": "Corbel.ttf",
+      "hash": "sha256-xmQrn5cDmAGNL9tSGGwoKBxxmDoGLTFBtZETYPorFO0="
+    },
+    "41928964640": {
+      "name": "Corbel Bold.ttf",
+      "hash": "sha256-kYRvdfDYAnsb9kBQPLTVQzp57iedvozQV46Pavre9XA="
+    },
+    "37832507313": {
+      "name": "Corbel Italic.ttf",
+      "hash": "sha256-nL04geJFVLi3VXAo9lOSdl19S3AEqbnqJEI5r7Xi54g="
+    },
+    "40714016858": {
+      "name": "Corbel Bold Italic.ttf",
+      "hash": "sha256-gpYs1QYO75IdttTWuYNE2BRy3O2OAZwNg17c54vV6js="
+    }
+  },
+  "Courier New": {
+    "39673202522": {
+      "name": "Courier New.ttf",
+      "hash": "sha256-z/NFbHS7vzPZ6Ngo/bXxL5w/r3/N2Fe8uUF061BJn3U="
+    },
+    "35606992108": {
+      "name": "Courier New Bold.ttf",
+      "hash": "sha256-+OmI+LGHAhdkRFPHTkxwqIdnzLN94W3PqlIBz7Ci0kE="
+    },
+    "30090747632": {
+      "name": "Courier New Bold Italic.ttf",
+      "hash": "sha256-ULqP3lulibZXkPBqqV21aLylAh9JmoZLSRd2vO/E4WQ="
+    },
+    "45181546227": {
+      "name": "Courier New Italic.ttf",
+      "hash": "sha256-HwoRoAbFBUu6lAL5t2M4b2x6hZvjduj7eali+Bygop8="
+    }
+  },
+  "Franklin Gothic": {
+    "40944288953": {
+      "name": "Franklin Gothic Demi.ttf",
+      "hash": "sha256-fW0I/raXKwsdPHhgWSrwOlesQJQzvgBvxSfjdN7ZOXg="
+    },
+    "35264640634": {
+      "name": "Franklin Gothic Demi Cond.ttf",
+      "hash": "sha256-MCuxW48eGcNojRNFd+i6slERZH3x+5zt291//hL+J78="
+    },
+    "34079528782": {
+      "name": "Franklin Gothic Demi Italic.ttf",
+      "hash": "sha256-w7aV7N9yo2bunPUHqXeILSK2zLbqTUx0IQwA/EEjhRo="
+    },
+    "36177649959": {
+      "name": "Franklin Gothic Heavy.ttf",
+      "hash": "sha256-7zcOm+UUIuxi+fVg6rdrTK2RpdJiPdpOIg08D1oMFBM="
+    },
+    "34934420178": {
+      "name": "Franklin Gothic Heavy Italic.ttf",
+      "hash": "sha256-KjuXFFMKmlXbSgYQ4ZY/OWeIkdGq4wUBQkGX7wnTHVA="
+    },
+    "43557860315": {
+      "name": "Franklin Gothic Medium.TTF",
+      "hash": "sha256-AD9q8XahJnHHup5R2XtZiqKQZBEdgFj2AA5WQMVaJ0k="
+    },
+    "42667678898": {
+      "name": "Franklin Gothic Medium Cond.ttf",
+      "hash": "sha256-0lgW4lwzXKA/add+Wx+SBAjl95JCGBjDdbZDenS8Sqg="
+    },
+    "42182258861": {
+      "name": "Franklin Gothic Medium Italic.TTF",
+      "hash": "sha256-wCNfFnQZAPT5Bao2M44yjnWS5/ZKcfIC0wEZ4zznHTw="
+    }
+  },
+  "Gabriola": {
+    "34438341383": {
+      "name": "Gabriola.ttf",
+      "hash": "sha256-utYa+IquLpxzl9w/U871YIfGt+JjdWCxARNQZ9cbvhA="
+    }
+  },
+  "Georgia": {
+    "35602463917": {
+      "name": "Georgia.ttf",
+      "hash": "sha256-MZasYwKEm+D4xzNdR0JlbpKS7BZIQ4mopndlfhDYwyU="
+    },
+    "35466551590": {
+      "name": "Georgia Bold.ttf",
+      "hash": "sha256-2t1xS5e0GPShLvXBJQzAgDqPZIMMQRbQOlAcUcoHV/A="
+    },
+    "35605880329": {
+      "name": "Georgia Italic.ttf",
+      "hash": "sha256-jkZbYUHkF1rlwAQ2kaU95NHnoDpEtTLNZUQiVVxVq0Q="
+    },
+    "35206472607": {
+      "name": "Georgia Bold Italic.ttf",
+      "hash": "sha256-YdikiGNXXkFg1mMQGW5LkYFtlREn6MuRo18bXVRd+4g="
+    }
+  },
+  "Impact": {
+    "40585182081": {
+      "name": "Impact.ttf",
+      "hash": "sha256-9472p1la2w2FZKU8aVLC2TSRwq2u73tOizy4MF7Bij8="
+    }
+  },
+  "Ink Free": {
+    "19794626264": {
+      "name": "Ink Free.ttf",
+      "hash": "sha256-+Jvihw/DJIvsFNJkQfSwwwPQEKNRQVtTC8Sbx1qTrSI="
+    }
+  },
+  "Lucida Sans Unicode": {
+    "35821919345": {
+      "name": "Lucida Sans Unicode.ttf",
+      "hash": "sha256-ggzi7EpQTCd5Ls7lDzW84SfM/kZ0r2zFtbrfZ7zHcp4="
+    }
+  },
+  "Microsoft Sans Serif": {
+    "42486742825": {
+      "name": "Microsoft Sans Serif.ttf",
+      "hash": "sha256-HZu7OcV+PwLzBucNySZY7INvujnGxH4TU29Pf2aRL9Y="
+    }
+  },
+  "Palatino Linotype": {
+    "38312838300": {
+      "name": "Palatino Linotype.ttf",
+      "hash": "sha256-WGWz7H77BXeBOAV0W+0WM79V8XvJnlGe5RAo+UqJtWk="
+    },
+    "42857408815": {
+      "name": "Palatino Linotype Bold.ttf",
+      "hash": "sha256-cmr8rVkJqkPFhQ8pbx0D4C0PbM6qxH12YGbZlGDL4SE="
+    },
+    "40362016979": {
+      "name": "Palatino Linotype Bold Italic.ttf",
+      "hash": "sha256-pyOqO7kbHFFxXBjKSx2QSOdhLUiXipXfr8EOBtcaWR4="
+    },
+    "41253495964": {
+      "name": "Palatino Linotype Italic.ttf",
+      "hash": "sha256-8SGS1Y4tOjtzFQInGCJoGRRu93MFIzwRhwfbVG2S7b4="
+    }
+  },
+  "Segoe UI Symbol": {
+    "43018484578": {
+      "name": "Segoe UI Symbol.ttf",
+      "hash": "sha256-dRlIod7ut0LZAV1z5N+t1jS2UDAAPcG2n3vYwJPHplk="
+    }
+  },
+  "Sitka Text": {
+    "34256111905": {
+      "name": "Sitka Text Bold Italic.ttf",
+      "hash": "sha256-yCKR4IbEEaOXeddUrQB3sAFkh2bf9wRPbYsK/WKb/WE="
+    },
+    "25646911825": {
+      "name": "Sitka Text Bold.ttf",
+      "hash": "sha256-IQhj1+W8e0Sg5QZv7J4K2FA4RrjZxc0569yqkGYvvbQ="
+    },
+    "31568813679": {
+      "name": "Sitka Text Italic.ttf",
+      "hash": "sha256-mHDYOIztzD+0EejSlIVosL988Ytuu6xYOd0PXC6U5oE="
+    },
+    "29715501809": {
+      "name": "Sitka Text Semibold Italic.ttf",
+      "hash": "sha256-IEWCSv8xVcuJt8LPYjzMXF2iNMg9Xc5S1fHvj89d45Q="
+    },
+    "24025921223": {
+      "name": "Sitka Text Semibold.ttf",
+      "hash": "sha256-Bo6RQGkGZXJvSZfYp6SPu1ls1Wh0gcJvhy8pom4BDo0="
+    },
+    "26093742781": {
+      "name": "Sitka Text.ttf",
+      "hash": "sha256-WnveiReU7mtJgQBTfz5mkIk4wn55mHEYfyp7mnGLYZc="
+    }
+  },
+  "Sylfaen": {
+    "45112038400": {
+      "name": "Sylfaen.ttf",
+      "hash": "sha256-VRc8DfNnPF/em+aT8YHETok1g0ROCKMxcBUIFh74aJU="
+    }
+  },
+  "Symbol": {
+    "26522609597": {
+      "name": "Symbol.ttf",
+      "hash": "sha256-cRhhtS8ss5L4DvYdDP4Fx+1nY0X5mgaIxy3ZiaWlHg4="
+    }
+  },
+  "Tahoma": {
+    "41918792564": {
+      "name": "Tahoma.ttf",
+      "hash": "sha256-Zacgi7NTS6QC8nTxEpGM6Ya18SxdB2YSLMqFKcjTXSw="
+    },
+    "42070383016": {
+      "name": "Tahoma Bold.ttf",
+      "hash": "sha256-kZhFyFaVwXbCpkcdJk0X7J5RpHLwZ1NAL7PTmVsTOcE="
+    }
+  },
+  "Times New Roman": {
+    "36614675134": {
+      "name": "Times New Roman.ttf",
+      "hash": "sha256-7gYZLq6sH3/WRzRVLG3nJHYf+C8tkdmmxu1GumJ94/Q="
+    },
+    "35824098464": {
+      "name": "Times New Roman Bold.ttf",
+      "hash": "sha256-Krz5XVvVIVwufvYQOsbq0mJJGsEr7SdaUX6w5PIey20="
+    },
+    "54657563835": {
+      "name": "Times New Roman Bold Italic.ttf",
+      "hash": "sha256-GElhJTT14UEg1/PGua1rPA7fxNYizAKi+X6EXgtI9RQ="
+    },
+    "48018584892": {
+      "name": "Times New Roman Italic.ttf",
+      "hash": "sha256-F/H4lSe+Q96GCOa+GcK63q+VMJhQXChXbZqdLkdycwQ="
+    }
+  },
+  "Trebuchet MS": {
+    "34633337668": {
+      "name": "Trebuchet MS.ttf",
+      "hash": "sha256-3+s3lYgOYtLVltap5+VZQVHD7hBApj8O7xibD5JcnBU="
+    },
+    "36411320561": {
+      "name": "Trebuchet MS Bold.ttf",
+      "hash": "sha256-AjJcfnU4WQI9ehv+ogF2GEUJt2ycsIlwt6UtJXj2Ca0="
+    },
+    "44381191458": {
+      "name": "Trebuchet MS Bold Italic.ttf",
+      "hash": "sha256-oEGToIvriVTiTOfjBv+3AJCW5pAAjF65wsb/ZOFxGrA="
+    },
+    "46434154916": {
+      "name": "Trebuchet MS Italic.ttf",
+      "hash": "sha256-wwMQPtUKNnhNpvF5lL/C+d+2sWFrRDlYkSJPKay/ky0="
+    }
+  },
+  "Verdana": {
+    "31984381249": {
+      "name": "Verdana.ttf",
+      "hash": "sha256-FX4893B6PsrF9vLcRf1gEf4gzxTvJ3aYAC2THpz3qFs="
+    },
+    "37718687264": {
+      "name": "Verdana Bold.ttf",
+      "hash": "sha256-ppTHV7pOvL/gPAizvISWFYZxIb96kpmAV5azIM+ow40="
+    },
+    "27812395958": {
+      "name": "Verdana Italic.ttf",
+      "hash": "sha256-C2V0Gh/y6sMjP6v065HArjIUvSlDJ6waobEx/HWziW4="
+    },
+    "38392815421": {
+      "name": "Verdana Bold Italic.ttf",
+      "hash": "sha256-gkTyNY1pXp7pfL5RY98kRJK5zfpKnIY9wgEbak4Q20I="
+    }
+  },
+  "Webdings": {
+    "33805005358": {
+      "name": "Webdings.ttf",
+      "hash": "sha256-rxwII1Lzk4ZuIYeYCZsR6O7KwEkHGDyjI8wwZgYNkFE="
+    }
+  },
+  "Wingdings": {
+    "37798520877": {
+      "name": "Wingdings.ttf",
+      "hash": "sha256-NDsh3Iwkd2iEZaMfmsk6N08BiMXaZjdg9/zmr+akqP0="
+    }
+  },
+  "Papyrus": {
+    "30541236361": {
+      "name": "Papyrus.ttf",
+      "hash": "sha256-ZA/4gXvgZAI8Blq1BjSxvL15hkXJb41BM/BrUP3/fbc="
+    }
+  }
+}

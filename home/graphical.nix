@@ -26,7 +26,7 @@ lib.mkIf osConfig.vris.graphical {
       vlc
       leoPkgs.twemoji-ttf
       leoPkgs.determination-fonts
-      leoPkgs.office-2007-fonts
+      leoPkgs.ms-fonts
     ]
     ++ lib.optionals pkgs.stdenv.isx86_64 [
       steam-run
