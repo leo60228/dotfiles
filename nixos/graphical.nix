@@ -156,6 +156,13 @@
       GDK_DEBUG = "portals";
       PLASMA_INTEGRATION_USE_PORTAL = 1;
     };
+
+    # Controllers {{{1
+    services.udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTR{idVendor}=="2dc8", ATTR{idProduct}=="6009", ENV{MTP_NO_PROBE}="1"
+      ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="6009", TAG+="systemd", ENV{SYSTEMD_WANTS}="evdev-keepalive@$kernel.service"
+    '';
+    systemd.packages = [ pkgs.leoPkgs.evdev-keepalive ];
     # }}}
   };
 }
