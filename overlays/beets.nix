@@ -15,7 +15,10 @@ self: super: {
           pydata-sphinx-theme = null;
         }).overrideAttrs
           (oldAttrs: {
-            outputs = [ "out" ];
+            outputs = [
+              "out"
+              "dist"
+            ];
           });
     })
   ];
