@@ -10,7 +10,7 @@ lib.mkIf osConfig.vris.graphical {
     with pkgs;
     [
       bitwarden-desktop
-      calibre
+      #calibre
       obsidian
       signal-desktop
       libnotify
