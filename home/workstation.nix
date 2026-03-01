@@ -32,7 +32,7 @@ lib.mkIf osConfig.vris.workstation {
         };
       }
     ))
-    opus-tools
+    #opus-tools
     docker-credential-helpers
     libsecret
     parsec-bin
