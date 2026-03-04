@@ -190,6 +190,10 @@
     '')
   ];
 
+  boot.extraModprobeConfig = ''
+    options usbhid quirks=0x2dc8:0x6009:0x400
+  '';
+
   # Filesystems {{{1
   boot.tmp.useTmpfs = true;
   networking.hostId = builtins.substring 0 8 (
