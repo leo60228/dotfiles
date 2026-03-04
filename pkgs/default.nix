@@ -12,7 +12,6 @@
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
   determination-fonts = callPackage ./determination-fonts { };
-  evdev-keepalive = callPackage ./evdev-keepalive { };
   filehost-elixire = callPackage ./filehost-elixire { };
   hactoolnet = callPackage ./hactoolnet { };
   hyfetch = callPackage ./hyfetch { };
