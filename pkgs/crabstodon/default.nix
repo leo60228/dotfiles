@@ -37,37 +37,31 @@ stdenv.mkDerivation rec {
     inherit version gemset ruby;
     gemdir = src;
     gemConfig = defaultGemConfig // {
-      mastodon_rust_stuff =
-        attrs:
-        let
-          gemSource = buildRubyGem {
-            inherit (attrs) gemName version source;
-            inherit (attrs.source) type;
-          };
-        in
-        {
-          cargoDeps = rustPlatform.fetchCargoVendor {
-            inherit (gemSource) src unpackPhase;
-            hash = "sha256-hy4CkE+mqP2v5RhIrVZKIK/dYj7Wv3AIjRrFBq/YLGA=";
-          };
-          nativeBuildInputs = [
-            cargo
-            rustc
-            rustPlatform.cargoSetupHook
-            rustPlatform.bindgenHook
-          ];
-          disallowedReferences = [
-            rustc.unwrapped
-          ];
-          # the default unpackPhase in buildRubyGem runs postUnpack hooks twice (for git/path gems), destroying the cargo setup hook
-          # https://github.com/NixOS/nixpkgs/blob/2f3930f291dcaa4d030b7dfd081114162bbd7584/pkgs/development/ruby-modules/gem/default.nix#L119
-          unpackPhase = "unpackPhase";
-          dontBuild = false;
-          preBuild = ''
-            mkdir -p .cargo
-            cat ../.cargo/config.toml > .cargo/config.toml
-          '';
+      mastodon_rust_stuff = attrs: {
+        cargoDeps = rustPlatform.importCargoLock {
+          lockFile = ./Cargo.lock;
         };
+        nativeBuildInputs = [
+          cargo
+          rustc
+          rustPlatform.cargoSetupHook
+          rustPlatform.bindgenHook
+        ];
+        disallowedReferences = [
+          rustc.unwrapped
+        ];
+        # the default unpackPhase in buildRubyGem runs postUnpack hooks twice (for git/path gems), destroying the cargo setup hook
+        # https://github.com/NixOS/nixpkgs/blob/2f3930f291dcaa4d030b7dfd081114162bbd7584/pkgs/development/ruby-modules/gem/default.nix#L119
+        unpackPhase = "unpackPhase";
+        dontBuild = false;
+        prePatch = ''
+          cp ${./Cargo.lock} Cargo.lock
+        '';
+        preBuild = ''
+          mkdir -p .cargo
+          sed 's;"cargo-vendor-dir;"/build/cargo-vendor-dir;' ../.cargo/config.toml > .cargo/config.toml
+        '';
+      };
     };
   };
 
