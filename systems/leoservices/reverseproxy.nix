@@ -125,6 +125,7 @@
           proxyWebsockets = true;
           proxyPass = "http://localhost:3000";
         };
+        locations."=/favicon.ico".alias = ./pds.ico;
       };
       "localhost" = {
         default = true;
