@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
   inputs.home-manager = {
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
@@ -54,10 +54,6 @@
     url = "github:leo60228/colmena/npkgs-lib";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
-  };
-  inputs.flake-programs-sqlite = {
-    url = "github:wamserma/flake-programs-sqlite";
-    inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.treefmt-nix = {
     url = "github:numtide/treefmt-nix";

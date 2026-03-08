@@ -91,7 +91,7 @@
     programs.fuse.userAllowOther = true;
     programs.command-not-found = {
       enable = true;
-      dbPath = flakes.flake-programs-sqlite.packages.${pkgs.stdenv.hostPlatform.system}.programs-sqlite;
+      dbPath = pkgs.path + "/programs.sqlite";
     };
 
     # Debuggers {{{1
