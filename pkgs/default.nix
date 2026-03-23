@@ -14,6 +14,7 @@
   determination-fonts = callPackage ./determination-fonts { };
   filehost-elixire = callPackage ./filehost-elixire { };
   hactoolnet = callPackage ./hactoolnet { };
+  hid-nintendo-switch2 = callPackage ./hid-nintendo-switch2 { };
   hyfetch = callPackage ./hyfetch { };
   mediawiki-extensions = callPackage ./mediawiki-extensions { };
   ms-fonts = callPackage ./ms-fonts { };
