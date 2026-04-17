@@ -101,11 +101,13 @@
   fileSystems."/srv/nfs/Music" = {
     device = "/home/leo60228/Music";
     options = [ "bind" ];
+    fsType = "none";
   };
 
   fileSystems."/srv/nfs/Videos" = {
     device = "/home/leo60228/Videos";
     options = [ "bind" ];
+    fsType = "none";
   };
 
   services.mysql = {
