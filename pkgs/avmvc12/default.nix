@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation rec {
   name = "avmvc12-${version}-${linuxPackages.kernel.version}";
-  version = "0-unstable-2026-01-23";
+  version = "0-unstable-2026-04-18";
 
   src = fetchFromGitHub {
     owner = "GloriousEggroll";
     repo = "AVMATRIX-VC12-4K-CAPTURE";
-    rev = "f8b2ec30ed352ae61d0c301715565a4077f277c7";
-    hash = "sha256-ZGY1acjeL5544T5RNfCtA87sfL7U6En0KZADhOPNgRg=";
+    rev = "601353d24ef8394733fe8ec703dc299ba81f26ec";
+    hash = "sha256-tsaL0W7+HKlJ2KD+cKGgQLAEFxF9NBEFMeDgEjCZT8E=";
   };
 
   sourceRoot = "source/src";
