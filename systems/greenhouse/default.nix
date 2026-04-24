@@ -330,5 +330,19 @@
         "/var/spool/ripe-atlas" = settings;
       };
   };
+
+  # Nextcloud {{{1
+  services.nextcloud = {
+    enable = true;
+    hostName = "nextcloud.l3.pm";
+    config.adminpassFile = "/var/lib/nextcloud-admin-pass";
+    config.dbtype = "sqlite";
+    https = true;
+  };
+
+  services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    forceSSL = true;
+    enableACME = true;
+  };
   # }}}
 }
