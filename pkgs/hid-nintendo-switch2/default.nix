@@ -20,8 +20,8 @@ stdenv.mkDerivation {
     # HID: nintendo: Add preliminary Switch 2 controller driver
     (fetchpatch {
       name = "switch-2.diff";
-      url = "https://lore.kernel.org/linux-input/20260318030850.289712-1-vi@endrift.com/t.mbox.gz";
-      hash = "sha256-Ba0b6JyWlOoyp9rL6koqxIztnOhyLg322ZFw4kZOYx0=";
+      url = "https://lore.kernel.org/linux-input/20260415073142.1303505-1-vi@endrift.com/t.mbox.gz";
+      hash = "sha256-u4zjiRUI/KVU4r2QPqDeLoGRBvrM8hjQl2GTPyhV1y0=";
       decode = ''
         export PATH="${lib.makeBinPath [ gitMinimal ]}:$PATH"
         export XDG_DATA_HOME="$(mktemp -d)"
