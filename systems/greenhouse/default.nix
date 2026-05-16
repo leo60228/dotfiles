@@ -249,6 +249,20 @@
       "--tz=local"
     ];
   };
+  virtualisation.oci-containers.containers.wyoming-faster-whisper = {
+    pull = "newer";
+    ports = [ "127.0.0.1:10300:10300" ];
+    volumes = [ "wyoming-faster-whisper:/data" ];
+    image = "docker.io/rhasspy/wyoming-whisper:latest";
+    cmd = [ "--language=en" ];
+  };
+  virtualisation.oci-containers.containers.wyoming-piper = {
+    pull = "newer";
+    ports = [ "127.0.0.1:10200:10200" ];
+    volumes = [ "wyoming-piper:/data" ];
+    image = "docker.io/rhasspy/wyoming-piper:latest";
+    cmd = [ "--voice=en_US-lessac-medium" ];
+  };
 
   services.zigbee2mqtt = {
     enable = true;
