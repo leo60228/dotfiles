@@ -177,20 +177,37 @@ lib.mkIf osConfig.vris.graphical {
           "discord" = "discord-canary";
           "ArchipelagoLauncher" = "archipelago";
         };
-        makeRule = wmclass: desktopfile: {
+        makeRule = match: desktopfile: {
+          inherit match;
           description = "Fix desktop file for ${desktopfile}";
-          match.window-class = {
-            value = wmclass;
-            match-whole = false;
-          };
           apply.desktopfile = {
             value = desktopfile;
             apply = "force";
           };
         };
-        rules = lib.mapAttrsToList makeRule mapping;
+        rules = lib.mapAttrsToList (
+          wmclass:
+          makeRule {
+            window-class = {
+              value = wmclass;
+              match-whole = false;
+            };
+          }
+        ) mapping;
       in
-      rules;
+      rules
+      ++ [
+        (makeRule {
+          window-class = {
+            value = "electron";
+            match-whole = false;
+          };
+          title = {
+            value = "Obsidian";
+            type = "substring";
+          };
+        } "obsidian")
+      ];
 
     configFile = {
       kdeglobals.General.AccentColor = "61,212,37";
