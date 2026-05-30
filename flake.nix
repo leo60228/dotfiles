@@ -68,7 +68,10 @@
     url = "github:Whovian9369/rom-properties-nix-flake";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
+  inputs.nixos-hardware = {
+    url = "github:NixOS/nixos-hardware";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.lanzaboote = {
     url = "github:nix-community/lanzaboote/v0.4.3";
     inputs.nixpkgs.follows = "nixpkgs";

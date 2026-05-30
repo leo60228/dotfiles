@@ -15,6 +15,7 @@
   ];
 
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
 
   boot.loader.grub.device = "/dev/sda";
 

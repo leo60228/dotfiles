@@ -1,7 +1,7 @@
 # vi: set foldmethod=marker:
 
 { config, pkgs, ... }:
-rec {
+{
   imports = [
     ./hardware.nix
     ./reverseproxy.nix
@@ -72,7 +72,7 @@ rec {
     domain = "*.pds.vriska.dev";
     extraDomainNames = [ "pds.vriska.dev" ];
     dnsProvider = "cloudflare";
-    credentialsFile = "/var/lib/pds/cloudflare-token";
+    environmentFile = "/var/lib/pds/cloudflare-token";
   };
 
   # Mastodon {{{1

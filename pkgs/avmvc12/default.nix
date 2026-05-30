@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "pic" ];
 
-  nativeBuildInputs = [ nukeReferences ] ++ [ linuxPackages.kernel.moduleBuildDependencies ];
+  nativeBuildInputs = [ nukeReferences ] ++ linuxPackages.kernel.moduleBuildDependencies;
 
   makeFlags = [
     "KERNELRELEASE=${linuxPackages.kernel.modDirVersion}"

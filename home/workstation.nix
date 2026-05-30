@@ -54,7 +54,7 @@ lib.mkIf osConfig.vris.workstation {
     qpwgraph
     jetbrains-toolbox
     rsgain
-    kio-fuse
+    kdePackages.kio-fuse
     lab
     bitwarden-cli
     cargo-edit

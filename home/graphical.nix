@@ -71,6 +71,7 @@ lib.mkIf osConfig.vris.graphical {
 
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
     package = osConfig.vris.firefox;
     policies = {
       OverrideFirstRunPage = "about:newtab";

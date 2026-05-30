@@ -6,7 +6,7 @@
   lib,
   ...
 }:
-rec {
+{
   imports = [ ./hardware.nix ];
 
   system.stateVersion = "18.03";
@@ -212,7 +212,7 @@ rec {
     domain = "*.social.crabs.life";
     extraDomainNames = [ "social.crabs.life" ];
     dnsProvider = "cloudflare";
-    credentialsFile = "/var/lib/mastodon/cloudflare-token";
+    environmentFile = "/var/lib/mastodon/cloudflare-token";
     group = "nginx";
   };
 
