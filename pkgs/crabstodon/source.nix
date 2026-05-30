@@ -15,9 +15,12 @@ applyPatches {
     hash = "sha256-nDx/x357Y01qlgahd6R4U9YKwx0n7np6Ez8md2qBTeQ=";
     passthru = {
       inherit version;
-      yarnHash = "sha256-fj9pc5eHkH5Zzvgdb8sOcbzRDqZ9KNUYJqzPIV6oSXA=";
+      yarnHash = "sha256-5D5tdqQTgTRUtxZxtn4IyoCF2dP4qQhRcfhl+CVGXfU=";
       yarnMissingHashes = ./missing-hashes.json;
     };
   };
-  patches = patches ++ [ ];
+  patches = patches ++ [
+    # Remove when https://github.com/mastodon/mastodon/commit/048700da2f95e492a81fde902f4d48c278763a6d is released
+    ./yarn-4.14-support.patch
+  ];
 }
