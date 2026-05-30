@@ -13,7 +13,7 @@
     flakes.lanzaboote.nixosModules.lanzaboote
   ];
 
-  nix.settings.max-jobs = lib.mkDefault 48;
+  nix.settings.max-jobs = lib.mkDefault 32;
   services.tailscale.extraDaemonFlags = [ "--encrypt-state" ];
 
   # Kernel {{{1
