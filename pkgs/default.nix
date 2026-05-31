@@ -8,6 +8,7 @@
 {
   amdgpu-hdmi-frl = callPackage ./amdgpu-hdmi-frl { };
   avmvc12 = callPackage ./avmvc12 { };
+  azaharplus = callPackage ./azaharplus { };
   beetcamp = python3.pkgs.callPackage ./beetcamp { };
   bin = callPackage ./bin { };
   crabstodon = callPackage ./crabstodon { };
