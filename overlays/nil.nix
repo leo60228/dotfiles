@@ -15,6 +15,11 @@ self: super:
       };
 
       cargoHash = "sha256-ZyTrxGX0mRdskxp4o5ssDCyZzNn36rIgP9fDaA1fDws=";
+      cargoDeps = self.rustPlatform.fetchCargoVendor {
+        inherit (oldAttrs) pname;
+        inherit version src;
+        hash = cargoHash;
+      };
     }
   );
 }
