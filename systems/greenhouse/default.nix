@@ -349,7 +349,7 @@
   services.nextcloud = {
     enable = true;
     hostName = "nextcloud.l3.pm";
-    package = pkgs.nextcloud33;
+    package = pkgs.nextcloud34;
     config.adminpassFile = "/var/lib/nextcloud-admin-pass";
     config.dbtype = "sqlite";
     https = true;

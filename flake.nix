@@ -73,9 +73,8 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.lanzaboote = {
-    url = "github:nix-community/lanzaboote/v0.4.3";
+    url = "github:nix-community/lanzaboote/v1.1.0";
     inputs.nixpkgs.follows = "nixpkgs";
-    inputs.flake-compat.follows = "flake-compat";
     inputs.rust-overlay.follows = "rust-overlay";
   };
   inputs.pyproject-nix = {

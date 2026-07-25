@@ -9,7 +9,7 @@ lib.mkIf osConfig.vris.graphical {
   home.packages =
     with pkgs;
     [
-      bitwarden-desktop
+      (bitwarden-desktop.override { electron_39 = electron; })
       calibre
       obsidian
       signal-desktop

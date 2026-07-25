@@ -12,6 +12,8 @@
     flakes.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
+  hardware.asahi.enable = true;
+
   boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
