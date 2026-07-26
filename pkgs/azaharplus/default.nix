@@ -21,5 +21,7 @@ azahar.overrideAttrs (
     };
 
     cmakeFlags = oldAttrs.cmakeFlags or [ ] ++ [ "-DQT_NO_PRIVATE_MODULE_WARNING=ON" ];
+
+    passthru.updateScript = null;
   }
 )
