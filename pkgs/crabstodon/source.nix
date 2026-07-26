@@ -5,22 +5,19 @@
   patches ? [ ],
 }:
 let
-  version = "unstable-2026-01-14";
+  version = "unstable-2026-07-26";
 in
 applyPatches {
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "d0ddcbbc838a96a525b9f1697f1e3c21aad61a5e";
-    hash = "sha256-nDx/x357Y01qlgahd6R4U9YKwx0n7np6Ez8md2qBTeQ=";
+    rev = "d082d4e5704c73787d8f885c1b9e829d0fc10cfd";
+    hash = "sha256-+oBQXzlWECHQpOfIawQcTFUoyPlFCFmJoYy7kxICZbY=";
     passthru = {
       inherit version;
-      yarnHash = "sha256-5D5tdqQTgTRUtxZxtn4IyoCF2dP4qQhRcfhl+CVGXfU=";
+      yarnHash = "sha256-s1J1rchGOyQLNV1I0BIYX+nwRD2PMqlTH2fkG1sRcZs=";
       yarnMissingHashes = ./missing-hashes.json;
     };
   };
-  patches = patches ++ [
-    # Remove when https://github.com/mastodon/mastodon/commit/048700da2f95e492a81fde902f4d48c278763a6d is released
-    ./yarn-4.14-support.patch
-  ];
+  patches = patches ++ [ ];
 }
