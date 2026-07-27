@@ -30,7 +30,7 @@ lib.mkIf osConfig.vris.graphical {
     ]
     ++ lib.optionals pkgs.stdenv.isx86_64 [
       steam-run
-      discord-ptb
+      discord-canary
       thunderbird-latest-bin
     ];
 
@@ -39,7 +39,7 @@ lib.mkIf osConfig.vris.graphical {
     Wants=mpdiscord.service
   '';
 
-  xdg.configFile."systemd/user/app-discord\\x2dptb@.service.d/override.conf".text = ''
+  xdg.configFile."systemd/user/app-discord\\x2dcanary@.service.d/override.conf".text = ''
     [Unit]
     Wants=mpdiscord.service
   '';
@@ -175,7 +175,7 @@ lib.mkIf osConfig.vris.graphical {
           "mcpelauncher-client" = "mcpelauncher-ui-qt";
           "Actual" = "com.actualbudget.actual";
           ".sameboy-wrapped" = "sameboy";
-          "discord" = "discord-ptb";
+          "discord" = "discord-canary";
           "ArchipelagoLauncher" = "archipelago";
         };
         makeRule = match: desktopfile: {
