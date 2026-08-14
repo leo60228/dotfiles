@@ -173,7 +173,7 @@ lib.mkIf osConfig.vris.graphical {
           ".virt-manager-wrapped" = "virt-manager";
           "io.mrarm." = "mcpelauncher-ui-qt";
           "mcpelauncher-client" = "mcpelauncher-ui-qt";
-          "Actual" = "com.actualbudget.actual";
+          "actual" = "com.actualbudget.actual";
           ".sameboy-wrapped" = "sameboy";
           "discord" = "discord-canary";
           "ArchipelagoLauncher" = "archipelago";
