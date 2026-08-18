@@ -100,6 +100,21 @@ lib.mkIf osConfig.vris.workstation {
     nerd-fonts.hack
   ];
 
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user.name = "leo60228";
+      user.email = "leo@60228.dev";
+      ui.default-command = "log";
+      signing.backend = "gpg";
+      signing.behavior = "drop";
+      git.sign-on-push = true;
+      revsets.bookmark-advance-to = "closest_pushable(@)";
+      revset-aliases."closest_pushable(to)" =
+        ''heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
+    };
+  };
+
   xdg.configFile."systemd/user/app-archipelago@.service.d/override.conf".text = ''
     [Service]
     Environment=KIVY_METRICS_DENSITY=2
