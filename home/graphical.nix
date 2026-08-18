@@ -177,6 +177,8 @@ lib.mkIf osConfig.vris.graphical {
           ".sameboy-wrapped" = "sameboy";
           "discord" = "discord-canary";
           "ArchipelagoLauncher" = "archipelago";
+          "libreoffice-writer" = "writer";
+          "md.Obsidian" = "obsidian";
         };
         makeRule = match: desktopfile: {
           inherit match;
@@ -196,19 +198,7 @@ lib.mkIf osConfig.vris.graphical {
           }
         ) mapping;
       in
-      rules
-      ++ [
-        (makeRule {
-          window-class = {
-            value = "electron";
-            match-whole = false;
-          };
-          title = {
-            value = "Obsidian";
-            type = "substring";
-          };
-        } "obsidian")
-      ];
+      rules;
 
     configFile = {
       kdeglobals.General.AccentColor = "61,212,37";
