@@ -54,6 +54,21 @@
     };
   };
 
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user.name = "leo60228";
+      user.email = "leo@60228.dev";
+      ui.default-command = "log";
+      signing.backend = "gpg";
+      signing.behavior = "drop";
+      git.sign-on-push = true;
+      revsets.bookmark-advance-to = "closest_pushable(@)";
+      revset-aliases."closest_pushable(to)" =
+        ''heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
+    };
+  };
+
   programs.home-manager.enable = true;
 
   systemd.user.startServices = true;
