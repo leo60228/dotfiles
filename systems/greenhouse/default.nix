@@ -27,6 +27,7 @@
     8123 # hass
     21063 # hass
     34197
+    8300
   ];
   networking.firewall.allowedUDPPorts = [
     25565
