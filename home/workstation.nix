@@ -168,4 +168,9 @@ lib.mkIf osConfig.vris.workstation {
       org.gradle.java.installations.auto-download=false
     '';
   };
+
+  programs.distrobox = {
+    enable = true;
+    settings.QT_PLUGIN_PATH = "";
+  };
 }
