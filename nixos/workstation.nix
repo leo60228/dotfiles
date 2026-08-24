@@ -149,6 +149,7 @@
         };
       };
     };
+    boot.kernelModules = [ "ntsync" ];
     boot.blacklistedKernelModules = [ "hid-steam" ];
 
     # binfmt {{{1
