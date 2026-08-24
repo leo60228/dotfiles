@@ -81,7 +81,7 @@ lib.mkIf osConfig.vris.workstation {
     hub
     prismlauncher
     mcpelauncher-ui-qt
-    wineWow64Packages.unstable
+    wineWow64Packages.stable
     gnumake
     (lib.hiPrio gcc)
     hplip
