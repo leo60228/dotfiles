@@ -58,25 +58,7 @@
   # Hydra {{{1
   services.hydra-dev = {
     enable = true;
-    package = pkgs.hydra.overrideAttrs (oldAttrs: {
-      nativeBuildInputs = map (
-        x:
-        if x.name == "hydra-perl-deps" then
-          x.override {
-            paths = map (
-              x:
-              if x ? pname && x.pname == "OIDC-Lite" then
-                x.overrideAttrs (oldAttrs: {
-                  doCheck = false;
-                })
-              else
-                x
-            ) x.paths;
-          }
-        else
-          x
-      ) oldAttrs.nativeBuildInputs;
-    });
+    package = pkgs.hydra;
     hydraURL = "https://hydra.capybara-pirate.ts.net";
     port = 9999;
     notificationSender = "hydra@60228.dev";
