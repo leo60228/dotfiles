@@ -28,7 +28,7 @@ lib.mkIf osConfig.vris.graphical {
       leoPkgs.determination-fonts
       leoPkgs.ms-fonts
     ]
-    ++ lib.optionals pkgs.stdenv.isx86_64 [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [
       steam-run
       discord-canary
       thunderbird-latest-bin

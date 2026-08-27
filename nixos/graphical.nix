@@ -56,7 +56,7 @@
       noto-fonts-cjk-sans
       corefonts
     ];
-    fonts.fontconfig.cache32Bit = pkgs.stdenv.isx86_64;
+    fonts.fontconfig.cache32Bit = pkgs.stdenv.hostPlatform.isx86_64;
 
     # mpd {{{1
     services.mpd = {

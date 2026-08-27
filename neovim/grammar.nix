@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Strip failed on darwin: strip: error: symbols referenced by indirect symbol table entries that can't be stripped
-  fixupPhase = lib.optionalString stdenv.isLinux ''
+  fixupPhase = lib.optionalString stdenv.hostPlatform.isLinux ''
     runHook preFixup
     $STRIP $out/parser
     runHook postFixup

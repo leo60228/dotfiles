@@ -10,7 +10,7 @@ rec {
   imports = [
     ./hardware.nix
     ./prometheus.nix
-    ./mediawiki.nix
+    #./mediawiki.nix
   ];
 
   system.stateVersion = "18.03";
