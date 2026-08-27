@@ -12,7 +12,6 @@ lib.mkIf osConfig.vris.workstation {
     sameboy
     mgba
     melonds
-    leoPkgs.azaharplus
     emuhawk
     archipelago
     nix-eval-jobs
