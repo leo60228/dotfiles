@@ -522,15 +522,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1786889192,
-        "narHash": "sha256-RvB+TJcp9xgJJEO7Ac7e44mRO7Nt1wXSVxTC4tizY4U=",
-        "rev": "002bfd9e839eedb5e0656c4d3747d92d0aafb18a",
+        "lastModified": 1787626335,
+        "narHash": "sha256-qov7+o4fDfh9XNedfyFcFG2JcpSxRQ6di3OOnxRprU0=",
+        "rev": "148d9e60d35fa5845df83e706fab2b923a4e8704",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/hydra/archive/002bfd9e839eedb5e0656c4d3747d92d0aafb18a.tar.gz?rev=002bfd9e839eedb5e0656c4d3747d92d0aafb18a"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/hydra/archive/148d9e60d35fa5845df83e706fab2b923a4e8704.tar.gz?rev=148d9e60d35fa5845df83e706fab2b923a4e8704"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz"
+        "url": "https://git.lix.systems/lix-project/hydra/archive/refs/pull/100/head.tar.gz"
       }
     },
     "lanzaboote": {
