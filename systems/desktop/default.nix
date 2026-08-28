@@ -67,7 +67,6 @@
     useSubstitutes = true;
     buildMachinesFiles = [
       (pkgs.writeText "machines" ''
-        ssh-ng://eu.nixbuild.net aarch64-linux /var/lib/hydra/id_ed25519 100 1 big-parallel,benchmark -
         ssh-ng://localhost i686-linux,x86_64-linux /var/lib/hydra/id_ed25519 24 2 kvm,nixos-test,big-parallel,benchmark -
       '')
     ];
