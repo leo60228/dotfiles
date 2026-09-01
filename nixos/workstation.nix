@@ -57,6 +57,7 @@
         })
       )
       pkgs.syncthingtray
+      pkgs.yubico-piv-tool
     ];
 
     vris.firefox = lib.mkDefault pkgs.firefox;
