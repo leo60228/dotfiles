@@ -56,6 +56,7 @@
         })
       )
       pkgs.syncthingtray
+      pkgs.opensc
       pkgs.yubico-piv-tool
     ];
 
