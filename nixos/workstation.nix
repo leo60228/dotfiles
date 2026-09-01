@@ -39,7 +39,6 @@
     environment.systemPackages = [
       pkgs.androidenv.androidPkgs.platform-tools
       pkgs.openocd
-      pkgs.OVMFFull
       config.virtualisation.libvirtd.qemu.package
       pkgs.virt-manager
       pkgs.kdePackages.sddm-kcm
