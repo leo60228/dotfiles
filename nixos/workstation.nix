@@ -95,6 +95,21 @@
       dbPath = pkgs.path + "/programs.sqlite";
     };
 
+    environment.etc."opensc.conf".text = ''
+      app default {
+        framework pkcs15 {
+          use_file_caching = yes;
+          pin_cache_ignore_user_consent = true;
+          pin_protected_certificate = ignore;
+        }
+
+        pkcs11 {
+          lock_login = false;
+          atomic = true;
+        }
+      }
+    '';
+
     # Debuggers {{{1
     services.udev.packages = [
       pkgs.platformio-core
