@@ -31,7 +31,17 @@
     services.libinput.enable = true;
     programs.dconf.enable = true;
     services.flatpak.enable = true;
-    networking.networkmanager.enable = true;
+
+    # NetworkManager {{{1
+    networking.networkmanager = {
+      enable = true;
+      unmanaged = [
+        "interface-name:docker*"
+        "interface-name:br-*"
+        "interface-name:lxcbr*"
+        "interface-name:virbr*"
+      ];
+    };
 
     # Sound {{{1
     security.rtkit.enable = true;
