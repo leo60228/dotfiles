@@ -63,7 +63,7 @@
   systemd.services.mastodon-init-dirs.postStart = ''
     cat /var/lib/mastodon/.extra_secrets_env >> /var/lib/mastodon/.secrets_env
   '';
-  systemd.services.mastodon-init-db.environment.SKIP_POST_DEPLOYMENT_MIGRATIONS = true;
+  systemd.services.mastodon-init-db.environment.SKIP_POST_DEPLOYMENT_MIGRATIONS = "true";
 
   services.postgresql.package = pkgs.postgresql_14;
 
