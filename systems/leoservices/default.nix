@@ -113,5 +113,6 @@
   security.acme.certs."60228.dev".group = "acme";
   users.users.nginx.extraGroups = [ "acme" ];
   users.groups.mastodon.members = [ "nginx" ];
+  systemd.services.mastodon-init-db.environment.SKIP_POST_DEPLOYMENT_MIGRATIONS = true;
   # }}}
 }
