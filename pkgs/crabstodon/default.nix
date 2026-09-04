@@ -5,7 +5,6 @@
   bundlerEnv,
   defaultGemConfig,
   nixosTests,
-  yarn-berry,
   callPackage,
   ruby,
   writeShellScript,
@@ -26,6 +25,10 @@
   yarnHash ? srcOverride.yarnHash,
   yarnMissingHashes ? srcOverride.yarnMissingHashes,
 }:
+
+let
+  yarn-berry = callPackage ./yarn-berry.nix { };
+in
 
 stdenv.mkDerivation rec {
   inherit pname version;
