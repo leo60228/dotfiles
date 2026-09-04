@@ -158,6 +158,7 @@
         enableACME = true;
 
         locations."/" = {
+          recommendedProxySettings = false;
           extraConfig = ''
             limit_except GET {
               deny all;
