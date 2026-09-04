@@ -28,6 +28,7 @@
     21063 # hass
     34197
     8300
+    113
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -217,13 +218,20 @@
     listen = [
       "irc://localhost:5002"
       "http://localhost:5003"
+      "ident://[::]"
     ];
     extraConfig = ''
       http-ingress https://${config.networking.hostName}.capybara-pirate.ts.net:5001
       file-upload http http://localhost:40413/upload
     '';
   };
-  systemd.services.soju.environment.GODEBUG = "tlsrsakex=1"; # eyeroll
+  systemd.services.soju = {
+    environment.GODEBUG = "tlsrsakex=1"; # eyeroll
+    serviceConfig = {
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+    };
+  };
 
   systemd.services.filehost-elixire = {
     after = [ "network-online.target" ];
