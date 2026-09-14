@@ -133,6 +133,14 @@
     systemd.services.alsa-store.serviceConfig.ExecStart =
       lib.mkForce "-${pkgs.alsa-utils}/sbin/alsactl restore --ignore";
 
+    # Wi-Fi {{{1
+    networking.networkmanager.wifi.backend = "iwd";
+
+    networking.wireless.iwd.settings = {
+      General.RoamThreshold5G = -66;
+      Rank.BandModifier6GHz = 1.1;
+    };
+
     # Fingerprint {{{1
     security.pam.services.polkit-1.fprintAuth = true;
     security.pam.services.polkit-1.rules.auth.fprintd.modulePath =
