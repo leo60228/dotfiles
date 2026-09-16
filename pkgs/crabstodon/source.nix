@@ -5,17 +5,17 @@
   patches ? [ ],
 }:
 let
-  version = "unstable-2026-09-04";
+  version = "unstable-2026-09-16";
 in
 applyPatches {
   src = fetchFromGitHub {
     owner = "BlaseballCrabs";
     repo = "mastodon";
-    rev = "d9000b3fe307c2d24b364d6c1687e870fa5ff777";
-    hash = "sha256-1NAynKWaXdXe1P59h4vOaMC0TEzSGX1mn4R1IkQzNZw=";
+    rev = "bd086173579dee00da4843482264862738755823";
+    hash = "sha256-Fyt3gT6l2G6Vrht6NPU08lNSiRcQrjWZBZHe1PkPATY=";
     passthru = {
       inherit version;
-      yarnHash = "sha256-xJ13bSBARpDP/RWWQwnJji6+YPrTbmm49G7di4olLwk=";
+      yarnHash = "sha256-jxW6dq5Lu1SQwzQb5IJefc6IaFShVFAJ3h9rUgWN/xg=";
       yarnMissingHashes = ./missing-hashes.json;
     };
   };
