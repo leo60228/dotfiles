@@ -92,7 +92,6 @@ lib.mkIf osConfig.vris.graphical {
             old-reddit-redirect
             reddit-enhancement-suite
             stylus
-            greasemonkey
             ublock-origin
             bitwarden
             plasma-integration
