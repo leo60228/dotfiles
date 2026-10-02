@@ -158,6 +158,11 @@ lib.mkIf osConfig.vris.graphical {
           #tabbrowser-tabs:not([overflow="true"]) ~ #alltabs-button {
             display: none !important;
           }
+
+          /* FIXME: backport from 159 */
+          .urlbar, #searchbar {
+            --chrome-box-shadow: rgba(0, 0, 0, 0.13) !important;
+          }
         '';
       };
   };
