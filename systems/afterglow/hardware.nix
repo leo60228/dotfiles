@@ -37,11 +37,11 @@
   vris.firefox =
     let
       wrapFirefox = pkgs.wrapFirefox.override {
-        ffmpeg_7 = pkgs.ffmpeg_7.overrideAttrs (oldAttrs: {
+        ffmpeg_9 = pkgs.ffmpeg_9.overrideAttrs (oldAttrs: {
           patches = oldAttrs.patches ++ [
             (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/LibreELEC/LibreELEC.tv/9c99ad0f0bdad077176be4250e64e9deda70c062/packages/multimedia/ffmpeg/patches/rpi/ffmpeg-001-rpi.patch";
-              hash = "sha256-IZsRZ25UUTvuSeXGGNJ8TODU51EO8rmAfjdsRPA9O5M=";
+              url = "https://raw.githubusercontent.com/LibreELEC/LibreELEC.tv/6db61afc1eb029769568cfe5299c0221879c04e4/packages/multimedia/ffmpeg/patches/rpi/0001-rpi.patch";
+              hash = "sha256-NAxhyGoOPxP3/0Lb41UUb0HDchGO8ztSZ8cuHim4YMo=";
             })
           ];
           doCheck = false;
