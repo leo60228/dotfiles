@@ -29,6 +29,9 @@
     34197
     8300
     113
+    21115 # rustdesk
+    21116 # rustdesk
+    21117 # rustdesk
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -39,6 +42,7 @@
     24454
     5353 # hass
     34197
+    21116 # rustdesk
   ];
 
   services.openssh.ports = [
@@ -94,6 +98,21 @@
         enableACME = true;
         forceSSL = true;
         root = "/var/www/utdrmusic";
+      };
+      "rustdesk.l3.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        locations = {
+          "/".return = 444;
+          "/ws/id" = {
+            proxyPass = "http://127.0.0.1:21118";
+            proxyWebsockets = true;
+          };
+          "/ws/relay" = {
+            proxyPass = "http://127.0.0.1:21119";
+            proxyWebsockets = true;
+          };
+        };
       };
     };
   };
@@ -367,6 +386,12 @@
   services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
     forceSSL = true;
     enableACME = true;
+  };
+
+  # RustDesk {{{1
+  services.rustdesk-server = {
+    enable = true;
+    signal.relayHosts = [ "rustdesk.l3.pm" ];
   };
   # }}}
 }
