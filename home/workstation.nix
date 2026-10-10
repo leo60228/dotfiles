@@ -162,13 +162,6 @@ lib.mkIf osConfig.vris.workstation {
 
   home.file.".rustup/toolchains/system".source = pkgs.leoPkgs.rust.rust;
 
-  home.file.".gradle/gradle.properties" = {
-    text = ''
-      org.gradle.java.installations.paths=${pkgs.jdk8}
-      org.gradle.java.installations.auto-download=false
-    '';
-  };
-
   programs.distrobox = {
     enable = true;
     settings.QT_PLUGIN_PATH = "";
