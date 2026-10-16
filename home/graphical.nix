@@ -77,6 +77,14 @@ lib.mkIf osConfig.vris.graphical {
       OverrideFirstRunPage = "about:newtab";
       EnableTrackingProtection.Value = true;
       PasswordManagerEnabled = false;
+
+      ExtensionSettings."{35d6291e-1d4b-f9b4-c52f-77e6410d1326}" = {
+        installation_mode = "allowed";
+        runtime_blocked_hosts = [
+          "*://*.google.com"
+          "*://*.cnbc.com"
+        ];
+      };
     };
     profiles.${
       if osConfig.vris.firefox.unwrapped.binaryName == "firefox-devedition" then
