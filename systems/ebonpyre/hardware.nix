@@ -43,6 +43,4 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
   hardware.asahi.extractPeripheralFirmware = false;
-
-  deployment.tags = [ "servers" ];
 }
