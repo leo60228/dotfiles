@@ -24,6 +24,14 @@
     flakes.lix-module.nixosModules.default
   ];
 
+  # FIXME: CVE-2026-111943
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+    "emSign Root CA - C1"
+    "emSign ECC Root CA - C3"
+  ];
+
   # SSH {{{1
   services.openssh = {
     enable = true;
