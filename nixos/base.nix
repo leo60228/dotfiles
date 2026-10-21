@@ -154,11 +154,7 @@
     tailscale
   ];
 
-  boot.initrd.extraUtilsCommands = lib.mkIf (!config.boot.initrd.systemd.enable) ''
-    copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
-  '';
-
-  boot.initrd.systemd.initrdBin = lib.mkIf (config.boot.initrd.systemd.enable) [ pkgs.e2fsprogs ];
+  boot.initrd.systemd.initrdBin = [ pkgs.e2fsprogs ];
 
   services.nginx.package = lib.mkDefault pkgs.nginxMainline;
 

@@ -70,8 +70,6 @@
     pkiBundle = "/var/lib/sbctl";
   };
 
-  boot.initrd.systemd.enable = true;
-
   # Disks {{{1
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;

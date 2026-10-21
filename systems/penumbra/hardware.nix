@@ -96,8 +96,6 @@
       pkgs.kdePackages.plasma-thunderbolt
     ];
 
-    boot.initrd.systemd.enable = true;
-
     # HiDPI {{{1
     console.earlySetup = true;
     console.packages = [ pkgs.terminus_font ];

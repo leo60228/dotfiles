@@ -46,13 +46,6 @@
     in
     lib.mkIf cfg.enable {
       # derived from https://discourse.nixos.org/t/import-zpool-before-luks-with-systemd-on-boot/65400/2
-      assertions = [
-        {
-          assertion = config.boot.initrd.systemd.enable;
-          message = "systemd stage-1 required for zfs-credstore";
-        }
-      ];
-
       boot.initrd = {
         systemd.services."zfs-import-${cfg.pool}".enable = false;
 
