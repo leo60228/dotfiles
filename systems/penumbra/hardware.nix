@@ -45,7 +45,6 @@
     '';
 
     boot.extraModulePackages = [
-      (pkgs.leoPkgs.amdgpu-hdmi-frl.override { linuxPackages = config.boot.kernelPackages; })
       (pkgs.leoPkgs.hid-nintendo-switch2.override { linuxPackages = config.boot.kernelPackages; })
     ];
 
