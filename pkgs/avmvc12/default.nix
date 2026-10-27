@@ -26,20 +26,11 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ nukeReferences ] ++ linuxPackages.kernel.moduleBuildDependencies;
 
-  makeFlags = [
+  makeFlags = linuxPackages.kernelModuleMakeFlags ++ [
     "KERNELRELEASE=${linuxPackages.kernel.modDirVersion}"
     "KERNELDIR=${linuxPackages.kernel.dev}/lib/modules/${linuxPackages.kernel.modDirVersion}/build"
-    # "INSTALL_MOD_PATH=$(out)"
+    "INSTALL_MOD_PATH=$(out)"
   ];
-
-  installPhase = ''
-    mkdir -p $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc
-    for x in $(find . -name '*.ko'); do
-      nuke-refs $x
-      cp $x $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc/
-      xz -f $out/lib/modules/${linuxPackages.kernel.modDirVersion}/kernel/drivers/misc/$x
-    done
-  '';
 
   passthru.updateScript = unstableGitUpdater { };
 
