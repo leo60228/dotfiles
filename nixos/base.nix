@@ -21,7 +21,7 @@
     # dependencies
     flakes.home-manager.nixosModules.home-manager
     "${flakes.hydra}/nixos-modules/hydra.nix"
-    flakes.lix-module.nixosModules.default
+    flakes.lix.nixosModules.default
   ];
 
   # SSH {{{1

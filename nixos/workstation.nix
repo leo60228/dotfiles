@@ -65,12 +65,14 @@
     # Avahi {{{1
     services.avahi = {
       enable = true;
-      allowPointToPoint = true;
       nssmdns4 = true;
-      publish = {
-        enable = true;
-        domain = true;
-        addresses = true;
+      settings = {
+        server.allow-point-to-point = true;
+        publish = {
+          disable-publishing = false;
+          publish-domain = true;
+          publish-addresses = true;
+        };
       };
     };
 
