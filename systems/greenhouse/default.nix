@@ -32,6 +32,7 @@
     21115 # rustdesk
     21116 # rustdesk
     21117 # rustdesk
+    30005 # dump1090-fa
   ];
   networking.firewall.allowedUDPPorts = [
     25565
@@ -391,6 +392,46 @@
   services.rustdesk-server = {
     enable = true;
     signal.relayHosts = [ "rustdesk.l3.pm" ];
+  };
+
+  # ADS-B {{{1
+  hardware.rtl-sdr.enable = true;
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="2838", TAG+="systemd", ENV{SYSTEMD_WANTS}+="dump1090-fa.service"
+  '';
+
+  services.dump1090-fa = {
+    enable = true;
+    extraArgs = [ "--quiet" ];
+  };
+
+  systemd.services.dump1090-fa = {
+    wantedBy = lib.mkForce [ ];
+    serviceConfig.PrivateNetwork = lib.mkForce false;
+  };
+
+  virtualisation.oci-containers.containers.piaware = {
+    pull = "newer";
+    image = "ghcr.io/sdr-enthusiasts/docker-piaware:latest";
+    environment = {
+      RECEIVER_TYPE = "relay";
+      BEASTHOST = "host.containers.internal";
+      BEASTPORT = "30005";
+    };
+    ports = [ "127.0.0.1:30080:80" ];
+    environmentFiles = [ "/var/lib/piaware.env" ];
+    extraOptions = [ "--tz=local" ];
+    labels."io.containers.autoupdate" = "registry";
+  };
+
+  virtualisation.oci-containers.containers.fr24feed = {
+    pull = "newer";
+    image = "ghcr.io/sdr-enthusiasts/docker-flightradar24:latest";
+    environment.BEASTHOST = "host.containers.internal";
+    ports = [ "127.0.0.1:8754:8754" ];
+    environmentFiles = [ "/var/lib/fr24feed.env" ];
+    extraOptions = [ "--tz=local" ];
+    labels."io.containers.autoupdate" = "registry";
   };
   # }}}
 }
