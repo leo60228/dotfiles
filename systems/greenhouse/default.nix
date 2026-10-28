@@ -402,7 +402,11 @@
 
   services.dump1090-fa = {
     enable = true;
-    extraArgs = [ "--quiet" ];
+    extraArgs = [
+      "--quiet"
+      "--adaptive-range"
+      "--fix"
+    ];
   };
 
   systemd.services.dump1090-fa = {
