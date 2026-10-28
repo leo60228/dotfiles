@@ -2,7 +2,6 @@
 
 {
   lib,
-  utils,
   pkgs,
   config,
   ...
@@ -165,71 +164,6 @@
       }
     ];
   };
-
-  # Unifi {{{1
-  #services.unifi = {
-  #  enable = true;
-  #  unifiPackage = pkgs.unifi;
-  #  mongodbPackage = pkgs.mongodb-7_0;
-  #  openFirewall = true;
-  #};
-  virtualisation.oci-containers.containers.uosserver =
-    let
-      version = "5.0.6";
-      imageVersion = "0.0.54";
-      platform = "linux-x64";
-      src = pkgs.fetchurl {
-        url = "https://fw-download.ubnt.com/data/unifi-os-server/1856-linux-x64-5.0.6-33f4990f-6c68-4e72-9d9c-477496c22450.6-x64";
-        hash = "sha256-IPoWR5GTiy7J1WgMEYdTxGo26qM2nO+U1c742pRo354=";
-      };
-      imageFile = pkgs.runCommand "image.tar" { inherit src; } ''
-        ${pkgs.unzip}/bin/unzip -p $src image.tar > $out || (($?==1))
-      '';
-      directories = [
-        "persistent"
-        "var/log"
-        "data"
-        "srv"
-        "var/lib/unifi"
-        "var/lib/mongodb"
-        "etc/rabbitmq/ssl"
-      ];
-    in
-    {
-      privileged = true;
-      volumes = map (x: "uosserver-${utils.escapeSystemdPath x}:/${x}") directories;
-      image = "uosserver:${imageVersion}";
-      inherit imageFile;
-      extraOptions = [
-        "--tz=local"
-        "--ip=10.88.0.7"
-      ];
-      ports =
-        (map (x: "${toString x}:${toString x}") [
-          5005
-          9543
-          6789
-          8080
-          8443
-          8444
-          11084
-          5671
-          8880
-          8881
-          8882
-        ])
-        ++ (map (x: "${toString x}:${toString x}/udp") [
-          3478
-          5514
-          10003
-        ])
-        ++ [ "11443:443" ];
-      environment = {
-        UOS_UUID = "5adb0601-b680-5fb4-87fd-352a477e36db";
-        UOS_SERVER_VERSION = version;
-        FIRMWARE_PLATFORM = platform;
-      };
-    };
 
   # soju {{{1
   services.soju = {
