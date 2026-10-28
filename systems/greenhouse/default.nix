@@ -331,22 +331,16 @@
   # ADS-B {{{1
   hardware.rtl-sdr.enable = true;
   services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="2838", TAG+="systemd", ENV{SYSTEMD_WANTS}+="dump1090-fa.service"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="2838", TAG+="systemd", ENV{SYSTEMD_WANTS}+="readsb.service"
   '';
 
-  services.dump1090-fa = {
-    enable = true;
-    extraArgs = [
-      "--quiet"
-      "--adaptive-range"
-      "--fix"
-    ];
-  };
-
-  systemd.services.dump1090-fa = {
-    wantedBy = lib.mkForce [ ];
-    serviceConfig.PrivateNetwork = lib.mkForce false;
-  };
+  systemd.services.readsb.script = ''
+    ${lib.getExe' pkgs.readsb "readsb"} \
+      --quiet \
+      --net --net-bo-port 30005 \
+      --device-type rtlsdr --gain auto \
+      $(< /var/lib/readsb.conf)
+  '';
 
   virtualisation.oci-containers.containers.piaware = {
     pull = "newer";
