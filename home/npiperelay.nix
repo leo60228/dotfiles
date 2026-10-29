@@ -36,11 +36,11 @@ lib.mkIf (osConfig.wsl.enable or false) {
           args = "-ei -s //./pipe/openssh-ssh-agent";
         };
         relay-gpg-agent = {
-          path = "/run/user/1000/gnupg/S.gpg-agent";
+          path = "/home/leo60228/.gnupg/S.gpg-agent";
           args = "-ei -a C:/Users/leo60228/AppData/Local/gnupg/S.gpg-agent";
         };
         relay-gpg-extra = {
-          path = "/run/user/1000/gnupg/S.gpg-agent.extra";
+          path = "/home/leo60228/.gnupg/S.gpg-agent.extra";
           args = "-ei -a C:/Users/leo60228/AppData/Local/gnupg/S.gpg-agent.extra";
         };
       };

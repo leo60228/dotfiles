@@ -10,8 +10,15 @@
 
   system.stateVersion = "25.05";
 
-  wsl.enable = true;
-  wsl.defaultUser = "leo60228";
+  wsl = {
+    enable = true;
+    defaultUser = "leo60228";
+    interop = {
+      register = true;
+      includePath = false;
+    };
+  };
+
   services.resolved.enable = false;
 
   deployment.allowLocalDeployment = true;
