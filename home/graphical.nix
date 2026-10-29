@@ -115,6 +115,7 @@ lib.mkIf osConfig.vris.graphical {
           "datareporting.policy.firstRunURL" = "";
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "browser.fixup.domainwhitelist.go" = true;
+          "network.trr.excluded-domains" = "go, capybara-pirate.ts.net";
           "browser.uiCustomization.state" = {
             currentVersion = 18;
             placements = {
