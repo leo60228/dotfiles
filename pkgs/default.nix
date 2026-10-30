@@ -16,6 +16,7 @@
   hid-nintendo-switch2 = callPackage ./hid-nintendo-switch2 { };
   hyfetch = callPackage ./hyfetch { };
   mediawiki-extensions = callPackage ./mediawiki-extensions { };
+  mlat-client = python3.pkgs.callPackage ./mlat-client { };
   ms-fonts = callPackage ./ms-fonts { };
   pam-fprint-grosshack = callPackage ./pam-fprint-grosshack { };
   reposilite = callPackage ./reposilite { };

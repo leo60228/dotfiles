@@ -342,6 +342,17 @@
       $(< /var/lib/readsb.conf)
   '';
 
+  systemd.services.mlat-client = {
+    wantedBy = [ "readsb.service" ];
+    after = [ "readsb.service" ];
+    script = ''
+      ${lib.getExe pkgs.leoPkgs.mlat-client} \
+        --input-type dump1090 \
+        --input-connect localhost:30005 \
+        $(< /var/lib/mlat-client.conf)
+    '';
+  };
+
   virtualisation.oci-containers.containers.piaware = {
     pull = "newer";
     image = "ghcr.io/sdr-enthusiasts/docker-piaware:latest";
