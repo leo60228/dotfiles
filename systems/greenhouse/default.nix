@@ -335,7 +335,7 @@
   '';
 
   systemd.services.readsb.script = ''
-    ${lib.getExe' pkgs.readsb "readsb"} \
+    exec ${lib.getExe' pkgs.readsb "readsb"} \
       --quiet \
       --net --net-bo-port 30005 \
       --device-type rtlsdr --gain auto \
@@ -346,7 +346,7 @@
     wantedBy = [ "readsb.service" ];
     after = [ "readsb.service" ];
     script = ''
-      ${lib.getExe pkgs.leoPkgs.mlat-client} \
+      exec ${lib.getExe pkgs.leoPkgs.mlat-client} \
         --input-type dump1090 \
         --input-connect localhost:30005 \
         $(< /var/lib/mlat-client.conf)
