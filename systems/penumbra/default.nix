@@ -66,6 +66,31 @@
     settings = {
       jobs = [
         {
+          type = "snap";
+          name = "snapshot";
+
+          filesystems."rpool/root<" = true;
+
+          snapshotting = {
+            type = "periodic";
+            interval = "15m";
+            prefix = "zrepl_";
+          };
+
+          pruning.keep = [
+            {
+              type = "grid";
+              grid = "1x1h(keep=all) | 24x1h | 2x1d";
+              regex = "^zrepl_.*";
+            }
+            {
+              type = "regex";
+              negate = true;
+              regex = "^zrepl_.*";
+            }
+          ];
+        }
+        {
           type = "push";
           name = "push_to_workstation";
 
@@ -86,7 +111,12 @@
 
           snapshotting.type = "manual";
           pruning = {
-            keep_sender = [ { type = "not_replicated"; } ];
+            keep_sender = [
+              {
+                type = "regex";
+                regex = ".*";
+              }
+            ];
             keep_receiver = [
               {
                 type = "regex";
@@ -94,8 +124,8 @@
                 regex = "^zrepl_.*$";
               }
               {
-                type = "last_n";
-                count = 2;
+                type = "grid";
+                grid = "1x1h(keep=all) | 24x1h | 360x1d";
                 regex = "^zrepl_.*$";
               }
             ];
