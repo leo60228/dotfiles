@@ -84,6 +84,7 @@ lib.mkIf osConfig.vris.graphical {
         runtime_blocked_hosts = [
           "*://*.google.com"
           "*://*.cnbc.com"
+          "*://*.economist.com"
         ];
       };
     };
