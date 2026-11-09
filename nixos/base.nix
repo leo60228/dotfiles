@@ -144,6 +144,7 @@
     openssh
     git
     tailscale
+    dig
   ];
 
   boot.initrd.systemd.initrdBin = [ pkgs.e2fsprogs ];
