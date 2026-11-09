@@ -35,6 +35,11 @@
       "sd_mod"
     ];
     boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelParams = [
+      "efivar_ssdt=uart"
+      "console=uart,0xfedc9000,115200n8"
+      "console=tty0"
+    ];
 
     boot.extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="US"
