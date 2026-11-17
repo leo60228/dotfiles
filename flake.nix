@@ -68,7 +68,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.lanzaboote = {
-    url = "github:nix-community/lanzaboote/v1.1.0";
+    url = "github:leo60228/lanzaboote/vriska";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.rust-overlay.follows = "rust-overlay";
   };

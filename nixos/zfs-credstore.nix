@@ -45,6 +45,32 @@
       cfg = config.vris.zfs-credstore;
     in
     lib.mkIf cfg.enable {
+      systemd.package = pkgs.systemd.overrideAttrs (
+        oldAttrs:
+        assert oldAttrs.version == "262";
+        {
+          version = "262-unstable-2026-11-17";
+
+          patches = [
+            (lib.elemAt oldAttrs.patches 0)
+            ../files/0002-Change-usr-share-zoneinfo-to-etc-zoneinfo.patch
+            ../files/0003-path-util.h-add-placeholder-for-DEFAULT_PATH_NORMAL.patch
+            ../files/0004-core-don-t-taint-on-unmerged-usr.patch
+          ];
+
+          mesonFlags = oldAttrs.mesonFlags ++ [
+            (lib.mesonEnable "rust" false)
+          ];
+
+          src = pkgs.fetchFromGitHub {
+            owner = "systemd";
+            repo = "systemd";
+            rev = "6501c454c47ad39d241ad71ea7f69b4ee72e06fd";
+            hash = "sha256-GR3NQcp/KxkvUo792Cq7aVknBRc0XxXLmi+qkQ1jSOE=";
+          };
+        }
+      );
+
       # derived from https://discourse.nixos.org/t/import-zpool-before-luks-with-systemd-on-boot/65400/2
       boot.initrd = {
         systemd.services."zfs-import-${cfg.pool}".enable = false;
