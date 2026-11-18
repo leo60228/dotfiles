@@ -76,6 +76,11 @@
         4
         7
       ];
+
+      upstreamStaticMeasurements = lib.mkForce [
+        "500-separator.pcrlock.d/300-0x00000000.pcrlock"
+        "400-secureboot-separator.pcrlock.d/300-0x00000000.pcrlock"
+      ];
     };
   };
 
