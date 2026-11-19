@@ -72,6 +72,7 @@
         "/dev/disk/by-id/nvme-WD_BLACK_SN850X_2000GB_24144C803060-part2"
       ];
       tpm2 = true;
+      autologin = true;
     };
 
     boot.initrd.luks.devices.swap = {

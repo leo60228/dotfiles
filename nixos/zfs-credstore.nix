@@ -37,6 +37,11 @@
         type = lib.types.bool;
         default = false;
       };
+
+      autologin = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
     };
   };
 
@@ -70,6 +75,31 @@
           };
         }
       );
+
+      security.pam.services.sddm-autologin = lib.mkIf cfg.autologin {
+        rules.auth.sddm-autologin-user.order = lib.mkForce 13000;
+        rules.auth.permit.order = lib.mkForce 13500;
+        rules.auth.systemd-loadkey = {
+          order = 10200;
+          control = "optional";
+          modulePath = "${config.systemd.package}/lib/security/pam_systemd_loadkey.so";
+          settings.keyname = "tpm2-pin";
+        };
+        rules.auth.kwallet = {
+          order = 12100;
+          control = "optional";
+          modulePath = "${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so";
+        };
+      };
+
+      systemd.services.display-manager = lib.mkIf cfg.autologin {
+        serviceConfig.KeyringMode = "inherit";
+      };
+
+      services.displayManager.autoLogin = lib.mkIf cfg.autologin {
+        enable = true;
+        user = "leo60228";
+      };
 
       # derived from https://discourse.nixos.org/t/import-zpool-before-luks-with-systemd-on-boot/65400/2
       boot.initrd = {
