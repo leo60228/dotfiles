@@ -41,7 +41,7 @@
     inputs.lix.follows = "lix";
   };
   inputs.lix = {
-    url = "https://git.lix.systems/lix-project/lix/archive/release-2.96.tar.gz";
+    url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-compat.follows = "flake-compat";
   };
