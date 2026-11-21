@@ -77,7 +77,7 @@
 
   # Mastodon {{{1
   services.postgresql.enable = true;
-  services.postgresql.package = pkgs.postgresql_14;
+  services.postgresql.package = pkgs.postgresql_19;
   services.redis.servers."".enable = true;
 
   services.mastodon = {

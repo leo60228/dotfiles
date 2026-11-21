@@ -65,7 +65,7 @@
   '';
   systemd.services.mastodon-init-db.environment.SKIP_POST_DEPLOYMENT_MIGRATIONS = "true";
 
-  services.postgresql.package = pkgs.postgresql_14;
+  services.postgresql.package = pkgs.postgresql_19;
 
   # Elasticsearch {{{1
   services.elasticsearch = {
