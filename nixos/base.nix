@@ -102,6 +102,7 @@
         "dotnet-sdk-wrapped-6.0.428"
       ]
       ++ lib.optional (!pkgs ? elasticsearch8) "elasticsearch-7.17.27";
+      problems.handlers."gtk+".broken = "ignore";
     };
   };
 

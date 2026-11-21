@@ -49,7 +49,6 @@
       enable = true;
       alsa.enable = true;
       pulse.enable = true;
-      jack.enable = true;
     };
     systemd.user.services.wireplumber.environment.ACP_PROFILES_DIR = ../files/profile-sets;
 
@@ -132,6 +131,8 @@
 
       pkgs.xsettingsd
       pkgs.xrdb
+
+      pkgs.pipewire
     ]
     ++ lib.optional config.hardware.bluetooth.enable pkgs.kdePackages.bluedevil;
 
