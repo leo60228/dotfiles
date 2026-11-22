@@ -179,12 +179,9 @@
       file-upload http http://localhost:40413/upload
     '';
   };
-  systemd.services.soju = {
-    environment.GODEBUG = "tlsrsakex=1"; # eyeroll
-    serviceConfig = {
-      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-      CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
-    };
+  systemd.services.soju.serviceConfig = {
+    AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+    CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
   };
 
   systemd.services.filehost-elixire = {
