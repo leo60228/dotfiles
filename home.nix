@@ -62,8 +62,10 @@
       ui.default-command = "log";
       signing.backend = "gpg";
       signing.behavior = "drop";
-      git.sign-on-push = true;
-      revsets.bookmark-advance-to = "closest_pushable(@)";
+      revsets = {
+        bookmark-advance-to = "closest_pushable(@)";
+        git-sign-on-push = "~signed() & mine()";
+      };
       revset-aliases."closest_pushable(to)" =
         ''heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
     };
