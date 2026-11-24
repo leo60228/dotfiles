@@ -605,15 +605,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1793205548,
-        "narHash": "sha256-E51fkzzqe1nZt3S/9f0zJWEo5XKQ23A7Bllqrd/Cndc=",
+        "lastModified": 1795390571,
+        "narHash": "sha256-53x8N8HOnq8fuedQCOzM+VD9zpPot5Pcx1zByKulhT0=",
         "owner": "moonlight-mod",
         "repo": "moonlight",
-        "rev": "649f96a05468a238c9f021021b4993036ca75b0f",
+        "rev": "b5af8247084ab3de18082ea30a6f3301889938d6",
         "type": "github"
       },
       "original": {
         "owner": "moonlight-mod",
+        "ref": "adryd/rspack-fixes",
         "repo": "moonlight",
         "type": "github"
       }

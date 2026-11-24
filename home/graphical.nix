@@ -30,7 +30,7 @@ lib.mkIf osConfig.vris.graphical {
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [
       steam-run
-      discord-canary
+      discord
       thunderbird-latest-bin
     ];
 

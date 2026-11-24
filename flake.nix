@@ -88,7 +88,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.moonlight = {
-    url = "github:moonlight-mod/moonlight";
+    url = "github:moonlight-mod/moonlight/adryd/rspack-fixes";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.flake-compat = {
